@@ -8,10 +8,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        slate: {
+          750: "#293649",
+        },
+      },
+      borderColor: {
+        main: "rgba(255, 255, 255, 0.24)",
+      },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        glass:
+          "linear-gradient(262.6deg, rgba(48, 49, 58, 0.5) 0%, rgba(48, 49, 58, 0.3) 101.18%, rgba(48, 49, 58, 0.3) 101.18%);",
+        main: "url('/images/nba-logo-blue.svg')",
+      },
+      gridTemplateColumns: {
+        "auto-fill": "repeat(auto-fill, minmax(300px, 1fr))",
       },
     },
   },

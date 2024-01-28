@@ -2,28 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer components {
+  .bg-layout {
+    background: linear-gradient(
+      160deg,
+      rgb(14 25 44 / 30%) 55%,
+      rgb(200 15 46 / 30%) 100%
+    );
+    @apply flex min-h-screen flex-col bg-slate-900 text-white before:absolute before:h-full before:w-full before:opacity-50 before:bg-main before:bg-center before:bg-no-repeat before:blur-[105px] before:content-[''];
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
