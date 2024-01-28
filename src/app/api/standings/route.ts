@@ -1,7 +1,13 @@
+import { API } from "@/constants";
+import { getLeagueYear } from "@/helpers/date";
+
 export async function GET() {
+  const year = getLeagueYear(new Date());
+  const nextYear = (year + 1) % 100;
+  const season = `${year}-${nextYear}`;
+
   const res = await fetch(
-    `https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/leaguestandingsv3&GroupBy=conf&LeagueID=00&Season=2023-24&SeasonType=Regular%20Season&Section=overall
-    `
+    `${API.BASE_URL}/leaguestandingsv3&GroupBy=conf&LeagueID=00&Season=${season}&SeasonType=Regular%20Season&Section=overall`
   );
 
   const data = await res.json();

@@ -1,3 +1,4 @@
+import { API } from "@/constants";
 import { parseGames } from "@/helpers/mappers";
 
 type Params = {
@@ -8,7 +9,7 @@ type Params = {
 
 export async function GET(request: Request, { params }: Params) {
   const res = await fetch(
-    `https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/scoreboardv3&GameDate=${params.date}&LeagueID=00`,
+    `${API.BASE_URL}/scoreboardv3&GameDate=${params.date}&LeagueID=00`,
     { next: { revalidate: 20 } }
   );
 
