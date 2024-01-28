@@ -11,3 +11,9 @@ export const REGULAR_PERIOD_COUNT = 4;
 export const DATE_DISPLAY_FORMAT = "dd MMMM yyyy";
 export const DATE_LINK_FORMAT = "yyyy-MM-dd";
 export const EST_IANA_ZONE_ID = "America/New_York";
+
+export const GAME_STATUS = {
+  NOT_STARTED: 1,
+  IN_PROGRESS: 2,
+  ENDED: 3,
+};

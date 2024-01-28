@@ -2,6 +2,7 @@
 
 import { getDays } from "@/helpers/date";
 import useSWR from "swr";
+import { GameCard } from "@/components/GameCard";
 
 const fetcher = (...args: [RequestInfo, RequestInit]) =>
   fetch(...args).then((res) => res.json());
@@ -17,8 +18,10 @@ export default function Games() {
   }
 
   return (
-    <main>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+    <main className="grid grid-cols-auto-fill gap-5">
+      {data?.map((game) => (
+        <GameCard key={game.gameId} {...game} />
+      ))}
     </main>
   );
 }
