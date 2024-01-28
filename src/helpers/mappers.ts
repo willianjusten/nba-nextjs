@@ -19,6 +19,7 @@ export const parseGames = (data: Games) => {
   return games.map((game) => {
     const {
       gameId,
+      gameStatus,
       gameStatusText,
       period,
       gameClock,
@@ -29,6 +30,7 @@ export const parseGames = (data: Games) => {
 
     return {
       gameId,
+      gameStatus,
       gameStatusText,
       period,
       gameClock,

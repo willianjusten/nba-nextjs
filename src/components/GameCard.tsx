@@ -2,12 +2,15 @@ import cn from "classnames";
 
 import { TeamInfo } from "@/components/TeamInfo";
 import { GAME_STATUS } from "@/constants";
+import { formatClock } from "@/helpers/date";
+import { getWinner } from "@/helpers/getWinner";
 
 export function GameCard({
   awayTeam,
   homeTeam,
   startTime,
-  status,
+  gameStatus,
+  gameStatusText,
   isHalftime,
   isEndOfPeriod,
   period,
@@ -15,7 +18,7 @@ export function GameCard({
   details = true,
   interactive = true,
 }) {
-  const winner = "awayTeam";
+  const winner = getWinner(awayTeam, homeTeam);
 
   return (
     <article
@@ -34,22 +37,14 @@ export function GameCard({
               <p
                 className={cn("w-1/3 text-left text-2xl font-bold", {
                   "opacity-50":
-                    winner !== "awayTeam" && status === GAME_STATUS.ENDED,
+                    winner !== "awayTeam" && gameStatus === GAME_STATUS.ENDED,
                 })}>
                 {awayTeam.score}
               </p>
             )}
-            <p className="flex-1 whitespace-nowrap px-3 pt-1.5 text-center uppercase">
-              {/* {getTimePeriod({
-                startTime,
-                status,
-                period,
-                clock,
-                isHalftime,
-                isEndOfPeriod,
-              })} */}
-              {gameClock}
-              {status == GAME_STATUS.IN_PROGRESS && (
+            <p className="text-sm flex-1 whitespace-nowrap px-3 pt-1.5 text-center uppercase">
+              {formatClock(gameClock, gameStatusText, period)}
+              {gameStatus == GAME_STATUS.IN_PROGRESS && (
                 <span className="mx-auto block pt-2 text-xs tracking-widest">
                   <span className="mr-1 inline-block h-2 w-2 animate-pulse rounded-full bg-red-700"></span>
                   Live
@@ -61,7 +56,7 @@ export function GameCard({
               <p
                 className={cn("w-1/3 text-right text-2xl font-bold", {
                   "opacity-50":
-                    winner !== "homeTeam" && status === GAME_STATUS.ENDED,
+                    winner !== "homeTeam" && gameStatus === GAME_STATUS.ENDED,
                 })}>
                 {homeTeam.score}
               </p>
