@@ -1,14 +1,14 @@
 "use client";
 
+import { getDays } from "@/helpers/date";
 import useSWR from "swr";
 
 const fetcher = (...args: [RequestInfo, RequestInit]) =>
   fetch(...args).then((res) => res.json());
 
 export default function Games() {
-  const today = new Date().toISOString().split("T")[0]; // 2021-01-01
-
-  const { data, error } = useSWR(`/api/games/${today}`, fetcher, {
+  const { day } = getDays();
+  const { data, error } = useSWR(`/api/games/${day}`, fetcher, {
     refreshInterval: 20000,
   });
 
