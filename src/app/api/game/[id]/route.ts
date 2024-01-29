@@ -5,7 +5,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const res = await fetch(`${API.DETAILS_URL}/boxscore_${params.id}.json`, {
-    next: { revalidate: 20 },
+    next: { revalidate: 0 },
   });
 
   const data = await res.json();
