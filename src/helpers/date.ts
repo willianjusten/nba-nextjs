@@ -61,61 +61,11 @@ export function getDays(date?: string) {
   };
 }
 
-const statusTextRegex =
-  /^([OT|Q][0-9]{1,2}) [0-9]{1,2}:[0-9]{1,2}(\.[0-9]{1,3})?$/;
-/**
- * Migrated from boxscore.js. Formats game status with clock or match status
- * @param {string} clock
- * @param {string} status
- */
-export const formatClock = (clock, status, totalPeriod) => {
-  if (status === "Half") {
-    return "Halftime";
-  } else if (status.includes("Halftime") || status.includes("Tipoff")) {
-    // game started, clock stopped
-    return status;
-  } else if (status === "PPD") {
-    // PPD mean postponed
-    return "Postponed";
-  } else if (
-    (status.startsWith("Start") || status.startsWith("End")) &&
-    status.includes("of")
-  ) {
-    // Start/End of 1st Qtr/OT
-    const statusArray = status.split(" ");
-    if (status.includes("Qtr")) {
-      return statusArray[0] + " of Q" + statusArray[2].charAt(0);
-    } else if (status.includes("OT")) {
-      return statusArray[0] + " of OT" + statusArray[2].charAt(0);
-    } else {
-      return status;
-    }
-  } else if (
-    (status.startsWith("Start") || status.startsWith("End")) &&
-    !status.includes("of")
-  ) {
-    // Start/End Q/OT1
-    return status;
-  } else if (status && status.includes("Qtr") && status.includes("of")) {
-    // game started being played over regular time
-    return "Q" + status.charAt(0) + " " + clock;
-  } else if (status && status.includes("OT") && status.includes("of")) {
-    // game start being played over over time
-    return "OT" + status.charAt(0) + " " + clock;
-  } else if (status.includes("Final")) {
-    if (+totalPeriod > 4) {
-      if (status.includes("OT")) {
-        return `${status} ${+totalPeriod - 4}`;
-      } else {
-        return `${status}/OT ${+totalPeriod - 4}`;
-      }
-    }
-    return status;
-  } else if (+totalPeriod === 0) {
-    return status;
-  } else if (statusTextRegex.test(status)) {
-    // already formatted
-    return status;
+export function formatClock(gameStatusText: string, gameTimeUTC: string) {
+  // this means the game didn't start yet, so let's format to show correct timezone
+  if (gameStatusText.includes("ET") || gameStatusText.includes("PT")) {
+    return format(new Date(gameTimeUTC), "h:mm a");
   }
-  return clock;
-};
+
+  return gameStatusText;
+}

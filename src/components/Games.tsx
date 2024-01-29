@@ -17,9 +17,11 @@ export default function Games() {
 
   return (
     <main className="grid grid-cols-auto-fill gap-5">
-      {data?.map((game) => (
-        <GameCard key={game.gameId} {...game} />
-      ))}
+      {data
+        ?.sort((a, b) => a.gameStatus - b.gameStatus)
+        .map((game) => (
+          <GameCard key={game.gameId} {...game} />
+        ))}
     </main>
   );
 }
