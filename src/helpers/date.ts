@@ -46,12 +46,3 @@ export function getDays(date?: string) {
     nextDay: format(addDays(day, 1), DATE_LINK_FORMAT),
   };
 }
-
-export function formatClock(gameStatusText: string, gameTimeUTC: string) {
-  // this means the game didn't start yet, so let's format to show correct timezone
-  if (gameStatusText.includes("ET") || gameStatusText.includes("PT")) {
-    return format(new Date(gameTimeUTC), "h:mm a");
-  }
-
-  return gameStatusText;
-}

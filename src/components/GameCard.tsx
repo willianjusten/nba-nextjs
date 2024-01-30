@@ -3,7 +3,6 @@ import cn from "classnames";
 import { TeamInfo } from "@/components/TeamInfo";
 import Time from "@/components/Time";
 import { GAME_STATUS } from "@/constants";
-import { formatClock } from "@/helpers/date";
 import { getWinner } from "@/helpers/getWinner";
 
 export function GameCard({
@@ -44,7 +43,7 @@ export function GameCard({
               gameStatusText.includes("PT") ? (
                 <Time time={gameTimeUTC} />
               ) : (
-                formatClock(gameStatusText, gameTimeUTC)
+                gameStatusText
               )}
 
               {gameStatus == GAME_STATUS.IN_PROGRESS && (
