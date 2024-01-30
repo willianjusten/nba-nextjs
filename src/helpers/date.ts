@@ -38,21 +38,9 @@ export const getLeagueYear = (date: Date) => {
  * @returns object of date objects
  */
 export function getDays(date?: string) {
-  let timeZonedDay: Date;
   const now = new Date().toISOString();
   const etNow = utcToZonedTime(now, EST_IANA_ZONE_ID);
-  const etNowHours = getHours(etNow);
-
-  // Some NBA games starts in a day and finishes in the next day
-  // in order to show the games that are happening at that time
-  // even being the next day, we get the previous day
-  if (etNowHours < 6) {
-    timeZonedDay = startOfDay(subDays(etNow, 1));
-  } else {
-    timeZonedDay = startOfDay(etNow);
-  }
-
-  const day = date ? parseISO(date) : timeZonedDay;
+  const day = date ? parseISO(date) : etNow;
 
   return {
     day: format(day, DATE_LINK_FORMAT),
