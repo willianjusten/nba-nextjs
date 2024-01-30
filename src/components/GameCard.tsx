@@ -1,3 +1,5 @@
+"use client";
+
 import cn from "classnames";
 
 import { TeamInfo } from "@/components/TeamInfo";
