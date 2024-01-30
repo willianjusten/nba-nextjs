@@ -1,8 +1,7 @@
-"use client";
-
 import cn from "classnames";
 
 import { TeamInfo } from "@/components/TeamInfo";
+import Time from "@/components/Time";
 import { GAME_STATUS } from "@/constants";
 import { formatClock } from "@/helpers/date";
 import { getWinner } from "@/helpers/getWinner";
@@ -41,7 +40,12 @@ export function GameCard({
             </p>
 
             <p className="text-sm flex-1 whitespace-nowrap px-3 pt-1.5 text-center uppercase">
-              {formatClock(gameStatusText, gameTimeUTC)}
+              {gameStatusText.includes("ET") ||
+              gameStatusText.includes("PT") ? (
+                <Time time={gameTimeUTC} />
+              ) : (
+                formatClock(gameStatusText, gameTimeUTC)
+              )}
 
               {gameStatus == GAME_STATUS.IN_PROGRESS && (
                 <span className="mx-auto block pt-2 text-xs tracking-widest">
