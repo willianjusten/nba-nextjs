@@ -6,6 +6,7 @@ import { GAME_STATUS } from "@/constants";
 import { getWinner } from "@/helpers/getWinner";
 
 export function GameCard({
+  gameId,
   awayTeam,
   homeTeam,
   gameStatus,
@@ -19,6 +20,7 @@ export function GameCard({
 
   return (
     <article
+      data-game-id={gameId}
       className={cn(
         "text-white flex h-full rounded-lg border border-main bg-glass backdrop-blur-lg duration-300 firefox:bg-slate-750",
         {

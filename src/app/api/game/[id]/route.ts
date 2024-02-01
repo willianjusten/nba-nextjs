@@ -1,14 +1,19 @@
 import { API } from "@/constants";
 
-export const revalidate = 0;
-
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const res = await fetch(`${API.DETAILS_URL}/boxscore_${params.id}.json`);
+  const res = await fetch(`${API.DETAILS_URL}/boxscore_${params.id}.json`, {
+    cache: "no-store",
+  });
 
-  const data = await res.json();
+  if (res.ok) {
+    const data = await res.json();
+    return Response.json(data);
+  }
 
-  return Response.json(data);
+  return Response.json({
+    notStarted: true,
+  });
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { GameCard } from "@/components/GameCard";
 import { DateSelector } from "@/components/DateSelector";
 import { getDays } from "@/helpers/date";
@@ -32,7 +33,9 @@ export default async function Games({ params: { date } }: GamesProps) {
         {data
           ?.sort((a, b) => a.gameStatus - b.gameStatus)
           .map((game) => (
-            <GameCard key={game.gameId} {...game} />
+            <Link key={game.gameId} href={`/game/${game.gameId}`}>
+              <GameCard key={game.gameId} {...game} />
+            </Link>
           ))}
       </main>
     </>
