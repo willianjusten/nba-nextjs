@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { GameCard } from "@/components/GameCard";
-import { DateSelector } from "@/components/DateSelector";
+
+import { GameCard } from "@/components/game-card";
+import { DateSelector } from "@/components/date-selector";
 import { getDays } from "@/helpers/date";
 import { API } from "@/constants";
 import { parseGames } from "@/helpers/mappers";
@@ -31,7 +32,7 @@ export default async function Games({ params: { date } }: GamesProps) {
     <>
       <DateSelector day={day} prevDay={prevDay} nextDay={nextDay} />
 
-      <main className="grid grid-cols-auto-fill gap-5">
+      <main className="grid-cols-auto-fill grid gap-5">
         {data
           ?.sort((a, b) => a.gameStatus - b.gameStatus)
           .map((game) => (

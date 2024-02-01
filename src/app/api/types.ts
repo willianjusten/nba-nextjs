@@ -39,7 +39,7 @@ export interface Game {
   awayTeam: Team;
 }
 
-export interface Team {
+export type Team = {
   teamId: number;
   teamName: string;
   teamCity: string;

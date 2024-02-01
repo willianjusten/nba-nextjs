@@ -4,9 +4,12 @@
  * @param homeTeam - The team object
  * @returns string
  */
-export function getWinner(awayTeam, homeTeam) {
+
+import { Team } from "@/app/api/types";
+
+export function getWinner(awayTeam: Partial<Team>, homeTeam: Partial<Team>) {
   if (Number(homeTeam.score) === Number(awayTeam.score)) return null;
   return Number(homeTeam.score) > Number(awayTeam.score)
-    ? "homeTeam"
-    : "awayTeam";
+    ? HOME_TEAM
+    : AWAY_TEAM;
 }

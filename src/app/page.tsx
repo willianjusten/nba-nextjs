@@ -1,5 +1,5 @@
 import SWRProvider from "@/components/SWRProvider";
-import Games from "@/components/Games";
+import { Games } from "@/components";
 
 async function getData() {
   const res = await fetch(`${process.env.API_DOMAIN}/api/today`, {

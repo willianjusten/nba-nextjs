@@ -1,7 +1,7 @@
 import Link from "next/link";
-
-import { ArrowIcon } from "@/components/ArrowIcon";
 import { format } from "date-fns";
+
+import { ArrowIcon } from "@/components/arrow-icon";
 import { DATE_LINK_FORMAT } from "@/constants";
 
 export type DateSelectorProps = {
