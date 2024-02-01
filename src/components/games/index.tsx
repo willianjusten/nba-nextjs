@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import useSWR from "swr";
-import { GameCard } from "@/components/game-card";
-import { DateSelector } from "@/components/date-selector";
+
+import { GameCard } from "@/components";
+import { DateSelector } from "@/components";
 import { getDays } from "@/helpers/date";
 
 //TODO: Duplicate type definition, should be in a shared file
@@ -31,13 +33,9 @@ const fetcher = (...args: [RequestInfo, RequestInit]) =>
 
 export default function Games() {
   const { day, prevDay, nextDay } = getDays();
-  const { data, error } = useSWR<Games>(`/api/today`, fetcher, {
-    refreshInterval: 20000,
+  const { data } = useSWR<Games>("/api/today", fetcher, {
+    refreshInterval: 15000,
   });
-
-  if (error) {
-    throw error;
-  }
 
   return (
     <>
@@ -46,7 +44,11 @@ export default function Games() {
       <main className="grid-cols-auto-fill grid gap-5">
         {data
           ?.sort((a, b) => a.gameStatus - b.gameStatus)
-          .map((game) => <GameCard key={game.gameId} {...game} />)}
+          .map((game) => (
+            <Link key={game.gameId} href={`/game/${game.gameId}`}>
+              <GameCard {...game} />
+            </Link>
+          ))}
       </main>
     </>
   );

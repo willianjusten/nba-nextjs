@@ -1,6 +1,6 @@
-import { Table, TableCell, TableHead } from "@/components/Table";
+import { Table, TableCell, TableHead } from "@/components";
 
-export function GameSummary({ game }) {
+function GameSummary({ game }) {
   const renderPeriods = (periods, isHeader = false) =>
     periods.map(({ period, score }) => {
       const key = isHeader ? period : score;
@@ -39,3 +39,5 @@ export function GameSummary({ game }) {
     </div>
   );
 }
+
+export default GameSummary;

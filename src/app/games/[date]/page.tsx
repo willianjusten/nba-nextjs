@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { GameCard } from "@/components/game-card";
-import { DateSelector } from "@/components/date-selector";
+import { GameCard } from "@/components";
+import { DateSelector } from "@/components";
 import { getDays } from "@/helpers/date";
 import { API } from "@/constants";
 import { parseGames } from "@/helpers/mappers";

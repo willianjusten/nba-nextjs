@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { format } from "date-fns";
 
-import { ArrowIcon } from "@/components/arrow-icon";
+import { ArrowIcon } from "@/components";
 import { DATE_LINK_FORMAT } from "@/constants";
 
 export type DateSelectorProps = {
@@ -10,7 +10,7 @@ export type DateSelectorProps = {
   prevDay: string;
 };
 
-export function DateSelector({ day, nextDay, prevDay }: DateSelectorProps) {
+function DateSelector({ day, nextDay, prevDay }: DateSelectorProps) {
   const today = format(new Date(), DATE_LINK_FORMAT);
   const prevLink = prevDay === today ? "/" : `/games/${prevDay}`;
   const nextLink = nextDay === today ? "/" : `/games/${nextDay}`;
@@ -32,3 +32,5 @@ export function DateSelector({ day, nextDay, prevDay }: DateSelectorProps) {
     </div>
   );
 }
+
+export default DateSelector;

@@ -8,7 +8,7 @@ const commonClass = "text-lg transition-opacity hover:opacity-70 border-b-2";
 const linkClass = `${commonClass} border-transparent hover:border-blue-300`;
 const activeLinkClass = `${commonClass} border-blue-500`;
 
-export function Header() {
+export default function Header() {
   const pathname = usePathname();
 
   return (

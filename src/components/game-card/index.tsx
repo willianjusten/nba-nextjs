@@ -1,7 +1,6 @@
 import cn from "classnames";
 
-import { TeamInfo } from "@/components/team-info";
-import Time from "@/components/time";
+import { TeamInfo, Time } from "@/components";
 import { GAME_STATUS, AWAY_TEAM, HOME_TEAM } from "@/constants";
 import { getWinner } from "@/helpers/getWinner";
 
@@ -15,6 +14,7 @@ type GameTeam = {
 };
 
 type GameCardProps = {
+  gameId: string;
   awayTeam: GameTeam;
   homeTeam: GameTeam;
   gameStatus: number;
@@ -25,7 +25,7 @@ type GameCardProps = {
   interactive?: boolean;
 };
 
-export function GameCard({
+function GameCard({
   gameId,
   awayTeam,
   homeTeam,
@@ -100,3 +100,5 @@ export function GameCard({
     </article>
   );
 }
+
+export default GameCard;

@@ -1,6 +1,6 @@
 const linkStyle = "border-b-blue-500 text-blue-500 hover:border-b-[1px]";
 
-export function Footer() {
+function Footer() {
   return (
     <footer className="container mx-auto px-4 pb-8 pt-16 text-center">
       <p className="flex justify-center gap-2">
@@ -19,3 +19,5 @@ export function Footer() {
     </footer>
   );
 }
+
+export default Footer;

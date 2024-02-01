@@ -6,6 +6,7 @@
  */
 
 import { Team } from "@/app/api/types";
+import { AWAY_TEAM, HOME_TEAM } from "@/constants";
 
 export function getWinner(awayTeam: Partial<Team>, homeTeam: Partial<Team>) {
   if (Number(homeTeam.score) === Number(awayTeam.score)) return null;
