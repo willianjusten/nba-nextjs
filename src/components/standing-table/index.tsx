@@ -42,7 +42,7 @@ export default function StandingTable({ label, conference }) {
                   {index + 1}
                 </div>
               </TableCell>
-              <TableCell className="flex items-center gap-2 min-w-48 md:min-w-0">
+              <TableCell className="flex items-center gap-2 min-w-48">
                 <Image
                   src={`https://cdn.nba.com/logos/nba/${team.id}/primary/L/logo.svg`}
                   width={40}
