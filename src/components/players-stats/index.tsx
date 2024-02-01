@@ -1,6 +1,6 @@
 import { Table, TableCell, TableHead } from "@/components";
 
-const extractMinutes = (str) => {
+const extractMinutes = (str: string) => {
   const match = str.match(/PT(\d+)M/);
   return match ? Number(match[1]) : null;
 };
@@ -9,7 +9,7 @@ export default function PlayersStats({ team }) {
   return (
     <div>
       <h1 className="text-2xl font-bold">
-        {team.tc} {team.tn}
+        {team.teamCity} {team.teamName}
       </h1>
       <Table>
         <TableHead>
