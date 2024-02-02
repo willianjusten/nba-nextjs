@@ -1,11 +1,31 @@
 import cn from "classnames";
 
-import { TeamInfo } from "@/components/TeamInfo";
-import Time from "@/components/Time";
-import { GAME_STATUS } from "@/constants";
+import { TeamInfo, Time } from "@/components";
+import { GAME_STATUS, AWAY_TEAM, HOME_TEAM } from "@/constants";
 import { getWinner } from "@/helpers/getWinner";
 
-export function GameCard({
+//TODO: Duplicate type definition, should be in a shared file
+type GameTeam = {
+  teamId: number;
+  teamName: string;
+  score: number;
+  wins?: number;
+  losses?: number;
+};
+
+type GameCardProps = {
+  gameId: string;
+  awayTeam: GameTeam;
+  homeTeam: GameTeam;
+  gameStatus: number;
+  gameStatusText: string;
+  gameTimeUTC: string;
+  period: string;
+  details?: boolean;
+  interactive?: boolean;
+};
+
+function GameCard({
   gameId,
   awayTeam,
   homeTeam,
@@ -15,18 +35,19 @@ export function GameCard({
   period,
   details = true,
   interactive = true,
-}) {
+}: GameCardProps) {
   const winner = getWinner(awayTeam, homeTeam);
 
   return (
     <article
       data-game-id={gameId}
       className={cn(
-        "text-white flex h-full rounded-lg border border-main bg-glass backdrop-blur-lg duration-300 firefox:bg-slate-750",
+        "border-main bg-glass firefox:bg-slate-750 flex h-full rounded-lg border text-white backdrop-blur-lg duration-300",
         {
           "hover:cursor-pointer hover:bg-slate-700": interactive,
-        }
-      )}>
+        },
+      )}
+    >
       <div className="flex w-full flex-col justify-between">
         <div className="flex p-6">
           <TeamInfo team={awayTeam} />
@@ -35,12 +56,13 @@ export function GameCard({
             <p
               className={cn("w-1/3 text-left text-2xl font-bold", {
                 "opacity-50":
-                  winner !== "awayTeam" && gameStatus === GAME_STATUS.ENDED,
-              })}>
+                  winner !== AWAY_TEAM && gameStatus === GAME_STATUS.ENDED,
+              })}
+            >
               {!!period && awayTeam.score}
             </p>
 
-            <p className="text-sm flex-1 whitespace-nowrap px-3 pt-1.5 text-center uppercase">
+            <p className="flex-1 whitespace-nowrap px-3 pt-1.5 text-center text-sm uppercase">
               {gameStatusText.includes("ET") ||
               gameStatusText.includes("PT") ? (
                 <Time time={gameTimeUTC} />
@@ -59,8 +81,9 @@ export function GameCard({
             <p
               className={cn("w-1/3 text-right text-2xl font-bold", {
                 "opacity-50":
-                  winner !== "homeTeam" && gameStatus === GAME_STATUS.ENDED,
-              })}>
+                  winner !== HOME_TEAM && gameStatus === GAME_STATUS.ENDED,
+              })}
+            >
               {!!period && homeTeam.score}
             </p>
           </div>
@@ -69,7 +92,7 @@ export function GameCard({
         </div>
 
         {details && (
-          <footer className="border-t border-main py-2 text-center text-sm">
+          <footer className="border-main border-t py-2 text-center text-sm">
             View details
           </footer>
         )}
@@ -77,3 +100,5 @@ export function GameCard({
     </article>
   );
 }
+
+export default GameCard;

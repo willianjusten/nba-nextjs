@@ -1,6 +1,6 @@
 import { getLeagueYear } from "@/helpers/date";
 import { API } from "@/constants";
-import { StandingTable } from "@/components/StandingsTable";
+import { StandingTable } from "@/components";
 
 const conferenceExtractor = (teams, isEast) =>
   teams

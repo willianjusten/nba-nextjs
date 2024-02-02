@@ -1,11 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import BackButton from "@/components/BackButton";
-import { GameCard } from "@/components/GameCard";
-import { GameSummary } from "@/components/GameSummary";
-import { PlayersStats } from "@/components/PlayerStats";
-import { TeamStats } from "@/components/TeamStats";
+import { BackButton, GameCard, GameSummary, PlayersStats, TeamStats } from "@/components";
 
 type GameProps = {
   params: {
@@ -23,13 +19,14 @@ export default function GamePage({ params: { id } }: GameProps) {
 
   if (!data) return <h1>Loading...</h1>;
 
-  if (data?.notStarted)
+  if (data?.notStarted) {
     return (
       <>
         <BackButton />
         <h1>Game has not started</h1>
       </>
     );
+  }
 
   return (
     <>

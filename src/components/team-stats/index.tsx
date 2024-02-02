@@ -1,4 +1,4 @@
-import { Table, TableCell } from "@/components/Table";
+import { Table, TableCell } from "@/components";
 
 export type StatisticProps = {
   homeStatistic: string;
@@ -20,7 +20,7 @@ export function Statistic({
   );
 }
 
-export function TeamStats({ game }) {
+export function TeamStats({ game }: any) {
   return (
     <Table>
       <tbody>

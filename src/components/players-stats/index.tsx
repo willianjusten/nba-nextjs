@@ -1,11 +1,11 @@
-import { Table, TableCell, TableHead } from "@/components/Table";
+import { Table, TableCell, TableHead } from "@/components";
 
 const extractMinutes = (str) => {
   const match = str.match(/PT(\d+)M/);
   return match ? Number(match[1]) : null;
 };
 
-export function PlayersStats({ team }) {
+export default function PlayersStats({ team }) {
   return (
     <div>
       <h1 className="text-2xl font-bold">

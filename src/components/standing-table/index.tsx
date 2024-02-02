@@ -1,12 +1,12 @@
 import cn from "classnames";
 import Image from "next/image";
 
-import { Table, TableCell, TableHead } from "@/components/Table";
+import { Table, TableCell, TableHead } from "@/components";
 
 export const isPlayoff = (i: number) => i <= 5;
 export const isPlayin = (i: number) => i >= 6 && i < 10;
 
-export function StandingTable({ label, conference }) {
+export default function StandingTable({ label, conference }) {
   const standing_colors = {
     playoff: "bg-green-600",
     playin: "bg-sky-600",
@@ -42,7 +42,7 @@ export function StandingTable({ label, conference }) {
                   {index + 1}
                 </div>
               </TableCell>
-              <TableCell className="flex items-center gap-2 min-w-48 md:min-w-0">
+              <TableCell className="flex items-center gap-2 min-w-48">
                 <Image
                   src={`https://cdn.nba.com/logos/nba/${team.id}/primary/L/logo.svg`}
                   width={40}

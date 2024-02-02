@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowIcon } from "@/components/ArrowIcon";
+import { ArrowIcon } from "@/components";
 
 function BackButton() {
   return (

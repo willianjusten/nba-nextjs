@@ -1,6 +1,16 @@
 import Image from "next/image";
 
-export function TeamInfo({ team }) {
+// Isn't really necessary to have this type, we should use GameTeam from game-card
+type TeamInfoProps = {
+  team: {
+    teamId: number;
+    teamName: string;
+    wins?: number;
+    losses?: number;
+  };
+};
+
+export default function TeamInfo({ team }: TeamInfoProps) {
   return (
     <div className="flex w-1/4 flex-col items-center text-center">
       <Image
