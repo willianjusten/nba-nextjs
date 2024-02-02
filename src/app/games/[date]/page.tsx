@@ -8,7 +8,9 @@ import { parseGames } from "@/helpers/mappers";
 async function getData(date: string) {
   const res = await fetch(
     `${API.BASE_URL}/scoreboardv3&GameDate=${date}&LeagueID=00`,
-    { next: { revalidate: 20 } }
+    {
+      cache: "no-store",
+    }
   );
 
   const data = await res.json();
