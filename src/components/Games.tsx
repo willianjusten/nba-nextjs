@@ -11,8 +11,8 @@ const fetcher = (...args: [RequestInfo, RequestInit]) =>
 
 export default function Games() {
   const { day, prevDay, nextDay } = getDays();
-  const { data } = useSWR(`/api/today`, fetcher, {
-    refreshInterval: 20000,
+  const { data } = useSWR("/api/today", fetcher, {
+    refreshInterval: 15000,
   });
 
   return (
