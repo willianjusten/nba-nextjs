@@ -2,7 +2,7 @@ import { Table, TableCell, TableHead } from "@/components";
 
 function GameSummary({ game }) {
   const renderPeriods = (periods, isHeader = false) =>
-    periods.map(({ period, score }) => {
+    periods.map(({ period, score }, index) => {
       const key = isHeader ? period : score;
       const content = isHeader
         ? period > 4
@@ -10,7 +10,7 @@ function GameSummary({ game }) {
           : `Q${period}`
         : score;
 
-      return <TableCell key={key}>{content}</TableCell>;
+      return <TableCell key={index}>{content}</TableCell>;
     });
 
   return (

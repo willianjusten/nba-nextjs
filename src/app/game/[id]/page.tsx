@@ -1,7 +1,13 @@
 "use client";
 
 import useSWR from "swr";
-import { BackButton, GameCard, GameSummary, PlayersStats, TeamStats } from "@/components";
+import {
+  BackButton,
+  GameCard,
+  GameSummary,
+  PlayersStats,
+  TeamStats,
+} from "@/components";
 
 type GameProps = {
   params: {
@@ -33,7 +39,7 @@ export default function GamePage({ params: { id } }: GameProps) {
       <BackButton />
 
       <div className="py-5 md:max-w-sm">
-        <GameCard {...data.game} />
+        <GameCard {...data.game} details={false} />
       </div>
 
       <GameSummary game={data.game} />
