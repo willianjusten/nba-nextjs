@@ -1,6 +1,6 @@
 import { getLeagueYear } from "@/helpers/date";
 import { API } from "@/constants";
-import { StandingTable } from "@/components";
+import { SwitchConference }from "@/components";
 
 const conferenceExtractor = (teams, isEast) =>
   teams
@@ -45,8 +45,7 @@ export default async function Standings() {
 
   return (
     <>
-      <StandingTable label="Eastern Conference" conference={east} />
-      <StandingTable label="Western Conference" conference={west} />
+      <SwitchConference east={east} west={west} />
     </>
   );
 }

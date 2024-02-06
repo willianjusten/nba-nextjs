@@ -8,6 +8,7 @@ export { default as Games } from "./games";
 export { default as Header } from "./header";
 export { default as PlayersStats } from "./players-stats";
 export { default as StandingTable } from "./standing-table";
+export { default as SwitchConference } from "./switch-conference";
 export { default as TeamInfo } from "./team-info";
 export { default as Time } from "./time";
 
