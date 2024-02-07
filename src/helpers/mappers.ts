@@ -16,8 +16,8 @@ export const parseGames = (data: Games) => {
     };
   };
 
-  const customSort = (a, b) => {
-    const priority: { [key: number]: number } = {
+  const orderByStatus = (a, b) => {
+    const priority = {
       2: 0, // Games Happening
       1: 1, // Games that will happen
       3: 2, // Games finished
@@ -26,7 +26,7 @@ export const parseGames = (data: Games) => {
     return priority[a.gameStatus] - priority[b.gameStatus];
   };
 
-  games.sort(customSort);
+  games.sort(orderByStatus);
 
   return games.map((game) => {
     const {
