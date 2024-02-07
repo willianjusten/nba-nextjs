@@ -1,37 +1,30 @@
-"use client"
+"use client";
 
-import cn from "classnames";
-
-import { useState } from "react"
+import { useState } from "react";
+import { OutlineButton } from "@/components";
 import { StandingTable } from "@/components";
 
-export default function SwitchConference({east, west}) {
-  const [conference, setConference] = useState('east');
-  const toggleConference = () => {
-    setConference(prevConference => {
-      const currentConference = prevConference === "east" ? "west" : "east";
-      return currentConference;
-    });
-  }
+export default function SwitchConference({ east, west }) {
+  const [conference, setConference] = useState("east");
+  const isEast = conference === "east";
+  const isWest = conference === "west";
 
   return (
     <>
-      <div className="inline-flex">
-        <button
-          onClick={toggleConference}
-          className={cn("bg-transparent font-semibold text-white-500 py-2 px-4 mr-4 border border-white-300         transition-all duration-200 hover:cursor-pointer rounded hover:opacity-60",
-          conference === "east" && "text-blue-500 border-blue-500")}>
-          East
-        </button>
-        <button
-          onClick={toggleConference}
-          className={cn("bg-transparent font-semibold text-white-500 py-2 px-4 mr-4 border border-white-300 transition-all duration-200 hover:cursor-pointer rounded hover:opacity-60",
-          conference === "west" && "border-blue-500 text-blue-600")}>
-          West
-        </button>
+      <div className="flex gap-4">
+        <OutlineButton
+          label={"East"}
+          active={isEast}
+          onClick={() => setConference("east")}
+        />
+        <OutlineButton
+          label={"West"}
+          active={isWest}
+          onClick={() => setConference("west")}
+        />
       </div>
-      {conference === 'east' && <StandingTable label="Eastern Conference" conference={east} />}
-      {conference === 'west' && <StandingTable label="Western Conference" conference={west} />}
+      {isEast && <StandingTable label="Eastern Conference" conference={east} />}
+      {isWest && <StandingTable label="Western Conference" conference={west} />}
     </>
-  )
+  );
 }

@@ -1,5 +1,6 @@
 export { default as ArrowIcon } from "./arrow-icon";
 export { default as BackButton } from "./back-button";
+export { default as OutlineButton } from "./outline-button";
 export { default as DateSelector } from "./date-selector";
 export { default as Footer } from "./footer";
 export { default as GameCard } from "./game-card";
