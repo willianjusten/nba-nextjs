@@ -42,13 +42,11 @@ export default function Games() {
       <DateSelector day={day} prevDay={prevDay} nextDay={nextDay} />
 
       <main className="grid-cols-auto-fill grid gap-5">
-        {data
-          ?.sort((a, b) => a.gameStatus - b.gameStatus)
-          .map((game) => (
-            <Link key={game.gameId} href={`/game/${game.gameId}`}>
-              <GameCard {...game} />
-            </Link>
-          ))}
+        {data?.map((game) => (
+          <Link key={game.gameId} href={`/game/${game.gameId}`}>
+            <GameCard {...game} />
+          </Link>
+        ))}
       </main>
     </>
   );
