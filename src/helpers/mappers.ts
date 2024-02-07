@@ -16,14 +16,20 @@ export const parseGames = (data: Games) => {
     };
   };
 
+  const STATUS = {
+    SOON: 1,
+    NOW: 2,
+    FINISHED: 3,
+  };
+
   const orderByStatus = (a, b) => {
-    const priority = {
-      2: 0, // Games Happening
-      1: 1, // Games that will happen
-      3: 2, // Games finished
+    const PRIORITY = {
+      [STATUS.NOW]: 0,
+      [STATUS.SOON]: 1,
+      [STATUS.FINISHED]: 2,
     };
 
-    return priority[a.gameStatus] - priority[b.gameStatus];
+    return PRIORITY[a.gameStatus] - PRIORITY[b.gameStatus];
   };
 
   games.sort(orderByStatus);
