@@ -1,4 +1,5 @@
 import { Games, Team } from "@/app/api/types";
+import { GAME_STATUS } from "@/constants";
 
 export const parseGames = (data: Games) => {
   const {
@@ -16,17 +17,11 @@ export const parseGames = (data: Games) => {
     };
   };
 
-  const STATUS = {
-    SOON: 1,
-    NOW: 2,
-    FINISHED: 3,
-  };
-
   const orderByStatus = (a, b) => {
     const PRIORITY = {
-      [STATUS.NOW]: 0,
-      [STATUS.SOON]: 1,
-      [STATUS.FINISHED]: 2,
+      [GAME_STATUS.IN_PROGRESS]: 0,
+      [GAME_STATUS.NOT_STARTED]: 1,
+      [GAME_STATUS.ENDED]: 2,
     };
 
     return PRIORITY[a.gameStatus] - PRIORITY[b.gameStatus];
