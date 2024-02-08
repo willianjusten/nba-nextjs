@@ -20,7 +20,7 @@ function GameSummary({ game }: { game: Game }) {
       <div className="overflow-x-auto">
         <Table>
           <TableHead>
-            <tr className="border-main border">
+            <tr className="border border-main">
               <TableCell>Team</TableCell>
               {renderPeriods(game.homeTeam.periods, true)}
             </tr>
