@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { GameCard } from "@/components";
-import { Game } from "@/app/api/types";
-import { parseGames } from "@/helpers/mappers";
+import { ParsedGames } from "@/helpers/mappers";
 
 type GamesListProps = {
-  games?: Game[] | ReturnType<typeof parseGames>;
+  games?: ParsedGames;
 };
 
 function GamesList({ games }: GamesListProps) {

@@ -1,6 +1,8 @@
 import { Games, Team } from "@/app/api/types";
 import { orderByStatus } from "@/helpers/ordering";
 
+export type ParsedGames = ReturnType<typeof parseGames>;
+
 export const parseGames = (data: Games) => {
   const {
     scoreboard: { games },
