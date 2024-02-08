@@ -39,6 +39,65 @@ export interface Game {
   awayTeam: Team;
 }
 
+export enum Status {
+  Active = "ACTIVE",
+  Inactive = "INACTIVE",
+}
+
+export interface Player {
+  status: Status;
+  order: number;
+  personId: number;
+  jerseyNum: string;
+  position?: string;
+  starter: string;
+  oncourt: string;
+  played: string;
+  statistics: PlayerStatistics;
+  name: string;
+  nameI: string;
+  firstName: string;
+  familyName: string;
+  notPlayingReason?: string;
+  notPlayingDescription?: string;
+}
+
+export interface PlayerStatistics {
+  assists: number;
+  blocks: number;
+  blocksReceived: number;
+  fieldGoalsAttempted: number;
+  fieldGoalsMade: number;
+  fieldGoalsPercentage: number;
+  foulsOffensive: number;
+  foulsDrawn: number;
+  foulsPersonal: number;
+  foulsTechnical: number;
+  freeThrowsAttempted: number;
+  freeThrowsMade: number;
+  freeThrowsPercentage: number;
+  minus: number;
+  minutes: string;
+  minutesCalculated: string;
+  plus: number;
+  plusMinusPoints: number;
+  points: number;
+  pointsFastBreak: number;
+  pointsInThePaint: number;
+  pointsSecondChance: number;
+  reboundsDefensive: number;
+  reboundsOffensive: number;
+  reboundsTotal: number;
+  steals: number;
+  threePointersAttempted: number;
+  threePointersMade: number;
+  threePointersPercentage: number;
+  turnovers: number;
+  twoPointersAttempted: number;
+  twoPointersMade: number;
+  twoPointersPercentage: number;
+}
+
 export type Team = {
   teamId: number;
   teamName: string;
@@ -52,6 +111,7 @@ export type Team = {
   inBonus: null;
   timeoutsRemaining: number;
   periods: Period[];
+  players: Player[];
 };
 
 export interface Period {

@@ -1,23 +1,7 @@
 import { getLeagueYear } from "@/helpers/date";
 import { API } from "@/constants";
-import { SwitchConference }from "@/components";
-
-const conferenceExtractor = (teams, isEast) =>
-  teams
-    .filter((team) => (isEast ? team[6] === "East" : team[6] === "West"))
-    .map((team) => ({
-      name: team[4],
-      id: team[2],
-      playoffCode: team[9],
-      win: team[13],
-      loss: team[14],
-      percentage: team[15],
-      gamesBehind: team[38],
-      homeRecord: team[18],
-      awayRecord: team[19],
-      lastTenRecord: team[20],
-      streak: team[36],
-    }));
+import { SwitchConference } from "@/components";
+import { conferenceExtractor } from "@/helpers/mappers";
 
 async function getData() {
   const year = getLeagueYear(new Date());
@@ -34,6 +18,7 @@ async function getData() {
   );
 
   const data = await res.json();
+
   return {
     east: conferenceExtractor(data.resultSets[0].rowSet, true),
     west: conferenceExtractor(data.resultSets[0].rowSet, false),
@@ -43,9 +28,5 @@ async function getData() {
 export default async function Standings() {
   const { east, west } = await getData();
 
-  return (
-    <>
-      <SwitchConference east={east} west={west} />
-    </>
-  );
+  return <SwitchConference east={east} west={west} />;
 }

@@ -1,3 +1,4 @@
+import { Team } from "@/app/api/types";
 import { Table, TableCell, TableHead } from "@/components";
 
 const extractMinutes = (str: string) => {
@@ -5,7 +6,11 @@ const extractMinutes = (str: string) => {
   return match ? Number(match[1]) : null;
 };
 
-export default function PlayersStats({ team }) {
+type PlayersStatsProps = {
+  team: Team;
+};
+
+export default function PlayersStats({ team }: PlayersStatsProps) {
   return (
     <div>
       <h1 className="text-2xl font-bold">

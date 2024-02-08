@@ -1,6 +1,16 @@
 import cn from "classnames";
 
-export default function OutlineButton({ label, active, onClick }) {
+type OutlineButtonProps = {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+};
+
+export default function OutlineButton({
+  label,
+  active,
+  onClick,
+}: OutlineButtonProps) {
   return (
     <button
       onClick={onClick}

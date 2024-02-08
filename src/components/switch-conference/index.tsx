@@ -3,8 +3,17 @@
 import { useState } from "react";
 import { OutlineButton } from "@/components";
 import { StandingTable } from "@/components";
+import { Conference } from "@/helpers/mappers";
 
-export default function SwitchConference({ east, west }) {
+type SwitchConferenceProps = {
+  east: Conference;
+  west: Conference;
+};
+
+export default function SwitchConference({
+  east,
+  west,
+}: SwitchConferenceProps) {
   const [conference, setConference] = useState("east");
   const isEast = conference === "east";
   const isWest = conference === "west";

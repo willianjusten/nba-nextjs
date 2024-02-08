@@ -1,8 +1,9 @@
+import { Game, Period } from "@/app/api/types";
 import { Table, TableCell, TableHead } from "@/components";
 
-function GameSummary({ game }) {
-  const renderPeriods = (periods, isHeader = false) =>
-    periods.map(({ period, score }, index) => {
+function GameSummary({ game }: { game: Game }) {
+  const renderPeriods = (periods: Period[], isHeader = false) =>
+    periods.map(({ period, score }, index: number) => {
       const key = isHeader ? period : score;
       const content = isHeader
         ? period > 4

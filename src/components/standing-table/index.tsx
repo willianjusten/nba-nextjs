@@ -2,11 +2,20 @@ import cn from "classnames";
 import Image from "next/image";
 
 import { Table, TableCell, TableHead } from "@/components";
+import { Conference } from "@/helpers/mappers";
 
 export const isPlayoff = (i: number) => i <= 5;
 export const isPlayin = (i: number) => i >= 6 && i < 10;
 
-export default function StandingTable({ label, conference }) {
+type StandingTableProps = {
+  label: string;
+  conference: Conference;
+};
+
+export default function StandingTable({
+  label,
+  conference,
+}: StandingTableProps) {
   const standing_colors = {
     playoff: "bg-green-600",
     playin: "bg-sky-600",
@@ -38,7 +47,8 @@ export default function StandingTable({ label, conference }) {
                   className={cn("rounded-full", {
                     [standing_colors.playoff]: isPlayoff(index),
                     [standing_colors.playin]: isPlayin(index),
-                  })}>
+                  })}
+                >
                   {index + 1}
                 </div>
               </TableCell>
@@ -68,12 +78,14 @@ export default function StandingTable({ label, conference }) {
       <div className="flex justify-center">
         <div className="mr-6 flex items-center">
           <div
-            className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playoff}`}></div>
+            className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playoff}`}
+          ></div>
           <span className="text-sm text-gray-400">Playoffs</span>
         </div>
         <div className="flex items-center">
           <div
-            className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playin}`}></div>
+            className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playin}`}
+          ></div>
           <span className="text-sm text-gray-400">Play-In Tournament</span>
         </div>
       </div>
