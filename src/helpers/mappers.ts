@@ -1,5 +1,5 @@
 import { Games, Team } from "@/app/api/types";
-import { PRIORITY } from "@/constants";
+import { orderByStatus } from "@/helpers/ordering";
 
 export const parseGames = (data: Games) => {
   const {
@@ -15,10 +15,6 @@ export const parseGames = (data: Games) => {
       losses: team.losses,
       score: team.score,
     };
-  };
-
-  const orderByStatus = (a, b) => {
-    return PRIORITY[a.gameStatus] - PRIORITY[b.gameStatus];
   };
 
   games.sort(orderByStatus);
