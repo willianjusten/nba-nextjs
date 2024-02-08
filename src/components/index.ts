@@ -4,6 +4,7 @@ export { default as OutlineButton } from "./outline-button";
 export { default as DateSelector } from "./date-selector";
 export { default as Footer } from "./footer";
 export { default as GameCard } from "./game-card";
+export { default as GamesList } from "./games-list";
 export { default as GameSummary } from "./game-summary";
 export { default as Games } from "./games";
 export { default as Header } from "./header";

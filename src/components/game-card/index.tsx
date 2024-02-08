@@ -19,8 +19,8 @@ type GameCardProps = {
   homeTeam: GameTeam;
   gameStatus: number;
   gameStatusText: string;
-  gameTimeUTC: string;
-  period: string;
+  gameTimeUTC: Date;
+  period: number;
   details?: boolean;
   interactive?: boolean;
 };
@@ -45,7 +45,7 @@ function GameCard({
         "border-main bg-glass firefox:bg-slate-750 flex h-full rounded-lg border text-white backdrop-blur-lg duration-300",
         {
           "hover:cursor-pointer hover:bg-slate-700": interactive,
-        },
+        }
       )}
     >
       <div className="flex w-full flex-col justify-between">

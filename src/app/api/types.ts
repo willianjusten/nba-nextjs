@@ -52,7 +52,7 @@ export type Team = {
   inBonus: null;
   timeoutsRemaining: number;
   periods: Period[];
-}
+};
 
 export interface Period {
   period: number;
