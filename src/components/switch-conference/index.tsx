@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { OutlineButton } from "@/components";
-import { StandingTable } from "@/components";
+import { OutlineButton, StandingTable } from "@/components";
 import { Conference } from "@/helpers/mappers";
+
+import { EAST_CONFERENCE, WEST_CONFERENCE } from "@/constants";
 
 type SwitchConferenceProps = {
   east: Conference;
@@ -14,9 +15,9 @@ export default function SwitchConference({
   east,
   west,
 }: SwitchConferenceProps) {
-  const [conference, setConference] = useState("east");
-  const isEast = conference === "east";
-  const isWest = conference === "west";
+  const [conference, setConference] = useState(EAST_CONFERENCE);
+  const isEast = conference === EAST_CONFERENCE;
+  const isWest = conference === WEST_CONFERENCE;
 
   return (
     <>
@@ -24,12 +25,12 @@ export default function SwitchConference({
         <OutlineButton
           label={"East"}
           active={isEast}
-          onClick={() => setConference("east")}
+          onClick={() => setConference(EAST_CONFERENCE)}
         />
         <OutlineButton
           label={"West"}
           active={isWest}
-          onClick={() => setConference("west")}
+          onClick={() => setConference(WEST_CONFERENCE)}
         />
       </div>
       {isEast && <StandingTable label="Eastern Conference" conference={east} />}

@@ -14,6 +14,9 @@ export const DATE_LINK_FORMAT = "yyyy-MM-dd";
 export const AWAY_TEAM = "awayTeam";
 export const HOME_TEAM = "homeTeam";
 
+export const EAST_CONFERENCE = "east";
+export const WEST_CONFERENCE = "west";
+
 export const GAME_STATUS = {
   NOT_STARTED: 1,
   IN_PROGRESS: 2,
