@@ -31,15 +31,12 @@ export default async function Games({ params: { date } }: GamesProps) {
   return (
     <>
       <DateSelector day={day} prevDay={prevDay} nextDay={nextDay} />
-
       <main className="grid-cols-auto-fill grid gap-5">
-        {data
-          ?.sort((a, b) => a.gameStatus - b.gameStatus)
-          .map((game) => (
-            <Link key={game.gameId} href={`/game/${game.gameId}`}>
-              <GameCard key={game.gameId} {...game} />
-            </Link>
-          ))}
+        {data.map((game) => (
+          <Link key={game.gameId} href={`/game/${game.gameId}`}>
+            <GameCard key={game.gameId} {...game} />
+          </Link>
+        ))}
       </main>
     </>
   );

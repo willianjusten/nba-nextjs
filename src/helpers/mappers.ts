@@ -1,4 +1,5 @@
 import { Games, Team } from "@/app/api/types";
+import { orderByStatus } from "@/helpers/ordering";
 
 export const parseGames = (data: Games) => {
   const {
@@ -16,7 +17,7 @@ export const parseGames = (data: Games) => {
     };
   };
 
-  return games.map((game) => {
+  return games.sort(orderByStatus).map((game) => {
     const {
       gameId,
       gameStatus,
