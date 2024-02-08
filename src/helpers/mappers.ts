@@ -17,9 +17,7 @@ export const parseGames = (data: Games) => {
     };
   };
 
-  games.sort(orderByStatus);
-
-  return games.map((game) => {
+  return games.sort(orderByStatus).map((game) => {
     const {
       gameId,
       gameStatus,
