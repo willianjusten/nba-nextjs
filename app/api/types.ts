@@ -1,22 +1,22 @@
-export interface Games {
+export type Games = {
   meta: Meta;
   scoreboard: Scoreboard;
-}
+};
 
-export interface Meta {
+export type Meta = {
   version: number;
   request: string;
   time: Date;
-}
+};
 
-export interface Scoreboard {
+export type Scoreboard = {
   gameDate: Date;
   leagueId: string;
   leagueName: string;
   games: Game[];
-}
+};
 
-export interface Game {
+export type Game = {
   gameId: string;
   gameCode: string;
   gameStatus: number;
@@ -37,14 +37,14 @@ export interface Game {
   broadcasters: Broadcasters;
   homeTeam: Team;
   awayTeam: Team;
-}
+};
 
 export enum Status {
   Active = "ACTIVE",
   Inactive = "INACTIVE",
 }
 
-export interface Player {
+export type Player = {
   status: Status;
   order: number;
   personId: number;
@@ -60,9 +60,9 @@ export interface Player {
   familyName: string;
   notPlayingReason?: string;
   notPlayingDescription?: string;
-}
+};
 
-export interface PlayerStatistics {
+export type PlayerStatistics = {
   assists: number;
   blocks: number;
   blocksReceived: number;
@@ -96,7 +96,7 @@ export interface PlayerStatistics {
   twoPointersAttempted: number;
   twoPointersMade: number;
   twoPointersPercentage: number;
-}
+};
 
 export type TeamStatistics = {
   assists: number;
@@ -179,13 +179,13 @@ export type Team = {
   statistics: TeamStatistics;
 };
 
-export interface Period {
+export type Period = {
   period: number;
   periodType: string;
   score: number;
-}
+};
 
-export interface Broadcasters {
+export type Broadcasters = {
   nationalBroadcasters: Broadcaster[];
   nationalRadioBroadcasters: Broadcaster[];
   nationalOttBroadcasters: any[];
@@ -195,20 +195,20 @@ export interface Broadcasters {
   awayTvBroadcasters: Broadcaster[];
   awayRadioBroadcasters: Broadcaster[];
   awayOttBroadcasters: Broadcaster[];
-}
+};
 
-export interface Broadcaster {
+export type Broadcaster = {
   broadcasterId: number;
   broadcastDisplay: string;
   broadcasterTeamId: number;
-}
+};
 
-export interface GameLeaders {
+export type GameLeaders = {
   homeLeaders: Leaders;
   awayLeaders: Leaders;
-}
+};
 
-export interface Leaders {
+export type Leaders = {
   personId: number;
   name: string;
   playerSlug: string;
@@ -218,10 +218,10 @@ export interface Leaders {
   points: number;
   rebounds: number;
   assists: number;
-}
+};
 
-export interface TeamLeaders {
+export type TeamLeaders = {
   homeLeaders: Leaders;
   awayLeaders: Leaders;
   seasonLeadersFlag: number;
-}
+};

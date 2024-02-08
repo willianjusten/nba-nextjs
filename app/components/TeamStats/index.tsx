@@ -7,11 +7,11 @@ export type StatisticProps = {
   label: string;
 };
 
-export function Statistic({
-  homeStatistic,
-  visitorStatistic,
-  label,
-}: StatisticProps) {
+type TeamStatsProps = {
+  game: Game;
+};
+
+function Statistic({ homeStatistic, visitorStatistic, label }: StatisticProps) {
   return (
     <tr>
       <TableCell>{homeStatistic}</TableCell>
@@ -21,11 +21,7 @@ export function Statistic({
   );
 }
 
-type TeamStatsProps = {
-  game: Game;
-};
-
-export function TeamStats({ game }: TeamStatsProps) {
+function TeamStats({ game }: TeamStatsProps) {
   return (
     <div>
       <h1 className="text-2xl font-bold">Team Stats</h1>
@@ -119,3 +115,5 @@ export function TeamStats({ game }: TeamStatsProps) {
     </div>
   );
 }
+
+export { Statistic, TeamStats };

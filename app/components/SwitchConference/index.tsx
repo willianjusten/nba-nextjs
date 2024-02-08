@@ -11,10 +11,7 @@ type SwitchConferenceProps = {
   west: Conference;
 };
 
-export default function SwitchConference({
-  east,
-  west,
-}: SwitchConferenceProps) {
+function SwitchConference({ east, west }: SwitchConferenceProps) {
   const [conference, setConference] = useState(EAST_CONFERENCE);
   const isEast = conference === EAST_CONFERENCE;
   const isWest = conference === WEST_CONFERENCE;
@@ -38,3 +35,5 @@ export default function SwitchConference({
     </>
   );
 }
+
+export default SwitchConference;

@@ -12,10 +12,7 @@ type StandingTableProps = {
   conference: Conference;
 };
 
-export default function StandingTable({
-  label,
-  conference,
-}: StandingTableProps) {
+function StandingTable({ label, conference }: StandingTableProps) {
   const standing_colors = {
     playoff: "bg-green-600",
     playin: "bg-sky-600",
@@ -92,3 +89,5 @@ export default function StandingTable({
     </div>
   );
 }
+
+export default StandingTable;

@@ -10,7 +10,7 @@ type TeamInfoProps = {
   };
 };
 
-export default function TeamInfo({ team }: TeamInfoProps) {
+function TeamInfo({ team }: TeamInfoProps) {
   return (
     <div className="flex w-1/4 flex-col items-center text-center">
       <Image
@@ -28,3 +28,5 @@ export default function TeamInfo({ team }: TeamInfoProps) {
     </div>
   );
 }
+
+export default TeamInfo;

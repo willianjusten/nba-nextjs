@@ -6,20 +6,18 @@ type OutlineButtonProps = {
   onClick: () => void;
 };
 
-export default function OutlineButton({
-  label,
-  active,
-  onClick,
-}: OutlineButtonProps) {
+function OutlineButton({ label, active, onClick }: OutlineButtonProps) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "bg-transparent font-semibold py-2 px-4 border-2 transition-all duration-200 hover:cursor-pointer rounded hover:opacity-70",
-        active && "text-blue-400 border-blue-400"
+        "rounded border-2 bg-transparent px-4 py-2 font-semibold transition-all duration-200 hover:cursor-pointer hover:opacity-70",
+        active && "border-blue-400 text-blue-400",
       )}
     >
       {label}
     </button>
   );
 }
+
+export default OutlineButton;
