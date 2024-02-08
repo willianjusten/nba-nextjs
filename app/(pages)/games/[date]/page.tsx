@@ -20,7 +20,7 @@ type GamesProps = {
   };
 };
 
-export default async function Games({ params: { date } }: GamesProps) {
+async function Games({ params: { date } }: GamesProps) {
   const data = await getData(date);
   const { day, prevDay, nextDay } = getDays(date);
 
@@ -31,3 +31,5 @@ export default async function Games({ params: { date } }: GamesProps) {
     </>
   );
 }
+
+export default Games;

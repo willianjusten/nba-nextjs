@@ -18,7 +18,7 @@ type GameProps = {
 const fetcher = (...args: [RequestInfo, RequestInit]) =>
   fetch(...args).then((res) => res.json());
 
-export default function GamePage({ params: { id } }: GameProps) {
+function GamePage({ params: { id } }: GameProps) {
   const { data } = useSWR(`/api/game/${id}`, fetcher, {
     refreshInterval: 20000,
   });
@@ -53,3 +53,5 @@ export default function GamePage({ params: { id } }: GameProps) {
     </>
   );
 }
+
+export default GamePage;
