@@ -8,7 +8,7 @@ const commonClass = "text-lg transition-opacity hover:opacity-70 border-b-2";
 const linkClass = `${commonClass} border-transparent hover:border-blue-300`;
 const activeLinkClass = `${commonClass} border-blue-500`;
 
-export default function Header() {
+function Header() {
   const pathname = usePathname();
 
   return (
@@ -30,15 +30,19 @@ export default function Header() {
               ? activeLinkClass
               : linkClass
           }
-          href="/">
+          href="/"
+        >
           Home
         </Link>
         <Link
           className={pathname === "/standings" ? activeLinkClass : linkClass}
-          href="/standings">
+          href="/standings"
+        >
           Standings
         </Link>
       </nav>
     </header>
   );
 }
+
+export default Header;

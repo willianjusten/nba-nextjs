@@ -10,7 +10,7 @@ type PlayersStatsProps = {
   team: Team;
 };
 
-export default function PlayersStats({ team }: PlayersStatsProps) {
+function PlayersStats({ team }: PlayersStatsProps) {
   return (
     <div>
       <h1 className="text-2xl font-bold">
@@ -49,3 +49,5 @@ export default function PlayersStats({ team }: PlayersStatsProps) {
     </div>
   );
 }
+
+export default PlayersStats;

@@ -24,8 +24,10 @@ async function getData() {
   };
 }
 
-export default async function Standings() {
+async function Standings() {
   const { east, west } = await getData();
 
   return <SwitchConference east={east} west={west} />;
 }
+
+export default Standings;
