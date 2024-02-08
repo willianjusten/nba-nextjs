@@ -7,12 +7,10 @@ import {
   parseISO,
   subDays,
 } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
 import {
   COVID_MONTH_END,
   COVID_YEAR,
   DATE_LINK_FORMAT,
-  EST_IANA_ZONE_ID,
   REGULAR_MONTH_END,
 } from "@/constants";
 
@@ -37,8 +35,7 @@ export const getLeagueYear = (date: Date) => {
  */
 export function getDays(date?: string) {
   const now = new Date().toISOString();
-  const etNow = utcToZonedTime(now, EST_IANA_ZONE_ID);
-  const day = date ? parseISO(date) : etNow;
+  const day = parseISO(date ?? now);
 
   return {
     day: format(day, DATE_LINK_FORMAT),
