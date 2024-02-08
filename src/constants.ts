@@ -20,3 +20,9 @@ export const GAME_STATUS = {
   IN_PROGRESS: 2,
   ENDED: 3,
 };
+
+export const PRIORITY = {
+  [GAME_STATUS.IN_PROGRESS]: 0,
+  [GAME_STATUS.NOT_STARTED]: 1,
+  [GAME_STATUS.ENDED]: 2,
+};
