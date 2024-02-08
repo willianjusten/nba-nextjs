@@ -98,6 +98,70 @@ export interface PlayerStatistics {
   twoPointersPercentage: number;
 }
 
+export type TeamStatistics = {
+  assists: number;
+  assistsTurnoverRatio: number;
+  benchPoints: number;
+  biggestLead: number;
+  biggestLeadScore: string;
+  biggestScoringRun: number;
+  biggestScoringRunScore: string;
+  blocks: number;
+  blocksReceived: number;
+  fastBreakPointsAttempted: number;
+  fastBreakPointsMade: number;
+  fastBreakPointsPercentage: number;
+  fieldGoalsAttempted: number;
+  fieldGoalsEffectiveAdjusted: number;
+  fieldGoalsMade: number;
+  fieldGoalsPercentage: number;
+  foulsOffensive: number;
+  foulsDrawn: number;
+  foulsPersonal: number;
+  foulsTeam: number;
+  foulsTechnical: number;
+  foulsTeamTechnical: number;
+  freeThrowsAttempted: number;
+  freeThrowsMade: number;
+  freeThrowsPercentage: number;
+  leadChanges: number;
+  minutes: string;
+  minutesCalculated: string;
+  points: number;
+  pointsAgainst: number;
+  pointsFastBreak: number;
+  pointsFromTurnovers: number;
+  pointsInThePaint: number;
+  pointsInThePaintAttempted: number;
+  pointsInThePaintMade: number;
+  pointsInThePaintPercentage: number;
+  pointsSecondChance: number;
+  reboundsDefensive: number;
+  reboundsOffensive: number;
+  reboundsPersonal: number;
+  reboundsTeam: number;
+  reboundsTeamDefensive: number;
+  reboundsTeamOffensive: number;
+  reboundsTotal: number;
+  secondChancePointsAttempted: number;
+  secondChancePointsMade: number;
+  secondChancePointsPercentage: number;
+  steals: number;
+  threePointersAttempted: number;
+  threePointersMade: number;
+  threePointersPercentage: number;
+  timeLeading: string;
+  timesTied: number;
+  trueShootingAttempts: number;
+  trueShootingPercentage: number;
+  turnovers: number;
+  turnoversTeam: number;
+  turnoversTotal: number;
+  twoPointersAttempted: number;
+  twoPointersMade: number;
+  twoPointersPercentage: number;
+};
+
 export type Team = {
   teamId: number;
   teamName: string;
@@ -112,6 +176,7 @@ export type Team = {
   timeoutsRemaining: number;
   periods: Period[];
   players: Player[];
+  statistics: TeamStatistics;
 };
 
 export interface Period {

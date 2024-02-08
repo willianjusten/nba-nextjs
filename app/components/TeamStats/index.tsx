@@ -1,8 +1,9 @@
+import { Game } from "@/app/api/types";
 import { Table, TableCell } from "@/app/components";
 
 export type StatisticProps = {
-  homeStatistic: string;
-  visitorStatistic: string;
+  homeStatistic: string | number;
+  visitorStatistic: string | number;
   label: string;
 };
 
@@ -20,7 +21,11 @@ export function Statistic({
   );
 }
 
-export function TeamStats({ game }: any) {
+type TeamStatsProps = {
+  game: Game;
+};
+
+export function TeamStats({ game }: TeamStatsProps) {
   return (
     <div>
       <h1 className="text-2xl font-bold">Team Stats</h1>
