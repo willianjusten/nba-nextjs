@@ -8,7 +8,7 @@ type GamesListProps = {
 
 function GamesList({ games }: GamesListProps) {
   return (
-    <main className="grid-cols-auto-fill grid gap-5">
+    <main className="grid grid-cols-auto-fill gap-5">
       {games?.map((game) => (
         <Link key={game.gameId} href={`/game/${game.gameId}`}>
           <GameCard {...game} />

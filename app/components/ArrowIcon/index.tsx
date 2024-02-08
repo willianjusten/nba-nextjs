@@ -11,7 +11,8 @@ function ArrowIcon({ size = 12, ...rest }: ArrowIconProps) {
       viewBox="0 0 12 12"
       width={size}
       height={size}
-      {...rest}>
+      {...rest}
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -28,4 +29,4 @@ function ArrowIcon({ size = 12, ...rest }: ArrowIconProps) {
   );
 }
 
-export default ArrowIcon
+export default ArrowIcon;

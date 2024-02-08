@@ -7,7 +7,7 @@ function Table({
   return (
     <table
       className={cn(
-        "border-main bg-glass my-5 min-w-full border text-center text-white",
+        "my-5 min-w-full border border-main bg-glass text-center text-white",
         { "md:min-w-min": !fullWidth },
       )}
     >
@@ -22,7 +22,7 @@ function TableCell({
 }: React.PropsWithChildren<{ className?: string }>) {
   return (
     <td
-      className={`border-main border px-3 py-2 ${className ? className : ""}`}
+      className={`border border-main px-3 py-2 ${className ? className : ""}`}
     >
       {children}
     </td>

@@ -42,7 +42,7 @@ function GameCard({
     <article
       data-game-id={gameId}
       className={cn(
-        "border-main bg-glass firefox:bg-slate-750 flex h-full rounded-lg border text-white backdrop-blur-lg duration-300",
+        "firefox:bg-slate-750 flex h-full rounded-lg border border-main bg-glass text-white backdrop-blur-lg duration-300",
         {
           "hover:cursor-pointer hover:bg-slate-700": interactive,
         },
@@ -92,7 +92,7 @@ function GameCard({
         </div>
 
         {details && (
-          <footer className="border-main border-t py-2 text-center text-sm">
+          <footer className="border-t border-main py-2 text-center text-sm">
             View details
           </footer>
         )}
