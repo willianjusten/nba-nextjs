@@ -14,6 +14,14 @@ import {
   REGULAR_MONTH_END,
 } from "@/app/constants";
 
+/**
+ * Get the current year of the season
+ * @param date - any date
+ * @returns number - year of the season
+ *
+ * Eg.: '2024-02-08' => 2023
+ * Eg.: '2024-10-02' => 2024
+ */
 export const getLeagueYear = (date: Date) => {
   if (getYear(date) === COVID_YEAR) {
     // 2020 season is delayed and season should finish in 2020-10
