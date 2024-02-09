@@ -36,7 +36,7 @@ function GameCard({
   details = true,
   interactive = true,
 }: GameCardProps) {
-  const winner = getWinner(awayTeam, homeTeam);
+  const winner = getWinner({ awayTeam, homeTeam });
 
   return (
     <article
