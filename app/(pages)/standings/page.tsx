@@ -2,6 +2,7 @@ import { API } from "@/app/constants";
 import { SwitchConference } from "@/app/components";
 import { getLeagueYear, conferenceExtractor } from "@/app/helpers";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 async function getData() {
   const year = getLeagueYear(new Date());
@@ -33,7 +34,11 @@ export const metadata: Metadata = {
 async function Standings() {
   const { east, west } = await getData();
 
-  return <SwitchConference east={east} west={west} />;
+  return (
+    <Suspense>
+      <SwitchConference east={east} west={west} />
+    </Suspense>
+  );
 }
 
 export default Standings;

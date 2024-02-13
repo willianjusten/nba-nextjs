@@ -5,6 +5,7 @@ import { OutlineButton, StandingTable } from "@/app/components";
 import { Conference } from "@/app/helpers";
 
 import { EAST_CONFERENCE, WEST_CONFERENCE } from "@/app/constants";
+import { useSearchParams } from "next/navigation";
 
 type SwitchConferenceProps = {
   east: Conference;
@@ -12,9 +13,21 @@ type SwitchConferenceProps = {
 };
 
 function SwitchConference({ east, west }: SwitchConferenceProps) {
-  const [conference, setConference] = useState(EAST_CONFERENCE);
+  const searchParams = useSearchParams();
+
+  const initialConference = searchParams.get("conference");
+  const [conference, setConference] = useState(
+    initialConference || EAST_CONFERENCE,
+  );
   const isEast = conference === EAST_CONFERENCE;
   const isWest = conference === WEST_CONFERENCE;
+
+  const updateConference = (conference: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("conference", conference);
+    window.history.pushState(null, "", `?${params.toString()}`);
+    setConference(conference);
+  };
 
   return (
     <>
@@ -22,12 +35,12 @@ function SwitchConference({ east, west }: SwitchConferenceProps) {
         <OutlineButton
           label={"East"}
           active={isEast}
-          onClick={() => setConference(EAST_CONFERENCE)}
+          onClick={() => updateConference(EAST_CONFERENCE)}
         />
         <OutlineButton
           label={"West"}
           active={isWest}
-          onClick={() => setConference(WEST_CONFERENCE)}
+          onClick={() => updateConference(WEST_CONFERENCE)}
         />
       </div>
       {isEast && <StandingTable label="Eastern Conference" conference={east} />}
