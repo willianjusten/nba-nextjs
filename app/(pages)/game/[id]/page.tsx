@@ -1,57 +1,31 @@
-"use client";
+import SWRProvider from "@/app/components/SWRProvider";
+import { GameDetails } from "@/app/components";
 
-import useSWR from "swr";
-import {
-  BackButton,
-  GameCard,
-  GameSummary,
-  PlayersStats,
-  TeamStats,
-} from "@/app/components";
+async function getData(id: string) {
+  const res = await fetch(`${process.env.API_DOMAIN}/api/game/${id}`, {
+    cache: "no-store",
+  });
 
-type GameProps = {
+  const data = await res.json();
+  return data;
+}
+
+type GameDetailsProps = {
   params: {
     id: string;
   };
 };
 
-const fetcher = (...args: [RequestInfo, RequestInit]) =>
-  fetch(...args).then((res) => res.json());
+export default async function Page({ params: { id } }: GameDetailsProps) {
+  const data = await getData(id);
 
-function GamePage({ params: { id } }: GameProps) {
-  const { data } = useSWR(`/api/game/${id}`, fetcher, {
-    refreshInterval: 20000,
-  });
-
-  if (!data) return <h1>Loading...</h1>;
-
-  if (data?.notStarted) {
-    return (
-      <>
-        <BackButton />
-        <h1>Game has not started</h1>
-      </>
-    );
-  }
+  const fallback = {
+    [`/api/game/${id}`]: data,
+  };
 
   return (
-    <>
-      <BackButton />
-
-      <div className="py-5 md:max-w-sm">
-        <GameCard {...data.game} details={false} />
-      </div>
-
-      <GameSummary game={data.game} />
-
-      <div className="flex gap-4 overflow-x-auto md:gap-12 ">
-        <PlayersStats team={data.game.homeTeam} />
-        <PlayersStats team={data.game.awayTeam} />
-
-        <TeamStats game={data.game} />
-      </div>
-    </>
+    <SWRProvider fallback={fallback}>
+      <GameDetails id={id} />
+    </SWRProvider>
   );
 }
-
-export default GamePage;

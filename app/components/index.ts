@@ -7,6 +7,7 @@ export { default as GameCard } from "./GameCard";
 export { default as GamesList } from "./GamesList";
 export { default as GameSummary } from "./GameSummary";
 export { default as Games } from "./Games";
+export { default as GameDetails } from "./GameDetails";
 export { default as Header } from "./Header";
 export { default as PlayersStats } from "./PlayersStats";
 export { default as StandingTable } from "./StandingTable";
