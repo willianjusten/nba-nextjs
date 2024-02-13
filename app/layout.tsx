@@ -7,6 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nba.willianjusten.com.br"),
   title: "Games for today | NBA Next.js",
   description: "See NBA game results and standings powered by Next.js",
 };

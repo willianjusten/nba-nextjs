@@ -1,6 +1,7 @@
 import { API } from "@/app/constants";
 import { SwitchConference } from "@/app/components";
 import { getLeagueYear, conferenceExtractor } from "@/app/helpers";
+import { Metadata } from "next";
 
 async function getData() {
   const year = getLeagueYear(new Date());
@@ -23,6 +24,11 @@ async function getData() {
     west: conferenceExtractor(data.resultSets[0].rowSet, false),
   };
 }
+
+export const metadata: Metadata = {
+  title: "Standings | NBA Next.js",
+  description: "See the current standings for NBA",
+};
 
 async function Standings() {
   const { east, west } = await getData();
