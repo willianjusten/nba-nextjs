@@ -5,7 +5,7 @@ import { OutlineButton, StandingTable } from "@/app/components";
 import { Conference } from "@/app/helpers";
 
 import { EAST_CONFERENCE, WEST_CONFERENCE } from "@/app/constants";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 type SwitchConferenceProps = {
   east: Conference;
@@ -13,7 +13,9 @@ type SwitchConferenceProps = {
 };
 
 function SwitchConference({ east, west }: SwitchConferenceProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const initialConference = searchParams.get("conference");
   const [conference, setConference] = useState(
@@ -23,9 +25,7 @@ function SwitchConference({ east, west }: SwitchConferenceProps) {
   const isWest = conference === WEST_CONFERENCE;
 
   const updateConference = (conference: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("conference", conference);
-    window.history.pushState(null, "", `?${params.toString()}`);
+    router.push(`${pathname}?conference=${conference}`);
     setConference(conference);
   };
 
