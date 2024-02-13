@@ -8,6 +8,7 @@ import {
   PlayersStats,
   TeamStats,
 } from "@/app/components";
+import { useTitle } from "@/app/hooks/use-title";
 
 const fetcher = (...args: [RequestInfo, RequestInit]) =>
   fetch(...args).then((res) => res.json());
@@ -16,6 +17,13 @@ function GameDetails({ id }: { id: string }) {
   const { data } = useSWR(`/api/game/${id}`, fetcher, {
     refreshInterval: 20000,
   });
+
+  const homeTeam = data?.game?.homeTeam;
+  const awayTeam = data?.game?.awayTeam;
+
+  useTitle(
+    `${awayTeam.teamName} ${awayTeam.score} x ${homeTeam.score} ${homeTeam.teamName} | NBA Next.JS`,
+  );
 
   if (data?.notStarted) {
     return (
