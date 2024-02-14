@@ -17,6 +17,7 @@ export const HOME_TEAM = "homeTeam";
 
 export const EAST_CONFERENCE = "east";
 export const WEST_CONFERENCE = "west";
+export const CONFERENCE_KEY = "conference";
 
 export const GAME_STATUS = {
   NOT_STARTED: 1,
