@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import { Header, Footer } from "@/app/components";
 import NProgressProvider from "@/app/components/NProgressProvider";
@@ -34,6 +35,7 @@ export default function RootLayout({
           </div>
         </NProgressProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
