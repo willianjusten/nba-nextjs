@@ -21,9 +21,9 @@ function GameDetails({ id }: { id: string }) {
   const homeTeam = data?.game?.homeTeam;
   const awayTeam = data?.game?.awayTeam;
 
-  const title = data?.game
-    ? `${awayTeam?.teamName} ${awayTeam?.score} x ${homeTeam?.score} ${homeTeam?.teamName} | NBA Next.JS`
-    : "Game Details | NBA Next.JS";
+  const gameScore = `${awayTeam?.teamName} ${awayTeam?.score} x ${homeTeam?.score} ${homeTeam?.teamName}`;
+
+  const title = `${data?.game ? gameScore : "Game Details"} | NBA Next.JS`;
 
   useTitle(title);
 
