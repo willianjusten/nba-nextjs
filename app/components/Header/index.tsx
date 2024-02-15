@@ -20,6 +20,7 @@ function Header() {
           alt="NBA NextJS"
           width={96}
           height={56}
+          priority
         />
       </Link>
 
