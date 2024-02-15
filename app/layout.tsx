@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Inter } from "next/font/google";
 import { Header, Footer } from "@/app/components";
 import NProgressProvider from "@/app/components/NProgressProvider";
 
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nba.willianjusten.com.br"),
@@ -22,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-sans">
         <NProgressProvider>
           <div className="bg-layout">
             <div className="z-[1] flex flex-grow flex-col">
