@@ -42,8 +42,11 @@ export const getLeagueYear = (date: Date) => {
  * @returns object of date objects
  */
 export function getDays(date?: string) {
-  const now = new Date().toISOString();
-  const day = parseISO(date ?? now);
+  const now = new Date();
+  const options = { timeZone: "America/New_York", hour12: false };
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+  const etNow = new Date(formatter.format(now));
+  const day = date ? parseISO(date) : etNow;
 
   return {
     day: format(day, DATE_LINK_FORMAT),
