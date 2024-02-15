@@ -25,7 +25,7 @@ export default function RootLayout({
           <div className="bg-layout">
             <div className="z-[1] flex flex-grow flex-col">
               <Header />
-              <main className="container mx-auto flex-grow px-4">
+              <main className="container mx-auto flex flex-grow flex-col px-4">
                 {children}
               </main>
               <Footer />
