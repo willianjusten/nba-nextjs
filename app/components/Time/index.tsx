@@ -12,7 +12,7 @@ function Time({ time }: TimeProps) {
 
   useEffect(() => setFormattedDate(format(new Date(time), "h:mm a")), [time]);
 
-  return <time>{formattedDate}</time>;
+  return <time suppressHydrationWarning={true}>{formattedDate}</time>;
 }
 
 export default Time;
