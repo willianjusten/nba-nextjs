@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 const NProgressProvider = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+    <Suspense>
       {children}
       <ProgressBar
         height="4px"
@@ -12,7 +13,7 @@ const NProgressProvider = ({ children }: { children: React.ReactNode }) => {
         options={{ showSpinner: false }}
         shallowRouting
       />
-    </>
+    </Suspense>
   );
 };
 
