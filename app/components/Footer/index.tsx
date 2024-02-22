@@ -1,4 +1,16 @@
+import { Fragment } from "react";
 const linkStyle = "border-b-blue-500 text-blue-500 hover:border-b-[1px]";
+
+const authors = [
+  {
+    name: "Willian Justen",
+    href: "https://willianjusten.com.br/",
+  },
+  {
+    name: "Marcus Silva",
+    href: "https://github.com/mvfsillva",
+  },
+];
 
 function Footer() {
   return (
@@ -7,14 +19,19 @@ function Footer() {
         <span>Created with</span>
         <span className="text-rose-600">♥️</span>
         <span>by</span>
-        <a
-          className={linkStyle}
-          href="https://willianjusten.com.br/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Willian Justen
-        </a>
+        {authors.map((item, index) => (
+          <Fragment key={index}>
+            <a
+              className={linkStyle}
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {item.name}
+            </a>
+            {index < authors.length - 1 && " and "}
+          </Fragment>
+        ))}
       </p>
     </footer>
   );

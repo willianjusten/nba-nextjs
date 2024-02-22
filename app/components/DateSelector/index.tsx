@@ -2,6 +2,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 
 import { ArrowIcon } from "@/app/components";
+import DatePicker from "@/app/components/DatePicker";
 import { DATE_LINK_FORMAT } from "@/app/constants";
 
 export type DateSelectorProps = {
@@ -23,7 +24,7 @@ function DateSelector({ day, nextDay, prevDay }: DateSelectorProps) {
           <ArrowIcon title="previous day" />
         </Link>
 
-        {day}
+        <DatePicker day={day} />
 
         <Link className="p-2" href={nextLink}>
           <ArrowIcon className="rotate-180" title="next day" />
