@@ -8,21 +8,16 @@ function ArrowIcon({ size = 12, ...rest }: ArrowIconProps) {
       fill="none"
       color="currentColor"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 12 12"
       width={size}
       height={size}
       {...rest}
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M0 6a.75.75 0 0 1 .75-.75h10a.75.75 0 0 1 0 1.5h-10A.75.75 0 0 1 0 6Z"
+        d="M0 6a.8.8 0 0 1 .8-.8h10a.8.8 0 0 1 0 1.5H.8A.8.8 0 0 1 0 6Z"
         fill="#CCC7C3"
       />
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M6.28.47a.75.75 0 0 1 0 1.06L1.81 6l4.47 4.47a.75.75 0 1 1-1.06 1.06l-5-5a.75.75 0 0 1 0-1.06l5-5a.75.75 0 0 1 1.06 0Z"
+        d="M6.3.5a.8.8 0 0 1 0 1L1.8 6l4.5 4.5a.8.8 0 1 1-1 1l-5-5a.8.8 0 0 1 0-1l5-5a.8.8 0 0 1 1 0Z"
         fill="#CCC7C3"
       />
     </svg>
