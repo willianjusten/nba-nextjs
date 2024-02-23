@@ -15,23 +15,25 @@ const authors = [
 function Footer() {
   return (
     <footer className="container mx-auto px-4 pb-8 pt-16 text-center">
-      <p className="flex justify-center gap-2">
-        <span>Created with</span>
-        <span className="text-rose-600">♥️</span>
-        <span>by</span>
-        {authors.map((item, index) => (
-          <Fragment key={index}>
-            <a
-              className={linkStyle}
-              href={item.href}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {item.name}
-            </a>
-            {index < authors.length - 1 && " and "}
-          </Fragment>
-        ))}
+      <p className="flex flex-col justify-center gap-2 sm:flex-row">
+        <span>
+          Created with <span className="text-rose-600">♥️</span> by
+        </span>
+        <span>
+          {authors.map((item, index) => (
+            <Fragment key={index}>
+              <a
+                className={linkStyle}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {item.name}
+              </a>
+              {index < authors.length - 1 && " and "}
+            </Fragment>
+          ))}
+        </span>
       </p>
     </footer>
   );
