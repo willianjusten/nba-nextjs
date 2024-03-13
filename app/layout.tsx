@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Header, Footer } from "@/app/components";
 import NProgressProvider from "@/app/components/NProgressProvider";
 
@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Games for today | NBA Next.js",
   description: "See NBA game results and standings powered by Next.js",
 };
+
+export const viewport: Viewport = {
+  themeColor: 'rgb(14 25 44 / 30%)',
+}
 
 export default function RootLayout({
   children,
