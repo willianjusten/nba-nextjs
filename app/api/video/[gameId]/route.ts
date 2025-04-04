@@ -44,7 +44,7 @@ export async function GET(
 
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
       videoTitle,
-    )}&channelId=${channelId}&type=video&maxResults=1&publishedAfter=${publishedAfter}&key=${apiKey}`;
+    )}&channelId=${channelId}&type=video&maxResults=1&key=${apiKey}`;
 
     const response = await fetch(apiUrl, { cache: "force-cache" });
     const data = await response.json();
