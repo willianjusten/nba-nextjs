@@ -8,6 +8,7 @@ import {
   PlayersStats,
   TeamStats,
 } from "@/app/components";
+import GameVideo from "@/app/components/GameVideo";
 import { useTitle } from "@/app/hooks/use-title";
 
 const fetcher = (...args: [RequestInfo, RequestInit]) =>
@@ -40,13 +41,23 @@ function GameDetails({ id }: { id: string }) {
     <>
       <BackButton />
 
-      <div className="py-5 md:max-w-sm">
-        <GameCard {...data.game} details={false} />
+      <div className="flex max-w-[1280px] flex-col md:flex-row md:gap-8">
+        <div className="flex-1">
+          <div className="py-5 md:max-w-sm">
+            <GameCard {...data.game} details={false} />
+          </div>
+          <GameSummary game={data.game} />
+        </div>
+
+        {/* Show video only if game is over */}
+        {data.game.gameStatus === 3 && (
+          <div className="md:w-[400px] md:flex-shrink-0 lg:w-[550px]">
+            <GameVideo gameId={id} />
+          </div>
+        )}
       </div>
 
-      <GameSummary game={data.game} />
-
-      <div className="flex gap-4 overflow-x-auto md:gap-12 ">
+      <div className="mt-8 flex gap-4 overflow-x-auto md:gap-12">
         <PlayersStats team={data.game.homeTeam} />
         <PlayersStats team={data.game.awayTeam} />
 
