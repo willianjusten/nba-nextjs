@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// Set a 24-hour revalidation period (in seconds)
+export const revalidate = 86400;
+
 export async function GET(
   request: Request,
   { params }: { params: { gameId: string } },
@@ -7,7 +10,10 @@ export async function GET(
   try {
     const gameId = params.gameId;
 
-    const gameRes = await fetch(`${process.env.API_DOMAIN}/api/game/${gameId}`);
+    const gameRes = await fetch(
+      `${process.env.API_DOMAIN}/api/game/${gameId}`,
+      { next: { revalidate } },
+    );
 
     if (!gameRes.ok) {
       return NextResponse.json({ error: "Game not found" }, { status: 404 });
@@ -40,7 +46,7 @@ export async function GET(
       videoTitle,
     )}&channelId=${channelId}&type=video&maxResults=1&key=${apiKey}`;
 
-    const response = await fetch(apiUrl, { cache: "force-cache" });
+    const response = await fetch(apiUrl, { next: { revalidate } });
     const data = await response.json();
 
     if (!response.ok || !data.items || data.items.length === 0) {
@@ -51,6 +57,7 @@ export async function GET(
     }
 
     const video = data.items[0];
+    console.log("apiUrl", apiUrl);
     console.log("videoTitle", videoTitle);
     console.log("video", video.snippet.title);
 
