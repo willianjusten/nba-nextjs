@@ -46,7 +46,7 @@ export async function GET(
       videoTitle,
     )}&channelId=${channelId}&type=video&maxResults=1&key=${apiKey}`;
 
-    const response = await fetch(apiUrl, { next: { revalidate } });
+    const response = await fetch(apiUrl, { cache: "no-store" });
     const data = await response.json();
 
     if (!response.ok || !data.items || data.items.length === 0) {
