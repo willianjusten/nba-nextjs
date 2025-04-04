@@ -41,7 +41,7 @@ function GameDetails({ id }: { id: string }) {
     <>
       <BackButton />
 
-      <div className="flex max-w-[1280px] flex-col md:flex-row md:gap-8">
+      <div className="container flex flex-col md:flex-row md:gap-8">
         <div className="flex-1">
           <div className="py-5 md:max-w-sm">
             <GameCard {...data.game} details={false} />
