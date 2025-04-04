@@ -51,6 +51,9 @@ export async function GET(
     }
 
     const video = data.items[0];
+    console.log("videoTitle", videoTitle);
+    console.log("video", video.snippet.title);
+
     return NextResponse.json({
       videoId: video.id.videoId,
       title: video.snippet.title,
