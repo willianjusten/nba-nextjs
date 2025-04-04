@@ -49,6 +49,9 @@ export async function GET(
     const response = await fetch(apiUrl, { cache: "force-cache" });
     const data = await response.json();
 
+    console.log("apiUrl", apiUrl);
+    console.log(JSON.stringify(data, null, 2));
+
     if (!response.ok || !data.items || data.items.length === 0) {
       return NextResponse.json(
         { error: "YouTube API error", details: data.error },
@@ -57,9 +60,6 @@ export async function GET(
     }
 
     const video = data.items[0];
-    console.log("apiUrl", apiUrl);
-    console.log("videoTitle", videoTitle);
-    console.log("video", JSON.stringify(data, null, 2));
 
     return NextResponse.json({
       videoId: video.id.videoId,
