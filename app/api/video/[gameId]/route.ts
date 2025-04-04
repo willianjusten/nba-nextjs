@@ -12,7 +12,7 @@ export async function GET(
 
     const gameRes = await fetch(
       `${process.env.API_DOMAIN}/api/game/${gameId}`,
-      { next: { revalidate } },
+      { cache: "force-cache" },
     );
 
     if (!gameRes.ok) {
@@ -44,7 +44,7 @@ export async function GET(
 
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
       videoTitle,
-    )}&channelId=${channelId}&type=video&maxResults=1&key=${apiKey}`;
+    )}&channelId=${channelId}&type=video&maxResults=1&order=relevance&publishedAfter=${publishedAfter}&key=${apiKey}`;
 
     const response = await fetch(apiUrl, { cache: "force-cache" });
     const data = await response.json();
