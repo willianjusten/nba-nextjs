@@ -26,7 +26,7 @@ export async function GET(
     const awayTeam = gameData.game?.awayTeam.teamName;
     const homeScore = gameData.game?.homeTeam.score;
     const awayScore = gameData.game?.awayTeam.score;
-
+    const publishedAfter = gameData.game?.gameTimeUTC;
     if (!homeTeam || !awayTeam) {
       return NextResponse.json(
         { error: "Game data incomplete" },
@@ -44,9 +44,9 @@ export async function GET(
 
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
       videoTitle,
-    )}&channelId=${channelId}&type=video&maxResults=1&key=${apiKey}`;
+    )}&channelId=${channelId}&type=video&maxResults=1&publishedAfter=${publishedAfter}&key=${apiKey}`;
 
-    const response = await fetch(apiUrl, { cache: "no-store" });
+    const response = await fetch(apiUrl, { cache: "force-cache" });
     const data = await response.json();
 
     if (!response.ok || !data.items || data.items.length === 0) {
