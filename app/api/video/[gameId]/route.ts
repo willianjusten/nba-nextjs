@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 
-// Set a 24-hour revalidation period (in seconds)
 export const revalidate = 86400;
 
 export async function GET(
@@ -48,9 +47,6 @@ export async function GET(
 
     const response = await fetch(apiUrl, { cache: "force-cache" });
     const data = await response.json();
-
-    console.log("apiUrl", apiUrl);
-    console.log(JSON.stringify(data, null, 2));
 
     if (!response.ok || !data.items || data.items.length === 0) {
       return NextResponse.json(
