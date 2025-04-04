@@ -59,7 +59,7 @@ export async function GET(
     const video = data.items[0];
     console.log("apiUrl", apiUrl);
     console.log("videoTitle", videoTitle);
-    console.log("video", video.snippet.title);
+    console.log("video", JSON.stringify(data, null, 2));
 
     return NextResponse.json({
       videoId: video.id.videoId,

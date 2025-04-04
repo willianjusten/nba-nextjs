@@ -14,7 +14,7 @@ type VideoData = {
 export default function GameVideo({ gameId }: { gameId: string }) {
   const { data, error } = useSWR<VideoData>(`/api/video/${gameId}`, fetcher);
 
-  if (error || !data) {
+  if (error || !data?.videoId) {
     return null;
   }
 
