@@ -7,10 +7,7 @@ export async function GET(
   try {
     const gameId = params.gameId;
 
-    const gameRes = await fetch(
-      `${process.env.API_DOMAIN}/api/game/${gameId}`,
-      { cache: "force-cache" },
-    );
+    const gameRes = await fetch(`${process.env.API_DOMAIN}/api/game/${gameId}`);
 
     if (!gameRes.ok) {
       return NextResponse.json({ error: "Game not found" }, { status: 404 });
