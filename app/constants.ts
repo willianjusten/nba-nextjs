@@ -8,6 +8,7 @@ export const COVID_MONTH_END = 9;
 export const REGULAR_MONTH_END = 5;
 export const REGULAR_PERIOD_COUNT = 4;
 
+export const EST_IANA_ZONE_ID = "America/New_York";
 export const DATE_DISPLAY_FORMAT = "dd MMMM yyyy";
 export const DATE_LINK_FORMAT = "yyyy-MM-dd";
 export const DATE_TITLE_FORMAT = "dd/MM/yyyy";

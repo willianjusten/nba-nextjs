@@ -2,15 +2,19 @@ import {
   addDays,
   addYears,
   format,
+  getHours,
   getMonth,
   getYear,
   parseISO,
+  startOfDay,
   subDays,
 } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import {
   COVID_MONTH_END,
   COVID_YEAR,
   DATE_LINK_FORMAT,
+  EST_IANA_ZONE_ID,
   REGULAR_MONTH_END,
 } from "@/app/constants";
 
@@ -42,8 +46,22 @@ export const getLeagueYear = (date: Date) => {
  * @returns object of date objects
  */
 export function getDays(date?: string) {
+  let timeZonedDay: Date;
   const now = new Date().toISOString();
-  const day = parseISO(date ?? now);
+  const etNow = toZonedTime(now, EST_IANA_ZONE_ID);
+  const etNowHours = getHours(etNow);
+
+  // The NBA API for today returns games from the day before
+  // during the morning, so people can see the games that happened
+  // during the day before, after this time, the API returns games
+  // from the current day, so we need to adjust the day to the current day
+  if (etNowHours < 6) {
+    timeZonedDay = startOfDay(subDays(etNow, 1));
+  } else {
+    timeZonedDay = startOfDay(etNow);
+  }
+
+  const day = date ? parseISO(date) : timeZonedDay;
 
   return {
     day: format(day, DATE_LINK_FORMAT),
