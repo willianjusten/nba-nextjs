@@ -8,6 +8,7 @@ First, create an `.env.local` file in the root of the project and add the follow
 
 ```bash
 API_DOMAIN=http://localhost:3000
+YOUTUBE_API_KEY=<GET A FREE KEY ON https://console.cloud.google.com/>
 ```
 
 Then, run the development server:
