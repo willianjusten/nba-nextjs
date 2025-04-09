@@ -57,7 +57,7 @@ function GameDetails({ id }: { id: string }) {
         )}
       </div>
 
-      <div className="mt-8 flex gap-4 overflow-x-auto md:gap-12">
+      <div className="mt-8 flex gap-4 overflow-x-auto md:gap-12 justify-between">
         <PlayersStats team={data.game.homeTeam} />
         <PlayersStats team={data.game.awayTeam} />
 
