@@ -52,7 +52,7 @@ export async function GET(
 
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
       videoTitle,
-    )}&channelId=${channelId}&type=video&maxResults=1&order=relevance&regionCode=BR&key=${apiKey}`;
+    )}&channelId=${channelId}&publishedAfter=${publishedAfter}&type=video&maxResults=1&order=relevance&regionCode=BR&key=${apiKey}`;
 
     // YouTube API call with caching
     try {
