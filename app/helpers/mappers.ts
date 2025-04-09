@@ -5,7 +5,7 @@ export type ParsedGames = ReturnType<typeof parseGames>;
 
 export const parseGames = (data: Games) => {
   const {
-    scoreboard: { games },
+    scoreboard: { gameDate, games },
   } = data;
 
   const getTeamData = (team: Team) => {
@@ -19,7 +19,7 @@ export const parseGames = (data: Games) => {
     };
   };
 
-  return games.sort(orderByStatus).map((game) => {
+  const parsedGames = games.sort(orderByStatus).map((game) => {
     const {
       gameId,
       gameStatus,
@@ -42,6 +42,11 @@ export const parseGames = (data: Games) => {
       awayTeam: getTeamData(awayTeam),
     };
   });
+
+  return {
+    gameDate,
+    games: parsedGames,
+  };
 };
 
 export type StandingsData = {

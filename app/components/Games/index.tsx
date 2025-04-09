@@ -9,15 +9,15 @@ const fetcher = (...args: [RequestInfo, RequestInit]) =>
   fetch(...args).then((res) => res.json());
 
 function Games() {
-  const { day, prevDay, nextDay } = getDays();
   const { data } = useSWR<ParsedGames>("/api/today", fetcher, {
     refreshInterval: 15000,
   });
+  const { day, prevDay, nextDay } = getDays(data?.gameDate);
 
   return (
     <>
       <DateSelector day={day} prevDay={prevDay} nextDay={nextDay} />
-      <GamesList games={data} />
+      <GamesList games={data?.games} />
     </>
   );
 }
