@@ -8,6 +8,7 @@ export { default as GameSummary } from "./GameSummary";
 export { default as Games } from "./Games";
 export { default as GameDetails } from "./GameDetails";
 export { default as Header } from "./Header";
+export { default as PlayoffsTable} from "./PlayoffsTable";
 export { default as PlayersStats } from "./PlayersStats";
 export { default as StandingTable } from "./StandingTable";
 export { default as SwitchConference } from "./SwitchConference";
