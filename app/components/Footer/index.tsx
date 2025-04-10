@@ -10,15 +10,17 @@ const authors = [
     name: "Marcus Silva",
     href: "https://github.com/mvfsillva",
   },
+  {
+    name: "Bruna Grassi",
+    href: "https://brunagrassi.com.br",
+  },
 ];
 
 function Footer() {
   return (
     <footer className="container mx-auto px-4 pb-8 pt-16 text-center">
       <p className="flex flex-col justify-center gap-2 sm:flex-row">
-        <span>
-          Created with <span className="text-rose-600">♥️</span> by
-        </span>
+        <span>Created with ♥️ by</span>
         <span>
           {authors.map((item, index) => (
             <Fragment key={index}>
@@ -30,7 +32,8 @@ function Footer() {
               >
                 {item.name}
               </a>
-              {index < authors.length - 1 && " and "}
+              {index < authors.length - 1 &&
+                (index === authors.length - 2 ? " and " : ", ")}
             </Fragment>
           ))}
         </span>

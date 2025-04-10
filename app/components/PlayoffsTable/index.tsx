@@ -7,24 +7,22 @@ type PlayoffsRoundProps = {
   data: PlayoffRound[];
 };
 
-const EastFirstRound = ({ data }: PlayoffsRoundProps) => {
-  return (
-    <g transform="translate(1030, -20)">
-      <g transform="translate(0,0)">
-        <Card data={data[0]} />
-      </g>
-      <g transform="translate(0,148)">
-        <Card data={data[1]} />
-      </g>
-      <g transform="translate(0,296)">
-        <Card data={data[2]} />
-      </g>
-      <g transform="translate(0,444)">
-        <Card data={data[3]} />
-      </g>
+const EastFirstRound = ({ data }: PlayoffsRoundProps) => (
+  <g transform="translate(1030, -20)">
+    <g transform="translate(0,0)">
+      <Card data={data[0]} />
     </g>
-  );
-};
+    <g transform="translate(0,148)">
+      <Card data={data[1]} />
+    </g>
+    <g transform="translate(0,296)">
+      <Card data={data[2]} />
+    </g>
+    <g transform="translate(0,444)">
+      <Card data={data[3]} />
+    </g>
+  </g>
+);
 
 const EastSecondRound = ({ data }: PlayoffsRoundProps) => (
   <g transform="translate(836, -20)">
@@ -99,13 +97,12 @@ function PlayoffsTable({ east, west, nbaFinals }: PlayoffBracket) {
         className="relative mx-auto mb-8 block w-[1216px] align-middle md:w-auto"
         preserveAspectRatio="xMidYMin slice"
       >
-        <rect className="fill-none" width="1216" height="593"></rect>
+        <Connectors />
 
         <EastFirstRound data={east.firstRound} />
         <EastSecondRound data={east.secondRound} />
         <EastThirdRound data={east.thirdRound} />
 
-        <Connectors />
         <Finals data={nbaFinals} />
 
         <WestFirstRound data={west.firstRound} />

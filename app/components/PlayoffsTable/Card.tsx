@@ -1,20 +1,28 @@
 import { PlayoffRound } from "@/app/api/types";
 import { TEAM_ID } from "@/app/constants";
+import { GlassRect, SvgText } from "./SVGHelpers";
+
+const SVG_DIMENSIONS = {
+  card: { width: 180, height: 134 },
+  row: { height: 40, width: 180 },
+  indicator: { height: 40, width: 4 },
+  image: { width: 24, height: 24 },
+};
 
 const WinnerIndicator = ({ conference }: { conference: string }) => {
   const transform =
     conference === "East" ? "translate(0, 0)" : "translate(176, 0)";
   return (
     <rect
-      height="40"
-      width="4"
+      height={SVG_DIMENSIONS.indicator.height}
+      width={SVG_DIMENSIONS.indicator.width}
       transform={transform}
-      className="fill-[#1c7ad3]"
+      className="fill-blue-500"
     />
   );
 };
 
-interface TeamInfo {
+type TeamInfo = {
   seedId: number;
   seedName?: string;
   seedRank: number;
@@ -22,7 +30,7 @@ interface TeamInfo {
   seriesConference: string;
   seriesWins: number;
   hasTeam: boolean;
-}
+};
 
 const TeamRow = ({
   seedId,
@@ -40,38 +48,36 @@ const TeamRow = ({
   const isWinner = seriesWinner !== 0 && seriesWinner === seedId;
 
   return (
-    <g
-      className={`text-xs ${seriesWinner === 0 ? "opacity-100" : !isWinner && "opacity-50"}`}
-    >
-      {isWinner && <WinnerIndicator conference={seriesConference} />}
-      <text
-        transform="translate(8, 0)"
-        dy="24"
-        className="fill-white text-center font-normal"
-      >
-        {seedRank !== 0 ? seedRank : ""}
-      </text>
-      <image
-        transform="translate(20, 8)"
-        width="24"
-        height="24"
-        xlinkHref={seedId ? teamLogo : fallbackLogo}
+    <>
+      <GlassRect
+        height={SVG_DIMENSIONS.row.height}
+        width={SVG_DIMENSIONS.row.width}
       />
-      <text
-        transform="translate(48, 0)"
-        dy="24"
-        className="fill-white text-center text-sm font-bold"
+      <g
+        className={`text-xs ${seriesWinner === 0 ? "opacity-100" : !isWinner && "opacity-50"}`}
       >
-        {teamName}
-      </text>
-      <text
-        transform="translate(160, 0)"
-        dy="24"
-        className="fill-white text-center text-sm font-bold"
-      >
-        {hasTeam ? seriesWins : ""}
-      </text>
-    </g>
+        {isWinner && <WinnerIndicator conference={seriesConference} />}
+
+        <SvgText x={8} y={24} className="font-normal">
+          {seedRank !== 0 ? seedRank : ""}
+        </SvgText>
+
+        <image
+          width={SVG_DIMENSIONS.image.width}
+          height={SVG_DIMENSIONS.image.height}
+          transform="translate(20, 8)"
+          xlinkHref={seedId ? teamLogo : fallbackLogo}
+        />
+
+        <SvgText x={48} y={24} className="text-sm font-bold">
+          {teamName}
+        </SvgText>
+
+        <SvgText x={160} y={24} className="text-sm font-bold">
+          {hasTeam ? seriesWins : ""}
+        </SvgText>
+      </g>
+    </>
   );
 };
 
@@ -80,13 +86,12 @@ function Card({ data }: { data: PlayoffRound }) {
 
   return (
     <svg
-      viewBox="0 0 180 134"
-      height="134"
-      width="180"
+      viewBox={`0 0 ${SVG_DIMENSIONS.card.width} ${SVG_DIMENSIONS.card.height}`}
+      height={SVG_DIMENSIONS.card.height}
+      width={SVG_DIMENSIONS.card.width}
       className="block align-middle"
     >
       <g transform="translate(0, 32)">
-        <rect height="40" width="180" className="fill-[#70738529]" />
         <TeamRow
           seedId={data.highSeedId}
           seedName={data.highSeedName}
@@ -98,7 +103,6 @@ function Card({ data }: { data: PlayoffRound }) {
         />
       </g>
       <g transform="translate(0, 73)">
-        <rect height="40" width="180" className="fill-[#70738529]" />
         <TeamRow
           seedId={data.lowSeedId}
           seedName={data.lowSeedName}
@@ -111,10 +115,14 @@ function Card({ data }: { data: PlayoffRound }) {
       </g>
       {data.seriesWinner && (
         <g transform="translate(0, 114)">
-          <rect height="20" width="180" className="fill-[#70738529]" />
-          <text dy="13" dx="4" className="fill-white text-center text-[12px]">
-            <tspan className="font-bold">{data.seriesText}</tspan>
-          </text>
+          <GlassRect
+            height={20}
+            width={SVG_DIMENSIONS.row.width}
+            className="fill-[#4b566e]"
+          />
+          <SvgText y={13} x={4} className="text-center text-[12px] font-bold">
+            {data.seriesText}
+          </SvgText>
         </g>
       )}
     </svg>
