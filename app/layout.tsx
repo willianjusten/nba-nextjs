@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Header, Footer } from "@/app/components";
 import NProgressProvider from "@/app/components/NProgressProvider";
 
@@ -8,11 +8,21 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://nba.willianjusten.com.br"),
   title: "Games for today | NBA Next.js",
   description: "See NBA game results and standings powered by Next.js",
+  applicationName: "GameDay",
+  themeColor: "rgb(14 25 44 / 30%)",
+  appleWebApp: {
+    capable: true,
+    title: "GameDay",
+  },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/icon-192.png",
+    apple: [
+      { url: "/apple-touch-icon.png" },
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
-
-export const viewport: Viewport = {
-  themeColor: 'rgb(14 25 44 / 30%)',
-}
 
 export default function RootLayout({
   children,
