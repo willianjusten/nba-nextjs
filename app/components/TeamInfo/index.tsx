@@ -20,7 +20,7 @@ function TeamInfo({ team }: TeamInfoProps) {
   return (
     <div className="flex w-1/4 flex-col items-center text-center">
       <Image
-        className="drop-shadow-[0_0_6px_rgba(255,255,255,0.6)]"
+        className="drop-shadow-smoth"
         src={logo}
         width={48}
         height={48}
