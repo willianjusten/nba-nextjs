@@ -1,4 +1,4 @@
-import { Games, Team } from "@/app/api/types";
+import { Games, PlayoffBracketData, Team } from "@/app/api/types";
 import { orderByStatus } from "@/app/helpers";
 
 export type ParsedGames = ReturnType<typeof parseGames>;
@@ -80,3 +80,42 @@ export const conferenceExtractor = (
       lastTenRecord: team[20],
       streak: team[36],
     }));
+
+export function formatPlayoffData(data: PlayoffBracketData) {
+  const { playoffBracketSeries } = data.bracket;
+
+  const rounds = {
+    east: {
+      firstRound: playoffBracketSeries.filter(
+        (s) => s.roundNumber === 1 && s.seriesConference === "East",
+      ),
+      secondRound: playoffBracketSeries.filter(
+        (s) => s.roundNumber === 2 && s.seriesConference === "East",
+      ),
+      thirdRound: playoffBracketSeries.filter(
+        (s) => s.roundNumber === 3 && s.seriesConference === "East",
+      ),
+    },
+    west: {
+      firstRound: playoffBracketSeries.filter(
+        (s) => s.roundNumber === 1 && s.seriesConference === "West",
+      ),
+      secondRound: playoffBracketSeries.filter(
+        (s) => s.roundNumber === 2 && s.seriesConference === "West",
+      ),
+      thirdRound: playoffBracketSeries.filter(
+        (s) => s.roundNumber === 3 && s.seriesConference === "West",
+      ),
+    },
+    nbaFinals: playoffBracketSeries.filter((s) => s.roundNumber === 4),
+  };
+
+  rounds.east.firstRound.sort(
+    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
+  );
+  rounds.west.firstRound.sort(
+    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
+  );
+
+  return rounds;
+}

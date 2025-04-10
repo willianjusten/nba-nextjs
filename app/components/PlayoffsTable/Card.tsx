@@ -1,31 +1,82 @@
+import { PlayoffRound } from "@/app/api/types";
 import { TEAM_ID } from "@/app/constants";
 
-const WinnerIndicator = ({ conference = "east" }: { conference: string }) => {
+const WinnerIndicator = ({ conference }: { conference: string }) => {
   const transform =
     conference === "East" ? "translate(0, 0)" : "translate(176, 0)";
-
   return (
     <rect
       height="40"
       width="4"
       transform={transform}
       className="fill-[#1c7ad3]"
-    ></rect>
+    />
   );
 };
 
-function Card({ data }) {
-  const highSeedName = data.highSeedName || TEAM_ID[data.highSeedId] || "TBD";
-  const lowSeedName = data.lowSeedName || TEAM_ID[data.lowSeedId] || "TBD";
-  const highSeedLogo = `https://cdn.nba.com/logos/nba/${data.highSeedId}/primary/L/logo.svg`;
-  const lowSeedLogo = `https://cdn.nba.com/logos/nba/${data.lowSeedId}/primary/L/logo.svg`;
+interface TeamInfo {
+  seedId: number;
+  seedName?: string;
+  seedRank: number;
+  seriesWinner: number;
+  seriesConference: string;
+  seriesWins: number;
+  hasTeam: boolean;
+}
+
+const TeamRow = ({
+  seedId,
+  seedName,
+  seedRank,
+  seriesWinner,
+  seriesConference,
+  seriesWins,
+  hasTeam,
+}: TeamInfo) => {
+  const teamName =
+    seedName || (TEAM_ID as Record<string, string>)[seedId] || "TBD";
+  const teamLogo = `https://cdn.nba.com/logos/nba/${seedId}/primary/L/logo.svg`;
   const fallbackLogo = "https://cdn.nba.com/logos/nba/fallback.svg";
-  const highSeedRank = data.highSeedRank !== 0 ? data.highSeedRank : "";
-  const lowSeedRank = data.lowSeedRank !== 0 ? data.lowSeedRank : "";
-  const highSeedRegSeasonWins = data.highSeedRegSeasonWins || "";
-  const highSeedRegSeasonLosses = data.highSeedRegSeasonLosses || "";
-  const lowSeedRegSeasonWins = data.lowSeedRegSeasonWins || "";
-  const lowSeedRegSeasonLosses = data.lowSeedRegSeasonLosses || "";
+  const isWinner = seriesWinner !== 0 && seriesWinner === seedId;
+
+  return (
+    <g
+      className={`text-xs ${seriesWinner === 0 ? "opacity-100" : !isWinner && "opacity-50"}`}
+    >
+      {isWinner && <WinnerIndicator conference={seriesConference} />}
+      <text
+        transform="translate(8, 0)"
+        dy="24"
+        className="fill-white text-center font-normal"
+      >
+        {seedRank !== 0 ? seedRank : ""}
+      </text>
+      <image
+        transform="translate(20, 8)"
+        width="24"
+        height="24"
+        xlinkHref={seedId ? teamLogo : fallbackLogo}
+      />
+      <text
+        transform="translate(48, 0)"
+        dy="24"
+        className="fill-white text-center text-sm font-bold"
+      >
+        {teamName}
+      </text>
+      <text
+        transform="translate(160, 0)"
+        dy="24"
+        className="fill-white text-center text-sm font-bold"
+      >
+        {hasTeam ? seriesWins : ""}
+      </text>
+    </g>
+  );
+};
+
+function Card({ data }: { data: PlayoffRound }) {
+  const hasTeam = data.highSeedId !== 0 || data.lowSeedId !== 0;
 
   return (
     <svg
@@ -35,95 +86,33 @@ function Card({ data }) {
       className="block align-middle"
     >
       <g transform="translate(0, 32)">
-        <rect height="40" width="180" className="fill-[#70738529]"></rect>
-        <g
-          className={`text-xs ${
-            data.seriesWinner !== 0 &&
-            data.seriesWinner !== data.highSeedId &&
-            "opacity-50"
-          }`}
-        >
-          {data.seriesWinner !== 0 && data.seriesWinner === data.highSeedId && (
-            <WinnerIndicator conference={data.seriesConference} />
-          )}
-          <text
-            transform="translate(8,0)"
-            dy="24"
-            className=" fill-white text-center font-normal"
-          >
-            {highSeedRank}
-          </text>
-          <image
-            transform="translate(20, 8)"
-            width="24"
-            height="24"
-            xlinkHref={data.highSeedId ? highSeedLogo : fallbackLogo}
-          ></image>
-          <text
-            transform="translate(48, 0)"
-            dy="24"
-            className=" fill-white text-center font-bold"
-          >
-            {highSeedName}
-          </text>
-          <text
-            transform="translate(140, 0)"
-            dy="24"
-            className="fill-white text-center text-[10px] font-bold"
-          >
-            {highSeedRegSeasonWins && highSeedRegSeasonLosses
-              ? `${highSeedRegSeasonWins}-${highSeedRegSeasonLosses}`
-              : ""}
-          </text>
-        </g>
+        <rect height="40" width="180" className="fill-[#70738529]" />
+        <TeamRow
+          seedId={data.highSeedId}
+          seedName={data.highSeedName}
+          seedRank={data.highSeedRank}
+          seriesWinner={data.seriesWinner}
+          seriesWins={data.highSeedSeriesWins}
+          seriesConference={data.seriesConference}
+          hasTeam={hasTeam}
+        />
       </g>
       <g transform="translate(0, 73)">
-        <rect height="40" width="180" className="fill-[#70738529]"></rect>
-        <g
-          className={`text-xs ${
-            data.seriesWinner !== 0 &&
-            data.seriesWinner !== data.lowSeedId &&
-            "opacity-50"
-          }`}
-        >
-          {data.seriesWinner !== 0 && data.seriesWinner === data.lowSeedId && (
-            <WinnerIndicator conference={data.seriesConference} />
-          )}
-          <text
-            transform="translate(8, 0)"
-            dy="24"
-            className=" fill-white text-center"
-          >
-            {lowSeedRank}
-          </text>
-          <image
-            transform="translate(20, 8)"
-            width="24"
-            height="24"
-            xlinkHref={data.lowSeedId ? lowSeedLogo : fallbackLogo}
-          ></image>
-          <text
-            transform="translate(48, 0)"
-            dy="24"
-            className="fill-white text-center font-bold"
-          >
-            {lowSeedName}
-          </text>
-          <text
-            transform="translate(140, 0)"
-            dy="24"
-            className=" fill-white text-center text-[10px] font-bold"
-          >
-            {lowSeedRegSeasonWins && lowSeedRegSeasonLosses
-              ? `${lowSeedRegSeasonWins}-${lowSeedRegSeasonLosses}`
-              : ""}
-          </text>
-        </g>
+        <rect height="40" width="180" className="fill-[#70738529]" />
+        <TeamRow
+          seedId={data.lowSeedId}
+          seedName={data.lowSeedName}
+          seedRank={data.lowSeedRank}
+          seriesWinner={data.seriesWinner}
+          seriesWins={data.lowSeedSeriesWins}
+          seriesConference={data.seriesConference}
+          hasTeam={hasTeam}
+        />
       </g>
       {data.seriesWinner && (
         <g transform="translate(0, 114)">
-          <rect height="20" width="180" className="fill-[#70738529]"></rect>
-          <text dy="13" dx="4" className=" fill-white text-center text-[10px] ">
+          <rect height="20" width="180" className="fill-[#70738529]" />
+          <text dy="13" dx="4" className="fill-white text-center text-[12px]">
             <tspan className="font-bold">{data.seriesText}</tspan>
           </text>
         </g>

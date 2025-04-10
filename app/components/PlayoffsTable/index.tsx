@@ -1,8 +1,13 @@
+import { PlayoffBracket, PlayoffRound } from "@/app/api/types";
 import Card from "./Card";
 import Connectors from "./Connectors";
 import NavBar from "./Navbar";
 
-const EastFirstRound = ({ data }) => {
+type PlayoffsRoundProps = {
+  data: PlayoffRound[];
+};
+
+const EastFirstRound = ({ data }: PlayoffsRoundProps) => {
   return (
     <g transform="translate(1030, -20)">
       <g transform="translate(0,0)">
@@ -21,7 +26,7 @@ const EastFirstRound = ({ data }) => {
   );
 };
 
-const EastSecondRound = ({ data }) => (
+const EastSecondRound = ({ data }: PlayoffsRoundProps) => (
   <g transform="translate(836, -20)">
     <g transform="translate(-18,64)">
       <Card data={data[0]} />
@@ -32,7 +37,7 @@ const EastSecondRound = ({ data }) => (
   </g>
 );
 
-const EastThirdRound = ({ data }) => (
+const EastThirdRound = ({ data }: PlayoffsRoundProps) => (
   <g transform="translate(715, -20)">
     <g transform="translate(0,210)">
       <Card data={data[0]} />
@@ -40,7 +45,7 @@ const EastThirdRound = ({ data }) => (
   </g>
 );
 
-const WestFirstRound = ({ data }) => (
+const WestFirstRound = ({ data }: PlayoffsRoundProps) => (
   <g transform="translate(0, -20)">
     <g transform="translate(0,0)">
       <Card data={data[0]} />
@@ -57,7 +62,7 @@ const WestFirstRound = ({ data }) => (
   </g>
 );
 
-const WestSecondRound = ({ data }) => (
+const WestSecondRound = ({ data }: PlayoffsRoundProps) => (
   <g transform="translate(194, -20)">
     <g transform="translate(18,64)">
       <Card data={data[0]} />
@@ -68,7 +73,7 @@ const WestSecondRound = ({ data }) => (
   </g>
 );
 
-const WestThirdRound = ({ data }) => (
+const WestThirdRound = ({ data }: PlayoffsRoundProps) => (
   <g transform="translate(301, -20)">
     <g transform="translate(18,210)">
       <Card data={data[0]} />
@@ -76,7 +81,7 @@ const WestThirdRound = ({ data }) => (
   </g>
 );
 
-const Finals = ({ data }) => (
+const Finals = ({ data }: PlayoffsRoundProps) => (
   <g transform="translate(499, -20)">
     <g transform="translate(18,210)">
       <Card data={data[0]} />
@@ -84,7 +89,7 @@ const Finals = ({ data }) => (
   </g>
 );
 
-function PlayoffsTable({ east, west, nbaFinals }) {
+function PlayoffsTable({ east, west, nbaFinals }: PlayoffBracket) {
   return (
     <div className="mt-8 overflow-x-scroll md:overflow-auto">
       <NavBar />
@@ -97,15 +102,15 @@ function PlayoffsTable({ east, west, nbaFinals }) {
         <rect className="fill-none" width="1216" height="593"></rect>
 
         <EastFirstRound data={east.firstRound} />
-        <EastSecondRound data={east.semifinals} />
-        <EastThirdRound data={east.finals} />
+        <EastSecondRound data={east.secondRound} />
+        <EastThirdRound data={east.thirdRound} />
 
         <Connectors />
         <Finals data={nbaFinals} />
 
         <WestFirstRound data={west.firstRound} />
-        <WestThirdRound data={west.finals} />
-        <WestSecondRound data={west.semifinals} />
+        <WestSecondRound data={west.secondRound} />
+        <WestThirdRound data={west.thirdRound} />
       </svg>
     </div>
   );

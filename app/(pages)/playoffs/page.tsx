@@ -1,47 +1,8 @@
-import { PlayoffsTable } from "@/app/components";
-import { API } from "@/app/constants";
-import { getLeagueYear } from "@/app/helpers";
 import { Metadata } from "next";
 import { Suspense } from "react";
-
-function formatPlayoffData(data) {
-  const { playoffBracketSeries } = data.bracket;
-
-  const rounds = {
-    east: {
-      firstRound: playoffBracketSeries.filter(
-        (s) => s.roundNumber === 1 && s.seriesConference === "East",
-      ),
-      semifinals: playoffBracketSeries.filter(
-        (s) => s.roundNumber === 2 && s.seriesConference === "East",
-      ),
-      finals: playoffBracketSeries.filter(
-        (s) => s.roundNumber === 3 && s.seriesConference === "East",
-      ),
-    },
-    west: {
-      firstRound: playoffBracketSeries.filter(
-        (s) => s.roundNumber === 1 && s.seriesConference === "West",
-      ),
-      semifinals: playoffBracketSeries.filter(
-        (s) => s.roundNumber === 2 && s.seriesConference === "West",
-      ),
-      finals: playoffBracketSeries.filter(
-        (s) => s.roundNumber === 3 && s.seriesConference === "West",
-      ),
-    },
-    nbaFinals: playoffBracketSeries.filter((s) => s.roundNumber === 4),
-  };
-
-  rounds.east.firstRound.sort(
-    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
-  );
-  rounds.west.firstRound.sort(
-    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
-  );
-
-  return rounds;
-}
+import { PlayoffsTable } from "@/app/components";
+import { formatPlayoffData, getLeagueYear } from "@/app/helpers";
+import { API } from "@/app/constants";
 
 async function getData() {
   const year = getLeagueYear(new Date());
