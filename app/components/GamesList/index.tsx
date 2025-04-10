@@ -3,7 +3,7 @@ import { GameCard } from "@/app/components";
 import { ParsedGames } from "@/app/helpers";
 
 type GamesListProps = {
-  games?: ParsedGames;
+  games?: ParsedGames["games"];
 };
 
 function GamesList({ games }: GamesListProps) {

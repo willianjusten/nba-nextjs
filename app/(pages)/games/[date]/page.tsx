@@ -35,12 +35,12 @@ export async function generateMetadata({
 
 async function Games({ params: { date } }: GamesProps) {
   const data = await getData(date);
-  const { day, prevDay, nextDay } = getDays(date);
+  const { day, prevDay, nextDay } = getDays(data?.gameDate);
 
   return (
     <>
       <DateSelector day={day} prevDay={prevDay} nextDay={nextDay} />
-      <GamesList games={data} />
+      <GamesList games={data?.games} />
     </>
   );
 }

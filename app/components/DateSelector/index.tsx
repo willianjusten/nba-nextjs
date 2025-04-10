@@ -13,8 +13,8 @@ export type DateSelectorProps = {
 
 function DateSelector({ day, nextDay, prevDay }: DateSelectorProps) {
   const today = format(new Date(), DATE_LINK_FORMAT);
-  const prevLink = prevDay === today ? "/" : `/games/${prevDay}`;
-  const nextLink = nextDay === today ? "/" : `/games/${nextDay}`;
+  const prevLink = `/games/${prevDay}`;
+  const nextLink = `/games/${nextDay}`;
 
   return (
     <div className="flex flex-col py-12">

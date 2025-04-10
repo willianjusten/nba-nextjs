@@ -10,7 +10,7 @@ export type Meta = {
 };
 
 export type Scoreboard = {
-  gameDate: Date;
+  gameDate: string;
   leagueId: string;
   leagueName: string;
   games: Game[];
