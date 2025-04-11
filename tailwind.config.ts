@@ -20,6 +20,7 @@ const config: Config = {
         slate: {
           750: "#293649",
         },
+        glass: "rgba(112, 115, 133, 0.16)",
       },
       borderColor: {
         main: "rgba(255, 255, 255, 0.24)",

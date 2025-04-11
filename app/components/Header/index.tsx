@@ -41,6 +41,12 @@ function Header() {
         >
           Standings
         </Link>
+        <Link
+          className={pathname === "/playoffs" ? activeLinkClass : linkClass}
+          href="/playoffs"
+        >
+          Playoffs
+        </Link>
       </nav>
     </header>
   );

@@ -225,3 +225,39 @@ export type TeamLeaders = {
   awayLeaders: Leaders;
   seasonLeadersFlag: number;
 };
+
+export type PlayoffRound = {
+  roundNumber: number;
+  displayOrderNumber: number;
+  highSeedId: number;
+  lowSeedId: number;
+  highSeedName?: string;
+  lowSeedName?: string;
+  highSeedRank: number;
+  lowSeedRank: number;
+  highSeedSeriesWins: number;
+  lowSeedSeriesWins: number;
+  seriesWinner: number;
+  seriesConference: string;
+  seriesText?: string;
+};
+
+export type PlayoffBracketData = {
+  bracket: {
+    playoffBracketSeries: PlayoffRound[];
+  };
+};
+
+export type PlayoffBracket = {
+  east: {
+    firstRound: PlayoffRound[];
+    secondRound: PlayoffRound[];
+    thirdRound: PlayoffRound[];
+  };
+  west: {
+    firstRound: PlayoffRound[];
+    secondRound: PlayoffRound[];
+    thirdRound: PlayoffRound[];
+  };
+  nbaFinals: PlayoffRound[];
+};
