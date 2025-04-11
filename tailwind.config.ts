@@ -32,6 +32,9 @@ const config: Config = {
       gridTemplateColumns: {
         "auto-fill": "repeat(auto-fill, minmax(320px, 1fr))",
       },
+      dropShadow: {
+        smoth: '0 0 1px rgba(255,255,255,0.6)'
+      }
     },
   },
   plugins: [],
