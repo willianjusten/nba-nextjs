@@ -89,26 +89,28 @@ const Finals = ({ data }: PlayoffsRoundProps) => (
 
 function PlayoffsTable({ east, west, nbaFinals }: PlayoffBracket) {
   return (
-    <div className="mt-8 overflow-x-scroll md:overflow-auto">
-      <NavBar />
+    <div className="flex flex-grow items-center">
+      <div className="w-full overflow-x-scroll md:overflow-auto">
+        <NavBar />
 
-      <svg
-        viewBox="0 0 1216 593"
-        className="relative mx-auto mb-8 block w-[1216px] align-middle md:w-auto"
-        preserveAspectRatio="xMidYMin slice"
-      >
-        <Connectors />
+        <svg
+          viewBox="0 0 1216 593"
+          className="relative mx-auto block w-[1216px] align-middle md:w-auto"
+          preserveAspectRatio="xMidYMin slice"
+        >
+          <Connectors />
 
-        <EastFirstRound data={east.firstRound} />
-        <EastSecondRound data={east.secondRound} />
-        <EastThirdRound data={east.thirdRound} />
+          <EastFirstRound data={east.firstRound} />
+          <EastSecondRound data={east.secondRound} />
+          <EastThirdRound data={east.thirdRound} />
 
-        <Finals data={nbaFinals} />
+          <Finals data={nbaFinals} />
 
-        <WestFirstRound data={west.firstRound} />
-        <WestSecondRound data={west.secondRound} />
-        <WestThirdRound data={west.thirdRound} />
-      </svg>
+          <WestFirstRound data={west.firstRound} />
+          <WestSecondRound data={west.secondRound} />
+          <WestThirdRound data={west.thirdRound} />
+        </svg>
+      </div>
     </div>
   );
 }
