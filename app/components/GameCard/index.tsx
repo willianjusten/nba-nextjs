@@ -19,6 +19,7 @@ type GameCardProps = {
   homeTeam: GameTeam;
   gameStatus: number;
   gameStatusText: string;
+  broadcaster: string;
   gameTimeUTC: Date;
   period: number;
   details?: boolean;
@@ -33,6 +34,7 @@ function GameCard({
   gameStatusText,
   gameTimeUTC,
   period,
+  broadcaster,
   details = true,
   interactive = true,
 }: GameCardProps) {
@@ -68,6 +70,12 @@ function GameCard({
                 <Time time={gameTimeUTC} />
               ) : (
                 gameStatusText
+              )}
+
+              {gameStatus !== GAME_STATUS.IN_PROGRESS && broadcaster && (
+                <span className="mx-auto block pt-2 text-xs tracking-widest">
+                  {broadcaster}
+                </span>
               )}
 
               {gameStatus == GAME_STATUS.IN_PROGRESS && (

@@ -1,4 +1,4 @@
-import { Games, PlayoffBracketData, Team } from "@/app/api/types";
+import { Broadcaster, Games, PlayoffBracketData, Team } from "@/app/api/types";
 import { orderByStatus } from "@/app/helpers";
 
 export type ParsedGames = ReturnType<typeof parseGames>;
@@ -29,6 +29,7 @@ export const parseGames = (data: Games) => {
       gameTimeUTC,
       homeTeam,
       awayTeam,
+      broadcasters,
     } = game;
 
     return {
@@ -38,6 +39,7 @@ export const parseGames = (data: Games) => {
       period,
       gameClock,
       gameTimeUTC,
+      broadcaster: getBroadcaster(broadcasters.nationalBroadcasters),
       homeTeam: getTeamData(homeTeam),
       awayTeam: getTeamData(awayTeam),
     };
@@ -119,3 +121,24 @@ export function formatPlayoffData(data: PlayoffBracketData) {
 
   return rounds;
 }
+
+/**
+ * This mapper is very generic and works mostly for the playoffs / national
+ * broadcasters. I wasn't able to identify a pattern for the regular season
+ * broadcasters, prime video doesn't have anything that identifies properly,
+ * but since for the playoffs we have the partnerships like TNT/TruTV/Max,
+ * we can identify them by that.
+ */
+const getBroadcaster = (broadcasters: Broadcaster[]) => {
+  const espn = broadcasters.find(
+    (b) =>
+      b.broadcastDisplay.includes("ESPN") || b.broadcastDisplay.includes("ABC"),
+  );
+  const primeVideo = broadcasters.find((b) =>
+    b.broadcastDisplay.includes("TNT/truTV/Max"),
+  );
+
+  if (espn) return "ESPN";
+  if (primeVideo) return "Prime Video";
+  return "";
+};
