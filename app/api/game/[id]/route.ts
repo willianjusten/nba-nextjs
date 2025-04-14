@@ -5,7 +5,6 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   try {
-    // Fetch game data
     const res = await fetch(
       `${API.DETAILS_URL}/boxscore/boxscore_${params.id}.json`,
       {
@@ -92,7 +91,6 @@ export async function GET(
       });
     } catch (error) {
       console.error("Error fetching video:", error);
-      // Return game data even if video fetch fails
       return Response.json({
         ...gameData,
         video: { error: "Error fetching video" },
