@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Header, Footer } from "@/app/components";
 import NProgressProvider from "@/app/components/NProgressProvider";
+import GoogleAnalytics from "@/app/components/GoogleAnalytics";
 
 import "./globals.css";
 
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: 'rgb(14 25 44 / 30%)',
-}
+  themeColor: "rgb(14 25 44 / 30%)",
+};
 
 export default function RootLayout({
   children,
@@ -33,6 +34,7 @@ export default function RootLayout({
             </div>
           </div>
         </NProgressProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );
