@@ -32,6 +32,8 @@ export const parseGames = (data: Games) => {
       broadcasters,
     } = game;
 
+    const broadcaster = getBroadcaster(broadcasters?.nationalBroadcasters);
+
     return {
       gameId,
       gameStatus,
@@ -39,7 +41,7 @@ export const parseGames = (data: Games) => {
       period,
       gameClock,
       gameTimeUTC,
-      broadcaster: getBroadcaster(broadcasters.nationalBroadcasters),
+      broadcaster,
       homeTeam: getTeamData(homeTeam),
       awayTeam: getTeamData(awayTeam),
     };
@@ -130,12 +132,13 @@ export function formatPlayoffData(data: PlayoffBracketData) {
  * we can identify them by that.
  */
 const getBroadcaster = (broadcasters: Broadcaster[]) => {
-  const espn = broadcasters.find(
+  const espn = broadcasters?.find(
     (b) =>
-      b.broadcastDisplay.includes("ESPN") || b.broadcastDisplay.includes("ABC"),
+      b?.broadcastDisplay.includes("ESPN") ||
+      b?.broadcastDisplay.includes("ABC"),
   );
-  const primeVideo = broadcasters.find((b) =>
-    b.broadcastDisplay.includes("TNT/truTV/Max"),
+  const primeVideo = broadcasters?.find((b) =>
+    b?.broadcastDisplay.includes("TNT/truTV/Max"),
   );
 
   if (espn) return "ESPN";
