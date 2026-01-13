@@ -16,6 +16,22 @@ async function getData() {
     },
   );
 
+  if (!res.ok) {
+    return {
+      east: {
+        firstRound: [],
+        secondRound: [],
+        thirdRound: [],
+      },
+      west: {
+        firstRound: [],
+        secondRound: [],
+        thirdRound: [],
+      },
+      nbaFinals: [],
+    };
+  }
+
   const data = await res.json();
 
   return formatPlayoffData(data);
