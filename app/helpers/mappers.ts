@@ -38,7 +38,7 @@ const parseGameData = (games: any[]) => {
       period,
       gameClock,
       gameTimeUTC: gameTimeUTC || gameTimeUtc,
-      // broadcaster,
+      broadcaster: "",
       homeTeam: getTeamData(homeTeam),
       awayTeam: getTeamData(awayTeam),
     };
