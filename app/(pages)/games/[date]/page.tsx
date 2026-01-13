@@ -1,19 +1,16 @@
 import { GamesList, DateSelector } from "@/app/components";
 import { API, DATE_TITLE_FORMAT } from "@/app/constants";
-import { getDays, parseGames } from "@/app/helpers";
+import { getDays, parsePreviousGames } from "@/app/helpers";
 import { format } from "date-fns/format";
 import { Metadata } from "next";
 
 async function getData(date: string) {
-  const res = await fetch(
-    `${API.BASE_URL}/scoreboardv3&GameDate=${date}&LeagueID=00`,
-    {
-      cache: "no-store",
-    },
-  );
+  const res = await fetch(`${API.GAME_CARD_URL}&gamedate=${date}`, {
+    cache: "no-store",
+  });
 
   const data = await res.json();
-  return parseGames(data);
+  return parsePreviousGames(data.cards, date);
 }
 
 type GamesProps = {

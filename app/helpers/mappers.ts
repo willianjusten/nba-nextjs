@@ -3,23 +3,19 @@ import { orderByStatus } from "@/app/helpers";
 
 export type ParsedGames = ReturnType<typeof parseGames>;
 
-export const parseGames = (data: Games) => {
-  const {
-    scoreboard: { gameDate, games },
-  } = data;
-
-  const getTeamData = (team: Team) => {
-    return {
-      teamId: team.teamId,
-      teamName: team.teamName,
-      teamTricode: team.teamTricode,
-      wins: team.wins,
-      losses: team.losses,
-      score: team.score,
-    };
+const getTeamData = (team: Team) => {
+  return {
+    teamId: team.teamId,
+    teamName: team.teamName,
+    teamTricode: team.teamTricode,
+    wins: team.wins,
+    losses: team.losses,
+    score: team.score,
   };
+};
 
-  const parsedGames = games.sort(orderByStatus).map((game) => {
+const parseGameData = (games: any[]) => {
+  return games.sort(orderByStatus).map((game) => {
     const {
       gameId,
       gameStatus,
@@ -27,6 +23,7 @@ export const parseGames = (data: Games) => {
       period,
       gameClock,
       gameTimeUTC,
+      gameTimeUtc,
       homeTeam,
       awayTeam,
       broadcasters,
@@ -40,16 +37,31 @@ export const parseGames = (data: Games) => {
       gameStatusText,
       period,
       gameClock,
-      gameTimeUTC,
+      gameTimeUTC: gameTimeUTC || gameTimeUtc,
       broadcaster,
       homeTeam: getTeamData(homeTeam),
       awayTeam: getTeamData(awayTeam),
     };
   });
+};
+
+export const parseGames = (data: Games) => {
+  const {
+    scoreboard: { gameDate, games },
+  } = data;
 
   return {
     gameDate,
-    games: parsedGames,
+    games: parseGameData(games),
+  };
+};
+
+export const parsePreviousGames = (data: any[], gameDate: string) => {
+  const games = data.map((card) => card.cardData);
+
+  return {
+    gameDate,
+    games: parseGameData(games),
   };
 };
 

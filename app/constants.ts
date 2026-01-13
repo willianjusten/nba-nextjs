@@ -2,6 +2,8 @@ export const API = {
   BASE_URL: "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats",
   DETAILS_URL: "https://cdn.nba.com/static/json/liveData",
   PLAYOFFS_URL: "https://cdn.nba.com/static/json/staticData",
+  GAME_CARD_URL:
+    "https://proxy.boxscores.site/?apiUrl=core-api.nba.com/cp/api/v1.9/feeds/gamecardfeed",
 };
 
 export const COVID_YEAR = 2020;
