@@ -47,7 +47,7 @@ export async function GET(
     const videoTitle = `Game recap: ${homeTeam} ${homeScore}, ${awayTeam} ${awayScore}`;
 
     const apiKey = process.env.YOUTUBE_API_KEY;
-    const channelId = "UCLd4dSmXdrJykO_hgOzbfPw"; // NBA official channel
+    const channelId = "UCWJ2lWNubArHWmf3FIHbfcQ"; // NBA official channel
 
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
       videoTitle,
