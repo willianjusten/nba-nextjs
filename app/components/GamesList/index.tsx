@@ -9,7 +9,7 @@ type GamesListProps = {
 function GamesList({ games }: GamesListProps) {
   if (!games?.length) {
     return (
-      <p className="flex flex-grow items-center justify-center text-center text-2xl">
+      <p className="flex grow items-center justify-center text-center text-2xl">
         No games today :(
       </p>
     );

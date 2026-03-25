@@ -97,7 +97,7 @@ function PlayoffsTable({ east, west, nbaFinals }: PlayoffBracket) {
   }
 
   return (
-    <div className="flex flex-grow items-center">
+    <div className="flex grow items-center">
       <div className="w-full overflow-x-scroll md:overflow-auto">
         <NavBar />
 

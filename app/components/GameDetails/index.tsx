@@ -51,7 +51,7 @@ function GameDetails({ id }: { id: string }) {
 
         {/* Show video only if game is over */}
         {data.game.gameStatus === 3 && (
-          <div className="md:w-[400px] md:flex-shrink-0 lg:w-[550px]">
+          <div className="md:w-[400px] md:shrink-0 lg:w-[550px]">
             <GameVideo gameId={id} />
           </div>
         )}

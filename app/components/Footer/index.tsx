@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-const linkStyle = "border-b-blue-500 text-blue-500 hover:border-b-[1px]";
+const linkStyle = "border-b-blue-500 text-blue-500 hover:border-b";
 
 const authors = [
   {
