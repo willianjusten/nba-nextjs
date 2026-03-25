@@ -29,7 +29,7 @@ function NavBar() {
   );
 
   return (
-    <div className="relative max-w-[100%]">
+    <div className="relative max-w-full">
       <div className="w-[1216px] md:w-auto">
         <svg
           viewBox="0 0 1041 64"

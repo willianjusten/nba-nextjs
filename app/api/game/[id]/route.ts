@@ -1,9 +1,7 @@
 import { API } from "@/app/constants";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     const res = await fetch(
       `${API.DETAILS_URL}/boxscore/boxscore_${params.id}.json`,
