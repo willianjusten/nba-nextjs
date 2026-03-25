@@ -14,12 +14,13 @@ async function getData(id: string) {
 }
 
 type GameDetailsProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export async function generateMetadata({ params }: GameDetailsProps) {
+export async function generateMetadata(props: GameDetailsProps) {
+  const params = await props.params;
   const data = await getData(params.id);
   const homeTeam = data.game?.homeTeam.teamName;
   const awayTeam = data.game?.awayTeam.teamName;
@@ -36,7 +37,13 @@ export async function generateMetadata({ params }: GameDetailsProps) {
   }
 }
 
-export default async function Page({ params: { id } }: GameDetailsProps) {
+export default async function Page(props: GameDetailsProps) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const data = await getData(id);
 
   const fallback = {

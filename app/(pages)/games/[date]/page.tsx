@@ -14,14 +14,13 @@ async function getData(date: string) {
 }
 
 type GamesProps = {
-  params: {
+  params: Promise<{
     date: string;
-  };
+  }>;
 };
 
-export async function generateMetadata({
-  params,
-}: GamesProps): Promise<Metadata> {
+export async function generateMetadata(props: GamesProps): Promise<Metadata> {
+  const params = await props.params;
   const date = params.date;
 
   return {
@@ -30,7 +29,8 @@ export async function generateMetadata({
   };
 }
 
-async function Games({ params }: GamesProps) {
+async function Games(props: GamesProps) {
+  const params = await props.params;
   const { date } = params;
 
   const data = await getData(date);
