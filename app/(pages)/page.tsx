@@ -1,4 +1,5 @@
-import SWRProvider from "@/app/components/SWRProvider";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import QueryClientProvider from "@/app/components/QueryClientProvider";
 import { Games } from "@/app/components";
 
 async function getData() {
@@ -13,13 +14,17 @@ async function getData() {
 export default async function Page() {
   const data = await getData();
 
-  const fallback = {
-    "/api/today": data,
-  };
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["today"],
+    queryFn: getData,
+  });
+
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <SWRProvider fallback={fallback}>
+    <QueryClientProvider dehydratedState={dehydratedState}>
       <Games />
-    </SWRProvider>
+    </QueryClientProvider>
   );
 }
