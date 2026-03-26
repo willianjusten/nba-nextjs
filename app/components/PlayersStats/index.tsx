@@ -23,9 +23,9 @@ function PlayersStats({ team }: PlayersStatsProps) {
               Player
             </TableCell>
             <TableCell>MIN</TableCell>
+            <TableCell>PTS</TableCell>
             <TableCell>REB</TableCell>
             <TableCell>AST</TableCell>
-            <TableCell>PTS</TableCell>
             <TableCell>+/-</TableCell>
           </tr>
         </TableHead>
