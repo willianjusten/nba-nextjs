@@ -23,9 +23,9 @@ function PlayersStats({ team }: PlayersStatsProps) {
               Player
             </TableCell>
             <TableCell>MIN</TableCell>
+            <TableCell>PTS</TableCell>
             <TableCell>REB</TableCell>
             <TableCell>AST</TableCell>
-            <TableCell>PTS</TableCell>
             <TableCell>+/-</TableCell>
           </tr>
         </TableHead>
@@ -38,9 +38,9 @@ function PlayersStats({ team }: PlayersStatsProps) {
               <TableCell>
                 {extractMinutes(player.statistics.minutesCalculated)}
               </TableCell>
+              <TableCell>{player.statistics.points}</TableCell>
               <TableCell>{player.statistics.reboundsTotal}</TableCell>
               <TableCell>{player.statistics.assists}</TableCell>
-              <TableCell>{player.statistics.points}</TableCell>
               <TableCell>{player.statistics.plusMinusPoints}</TableCell>
             </tr>
           ))}
