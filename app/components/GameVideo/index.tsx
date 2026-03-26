@@ -1,8 +1,12 @@
 "use client";
 
-import useSWRImmutable from "swr";
+import { useQuery } from "@tanstack/react-query";
+import type { QueryFunctionContext } from "@tanstack/react-query";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = async (gameId: string) => {
+  const res = await fetch(`/api/game/${gameId}?include_video=true`);
+  return res.json();
+};
 
 type VideoData = {
   videoId: string;
@@ -12,10 +16,11 @@ type VideoData = {
 };
 
 export default function GameVideo({ gameId }: { gameId: string }) {
-  const { data, error } = useSWRImmutable<{ video: VideoData }>(
-    `/api/game/${gameId}?include_video=true`,
-    fetcher,
-  );
+  const { data, error } = useQuery<{ video: VideoData }>({
+    queryKey: ["game-video", gameId],
+    queryFn: () => fetcher(gameId),
+    staleTime: Infinity,
+  });
 
   if (error || !data?.video?.videoId) {
     return null;
@@ -28,7 +33,7 @@ export default function GameVideo({ gameId }: { gameId: string }) {
         <iframe
           src={`https://www.youtube.com/embed/${data.video.videoId}`}
           title={data.video.title}
-          className="absolute left-0 top-0 h-full w-full rounded-lg"
+          className="absolute top-0 left-0 h-full w-full rounded-lg"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
