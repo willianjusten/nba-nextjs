@@ -1,6 +1,7 @@
 export { default as BackButton } from "./BackButton";
 export { default as OutlineButton } from "./OutlineButton";
 export { default as DateSelector } from "./DateSelector";
+export { default as QueryClientProvider } from "./QueryClientProvider";
 export { default as Footer } from "./Footer";
 export { default as GameCard } from "./GameCard";
 export { default as GamesList } from "./GamesList";
