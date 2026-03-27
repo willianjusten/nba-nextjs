@@ -17,6 +17,7 @@
         "name": "next"
       }
     ],
+    "types": ["vitest/globals"],
     "paths": {
       "@/*": ["./*"]
     },
@@ -27,7 +28,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "jest.setup.js",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
