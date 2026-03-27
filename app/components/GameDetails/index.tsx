@@ -1,6 +1,6 @@
 "use client";
 
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import {
   BackButton,
   GameCard,
@@ -11,12 +11,22 @@ import {
 import GameVideo from "@/app/components/GameVideo";
 import { useTitle } from "@/app/hooks/use-title";
 
-const fetcher = (...args: [RequestInfo, RequestInit]) =>
-  fetch(...args).then((res) => res.json());
+const fetcher = async (id: string) => {
+  const res = await fetch(`/api/game/${id}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch game");
+  }
+
+  return res.json();
+};
 
 function GameDetails({ id }: { id: string }) {
-  const { data } = useSWR(`/api/game/${id}`, fetcher, {
-    refreshInterval: 20000,
+  const { data } = useQuery({
+    queryKey: ["game", id],
+    queryFn: () => fetcher(id),
+    refetchInterval: 20000,
+    staleTime: 20000,
   });
 
   const homeTeam = data?.game?.homeTeam;
@@ -57,7 +67,7 @@ function GameDetails({ id }: { id: string }) {
         )}
       </div>
 
-      <div className="mt-8 flex gap-4 overflow-x-auto md:gap-12 justify-between">
+      <div className="mt-8 flex justify-between gap-4 overflow-x-auto md:gap-12">
         <PlayersStats team={data.game.homeTeam} />
         <PlayersStats team={data.game.awayTeam} />
 
