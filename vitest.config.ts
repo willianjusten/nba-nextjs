@@ -6,8 +6,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: "jsdom",
-    setupFiles: ["./vitest.setup.ts"],
+    environment: "happy-dom",
     include: ["**/*.{test,spec}.{ts,tsx}", "**/test.{ts,tsx}"],
     coverage: {
       reporter: ["text", "json", "html"],
