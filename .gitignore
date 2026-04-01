@@ -35,3 +35,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude Code working directory
+claude/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Claude plans
+.claude/plans/
