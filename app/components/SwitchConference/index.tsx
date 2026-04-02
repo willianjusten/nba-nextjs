@@ -27,16 +27,13 @@ function SwitchConference({
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const resolvedConference =
+  const conference =
     searchParams.get(CONFERENCE_KEY) ?? initialConference ?? EAST_CONFERENCE;
-
-  const [conference, setConference] = useState(resolvedConference);
 
   const isEast = conference === EAST_CONFERENCE;
   const isWest = conference === WEST_CONFERENCE;
 
   const updateConference = (next: string) => {
-    setConference(next);
     setConferenceCookie(next);
     router.push(`${pathname}?conference=${next}`);
   };
