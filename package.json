@@ -11,6 +11,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
+    "@bprogress/next": "^3.2.12",
     "@radix-ui/react-popover": "^1.1.0",
     "@tanstack/react-query": "^5.95.2",
     "classnames": "^2.5.1",
