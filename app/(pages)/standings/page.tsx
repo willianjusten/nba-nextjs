@@ -1,4 +1,5 @@
-import { API } from "@/app/constants";
+import { API, CONFERENCE_KEY } from "@/app/constants";
+import { cookies } from "next/headers";
 import { SwitchConference } from "@/app/components";
 import { getLeagueYear, conferenceExtractor } from "@/app/helpers";
 import { Metadata } from "next";
@@ -33,10 +34,16 @@ export const metadata: Metadata = {
 
 async function Standings() {
   const { east, west } = await getData();
+  const cookieStore = await cookies();
+  const initialConference = cookieStore.get(CONFERENCE_KEY)?.value;
 
   return (
     <Suspense>
-      <SwitchConference east={east} west={west} />
+      <SwitchConference
+        east={east}
+        west={west}
+        initialConference={initialConference}
+      />
     </Suspense>
   );
 }

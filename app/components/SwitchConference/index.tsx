@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
+import { setConferenceCookie } from "@/app/helpers";
 import type { Conference } from "@/app/helpers";
 import { OutlineButton, StandingTable } from "@/app/components";
 import {
@@ -14,47 +15,42 @@ import {
 type SwitchConferenceProps = {
   east: Conference;
   west: Conference;
+  initialConference?: string;
 };
 
-function SwitchConference({ east, west }: SwitchConferenceProps) {
+function SwitchConference({
+  east,
+  west,
+  initialConference,
+}: SwitchConferenceProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  function getLocalStorageConference() {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem(CONFERENCE_KEY);
-    }
+  const resolved =
+    searchParams.get(CONFERENCE_KEY) ?? initialConference ?? EAST_CONFERENCE;
 
-    return null;
-  }
-
-  const initialConference =
-    searchParams.get(CONFERENCE_KEY) || getLocalStorageConference();
-
-  const [conference, setConference] = useState(
-    initialConference || EAST_CONFERENCE,
-  );
+  const [conference, setConference] = useState(resolved);
 
   const isEast = conference === EAST_CONFERENCE;
   const isWest = conference === WEST_CONFERENCE;
 
-  const updateConference = (conference: string) => {
-    setConference(conference);
-    router.push(`${pathname}?conference=${conference}`);
-    localStorage.setItem(CONFERENCE_KEY, conference);
+  const updateConference = (next: string) => {
+    setConference(next);
+    setConferenceCookie(next);
+    router.push(`${pathname}?conference=${next}`);
   };
 
   return (
     <>
       <div className="flex gap-4">
         <OutlineButton
-          label={"East"}
+          label="East"
           active={isEast}
           onClick={() => updateConference(EAST_CONFERENCE)}
         />
         <OutlineButton
-          label={"West"}
+          label="West"
           active={isWest}
           onClick={() => updateConference(WEST_CONFERENCE)}
         />
