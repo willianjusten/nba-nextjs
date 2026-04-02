@@ -27,10 +27,10 @@ function SwitchConference({
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const resolved =
+  const resolvedConference =
     searchParams.get(CONFERENCE_KEY) ?? initialConference ?? EAST_CONFERENCE;
 
-  const [conference, setConference] = useState(resolved);
+  const [conference, setConference] = useState(resolvedConference);
 
   const isEast = conference === EAST_CONFERENCE;
   const isWest = conference === WEST_CONFERENCE;
