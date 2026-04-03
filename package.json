@@ -11,12 +11,12 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
+    "@bprogress/next": "^3.2.12",
     "@radix-ui/react-popover": "^1.1.0",
     "@tanstack/react-query": "^5.95.2",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "next": "^16.2.1",
-    "next-nprogress-bar": "^2.4.7",
     "react": "^19.2.4",
     "react-day-picker": "^9.14.0",
     "react-dom": "^19.2.4"

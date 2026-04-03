@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from 'next-nprogress-bar';
+import { useRouter } from "@bprogress/next/app";
 import { format, parseISO } from "date-fns";
 import {
   Calendar,
