@@ -39,11 +39,7 @@ async function Standings() {
 
   return (
     <Suspense>
-      <SwitchConference
-        east={east}
-        west={west}
-        initialConference={initialConference}
-      />
+      <SwitchConference east={east} west={west} initialConference={initialConference} />
     </Suspense>
   );
 }

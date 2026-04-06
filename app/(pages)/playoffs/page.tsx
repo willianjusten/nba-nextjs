@@ -7,14 +7,11 @@ import { API } from "@/app/constants";
 async function getData() {
   const year = getLeagueYear(new Date());
 
-  const res = await fetch(
-    `${API.PLAYOFFS_URL}/brackets/${year}/PlayoffBracket.json`,
-    {
-      next: {
-        revalidate: 60,
-      },
+  const res = await fetch(`${API.PLAYOFFS_URL}/brackets/${year}/PlayoffBracket.json`, {
+    next: {
+      revalidate: 60,
     },
-  );
+  });
 
   if (!res.ok) {
     return {
