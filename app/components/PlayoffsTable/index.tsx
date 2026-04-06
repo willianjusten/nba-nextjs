@@ -88,11 +88,7 @@ const Finals = ({ data }: PlayoffsRoundProps) => (
 );
 
 function PlayoffsTable({ east, west, nbaFinals }: PlayoffBracket) {
-  if (
-    east.firstRound.length === 0 ||
-    west.firstRound.length === 0 ||
-    nbaFinals.length === 0
-  ) {
+  if (east.firstRound.length === 0 || west.firstRound.length === 0 || nbaFinals.length === 0) {
     return <div>No data available</div>;
   }
 

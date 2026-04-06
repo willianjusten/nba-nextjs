@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { QueryFunctionContext } from "@tanstack/react-query";
 
 const fetcher = async (gameId: string) => {
   const res = await fetch(`/api/game/${gameId}?include_video=true`);

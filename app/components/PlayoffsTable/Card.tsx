@@ -10,8 +10,7 @@ const SVG_DIMENSIONS = {
 };
 
 const WinnerIndicator = ({ conference }: { conference: string }) => {
-  const transform =
-    conference === "East" ? "translate(0, 0)" : "translate(176, 0)";
+  const transform = conference === "East" ? "translate(0, 0)" : "translate(176, 0)";
   return (
     <rect
       height={SVG_DIMENSIONS.indicator.height}
@@ -41,21 +40,15 @@ const TeamRow = ({
   seriesWins,
   hasTeam,
 }: TeamInfo) => {
-  const teamName =
-    seedName || (TEAM_ID as Record<string, string>)[seedId] || "TBD";
+  const teamName = seedName || (TEAM_ID as Record<string, string>)[seedId] || "TBD";
   const teamLogo = `https://cdn.nba.com/logos/nba/${seedId}/primary/L/logo.svg`;
   const fallbackLogo = "https://cdn.nba.com/logos/nba/fallback.svg";
   const isWinner = seriesWinner !== 0 && seriesWinner === seedId;
 
   return (
     <>
-      <GlassRect
-        height={SVG_DIMENSIONS.row.height}
-        width={SVG_DIMENSIONS.row.width}
-      />
-      <g
-        className={`text-xs ${seriesWinner === 0 ? "opacity-100" : !isWinner && "opacity-50"}`}
-      >
+      <GlassRect height={SVG_DIMENSIONS.row.height} width={SVG_DIMENSIONS.row.width} />
+      <g className={`text-xs ${seriesWinner === 0 ? "opacity-100" : !isWinner && "opacity-50"}`}>
         {isWinner && <WinnerIndicator conference={seriesConference} />}
 
         <SvgText x={8} y={24} className="font-normal">
@@ -115,11 +108,7 @@ function Card({ data }: { data: PlayoffRound }) {
       </g>
       {data.seriesWinner && (
         <g transform="translate(0, 114)">
-          <GlassRect
-            height={20}
-            width={SVG_DIMENSIONS.row.width}
-            className="fill-[#4b566e]"
-          />
+          <GlassRect height={20} width={SVG_DIMENSIONS.row.width} className="fill-[#4b566e]" />
           <SvgText y={13} x={4} className="text-center text-[12px] font-bold">
             {data.seriesText}
           </SvgText>

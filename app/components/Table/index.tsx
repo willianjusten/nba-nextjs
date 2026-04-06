@@ -1,31 +1,20 @@
 import cn from "classnames";
 
-function Table({
-  fullWidth = false,
-  children,
-}: React.PropsWithChildren<{ fullWidth?: boolean }>) {
+function Table({ fullWidth = false, children }: React.PropsWithChildren<{ fullWidth?: boolean }>) {
   return (
     <table
-      className={cn(
-        "my-5 min-w-full border border-main bg-glass text-center text-white",
-        { "md:min-w-min": !fullWidth },
-      )}
+      className={cn("my-5 min-w-full border border-main bg-glass text-center text-white", {
+        "md:min-w-min": !fullWidth,
+      })}
     >
       {children}
     </table>
   );
 }
 
-function TableCell({
-  className,
-  children,
-}: React.PropsWithChildren<{ className?: string }>) {
+function TableCell({ className, children }: React.PropsWithChildren<{ className?: string }>) {
   return (
-    <td
-      className={`border border-main px-3 py-2 ${className ? className : ""}`}
-    >
-      {children}
-    </td>
+    <td className={`border border-main px-3 py-2 ${className ? className : ""}`}>{children}</td>
   );
 }
 

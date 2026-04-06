@@ -26,19 +26,12 @@ function Header() {
 
       <nav className="flex gap-6">
         <Link
-          className={
-            pathname === "/" || pathname.includes("/games/")
-              ? activeLinkClass
-              : linkClass
-          }
+          className={pathname === "/" || pathname.includes("/games/") ? activeLinkClass : linkClass}
           href="/"
         >
           Home
         </Link>
-        <Link
-          className={pathname === "/standings" ? activeLinkClass : linkClass}
-          href="/standings"
-        >
+        <Link className={pathname === "/standings" ? activeLinkClass : linkClass} href="/standings">
           Standings
         </Link>
         {/* <Link

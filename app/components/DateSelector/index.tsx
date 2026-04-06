@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { format } from "date-fns";
 
 import { ArrowIcon } from "@/app/components";
 import DatePicker from "@/app/components/DatePicker";
-import { DATE_LINK_FORMAT } from "@/app/constants";
 
 export type DateSelectorProps = {
   day: string;
@@ -12,7 +10,6 @@ export type DateSelectorProps = {
 };
 
 function DateSelector({ day, nextDay, prevDay }: DateSelectorProps) {
-  const today = format(new Date(), DATE_LINK_FORMAT);
   const prevLink = `/games/${prevDay}`;
   const nextLink = `/games/${nextDay}`;
 

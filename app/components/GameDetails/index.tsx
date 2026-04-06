@@ -1,13 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import {
-  BackButton,
-  GameCard,
-  GameSummary,
-  PlayersStats,
-  TeamStats,
-} from "@/app/components";
+import { BackButton, GameCard, GameSummary, PlayersStats, TeamStats } from "@/app/components";
 import GameVideo from "@/app/components/GameVideo";
 import { useTitle } from "@/app/hooks/use-title";
 

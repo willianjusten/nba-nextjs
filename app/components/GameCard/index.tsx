@@ -57,25 +57,21 @@ function GameCard({
           <div className="mt-3 flex flex-1">
             <p
               className={cn("w-1/3 text-left text-2xl font-bold", {
-                "opacity-50":
-                  winner !== AWAY_TEAM && gameStatus === GAME_STATUS.ENDED,
+                "opacity-50": winner !== AWAY_TEAM && gameStatus === GAME_STATUS.ENDED,
               })}
             >
               {!!period && awayTeam.score}
             </p>
 
             <p className="flex-1 whitespace-nowrap px-3 pt-1.5 text-center text-sm uppercase">
-              {gameStatusText.includes("ET") ||
-              gameStatusText.includes("PT") ? (
+              {gameStatusText.includes("ET") || gameStatusText.includes("PT") ? (
                 <Time time={gameTimeUTC} />
               ) : (
                 gameStatusText
               )}
 
               {gameStatus !== GAME_STATUS.IN_PROGRESS && broadcaster && (
-                <span className="mx-auto block pt-2 text-xs tracking-widest">
-                  {broadcaster}
-                </span>
+                <span className="mx-auto block pt-2 text-xs tracking-widest">{broadcaster}</span>
               )}
 
               {gameStatus == GAME_STATUS.IN_PROGRESS && (
@@ -88,8 +84,7 @@ function GameCard({
 
             <p
               className={cn("w-1/3 text-right text-2xl font-bold", {
-                "opacity-50":
-                  winner !== HOME_TEAM && gameStatus === GAME_STATUS.ENDED,
+                "opacity-50": winner !== HOME_TEAM && gameStatus === GAME_STATUS.ENDED,
               })}
             >
               {!!period && homeTeam.score}
@@ -100,9 +95,7 @@ function GameCard({
         </div>
 
         {details && (
-          <footer className="border-t border-main py-2 text-center text-sm">
-            View details
-          </footer>
+          <footer className="border-t border-main py-2 text-center text-sm">View details</footer>
         )}
       </div>
     </article>

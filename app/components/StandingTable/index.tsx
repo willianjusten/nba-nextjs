@@ -61,9 +61,7 @@ function StandingTable({ label, conference }: StandingTableProps) {
               <TableCell>{team.win}</TableCell>
               <TableCell>{team.loss}</TableCell>
               <TableCell>{team.percentage}</TableCell>
-              <TableCell>
-                {team.gamesBehind === "0.0" ? "-" : team.gamesBehind}
-              </TableCell>
+              <TableCell>{team.gamesBehind === "0.0" ? "-" : team.gamesBehind}</TableCell>
               <TableCell>{team.homeRecord}</TableCell>
               <TableCell>{team.awayRecord}</TableCell>
               <TableCell>{team.lastTenRecord}</TableCell>
@@ -74,15 +72,11 @@ function StandingTable({ label, conference }: StandingTableProps) {
       </Table>
       <div className="flex justify-center">
         <div className="mr-6 flex items-center">
-          <div
-            className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playoff}`}
-          ></div>
+          <div className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playoff}`}></div>
           <span className="text-sm text-gray-400">Playoffs</span>
         </div>
         <div className="flex items-center">
-          <div
-            className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playin}`}
-          ></div>
+          <div className={`mr-2 h-5 w-10 rounded-full ${standing_colors.playin}`}></div>
           <span className="text-sm text-gray-400">Play-In Tournament</span>
         </div>
       </div>

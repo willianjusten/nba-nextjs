@@ -1,16 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 import { setConferenceCookie } from "@/app/helpers";
 import type { Conference } from "@/app/helpers";
 import { OutlineButton, StandingTable } from "@/app/components";
-import {
-  EAST_CONFERENCE,
-  WEST_CONFERENCE,
-  CONFERENCE_KEY,
-} from "@/app/constants";
+import { EAST_CONFERENCE, WEST_CONFERENCE, CONFERENCE_KEY } from "@/app/constants";
 
 type SwitchConferenceProps = {
   east: Conference;
@@ -18,17 +13,12 @@ type SwitchConferenceProps = {
   initialConference?: string;
 };
 
-function SwitchConference({
-  east,
-  west,
-  initialConference,
-}: SwitchConferenceProps) {
+function SwitchConference({ east, west, initialConference }: SwitchConferenceProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const conference =
-    searchParams.get(CONFERENCE_KEY) ?? initialConference ?? EAST_CONFERENCE;
+  const conference = searchParams.get(CONFERENCE_KEY) ?? initialConference ?? EAST_CONFERENCE;
 
   const isEast = conference === EAST_CONFERENCE;
   const isWest = conference === WEST_CONFERENCE;
