@@ -77,10 +77,7 @@ type ResultSet = {
 
 export type Conference = ReturnType<typeof conferenceExtractor>;
 
-export const conferenceExtractor = (
-  teams: ResultSet["rowSet"],
-  isEast: boolean,
-) =>
+export const conferenceExtractor = (teams: ResultSet["rowSet"], isEast: boolean) =>
   teams
     .filter((team) => (isEast ? team[6] === "East" : team[6] === "West"))
     .map((team) => ({
@@ -126,12 +123,8 @@ export function formatPlayoffData(data: PlayoffBracketData) {
     nbaFinals: playoffBracketSeries.filter((s) => s.roundNumber === 4),
   };
 
-  rounds.east.firstRound.sort(
-    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
-  );
-  rounds.west.firstRound.sort(
-    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
-  );
+  rounds.east.firstRound.sort((a, b) => a.displayOrderNumber - b.displayOrderNumber);
+  rounds.west.firstRound.sort((a, b) => a.displayOrderNumber - b.displayOrderNumber);
 
   return rounds;
 }
@@ -145,13 +138,9 @@ export function formatPlayoffData(data: PlayoffBracketData) {
  */
 const getBroadcaster = (broadcasters: Broadcaster[]) => {
   const espn = broadcasters?.find(
-    (b) =>
-      b?.broadcastDisplay.includes("ESPN") ||
-      b?.broadcastDisplay.includes("ABC"),
+    (b) => b?.broadcastDisplay.includes("ESPN") || b?.broadcastDisplay.includes("ABC"),
   );
-  const primeVideo = broadcasters?.find((b) =>
-    b?.broadcastDisplay.includes("TNT/truTV/Max"),
-  );
+  const primeVideo = broadcasters?.find((b) => b?.broadcastDisplay.includes("TNT/truTV/Max"));
 
   if (espn) return "ESPN";
   if (primeVideo) return "Prime Video";
