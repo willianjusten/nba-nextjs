@@ -12,7 +12,7 @@ type TeamInfoProps = {
 
 function TeamInfo({ team }: TeamInfoProps) {
   const teamName = team.teamName || "TBD";
-  const logo = !!team.teamId
+  const logo = team.teamId
     ? `https://cdn.nba.com/logos/nba/${team.teamId}/primary/L/logo.svg`
     : "https://cdn.nba.com/logos/nba/fallback.svg";
   const hasRecord = team.wins !== undefined && team.losses !== undefined;

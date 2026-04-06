@@ -16,7 +16,7 @@ const PopoverContent = forwardRef<
       ref={ref}
       align={align}
       sideOffset={sideOffset}
-      className={cn("bg-layout text-popover-foreground z-50 min-h-1 rounded-md border p-4")}
+      className={cn("bg-layout text-popover-foreground z-50 min-h-1 rounded-md border p-4", className)}
       {...props}
     />
   </PopoverPrimitive.Portal>
