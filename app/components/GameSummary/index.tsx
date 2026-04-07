@@ -4,7 +4,11 @@ import { Table, TableCell, TableHead } from "@/app/components";
 function GameSummary({ game }: { game: Game }) {
   const renderPeriods = (periods: Period[], isHeader = false) =>
     periods.map(({ period, score }, index: number) => {
-      const content = isHeader ? (period > 4 ? `OT${period - 4}` : `Q${period}`) : score;
+      const content = isHeader
+        ? period > 4
+          ? `OT${period - 4}`
+          : `Q${period}`
+        : score;
 
       return <TableCell key={index}>{content}</TableCell>;
     });

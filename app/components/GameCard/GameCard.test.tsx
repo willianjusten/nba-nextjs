@@ -39,7 +39,11 @@ describe("GameCard", () => {
 
   it("renders the live indicator when the game is in progress", () => {
     render(
-      <GameCard {...defaultProps} gameStatus={GAME_STATUS.IN_PROGRESS} gameStatusText="Q2 05:00" />,
+      <GameCard
+        {...defaultProps}
+        gameStatus={GAME_STATUS.IN_PROGRESS}
+        gameStatusText="Q2 05:00"
+      />,
     );
 
     expect(screen.getByText("Live")).toBeDefined();

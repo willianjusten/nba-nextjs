@@ -43,7 +43,11 @@ type Connector = {
 function Connectors() {
   const renderConnectors = (connectors: Connector[]) =>
     connectors.map((connector: Connector, i: number) => (
-      <polyline key={i} transform={connector.transform} points={connector.points} />
+      <polyline
+        key={i}
+        transform={connector.transform}
+        points={connector.points}
+      />
     ));
 
   return (

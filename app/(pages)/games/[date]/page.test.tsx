@@ -38,8 +38,11 @@ describe("Games by date page", () => {
 
     expect(await screen.findByText(/lakers/i)).toBeDefined();
     expect(await screen.findByText("Heat")).toBeDefined();
-    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining("gamedate=2026-03-31"), {
-      cache: "no-store",
-    });
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining("gamedate=2026-03-31"),
+      {
+        cache: "no-store",
+      },
+    );
   });
 });

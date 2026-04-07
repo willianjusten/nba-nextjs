@@ -6,7 +6,9 @@ export const GlassRect = ({
   width: number;
   height: number;
   className?: string;
-}) => <rect height={height} width={width} className={`fill-glass ${className}`} />;
+}) => (
+  <rect height={height} width={width} className={`fill-glass ${className}`} />
+);
 
 export const SvgText = ({
   x,

@@ -24,10 +24,16 @@ function Footer() {
         <span>
           {authors.map((item, index) => (
             <Fragment key={index}>
-              <a className={linkStyle} href={item.href} target="_blank" rel="noreferrer">
+              <a
+                className={linkStyle}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+              >
                 {item.name}
               </a>
-              {index < authors.length - 1 && (index === authors.length - 2 ? " and " : ", ")}
+              {index < authors.length - 1 &&
+                (index === authors.length - 2 ? " and " : ", ")}
             </Fragment>
           ))}
         </span>

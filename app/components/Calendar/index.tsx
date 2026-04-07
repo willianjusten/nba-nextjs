@@ -1,7 +1,11 @@
 "use client";
 
 import { isToday } from "date-fns";
-import { DayPicker, DayPickerProps, getDefaultClassNames } from "react-day-picker";
+import {
+  DayPicker,
+  DayPickerProps,
+  getDefaultClassNames,
+} from "react-day-picker";
 import { ChevronIcon } from "@/app/components";
 
 type CalendarProps = {
@@ -33,7 +37,9 @@ function Calendar({ classNames, ...props }: CalendarProps) {
         day_button:
           "size-8 p-0 font-normal flex items-center justify-center rounded-md transition-colors cursor-pointer",
         selected: "bg-white text-black font-bold rounded",
-        today: isTodaySelected ? "bg-slate-700/50 rounded" : "bg-white text-black rounded",
+        today: isTodaySelected
+          ? "bg-slate-700/50 rounded"
+          : "bg-white text-black rounded",
         outside: "opacity-30",
         ...classNames,
       }}

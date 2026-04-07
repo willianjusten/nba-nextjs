@@ -22,7 +22,8 @@ export default async function GET({ params }: { params: { id: string } }) {
         style={{
           fontSize: 40,
           color: "black",
-          background: "linear-gradient(160deg,rgba(14,25,44,.3) 55%,rgba(200,15,46,.3))",
+          background:
+            "linear-gradient(160deg,rgba(14,25,44,.3) 55%,rgba(200,15,46,.3))",
           backgroundColor: "rgb(15 23 42/1)",
           width: "100%",
           height: "100%",
@@ -66,7 +67,8 @@ export default async function GET({ params }: { params: { id: string } }) {
       style={{
         fontSize: 40,
         color: "black",
-        background: "linear-gradient(160deg,rgba(14,25,44,.3) 55%,rgba(200,15,46,.3))",
+        background:
+          "linear-gradient(160deg,rgba(14,25,44,.3) 55%,rgba(200,15,46,.3))",
         backgroundColor: "rgb(15 23 42/1)",
         width: "100%",
         height: "100%",
@@ -93,7 +95,9 @@ export default async function GET({ params }: { params: { id: string } }) {
           </div>
 
           <div tw="mt-10 flex flex-1">
-            <p tw="flex-1 px-3 pt-1.5 text-center justify-center text-white uppercase">X</p>
+            <p tw="flex-1 px-3 pt-1.5 text-center justify-center text-white uppercase">
+              X
+            </p>
           </div>
 
           <div tw="flex w-1/4 flex-col items-center text-center">

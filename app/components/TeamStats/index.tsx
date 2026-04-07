@@ -31,7 +31,9 @@ function TeamStats({ game }: TeamStatsProps) {
             <TableCell className="min-w-[90px] bg-slate-900 font-bold">
               {game.homeTeam.teamName}
             </TableCell>
-            <TableCell className="min-w-[150px] bg-slate-900 font-bold">Stats</TableCell>
+            <TableCell className="min-w-[150px] bg-slate-900 font-bold">
+              Stats
+            </TableCell>
             <TableCell className="min-w-[90px] bg-slate-900 font-bold">
               {game.awayTeam.teamName}
             </TableCell>

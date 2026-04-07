@@ -19,7 +19,9 @@ function PlayersStats({ team }: PlayersStatsProps) {
       <Table>
         <TableHead>
           <tr>
-            <TableCell className="min-w-[120px] text-left sm:min-w-full">Player</TableCell>
+            <TableCell className="min-w-[120px] text-left sm:min-w-full">
+              Player
+            </TableCell>
             <TableCell>MIN</TableCell>
             <TableCell>PTS</TableCell>
             <TableCell>REB</TableCell>
@@ -30,8 +32,12 @@ function PlayersStats({ team }: PlayersStatsProps) {
         <tbody>
           {team.players.map((player) => (
             <tr key={player.jerseyNum}>
-              <TableCell className="truncate text-left">{player.nameI}</TableCell>
-              <TableCell>{extractMinutes(player.statistics.minutesCalculated)}</TableCell>
+              <TableCell className="truncate text-left">
+                {player.nameI}
+              </TableCell>
+              <TableCell>
+                {extractMinutes(player.statistics.minutesCalculated)}
+              </TableCell>
               <TableCell>{player.statistics.points}</TableCell>
               <TableCell>{player.statistics.reboundsTotal}</TableCell>
               <TableCell>{player.statistics.assists}</TableCell>

@@ -74,7 +74,10 @@ type ResultSet = {
 
 export type Conference = ReturnType<typeof conferenceExtractor>;
 
-export const conferenceExtractor = (teams: ResultSet["rowSet"], isEast: boolean) =>
+export const conferenceExtractor = (
+  teams: ResultSet["rowSet"],
+  isEast: boolean,
+) =>
   teams
     .filter((team) => (isEast ? team[6] === "East" : team[6] === "West"))
     .map((team) => ({
@@ -120,8 +123,12 @@ export function formatPlayoffData(data: PlayoffBracketData) {
     nbaFinals: playoffBracketSeries.filter((s) => s.roundNumber === 4),
   };
 
-  rounds.east.firstRound.sort((a, b) => a.displayOrderNumber - b.displayOrderNumber);
-  rounds.west.firstRound.sort((a, b) => a.displayOrderNumber - b.displayOrderNumber);
+  rounds.east.firstRound.sort(
+    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
+  );
+  rounds.west.firstRound.sort(
+    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
+  );
 
   return rounds;
 }
