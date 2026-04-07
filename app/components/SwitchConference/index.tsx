@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 import { setConferenceCookie } from "@/app/helpers";

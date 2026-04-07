@@ -42,7 +42,6 @@ export default async function Page(props: GameDetailsProps) {
   const params = await props.params;
   const { id } = params;
 
-  const data = await getData(id);
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

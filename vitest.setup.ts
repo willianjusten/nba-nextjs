@@ -11,3 +11,15 @@ vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: any) =>
     React.createElement("a", { href, ...props }, children),
 }));
+
+vi.mock("@bprogress/next/app", () => ({
+  __esModule: true,
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    refresh: vi.fn(),
+  }),
+}));

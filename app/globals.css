@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @utility container {
   @media (width >= --theme(--breakpoint-sm)) {
@@ -31,7 +31,7 @@
     rgba(48, 49, 58, 0.3) 101.18%,
     rgba(48, 49, 58, 0.3) 101.18%
   );
-  --background-image-main: url('/images/nba-logo-blue.svg');
+  --background-image-main: url("/images/nba-logo-blue.svg");
 
   --grid-template-columns-auto-fill: repeat(auto-fill, minmax(320px, 1fr));
 
@@ -62,7 +62,6 @@
 }
 
 @layer utilities {
-
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;

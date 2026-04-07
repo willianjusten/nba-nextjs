@@ -8,7 +8,9 @@ function Table({
     <table
       className={cn(
         "my-5 min-w-full border border-main bg-glass text-center text-white",
-        { "md:min-w-min": !fullWidth },
+        {
+          "md:min-w-min": !fullWidth,
+        },
       )}
     >
       {children}
