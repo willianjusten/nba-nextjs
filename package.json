@@ -12,7 +12,8 @@
     "lint:oxc": "oxlint .",
     "lint:oxc:fix": "oxlint --fix .",
     "format": "oxfmt --write .",
-    "format:check": "oxfmt --check ."
+    "format:check": "oxfmt --check .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@bprogress/next": "^3.2.12",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitest/coverage-v8": "^4.1.2",
     "happy-dom": "^20.8.9",
+    "husky": "^9.1.7",
     "oxfmt": "^0.43.0",
     "oxlint": "^1.58.0",
     "postcss": "^8.5.8",
