@@ -11,6 +11,8 @@ type PlayersStatsProps = {
 };
 
 function PlayersStats({ team }: PlayersStatsProps) {
+  const headerCellClassName = "border border-main px-3 py-2";
+
   return (
     <div>
       <h1 className="text-2xl font-bold">
@@ -19,21 +21,28 @@ function PlayersStats({ team }: PlayersStatsProps) {
       <Table>
         <TableHead>
           <tr>
-            <TableCell className="min-w-[120px] text-left sm:min-w-full">
+            <th
+              className={`${headerCellClassName} min-w-[120px] text-left sm:min-w-full`}
+            >
               Player
-            </TableCell>
-            <TableCell>MIN</TableCell>
-            <TableCell>PTS</TableCell>
-            <TableCell>REB</TableCell>
-            <TableCell>AST</TableCell>
-            <TableCell>+/-</TableCell>
+            </th>
+            <th className={headerCellClassName}>MIN</th>
+            <th className={headerCellClassName}>PTS</th>
+            <th className={headerCellClassName}>REB</th>
+            <th className={headerCellClassName}>AST</th>
+            <th className={headerCellClassName}>+/-</th>
           </tr>
         </TableHead>
         <tbody>
           {team.players.map((player) => (
-            <tr key={player.jerseyNum}>
-              <TableCell className="truncate text-left">
-                {player.nameI}
+            <tr key={player.personId}>
+              <TableCell className="text-left">
+                <div className="inline-flex items-center gap-2">
+                  <span className="inline-flex w-[20px] shrink-0 justify-end opacity-40">
+                    {player.jerseyNum}
+                  </span>
+                  <span className="truncate">{player.nameI}</span>
+                </div>
               </TableCell>
               <TableCell>
                 {extractMinutes(player.statistics.minutesCalculated)}
