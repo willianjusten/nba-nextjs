@@ -11,8 +11,6 @@ type PlayersStatsProps = {
 };
 
 function PlayersStats({ team }: PlayersStatsProps) {
-  const headerCellClassName = "border border-main px-3 py-2";
-
   return (
     <div>
       <h1 className="text-2xl font-bold">
@@ -21,16 +19,14 @@ function PlayersStats({ team }: PlayersStatsProps) {
       <Table>
         <TableHead>
           <tr>
-            <th
-              className={`${headerCellClassName} min-w-[120px] text-left sm:min-w-full`}
-            >
+            <TableCell className="min-w-[120px] text-left sm:min-w-full">
               Player
-            </th>
-            <th className={headerCellClassName}>MIN</th>
-            <th className={headerCellClassName}>PTS</th>
-            <th className={headerCellClassName}>REB</th>
-            <th className={headerCellClassName}>AST</th>
-            <th className={headerCellClassName}>+/-</th>
+            </TableCell>
+            <TableCell>MIN</TableCell>
+            <TableCell>PTS</TableCell>
+            <TableCell>REB</TableCell>
+            <TableCell>AST</TableCell>
+            <TableCell>+/-</TableCell>
           </tr>
         </TableHead>
         <tbody>
