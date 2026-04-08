@@ -45,12 +45,9 @@
     "vitest": "^4.1.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "oxfmt --write",
-      "oxlint --deny-warnings"
-    ],
-    "*.{json,md,css}": [
-      "oxfmt --write"
-    ]
-  }
+      "*.{js,jsx,ts,tsx}": [
+        "oxfmt --write --no-error-on-unmatched-pattern",
+        "oxlint --deny-warnings"
+      ]
+    }
 }
