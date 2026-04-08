@@ -31,9 +31,14 @@ function PlayersStats({ team }: PlayersStatsProps) {
         </TableHead>
         <tbody>
           {team.players.map((player) => (
-            <tr key={player.jerseyNum}>
-              <TableCell className="truncate text-left">
-                {player.nameI}
+            <tr key={player.personId}>
+              <TableCell className="text-left">
+                <div className="inline-flex items-center gap-2">
+                  <span className="inline-flex w-[20px] shrink-0 justify-end opacity-40">
+                    {player.jerseyNum}
+                  </span>
+                  <span className="truncate">{player.nameI}</span>
+                </div>
               </TableCell>
               <TableCell>
                 {extractMinutes(player.statistics.minutesCalculated)}
