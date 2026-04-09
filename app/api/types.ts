@@ -261,3 +261,9 @@ export type PlayoffBracket = {
   };
   nbaFinals: PlayoffRound[];
 };
+
+export type GameTeam = Pick<
+  Team,
+  "teamId" | "teamName" | "teamTricode" | "score"
+> &
+  Partial<Pick<Team, "wins" | "losses">>;
