@@ -1,13 +1,8 @@
 import Image from "next/image";
+import type { GameTeam } from "@/app/api/types";
 
-// Isn't really necessary to have this type, we should use GameTeam from game-card
 type TeamInfoProps = {
-  team: {
-    teamId: number;
-    teamName: string;
-    wins?: number;
-    losses?: number;
-  };
+  team: GameTeam;
 };
 
 function TeamInfo({ team }: TeamInfoProps) {
