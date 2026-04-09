@@ -262,8 +262,5 @@ export type PlayoffBracket = {
   nbaFinals: PlayoffRound[];
 };
 
-export type GameTeam = Pick<
-  Team,
-  "teamId" | "teamName" | "teamTricode" | "score"
-> &
+export type GameTeam = Pick<Team, "teamId" | "teamName" | "score"> &
   Partial<Pick<Team, "wins" | "losses">>;

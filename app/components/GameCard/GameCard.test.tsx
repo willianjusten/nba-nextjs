@@ -8,7 +8,7 @@ describe("GameCard", () => {
     awayTeam: {
       teamId: 1,
       teamName: "Lakers",
-      triCode: "LAL",
+      teamTricode: "LAL",
       score: 101,
       wins: 30,
       losses: 20,
@@ -16,7 +16,7 @@ describe("GameCard", () => {
     homeTeam: {
       teamId: 2,
       teamName: "Heat",
-      triCode: "MIA",
+      teamTricode: "MIA",
       score: 99,
       wins: 28,
       losses: 22,
