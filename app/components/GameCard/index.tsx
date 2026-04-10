@@ -3,15 +3,7 @@ import cn from "classnames";
 import { TeamInfo, Time } from "@/app/components";
 import { GAME_STATUS, AWAY_TEAM, HOME_TEAM } from "@/app/constants";
 import { getWinner } from "@/app/helpers";
-
-//TODO: Duplicate type definition, should be in a shared file
-type GameTeam = {
-  teamId: number;
-  teamName: string;
-  score: number;
-  wins?: number;
-  losses?: number;
-};
+import { GameTeam } from "@/app/api/types";
 
 type GameCardProps = {
   gameId: string;

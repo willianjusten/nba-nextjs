@@ -22,7 +22,7 @@ const WinnerIndicator = ({ conference }: { conference: string }) => {
   );
 };
 
-type TeamInfo = {
+type TeamRowProps = {
   seedId: number;
   seedName?: string;
   seedRank: number;
@@ -40,7 +40,7 @@ const TeamRow = ({
   seriesConference,
   seriesWins,
   hasTeam,
-}: TeamInfo) => {
+}: TeamRowProps) => {
   const teamName =
     seedName || (TEAM_ID as Record<string, string>)[seedId] || "TBD";
   const teamLogo = `https://cdn.nba.com/logos/nba/${seedId}/primary/L/logo.svg`;
