@@ -1,6 +1,8 @@
 export const API = {
   BASE_URL: "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats",
   DETAILS_URL: "https://cdn.nba.com/static/json/liveData",
+  TODAY_URL_PROXY:
+    "https://proxy.boxscores.site/?apiUrl=cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
   PLAYOFFS_URL: "https://cdn.nba.com/static/json/staticData",
   GAME_CARD_URL:
     "https://proxy.boxscores.site/?apiUrl=core-api.nba.com/cp/api/v1.9/feeds/gamecardfeed",
