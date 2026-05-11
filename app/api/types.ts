@@ -240,6 +240,8 @@ export type PlayoffRound = {
   seriesWinner: number;
   seriesConference: string;
   seriesText?: string;
+  displayTopTeam: number;
+  displayBottomTeam: number;
 };
 
 export type PlayoffBracketData = {
