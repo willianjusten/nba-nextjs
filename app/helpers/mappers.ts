@@ -123,12 +123,5 @@ export function formatPlayoffData(data: PlayoffBracketData) {
     nbaFinals: playoffBracketSeries.filter((s) => s.roundNumber === 4),
   };
 
-  rounds.east.firstRound.sort(
-    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
-  );
-  rounds.west.firstRound.sort(
-    (a, b) => a.displayOrderNumber - b.displayOrderNumber,
-  );
-
   return rounds;
 }

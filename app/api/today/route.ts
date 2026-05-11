@@ -8,8 +8,6 @@ export async function GET() {
     cache: "no-store",
   });
 
-  console.log(res);
-
   const data = await res.json();
   const parsedGames = parseGames(data);
 
