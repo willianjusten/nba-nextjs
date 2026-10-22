@@ -5,6 +5,8 @@ import scheduledDay from "./__fixtures__/scoreboard-scheduled-day.json";
 import noGames from "./__fixtures__/scoreboard-no-games.json";
 import playoffGame from "./__fixtures__/scoreboard-playoff-game.json";
 import playInGame from "./__fixtures__/scoreboard-play-in.json";
+import liveDay from "./__fixtures__/scoreboard-live-day-simulated.json";
+import endOfPeriod from "./__fixtures__/scoreboard-end-of-period-simulated.json";
 
 const fetchMock = vi.fn();
 
@@ -90,6 +92,37 @@ describe("fetchScoreboard", () => {
     expect(lateGame.startTime).toBe("2026-10-23T01:30Z");
     expect(lateGame.nbaDate).toBe("2026-10-22");
     expect(lateGame.home.score).toBe(0);
+  });
+
+  it("maps a live game with period, clock, and current scores", async () => {
+    respondWith(liveDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-22")!);
+    const liveGame = scoreboard.games[0];
+
+    expect(liveGame.status).toEqual({ kind: "live", period: 2, clock: "7:11" });
+    expect(liveGame.home.score).toBe(52);
+    expect(liveGame.away.score).toBe(48);
+  });
+
+  it("maps a game at halftime", async () => {
+    respondWith(liveDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-22")!);
+
+    expect(scoreboard.games[1].status).toEqual({ kind: "halftime", period: 2 });
+  });
+
+  it("keeps a game between quarters live", async () => {
+    respondWith(endOfPeriod);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-22")!);
+
+    expect(scoreboard.games[0].status).toEqual({
+      kind: "live",
+      period: 1,
+      clock: "0.0",
+    });
   });
 
   it("returns an empty list on a day without games", async () => {
