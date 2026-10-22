@@ -1,4 +1,5 @@
 export { fetchScoreboard } from "./scoreboard";
+export { fetchStandings } from "./standings";
 export {
   fetchTeamDetail,
   fetchTeamIdBySlug,

@@ -1,11 +1,15 @@
 export const ESPN_HOSTS = {
   site: {
     origin: "https://site.api.espn.com",
-    allowedPathPrefix: "/apis/site/v2/sports/basketball/nba/",
+    // Standings live under /apis/v2, outside the rest of the site API.
+    allowedPathPrefixes: [
+      "/apis/site/v2/sports/basketball/nba/",
+      "/apis/v2/sports/basketball/nba/",
+    ],
   },
   core: {
     origin: "https://sports.core.api.espn.com",
-    allowedPathPrefix: "/v2/sports/basketball/leagues/nba/",
+    allowedPathPrefixes: ["/v2/sports/basketball/leagues/nba/"],
   },
 } as const;
 
@@ -51,6 +55,11 @@ export const ESPN_ENDPOINTS = {
     path: `${TEAMS_PATH}/{teamId}/schedule`,
     access: "direct",
     revalidateSeconds: FIVE_MINUTES_IN_SECONDS,
+  },
+  standings: {
+    host: "site",
+    path: "/apis/v2/sports/basketball/nba/standings",
+    access: "direct",
   },
   teamRoster: {
     host: "site",

@@ -37,6 +37,21 @@ export const strings = {
   },
   standings: {
     title: "Standings",
+    regularSeason: (seasonName: string) => `${seasonName} Regular Season`,
+    columns: {
+      seed: "#",
+      team: "Team",
+      wins: "W",
+      losses: "L",
+      winPercent: "PCT",
+      gamesBehind: "GB",
+      home: "Home",
+      road: "Away",
+      lastTen: "L10",
+      streak: "Strk",
+    },
+    leaderGamesBehind: "-",
+    noStreak: "-",
   },
   team: {
     record: (record: string) => `Record ${record}`,

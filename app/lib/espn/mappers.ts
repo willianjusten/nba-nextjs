@@ -9,6 +9,12 @@ import type {
   Team,
 } from "@/app/lib/domain/game";
 import type {
+  ConferenceStandings,
+  Season,
+  SeasonPhase,
+  StandingsRow,
+} from "@/app/lib/domain/standings";
+import type {
   ListedTeam,
   RosterPlayer,
   TeamDetail,
@@ -18,6 +24,7 @@ import { nbaDateOf } from "@/app/lib/time/nba-date";
 import type {
   RawBroadcast,
   RawCompetitor,
+  RawConferenceStandings,
   RawEvent,
   RawGeoBroadcast,
   RawListedTeam,
@@ -28,6 +35,9 @@ import type {
   RawTeamDetailResponse,
   RawSeason,
   RawSeries,
+  RawStandingsEntry,
+  RawStandingsResponse,
+  RawStandingsStat,
   RawStatus,
   RawTeam,
 } from "./raw-types";
@@ -301,5 +311,120 @@ export function mapRosterPlayer(athlete: RawRosterAthlete): RosterPlayer {
     weight: athlete.displayWeight ?? null,
     age: athlete.age ?? null,
     headshotUrl: athlete.headshot?.href ?? null,
+  };
+}
+
+const OFFSEASON_TYPE_ID = 4;
+
+function seasonPhaseOf(seasonTypeId: number): SeasonPhase | undefined {
+  return seasonTypeId === OFFSEASON_TYPE_ID
+    ? "offseason"
+    : SEASON_TYPE_BY_ID[seasonTypeId];
+}
+
+// The season calendar lists each season type with its date range, so the current phase follows from the time alone.
+export function mapSeason(
+  { season, seasons }: RawStandingsResponse,
+  now: Date,
+): Season {
+  const calendar = seasons?.find(
+    (candidate) => candidate.year === season.year,
+  )?.types;
+  // Without the calendar the phase would silently read as offseason.
+  if (!calendar) {
+    throw new Error(
+      `ESPN standings have no calendar for season ${season.year}`,
+    );
+  }
+  const currentCalendarEntry = calendar.find(
+    (entry) =>
+      new Date(entry.startDate) <= now && now <= new Date(entry.endDate),
+  );
+
+  return {
+    year: season.year,
+    displayName: season.displayName,
+    // Outside every listed range the league is between seasons.
+    currentPhase:
+      (currentCalendarEntry &&
+        seasonPhaseOf(Number(currentCalendarEntry.id))) ??
+      "offseason",
+  };
+}
+
+// A missing stat means ESPN changed the format; a default of 0 would show a plausible but wrong table.
+function requiredStat(
+  stat: RawStandingsStat | undefined,
+  key: string,
+  teamId: string,
+) {
+  if (!stat) {
+    throw new Error(`ESPN standings for team ${teamId} have no ${key} stat`);
+  }
+  return stat;
+}
+
+function mapStandingsRow({ team, stats }: RawStandingsEntry): StandingsRow {
+  const numericStat = (name: string) => {
+    const { value } = requiredStat(
+      stats.find((stat) => stat.name === name),
+      name,
+      team.id,
+    );
+    if (value === undefined) {
+      throw new Error(`ESPN standings ${name} stat has no value`);
+    }
+    return value;
+  };
+  // Record stats such as "Home" are named for display, so they are found by type.
+  const recordStat = (type: string) => {
+    const { summary } = requiredStat(
+      stats.find((stat) => stat.type === type),
+      type,
+      team.id,
+    );
+    if (summary === undefined) {
+      throw new Error(`ESPN standings ${type} record has no summary`);
+    }
+    return summary;
+  };
+  // ESPN sends "-" as the streak of a team that has not played yet.
+  const streak = stats.find((stat) => stat.name === "streak")?.displayValue;
+
+  return {
+    team: mapListedTeam(team),
+    seed: numericStat("playoffSeed"),
+    wins: numericStat("wins"),
+    losses: numericStat("losses"),
+    winPercent: numericStat("winPercent"),
+    gamesBehind: numericStat("gamesBehind"),
+    homeRecord: recordStat("home"),
+    roadRecord: recordStat("road"),
+    // ESPN leaves the last ten games out until a team has played.
+    lastTenRecord:
+      stats.find((stat) => stat.type === "lasttengames")?.summary ?? "0-0",
+    streak: streak && streak !== "-" ? streak : null,
+  };
+}
+
+// ESPN does not send the entries in standings order, and early in the season several teams can share a seed.
+function compareStandingsRows(first: StandingsRow, second: StandingsRow) {
+  return (
+    first.seed - second.seed ||
+    second.winPercent - first.winPercent ||
+    first.team.displayName.localeCompare(second.team.displayName)
+  );
+}
+
+export function mapConferenceStandings(
+  conference: RawConferenceStandings,
+): ConferenceStandings {
+  return {
+    id: conference.id,
+    name: conference.name,
+    abbreviation: conference.abbreviation,
+    rows: conference.standings.entries
+      .map(mapStandingsRow)
+      .sort(compareStandingsRows),
   };
 }

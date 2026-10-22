@@ -17,10 +17,13 @@ export async function GET(request: Request, { params }: RouteContext) {
   const { host, path } = await params;
   if (!isEspnHost(host)) return new Response(null, { status: 404 });
 
-  const { origin, allowedPathPrefix } = ESPN_HOSTS[host];
+  const { origin, allowedPathPrefixes } = ESPN_HOSTS[host];
   // Normalizing through URL resolves ".." segments before the prefix check, so the proxy cannot reach other ESPN APIs.
   const upstreamUrl = new URL(`/${path.join("/")}`, origin);
-  if (!upstreamUrl.pathname.startsWith(allowedPathPrefix)) {
+  const isAllowedPath = allowedPathPrefixes.some((prefix) =>
+    upstreamUrl.pathname.startsWith(prefix),
+  );
+  if (!isAllowedPath) {
     return new Response(null, { status: 404 });
   }
   upstreamUrl.search = new URL(request.url).search;

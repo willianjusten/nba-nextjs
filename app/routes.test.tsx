@@ -17,12 +17,14 @@ import teamsList from "./lib/espn/__fixtures__/teams-list.json";
 import lakersDetail from "./lib/espn/__fixtures__/team-detail-lakers.json";
 import lakersSchedule from "./lib/espn/__fixtures__/team-schedule-lakers.json";
 import lakersRoster from "./lib/espn/__fixtures__/team-roster-lakers.json";
+import standings from "./lib/espn/__fixtures__/standings-regular-season.json";
 
 function espnFixtureFor(url: string) {
   if (url.endsWith("/teams/13/schedule")) return lakersSchedule;
   if (url.endsWith("/teams/13/roster")) return lakersRoster;
   if (url.endsWith("/teams/13")) return lakersDetail;
   if (url.endsWith("/teams")) return teamsList;
+  if (url.endsWith("/standings?seasontype=2")) return standings;
   return finalDay;
 }
 
@@ -83,12 +85,63 @@ describe("routes", () => {
     ).toBeDefined();
   });
 
-  it("renders the standings page", () => {
-    render(<StandingsPage />);
+  it("renders the standings page for the current season", async () => {
+    render(await StandingsPage());
 
     expect(
       screen.getByRole("heading", { name: strings.standings.title }),
     ).toBeDefined();
+    expect(
+      screen.getByText(strings.standings.regularSeason("2026-27")),
+    ).toBeDefined();
+  });
+
+  it.each([
+    ["Eastern Conference", "Indiana Pacers"],
+    ["Western Conference", "Minnesota Timberwolves"],
+  ])(
+    "lists the %s standings in seed order",
+    async (conferenceName, leaderName) => {
+      render(await StandingsPage());
+
+      const conference = screen.getByRole("region", { name: conferenceName });
+      const [, leaderRow] = within(conference).getAllByRole("row");
+      expect(within(conference).getAllByRole("row")).toHaveLength(16);
+      expect(
+        within(leaderRow).getByRole("link", { name: leaderName }),
+      ).toBeDefined();
+    },
+  );
+
+  it("shows each team's record in the standings", async () => {
+    render(await StandingsPage());
+
+    const east = screen.getByRole("region", { name: "Eastern Conference" });
+    const leaderRow = within(east).getByRole("row", { name: /Indiana Pacers/ });
+    expect(
+      within(leaderRow)
+        .getAllByRole("cell")
+        .map((cell) => cell.textContent),
+    ).toEqual([
+      "1",
+      "Indiana Pacers",
+      "1",
+      "0",
+      "1.000",
+      "-",
+      "0-0",
+      "1-0",
+      "1-0",
+      "W1",
+    ]);
+  });
+
+  it("links each standings team to its team page", async () => {
+    render(await StandingsPage());
+
+    expect(
+      screen.getByRole("link", { name: "Indiana Pacers" }).getAttribute("href"),
+    ).toBe("/teams/pacers");
   });
 
   it("renders the team page for the requested slug", async () => {

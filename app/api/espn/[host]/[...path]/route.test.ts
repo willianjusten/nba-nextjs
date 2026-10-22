@@ -121,6 +121,22 @@ describe("ESPN proxy route", () => {
     expect(fetchMock.mock.calls[0][1]).not.toHaveProperty("next");
   });
 
+  it("forwards standings requests, which live outside the site API path", async () => {
+    fetchMock.mockResolvedValueOnce(new Response("{}", { status: 200 }));
+
+    const response = await callRoute(
+      "site",
+      ["apis", "v2", "sports", "basketball", "nba", "standings"],
+      "?seasontype=2",
+    );
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?seasontype=2",
+      expect.anything(),
+    );
+    expect(response.status).toBe(200);
+  });
+
   it("passes ESPN error statuses through", async () => {
     fetchMock.mockResolvedValueOnce(new Response("", { status: 503 }));
 
@@ -147,6 +163,11 @@ describe("ESPN proxy route", () => {
       "a path outside the NBA API",
       "site",
       ["apis", "site", "v2", "sports", "football", "nfl", "scoreboard"],
+    ],
+    [
+      "a standings path outside the NBA API",
+      "site",
+      ["apis", "v2", "sports", "football", "nfl", "standings"],
     ],
     [
       "a path that escapes the prefix",

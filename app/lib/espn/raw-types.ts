@@ -138,3 +138,42 @@ export type RawTeam = {
   color?: string;
   logo: string;
 };
+
+export type RawStandingsResponse = {
+  season: RawStandingsSeason;
+  seasons?: RawStandingsSeason[];
+  children?: RawConferenceStandings[];
+};
+
+export type RawStandingsSeason = {
+  year: number;
+  displayName: string;
+  types?: RawSeasonCalendarEntry[];
+};
+
+export type RawSeasonCalendarEntry = {
+  id: string;
+  startDate: string;
+  endDate: string;
+};
+
+export type RawConferenceStandings = {
+  id: string;
+  name: string;
+  abbreviation: string;
+  standings: { entries: RawStandingsEntry[] };
+};
+
+export type RawStandingsEntry = {
+  team: RawListedTeam;
+  stats: RawStandingsStat[];
+};
+
+// Numeric stats carry value and displayValue; record stats such as "home" carry a summary instead.
+export type RawStandingsStat = {
+  name: string;
+  type: string;
+  value?: number;
+  displayValue?: string;
+  summary?: string;
+};
