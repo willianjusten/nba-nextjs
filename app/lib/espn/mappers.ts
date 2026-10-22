@@ -1,4 +1,14 @@
-import type { Leader } from "@/app/lib/domain/leaders";
+import type {
+  BoxScorePlayer,
+  BoxScoreStats,
+  CourtCoordinate,
+  GameLeader,
+  GameSide,
+  GameSummary,
+  Play,
+  TeamBoxScore,
+} from "@/app/lib/domain/game-summary";
+import type { Leader, LeaderStat } from "@/app/lib/domain/leaders";
 import type {
   Broadcast,
   BroadcastMarket,
@@ -23,6 +33,9 @@ import type {
 } from "@/app/lib/domain/team";
 import { nbaDateOf } from "@/app/lib/time/nba-date";
 import type {
+  RawBoxScoreAthlete,
+  RawBoxScoreStatistics,
+  RawBoxScoreTeam,
   RawBroadcast,
   RawCompetitor,
   RawConferenceStandings,
@@ -31,6 +44,7 @@ import type {
   RawLeader,
   RawLeaderAthlete,
   RawListedTeam,
+  RawPlay,
   RawRosterAthlete,
   RawScheduleCompetitor,
   RawScheduleEvent,
@@ -42,6 +56,10 @@ import type {
   RawStandingsResponse,
   RawStandingsStat,
   RawStatus,
+  RawSummary,
+  RawSummaryCompetitor,
+  RawSummaryLeaderCategory,
+  RawSummaryTeamLeaders,
   RawTeam,
 } from "./raw-types";
 
@@ -305,7 +323,7 @@ export function mapScheduleGame(event: RawScheduleEvent): Game {
 }
 
 export function mapLeader(
-  { value, displayValue }: RawLeader,
+  { value, displayValue }: Pick<RawLeader, "value" | "displayValue">,
   athlete: RawLeaderAthlete,
 ): Leader {
   return {
@@ -444,5 +462,203 @@ export function mapConferenceStandings(
     rows: conference.standings.entries
       .map(mapStandingsRow)
       .sort(compareStandingsRows),
+  };
+}
+
+const BOX_SCORE_STAT_KEYS: Record<keyof BoxScoreStats, string> = {
+  minutes: "minutes",
+  points: "points",
+  fieldGoals: "fieldGoalsMade-fieldGoalsAttempted",
+  threePointers: "threePointFieldGoalsMade-threePointFieldGoalsAttempted",
+  freeThrows: "freeThrowsMade-freeThrowsAttempted",
+  rebounds: "rebounds",
+  offensiveRebounds: "offensiveRebounds",
+  defensiveRebounds: "defensiveRebounds",
+  assists: "assists",
+  steals: "steals",
+  blocks: "blocks",
+  turnovers: "turnovers",
+  fouls: "fouls",
+  plusMinus: "plusMinus",
+};
+
+function mapBoxScoreStats(keys: string[], values: string[]): BoxScoreStats {
+  const statEntries = Object.entries(BOX_SCORE_STAT_KEYS).map(
+    ([stat, espnKey]) => {
+      const value = values[keys.indexOf(espnKey)];
+      // A missing column means ESPN changed the format; an empty cell would hide that.
+      if (value === undefined) {
+        throw new Error(`ESPN box score has no ${espnKey} stat`);
+      }
+      return [stat, value];
+    },
+  );
+  return Object.fromEntries(statEntries) as BoxScoreStats;
+}
+
+function mapBoxScorePlayer(
+  { athlete, starter, didNotPlay, reason, stats }: RawBoxScoreAthlete,
+  keys: string[],
+): BoxScorePlayer {
+  return {
+    athlete: {
+      id: athlete.id,
+      displayName: athlete.displayName,
+      shortName: athlete.shortName,
+      jersey: athlete.jersey ?? null,
+      position: athlete.position?.abbreviation ?? null,
+      headshotUrl: athlete.headshot?.href ?? null,
+    },
+    starter,
+    stats: stats.length > 0 ? mapBoxScoreStats(keys, stats) : null,
+    didNotPlayReason: didNotPlay ? (reason ?? null) : null,
+  };
+}
+
+const EMPTY_TEAM_BOX_SCORE: TeamBoxScore = { players: [], totals: null };
+
+function mapTeamBoxScore(
+  statistics: RawBoxScoreStatistics | undefined,
+): TeamBoxScore {
+  if (!statistics || statistics.athletes.length === 0) {
+    return EMPTY_TEAM_BOX_SCORE;
+  }
+  return {
+    players: statistics.athletes.map((athlete) =>
+      mapBoxScorePlayer(athlete, statistics.keys),
+    ),
+    totals: mapBoxScoreStats(statistics.keys, statistics.totals),
+  };
+}
+
+// Before the game starts ESPN names the season averages, e.g. "pointsPerGame".
+const LEADER_STAT_BY_CATEGORY_NAME: Record<string, LeaderStat> = {
+  points: "points",
+  rebounds: "rebounds",
+  assists: "assists",
+  pointsPerGame: "points",
+  reboundsPerGame: "rebounds",
+  assistsPerGame: "assists",
+};
+
+function mapGameLeaders(categories: RawSummaryLeaderCategory[] = []) {
+  return categories.flatMap((category): GameLeader[] => {
+    const stat = LEADER_STAT_BY_CATEGORY_NAME[category.name];
+    const [topLeader] = category.leaders;
+    return stat && topLeader
+      ? [{ stat, leader: mapLeader(topLeader, topLeader.athlete) }]
+      : [];
+  });
+}
+
+// ESPN fills the coordinates of plays without a court location with these values instead of leaving them out.
+const SENTINEL_COORDINATE_X = -214748340;
+const SENTINEL_COORDINATE_Y = -214748365;
+
+function mapCoordinate(
+  coordinate: RawPlay["coordinate"],
+): CourtCoordinate | null {
+  if (
+    !coordinate ||
+    coordinate.x === SENTINEL_COORDINATE_X ||
+    coordinate.y === SENTINEL_COORDINATE_Y
+  ) {
+    return null;
+  }
+  return { x: coordinate.x, y: coordinate.y };
+}
+
+function mapPlay(play: RawPlay): Play {
+  return {
+    id: play.id,
+    period: play.period.number,
+    clock: play.clock.displayValue,
+    text: play.text,
+    teamId: play.team?.id ?? null,
+    homeScore: play.homeScore,
+    awayScore: play.awayScore,
+    scoringPlay: play.scoringPlay,
+    scoreValue: play.scoreValue,
+    shootingPlay: play.shootingPlay,
+    coordinate: mapCoordinate(play.coordinate),
+  };
+}
+
+function mapLineScore(competitor: RawSummaryCompetitor) {
+  return (competitor.linescores ?? []).map((periodScore) =>
+    normalizeScore(periodScore.displayValue),
+  );
+}
+
+function bySide<Value>(
+  home: RawSummaryCompetitor,
+  away: RawSummaryCompetitor,
+  valueOf: (competitor: RawSummaryCompetitor) => Value,
+): GameSide<Value> {
+  return { home: valueOf(home), away: valueOf(away) };
+}
+
+function findByTeam<Entry extends { team: { id: string } }>(
+  entries: Entry[] | undefined,
+  competitor: RawSummaryCompetitor,
+) {
+  return entries?.find((entry) => entry.team.id === competitor.team.id);
+}
+
+function mapSummaryCompetitor(competitor: RawSummaryCompetitor) {
+  return mapCompetitor({
+    ...competitor,
+    team: {
+      ...competitor.team,
+      logo: pickScoreboardLogo(competitor.team.logos),
+    },
+  });
+}
+
+export function mapGameSummary(summary: RawSummary): GameSummary {
+  const { header } = summary;
+  const competition = header.competitions[0];
+  const home = findCompetitor(header.id, competition?.competitors, "home");
+  const away = findCompetitor(header.id, competition?.competitors, "away");
+  // The summary status has no period once the game is over, so it is counted from the line score.
+  const status = {
+    ...competition.status,
+    period: competition.status.period ?? home.linescores?.length ?? 0,
+    displayClock: competition.status.displayClock ?? "",
+  };
+  const playoffSeries = competition.series?.find(
+    (series) => series.type === "playoff",
+  );
+
+  return {
+    game: {
+      id: header.id,
+      startTime: competition.date,
+      nbaDate: nbaDateOf(competition.date),
+      seasonYear: header.season.year,
+      seasonType: mapSeasonType(header.season),
+      status: mapStatus(status),
+      home: mapSummaryCompetitor(home),
+      away: mapSummaryCompetitor(away),
+      // The summary sends its broadcasts in the geoBroadcast shape.
+      broadcasts: mapBroadcasts([], competition.broadcasts),
+      series: mapSeries(playoffSeries, home.team.id, away.team.id),
+    },
+    lineScore: bySide(home, away, mapLineScore),
+    boxScore: bySide(home, away, (competitor) =>
+      mapTeamBoxScore(
+        findByTeam<RawBoxScoreTeam>(summary.boxscore?.players, competitor)
+          ?.statistics[0],
+      ),
+    ),
+    leaders: bySide(home, away, (competitor) =>
+      mapGameLeaders(
+        findByTeam<RawSummaryTeamLeaders>(summary.leaders, competitor)?.leaders,
+      ),
+    ),
+    plays: (summary.plays ?? []).map(mapPlay),
+    winProbability: (summary.winprobability ?? []).map(
+      ({ playId, homeWinPercentage }) => ({ playId, homeWinPercentage }),
+    ),
   };
 }

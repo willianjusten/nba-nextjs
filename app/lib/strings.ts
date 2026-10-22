@@ -33,7 +33,56 @@ export const strings = {
     separator: " · ",
   },
   game: {
-    title: (gameId: string) => `Game ${gameId}`,
+    title: (awayTeamName: string, homeTeamName: string) =>
+      `${awayTeamName} at ${homeTeamName}`,
+    loading: "Loading game...",
+    error: "We couldn't load this game right now.",
+    retry: "Try again",
+    retrying: "Trying again...",
+    stale: "Game data may be out of date. Retrying automatically.",
+    lineScore: {
+      title: "Line score",
+      team: "Team",
+      total: "T",
+    },
+    leaders: {
+      title: "Game leaders",
+      empty: "No leaders yet.",
+    },
+    boxScore: {
+      title: (teamName: string) => `${teamName} box score`,
+      player: "Player",
+      totals: "Totals",
+      didNotPlay: (reason: string) => `DNP - ${reason}`,
+      columns: {
+        minutes: "MIN",
+        points: "PTS",
+        fieldGoals: "FG",
+        threePointers: "3PT",
+        freeThrows: "FT",
+        rebounds: "REB",
+        offensiveRebounds: "OREB",
+        defensiveRebounds: "DREB",
+        assists: "AST",
+        steals: "STL",
+        blocks: "BLK",
+        turnovers: "TO",
+        fouls: "PF",
+        plusMinus: "+/-",
+      },
+    },
+    plays: {
+      title: "Plays",
+      empty: "No plays yet.",
+      score: (awayScore: number, homeScore: number) =>
+        `${awayScore}-${homeScore}`,
+    },
+    winProbability: {
+      title: "Win probability",
+      empty: "Win probability is not available yet.",
+      chance: (teamAbbreviation: string, formattedPercent: string) =>
+        `${teamAbbreviation} ${formattedPercent}`,
+    },
   },
   standings: {
     title: "Standings",

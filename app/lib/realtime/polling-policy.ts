@@ -13,7 +13,7 @@ const POLLING_INTERVAL_BY_CONTEXT: Record<PollingContext, number> = {
 // Polling starts this long before tip-off so the first live score is not missed.
 const PRE_GAME_WINDOW_MS = 10 * 60 * 1000;
 
-type PolledGame = Pick<Game, "status" | "startTime">;
+export type PolledGame = Pick<Game, "status" | "startTime">;
 
 type PollingInput = {
   games: PolledGame[];

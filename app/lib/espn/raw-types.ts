@@ -206,3 +206,96 @@ export type RawLeaderAthlete = {
   displayName: string;
   headshot?: { href: string };
 };
+
+export type RawSummary = {
+  header: RawSummaryHeader;
+  boxscore?: { players?: RawBoxScoreTeam[] };
+  leaders?: RawSummaryTeamLeaders[];
+  // Missing before the game starts.
+  plays?: RawPlay[];
+  winprobability?: RawWinProbabilityPoint[];
+};
+
+// The summary header carries the event's season, while its competition mirrors a scoreboard competition.
+export type RawSummaryHeader = {
+  id: string;
+  season: RawSeason;
+  competitions: RawSummaryCompetition[];
+};
+
+export type RawSummaryCompetition = {
+  date: string;
+  // Unlike the scoreboard, the summary can leave the period and clock out of the status.
+  status: Omit<RawStatus, "period" | "displayClock"> &
+    Partial<Pick<RawStatus, "period" | "displayClock">>;
+  competitors: RawSummaryCompetitor[];
+  broadcasts?: RawGeoBroadcast[];
+  series?: RawSeries[];
+};
+
+export type RawSummaryCompetitor = {
+  homeAway: "home" | "away";
+  // Missing before the game starts.
+  score?: string;
+  winner?: boolean;
+  team: RawListedTeam;
+  linescores?: { displayValue: string }[];
+};
+
+export type RawBoxScoreTeam = {
+  team: { id: string };
+  statistics: RawBoxScoreStatistics[];
+};
+
+export type RawBoxScoreStatistics = {
+  // Names each position of the athletes' stats and of the totals, e.g. "fieldGoalsMade-fieldGoalsAttempted".
+  keys: string[];
+  athletes: RawBoxScoreAthlete[];
+  totals: string[];
+};
+
+export type RawBoxScoreAthlete = {
+  starter: boolean;
+  didNotPlay?: boolean;
+  reason?: string;
+  // Empty for a player who did not play.
+  stats: string[];
+  athlete: {
+    id: string;
+    displayName: string;
+    shortName: string;
+    jersey?: string;
+    position?: { abbreviation: string };
+    headshot?: { href: string };
+  };
+};
+
+export type RawSummaryTeamLeaders = {
+  team: { id: string };
+  leaders?: RawSummaryLeaderCategory[];
+};
+
+export type RawSummaryLeaderCategory = {
+  // "points" once the game starts, "pointsPerGame" before it.
+  name: string;
+  leaders: (Omit<RawLeader, "athlete"> & { athlete: RawLeaderAthlete })[];
+};
+
+export type RawPlay = {
+  id: string;
+  text: string;
+  period: { number: number };
+  clock: { displayValue: string };
+  team?: { id: string };
+  homeScore: number;
+  awayScore: number;
+  scoringPlay: boolean;
+  scoreValue: number;
+  shootingPlay: boolean;
+  coordinate?: { x: number; y: number };
+};
+
+export type RawWinProbabilityPoint = {
+  playId: string;
+  homeWinPercentage: number;
+};

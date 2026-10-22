@@ -41,6 +41,11 @@ export const ESPN_ENDPOINTS = {
     path: "/apis/site/v2/sports/basketball/nba/scoreboard",
     access: "direct",
   },
+  summary: {
+    host: "site",
+    path: "/apis/site/v2/sports/basketball/nba/summary",
+    access: "direct",
+  },
   // ESPN sends no CORS headers on the teams list and team detail.
   teams: {
     host: "site",
