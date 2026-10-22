@@ -107,6 +107,11 @@ const SUPPORTED_BROADCAST_NAMES = new Set([
   "prime video",
   "nba league pass",
 ]);
+// League Pass carries every game, so a game without a supported channel is still watchable there.
+const FALLBACK_BROADCAST: Broadcast = {
+  name: "NBA League Pass",
+  market: "national",
+};
 
 function toMarket(rawMarket: string): BroadcastMarket | undefined {
   const market = rawMarket.toLowerCase();
@@ -130,6 +135,8 @@ function mapBroadcasts(competition: RawCompetition | undefined): Broadcast[] {
     },
   );
 
+  console.log("listedBroadcasts:", listedBroadcasts);
+
   const broadcastByNormalizedName = new Map<string, Broadcast>();
   for (const market of MARKET_PRIORITY) {
     for (const broadcast of [...listedBroadcasts, ...usGeoBroadcasts]) {
@@ -143,7 +150,9 @@ function mapBroadcasts(competition: RawCompetition | undefined): Broadcast[] {
       }
     }
   }
-  return [...broadcastByNormalizedName.values()];
+  return broadcastByNormalizedName.size > 0
+    ? [...broadcastByNormalizedName.values()]
+    : [FALLBACK_BROADCAST];
 }
 
 function mapSeries(

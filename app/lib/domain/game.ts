@@ -50,7 +50,7 @@ export type Game = {
   status: GameStatus;
   home: GameCompetitor;
   away: GameCompetitor;
-  // Ordered national first; empty when ESPN lists no US broadcast.
+  // Ordered national first; never empty, since NBA League Pass is the fallback.
   broadcasts: Broadcast[];
   series: PlayoffSeries | null;
 };

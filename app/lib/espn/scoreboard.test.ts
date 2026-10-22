@@ -198,13 +198,14 @@ describe("fetchScoreboard", () => {
     ]);
   });
 
-  it("returns an empty broadcast list when no supported channel is listed", async () => {
+  it("falls back to NBA League Pass when no supported channel is listed", async () => {
     respondWith(preseasonDay);
 
     const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-15")!);
+    const leaguePassOnly = [{ name: "NBA League Pass", market: "national" }];
 
-    expect(scoreboard.games[0].broadcasts).toEqual([]);
-    expect(scoreboard.games[1].broadcasts).toEqual([]);
+    expect(scoreboard.games[0].broadcasts).toEqual(leaguePassOnly);
+    expect(scoreboard.games[1].broadcasts).toEqual(leaguePassOnly);
   });
 
   it("exposes the series of a playoff game by side", async () => {
