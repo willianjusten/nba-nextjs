@@ -38,6 +38,20 @@ describe("ESPN transport", () => {
     );
   });
 
+  it("skips the browser cache for live game data", async () => {
+    fetchMock.mockImplementation(
+      async () => new Response(JSON.stringify(noGames)),
+    );
+
+    await espnGet("scoreboard");
+    await espnGet("summary");
+
+    for (const [, requestInit] of fetchMock.mock.calls) {
+      expect(requestInit).toMatchObject({ cache: "no-store" });
+    }
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
   it("rewrites private core API hosts to the public host", async () => {
     fetchMock.mockResolvedValueOnce(new Response(JSON.stringify(playoffGame)));
 

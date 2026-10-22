@@ -5,9 +5,10 @@ export type PollingContext = "games-list" | "game-detail";
 // Matches TanStack Query's refetchInterval, where false turns polling off.
 export const NO_POLLING = false;
 
+// Matches the max-age ESPN's CDN sets on each endpoint (6 s scoreboard, 8 s summary); polling faster only returns the same cached copy.
 const POLLING_INTERVAL_BY_CONTEXT: Record<PollingContext, number> = {
-  "games-list": 15_000,
-  "game-detail": 10_000,
+  "games-list": 6_000,
+  "game-detail": 8_000,
 };
 
 // Polling starts this long before tip-off so the first live score is not missed.

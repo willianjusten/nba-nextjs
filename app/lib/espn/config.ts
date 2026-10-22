@@ -25,6 +25,8 @@ export type EspnEndpoint = {
   path: string;
   access: EspnAccess;
   revalidateSeconds?: number;
+  // Live scores skip every cache between ESPN's CDN and the app, so a poll never reads an older copy than ESPN serves.
+  isLive?: boolean;
 };
 
 export const REGULAR_SEASON_TYPE_ID = "2";
@@ -40,11 +42,13 @@ export const ESPN_ENDPOINTS = {
     host: "site",
     path: "/apis/site/v2/sports/basketball/nba/scoreboard",
     access: "direct",
+    isLive: true,
   },
   summary: {
     host: "site",
     path: "/apis/site/v2/sports/basketball/nba/summary",
     access: "direct",
+    isLive: true,
   },
   // ESPN sends no CORS headers on the teams list and team detail.
   teams: {
@@ -98,7 +102,10 @@ export const ESPN_ENDPOINTS = {
 
 export type EspnEndpointName = keyof typeof ESPN_ENDPOINTS;
 
-export function endpointCacheOptions(endpoint: EspnEndpoint | undefined) {
+export function endpointCacheOptions(
+  endpoint: EspnEndpoint | undefined,
+): RequestInit {
+  if (endpoint?.isLive) return { cache: "no-store" };
   return endpoint?.revalidateSeconds === undefined
     ? {}
     : { next: { revalidate: endpoint.revalidateSeconds } };

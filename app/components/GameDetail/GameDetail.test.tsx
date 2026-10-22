@@ -8,7 +8,7 @@ import { strings } from "@/app/lib/strings";
 import GameDetail from ".";
 
 const GAME_ID = "401909093";
-const GAME_DETAIL_POLLING_MS = 10_000;
+const GAME_DETAIL_POLLING_MS = 8_000;
 const DURING_LIVE_GAME = new Date("2026-10-22T23:45:00Z");
 // Five minutes before the pre-game fixture's 01:30Z tip-off, inside the pre-game polling window.
 const SHORTLY_BEFORE_TIP_OFF = new Date("2026-10-23T01:25:00Z");
@@ -83,7 +83,7 @@ afterEach(() => {
 });
 
 describe("GameDetail live polling", () => {
-  it("refetches the summary every 10 seconds while the game is live", async () => {
+  it("refetches the summary every 8 seconds while the game is live", async () => {
     await renderLoadedGameDetail(liveSummary, DURING_LIVE_GAME);
 
     fetchMock.mockResolvedValue(jsonResponse(liveSummary));

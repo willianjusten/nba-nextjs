@@ -41,22 +41,22 @@ function intervalFor(
 }
 
 describe("pollingInterval", () => {
-  it("polls the games list every 15 seconds while a game is live", () => {
-    expect(intervalFor([gameAt(final, -180), gameAt(live, -60)])).toBe(15_000);
+  it("polls the games list every 6 seconds while a game is live", () => {
+    expect(intervalFor([gameAt(final, -180), gameAt(live, -60)])).toBe(6_000);
   });
 
-  it("polls a game detail every 10 seconds while the game is live", () => {
+  it("polls a game detail every 8 seconds while the game is live", () => {
     expect(intervalFor([gameAt(live, -60)], { context: "game-detail" })).toBe(
-      10_000,
+      8_000,
     );
   });
 
   it("keeps polling at halftime", () => {
-    expect(intervalFor([gameAt(halftime, -75)])).toBe(15_000);
+    expect(intervalFor([gameAt(halftime, -75)])).toBe(6_000);
   });
 
   it("polls when a game starts exactly 10 minutes from now", () => {
-    expect(intervalFor([gameAt(scheduled, 10)])).toBe(15_000);
+    expect(intervalFor([gameAt(scheduled, 10)])).toBe(6_000);
   });
 
   it("does not poll when the next game starts just over 10 minutes from now", () => {
@@ -64,7 +64,7 @@ describe("pollingInterval", () => {
   });
 
   it("keeps polling a scheduled game whose start time has passed", () => {
-    expect(intervalFor([gameAt(scheduled, -5)])).toBe(15_000);
+    expect(intervalFor([gameAt(scheduled, -5)])).toBe(6_000);
   });
 
   it("does not poll when every game is final", () => {
