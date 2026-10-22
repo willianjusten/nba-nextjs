@@ -150,6 +150,24 @@ describe("fetchScoreboard", () => {
     expect(scoreboard.games[0].seasonType).toBe("play-in");
   });
 
+  it("throws instead of reporting an empty day when the response has no events list", async () => {
+    respondWith({ leagues: [] });
+
+    await expect(
+      fetchScoreboard(parseNbaDate("2026-10-21")!),
+    ).rejects.toThrow();
+  });
+
+  it("throws instead of reporting a game as scheduled when its state is unknown", async () => {
+    const unknownState = structuredClone(scheduledDay);
+    unknownState.events[0].status.type.state = "unexpected";
+    respondWith(unknownState);
+
+    await expect(
+      fetchScoreboard(parseNbaDate("2026-10-22")!),
+    ).rejects.toThrow();
+  });
+
   it("throws when ESPN responds with an error", async () => {
     fetchMock.mockResolvedValueOnce(new Response("", { status: 503 }));
 

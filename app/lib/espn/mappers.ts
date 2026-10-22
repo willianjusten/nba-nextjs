@@ -55,8 +55,11 @@ function mapStatus(status: RawStatus): GameStatus {
       };
     case "post":
       return { kind: "final", period: status.period };
-    default:
+    case "pre":
       return { kind: "scheduled" };
+    default:
+      // Guessing "scheduled" here would show a game as not started when ESPN sent something unexpected.
+      throw new Error(`Unknown ESPN game state: ${status.type.state}`);
   }
 }
 

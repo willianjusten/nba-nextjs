@@ -11,8 +11,13 @@ export async function fetchScoreboard(nbaDate: NbaDate): Promise<Scoreboard> {
     new URLSearchParams({ dates: espnDate }),
   );
 
+  // A missing events list means ESPN sent something unexpected, which must not read as a day without games.
+  if (!Array.isArray(rawScoreboard.events)) {
+    throw new Error(`ESPN scoreboard for ${nbaDate} has no events list`);
+  }
+
   return {
     nbaDate,
-    games: (rawScoreboard.events ?? []).map(mapGame),
+    games: rawScoreboard.events.map(mapGame),
   };
 }

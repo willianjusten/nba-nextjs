@@ -3,25 +3,38 @@
 import { useQuery } from "@tanstack/react-query";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
-import { strings } from "@/app/lib/strings";
 import GameCard from "@/app/components/GameCard";
+import {
+  GAMES_GRID_CLASS_NAME,
+  GamesListEmpty,
+  GamesListError,
+  GamesListLoading,
+} from "./states";
 
 export default function GamesList({ nbaDate }: { nbaDate: NbaDate }) {
   const {
     data: scoreboard,
-    isPending,
-    isError,
+    error,
+    isFetching,
+    refetch,
   } = useQuery(scoreboardQueryOptions(nbaDate));
 
-  if (isPending) return <p>{strings.games.loading}</p>;
-  if (isError) return <p role="alert">{strings.games.error}</p>;
-  if (scoreboard.games.length === 0) return <p>{strings.games.empty}</p>;
+  // Data is checked before the error: a failed refetch keeps the last valid scoreboard instead of hiding it.
+  if (scoreboard) {
+    if (scoreboard.games.length === 0) return <GamesListEmpty />;
 
-  return (
-    <div className="grid grid-cols-auto-fill gap-4">
-      {scoreboard.games.map((game) => (
-        <GameCard key={game.id} game={game} />
-      ))}
-    </div>
-  );
+    return (
+      <div className={GAMES_GRID_CLASS_NAME}>
+        {scoreboard.games.map((game) => (
+          <GameCard key={game.id} game={game} />
+        ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return <GamesListError onRetry={() => refetch()} isRetrying={isFetching} />;
+  }
+
+  return <GamesListLoading />;
 }

@@ -12,7 +12,9 @@ export const strings = {
   games: {
     title: (formattedDate: string) => `Games on ${formattedDate}`,
     loading: "Loading games...",
-    error: "Couldn't load games. Try again in a moment.",
+    error: "We couldn't load the games right now.",
+    retry: "Try again",
+    retrying: "Trying again...",
     empty: "No games scheduled for this day.",
   },
   gameStatus: {
