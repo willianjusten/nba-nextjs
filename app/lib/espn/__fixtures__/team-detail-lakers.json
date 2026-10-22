@@ -1,0 +1,1045 @@
+{
+  "team": {
+    "abbreviation": "LAL",
+    "alternateColor": "fdb927",
+    "color": "552583",
+    "displayName": "Los Angeles Lakers",
+    "franchise": {
+      "abbreviation": "LAL",
+      "color": "552583",
+      "displayName": "Los Angeles Lakers",
+      "id": "13",
+      "isActive": true,
+      "location": "Los Angeles",
+      "name": "Lakers",
+      "shortDisplayName": "Lakers",
+      "slug": "los-angeles-lakers",
+      "uid": "s:40~l:46~f:13",
+      "venue": {
+        "address": {
+          "city": "Los Angeles",
+          "state": "CA"
+        },
+        "fullName": "crypto.com Arena",
+        "grass": false,
+        "guid": "cd3244eb-8bc6-36ec-9ce7-5f620a9ea5d6",
+        "id": "1841",
+        "images": [
+          {
+            "alt": "",
+            "height": 1125,
+            "href": "https://a.espncdn.com/i/venues/nba/day/1841.jpg",
+            "rel": ["full", "day"],
+            "width": 2000
+          }
+        ],
+        "indoor": true,
+        "shortName": "Staples Center"
+      }
+    },
+    "groups": {
+      "id": "4",
+      "isConference": false,
+      "parent": {
+        "id": "6"
+      }
+    },
+    "id": "13",
+    "isActive": true,
+    "links": [
+      {
+        "href": "https://www.espn.com/nba/team/_/name/lal/los-angeles-lakers",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["clubhouse", "desktop", "team"],
+        "shortText": "Clubhouse",
+        "text": "Clubhouse"
+      },
+      {
+        "href": "https://www.espn.com/nba/team/roster/_/name/lal/los-angeles-lakers",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["roster", "desktop", "team"],
+        "shortText": "Roster",
+        "text": "Roster"
+      },
+      {
+        "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=roster",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["roster", "sportscenter", "app", "team"],
+        "shortText": "Roster",
+        "text": "Roster"
+      },
+      {
+        "href": "https://www.espn.com/nba/team/stats/_/name/lal/los-angeles-lakers",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["stats", "desktop", "team"],
+        "shortText": "Statistics",
+        "text": "Statistics"
+      },
+      {
+        "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=stats",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["stats", "sportscenter", "app", "team"],
+        "shortText": "Statistics",
+        "text": "Statistics"
+      },
+      {
+        "href": "https://www.espn.com/nba/team/schedule/_/name/lal",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["schedule", "desktop", "team"],
+        "shortText": "Schedule",
+        "text": "Schedule"
+      },
+      {
+        "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=scores",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["schedule", "sportscenter", "app", "team"],
+        "shortText": "Schedule",
+        "text": "Schedule"
+      },
+      {
+        "href": "https://www.espn.com/nba/team/photos/_/name/lal",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["photos", "desktop", "team"],
+        "shortText": "photos",
+        "text": "photos"
+      },
+      {
+        "href": "https://www.vividseats.com/los-angeles-lakers-tickets--sports-nba-basketball/performer/483?wsUser=717",
+        "isExternal": true,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["tickets", "desktop", "team"],
+        "shortText": "Tickets",
+        "text": "Tickets"
+      },
+      {
+        "href": "https://www.espn.com/nba/draft/teams/_/name/lal/los-angeles-lakers",
+        "isExternal": false,
+        "isPremium": true,
+        "language": "en-US",
+        "rel": ["draftpicks", "desktop", "team"],
+        "shortText": "Draft Picks",
+        "text": "Draft Picks"
+      },
+      {
+        "href": "https://www.espn.com/nba/team/transactions/_/name/lal",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["transactions", "desktop", "team"],
+        "shortText": "Transactions",
+        "text": "Transactions"
+      },
+      {
+        "href": "https://www.espn.com/nba/team/injuries/_/name/lal",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["injuries", "desktop", "team"],
+        "shortText": "Injuries",
+        "text": "Injuries"
+      },
+      {
+        "href": "https://www.espn.com/nba/team/depth/_/name/lal",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["depthchart", "desktop", "team"],
+        "shortText": "Depth Chart",
+        "text": "Depth Chart"
+      },
+      {
+        "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=depthchart",
+        "isExternal": false,
+        "isPremium": false,
+        "language": "en-US",
+        "rel": ["depthchart", "sportscenter", "app", "team"],
+        "shortText": "Depth Chart",
+        "text": "Depth Chart"
+      }
+    ],
+    "location": "Los Angeles",
+    "logos": [
+      {
+        "alt": "",
+        "height": 500,
+        "href": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+        "rel": ["full", "default"],
+        "width": 500
+      },
+      {
+        "alt": "",
+        "height": 500,
+        "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/lal.png",
+        "rel": ["full", "dark"],
+        "width": 500
+      },
+      {
+        "alt": "",
+        "height": 500,
+        "href": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
+        "rel": ["full", "scoreboard"],
+        "width": 500
+      },
+      {
+        "alt": "",
+        "height": 500,
+        "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/lal.png",
+        "rel": ["full", "scoreboard", "dark"],
+        "width": 500
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_white_color.png",
+        "rel": ["full", "primary_logo_on_white_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_black_color.png",
+        "rel": ["full", "primary_logo_on_black_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_primary_color.png",
+        "rel": ["full", "primary_logo_on_primary_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_secondary_color.png",
+        "rel": ["full", "primary_logo_on_secondary_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_black.png",
+        "rel": ["full", "primary_logo_black"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_white.png",
+        "rel": ["full", "primary_logo_white"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_white_color.png",
+        "rel": ["full", "secondary_logo_on_white_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_black_color.png",
+        "rel": ["full", "secondary_logo_on_black_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_primary_color.png",
+        "rel": ["full", "secondary_logo_on_primary_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_secondary_color.png",
+        "rel": ["full", "secondary_logo_on_secondary_color"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_black.png",
+        "rel": ["full", "secondary_logo_black"],
+        "width": 4096
+      },
+      {
+        "alt": "",
+        "height": 4096,
+        "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_white.png",
+        "rel": ["full", "secondary_logo_white"],
+        "width": 4096
+      }
+    ],
+    "name": "Lakers",
+    "nextEvent": [
+      {
+        "competitions": [
+          {
+            "attendance": 0,
+            "boxscoreAvailable": false,
+            "broadcasts": [
+              {
+                "lang": "en",
+                "market": {
+                  "id": "0",
+                  "type": "Not Applicable"
+                },
+                "media": {
+                  "shortName": "NBA League Pass"
+                },
+                "partnered": false,
+                "region": "us",
+                "type": {
+                  "id": "6",
+                  "shortName": "Subscription Package"
+                }
+              },
+              {
+                "lang": "en",
+                "market": {
+                  "id": "2",
+                  "type": "Home"
+                },
+                "media": {
+                  "shortName": "Spectrum Sports Net"
+                },
+                "partnered": false,
+                "region": "us",
+                "type": {
+                  "id": "1",
+                  "shortName": "TV"
+                }
+              },
+              {
+                "lang": "en",
+                "market": {
+                  "id": "2",
+                  "type": "Home"
+                },
+                "media": {
+                  "shortName": "Spectrum Sports Net +"
+                },
+                "partnered": false,
+                "region": "us",
+                "type": {
+                  "id": "4",
+                  "shortName": "Streaming"
+                }
+              },
+              {
+                "lang": "en",
+                "market": {
+                  "id": "3",
+                  "type": "Away"
+                },
+                "media": {
+                  "shortName": "ClipperVision"
+                },
+                "partnered": false,
+                "region": "us",
+                "type": {
+                  "id": "4",
+                  "shortName": "Streaming"
+                }
+              }
+            ],
+            "competitors": [
+              {
+                "homeAway": "home",
+                "id": "13",
+                "order": 0,
+                "team": {
+                  "abbreviation": "LAL",
+                  "displayName": "Los Angeles Lakers",
+                  "id": "13",
+                  "links": [
+                    {
+                      "href": "https://www.espn.com/nba/team/_/name/lal/los-angeles-lakers",
+                      "rel": ["clubhouse", "desktop", "team"],
+                      "text": "Clubhouse"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/roster/_/name/lal/los-angeles-lakers",
+                      "rel": ["roster", "desktop", "team"],
+                      "text": "Roster"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=roster",
+                      "rel": ["roster", "sportscenter", "app", "team"],
+                      "text": "Roster"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/stats/_/name/lal/los-angeles-lakers",
+                      "rel": ["stats", "desktop", "team"],
+                      "text": "Statistics"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=stats",
+                      "rel": ["stats", "sportscenter", "app", "team"],
+                      "text": "Statistics"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/schedule/_/name/lal",
+                      "rel": ["schedule", "desktop", "team"],
+                      "text": "Schedule"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=scores",
+                      "rel": ["schedule", "sportscenter", "app", "team"],
+                      "text": "Schedule"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/photos/_/name/lal",
+                      "rel": ["photos", "desktop", "team"],
+                      "text": "photos"
+                    },
+                    {
+                      "href": "https://www.vividseats.com/los-angeles-lakers-tickets--sports-nba-basketball/performer/483?wsUser=717",
+                      "rel": ["tickets", "desktop", "team"],
+                      "text": "Tickets"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/draft/teams/_/name/lal/los-angeles-lakers",
+                      "rel": ["draftpicks", "desktop", "team"],
+                      "text": "Draft Picks"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/transactions/_/name/lal",
+                      "rel": ["transactions", "desktop", "team"],
+                      "text": "Transactions"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/injuries/_/name/lal",
+                      "rel": ["injuries", "desktop", "team"],
+                      "text": "Injuries"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/depth/_/name/lal",
+                      "rel": ["depthchart", "desktop", "team"],
+                      "text": "Depth Chart"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=depthchart",
+                      "rel": ["depthchart", "sportscenter", "app", "team"],
+                      "text": "Depth Chart"
+                    }
+                  ],
+                  "location": "Los Angeles",
+                  "logos": [
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+                      "rel": ["full", "default"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/lal.png",
+                      "rel": ["full", "dark"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
+                      "rel": ["full", "scoreboard"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/lal.png",
+                      "rel": ["full", "scoreboard", "dark"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_white_color.png",
+                      "rel": ["full", "primary_logo_on_white_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_black_color.png",
+                      "rel": ["full", "primary_logo_on_black_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_primary_color.png",
+                      "rel": ["full", "primary_logo_on_primary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_on_secondary_color.png",
+                      "rel": ["full", "primary_logo_on_secondary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_black.png",
+                      "rel": ["full", "primary_logo_black"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/primary_logo_white.png",
+                      "rel": ["full", "primary_logo_white"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_white_color.png",
+                      "rel": ["full", "secondary_logo_on_white_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_black_color.png",
+                      "rel": ["full", "secondary_logo_on_black_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_primary_color.png",
+                      "rel": ["full", "secondary_logo_on_primary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_on_secondary_color.png",
+                      "rel": ["full", "secondary_logo_on_secondary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_black.png",
+                      "rel": ["full", "secondary_logo_black"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/2876e98b-b9bc-2920-4319-46e6943f8be4/logos/secondary_logo_white.png",
+                      "rel": ["full", "secondary_logo_white"],
+                      "width": 4096
+                    }
+                  ],
+                  "shortDisplayName": "Lakers"
+                },
+                "type": "team"
+              },
+              {
+                "homeAway": "away",
+                "id": "12",
+                "order": 1,
+                "team": {
+                  "abbreviation": "LAC",
+                  "displayName": "LA Clippers",
+                  "id": "12",
+                  "links": [
+                    {
+                      "href": "https://www.espn.com/nba/team/_/name/lac/la-clippers",
+                      "rel": ["clubhouse", "desktop", "team"],
+                      "text": "Clubhouse"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/roster/_/name/lac/la-clippers",
+                      "rel": ["roster", "desktop", "team"],
+                      "text": "Roster"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:12&section=roster",
+                      "rel": ["roster", "sportscenter", "app", "team"],
+                      "text": "Roster"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/stats/_/name/lac/la-clippers",
+                      "rel": ["stats", "desktop", "team"],
+                      "text": "Statistics"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:12&section=stats",
+                      "rel": ["stats", "sportscenter", "app", "team"],
+                      "text": "Statistics"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/schedule/_/name/lac",
+                      "rel": ["schedule", "desktop", "team"],
+                      "text": "Schedule"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:12&section=scores",
+                      "rel": ["schedule", "sportscenter", "app", "team"],
+                      "text": "Schedule"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/photos/_/name/lac",
+                      "rel": ["photos", "desktop", "team"],
+                      "text": "photos"
+                    },
+                    {
+                      "href": "https://www.vividseats.com/la-clippers-tickets--sports-nba-basketball/performer/480?wsUser=717",
+                      "rel": ["tickets", "desktop", "team"],
+                      "text": "Tickets"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/draft/teams/_/name/lac/la-clippers",
+                      "rel": ["draftpicks", "desktop", "team"],
+                      "text": "Draft Picks"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/transactions/_/name/lac",
+                      "rel": ["transactions", "desktop", "team"],
+                      "text": "Transactions"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/injuries/_/name/lac",
+                      "rel": ["injuries", "desktop", "team"],
+                      "text": "Injuries"
+                    },
+                    {
+                      "href": "https://www.espn.com/nba/team/depth/_/name/lac",
+                      "rel": ["depthchart", "desktop", "team"],
+                      "text": "Depth Chart"
+                    },
+                    {
+                      "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:12&section=depthchart",
+                      "rel": ["depthchart", "sportscenter", "app", "team"],
+                      "text": "Depth Chart"
+                    }
+                  ],
+                  "location": "LA",
+                  "logos": [
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
+                      "rel": ["full", "default"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/lac.png",
+                      "rel": ["full", "dark"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lac.png",
+                      "rel": ["full", "scoreboard"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 500,
+                      "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/lac.png",
+                      "rel": ["full", "scoreboard", "dark"],
+                      "width": 500
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/primary_logo_on_white_color.png",
+                      "rel": ["full", "primary_logo_on_white_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/primary_logo_on_black_color.png",
+                      "rel": ["full", "primary_logo_on_black_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/primary_logo_on_primary_color.png",
+                      "rel": ["full", "primary_logo_on_primary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/primary_logo_on_secondary_color.png",
+                      "rel": ["full", "primary_logo_on_secondary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/primary_logo_black.png",
+                      "rel": ["full", "primary_logo_black"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/primary_logo_white.png",
+                      "rel": ["full", "primary_logo_white"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/secondary_logo_on_white_color.png",
+                      "rel": ["full", "secondary_logo_on_white_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/secondary_logo_on_black_color.png",
+                      "rel": ["full", "secondary_logo_on_black_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/secondary_logo_on_primary_color.png",
+                      "rel": ["full", "secondary_logo_on_primary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/secondary_logo_on_secondary_color.png",
+                      "rel": ["full", "secondary_logo_on_secondary_color"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/secondary_logo_black.png",
+                      "rel": ["full", "secondary_logo_black"],
+                      "width": 4096
+                    },
+                    {
+                      "alt": "",
+                      "height": 4096,
+                      "href": "https://a.espncdn.com/guid/083a58a6-b849-3501-e67b-059290d12295/logos/secondary_logo_white.png",
+                      "rel": ["full", "secondary_logo_white"],
+                      "width": 4096
+                    }
+                  ],
+                  "shortDisplayName": "Clippers"
+                },
+                "type": "team"
+              }
+            ],
+            "date": "2026-10-24T02:00Z",
+            "id": "401909851",
+            "neutralSite": false,
+            "notes": [],
+            "status": {
+              "clock": 0.0,
+              "displayClock": "0.0",
+              "period": 0,
+              "type": {
+                "completed": false,
+                "description": "Scheduled",
+                "detail": "Fri, October 23rd at 10:00 PM EDT",
+                "id": "1",
+                "name": "STATUS_SCHEDULED",
+                "shortDetail": "10/23 - 10:00 PM EDT",
+                "state": "pre"
+              }
+            },
+            "tickets": [
+              {
+                "description": "LA Clippers at Los Angeles Lakers",
+                "id": "7433094",
+                "links": [
+                  {
+                    "href": "https://www.vividseats.com/los-angeles-lakers-tickets-cryptocom-arena-10-23-2026/production/7433094?wsUser=717",
+                    "rel": ["tickets", "desktop", "event"]
+                  },
+                  {
+                    "href": "https://www.vividseats.com/crypto-arena-tickets/venue/1604?wsUser=717",
+                    "rel": ["tickets", "desktop", "venue"]
+                  }
+                ],
+                "maxPrice": 20018.0,
+                "numberAvailable": 3874,
+                "startingPrice": 68.0,
+                "summary": "Tickets as low as $68",
+                "totalPostings": 1624
+              }
+            ],
+            "ticketsAvailable": true,
+            "timeValid": true,
+            "type": {
+              "abbreviation": "STD",
+              "id": "1",
+              "slug": "standard",
+              "text": "Standard",
+              "type": "standard"
+            },
+            "venue": {
+              "address": {
+                "city": "Los Angeles",
+                "state": "CA"
+              },
+              "fullName": "crypto.com Arena"
+            }
+          }
+        ],
+        "date": "2026-10-24T02:00Z",
+        "id": "401909851",
+        "links": [
+          {
+            "href": "https://www.espn.com/nba/game/_/gameId/401909851/clippers-lakers",
+            "isExternal": false,
+            "isPremium": false,
+            "language": "en-US",
+            "rel": ["summary", "desktop", "event"],
+            "shortText": "Summary",
+            "text": "Gamecast"
+          },
+          {
+            "href": "sportscenter://x-callback-url/showGame?sportName=basketball&leagueAbbrev=nba&gameId=401909851",
+            "isExternal": false,
+            "isPremium": false,
+            "language": "en-US",
+            "rel": ["summary", "sportscenter", "app", "event"],
+            "shortText": "Summary",
+            "text": "Gamecast"
+          },
+          {
+            "href": "https://www.espn.com/nba/game/_/gameId/401909851",
+            "isExternal": false,
+            "isPremium": false,
+            "language": "en-US",
+            "rel": ["now", "desktop", "event"],
+            "shortText": "Now",
+            "text": "Now"
+          },
+          {
+            "href": "https://www.espn.com/nba/preview/_/gameId/401909851",
+            "isExternal": false,
+            "isPremium": false,
+            "language": "en-US",
+            "rel": ["preview", "desktop", "event"],
+            "shortText": "Preview",
+            "text": "Preview"
+          },
+          {
+            "href": "https://www.espn.com/nba/odds/_/gameId/401909851",
+            "isExternal": false,
+            "isPremium": false,
+            "language": "en-US",
+            "rel": ["odds", "desktop", "event"],
+            "shortText": "Odds",
+            "text": "Odds"
+          },
+          {
+            "href": "https://m.espn.com/nba/odds/_/gameId/401909851",
+            "isExternal": false,
+            "isPremium": false,
+            "language": "en-US",
+            "rel": ["odds", "mobile", "event"],
+            "shortText": "Odds",
+            "text": "Odds"
+          }
+        ],
+        "name": "LA Clippers at Los Angeles Lakers",
+        "season": {
+          "displayName": "2026-27",
+          "year": 2027
+        },
+        "seasonType": {
+          "abbreviation": "reg",
+          "id": "2",
+          "name": "Regular Season",
+          "type": 2
+        },
+        "shortName": "LAC @ LAL",
+        "timeValid": true
+      }
+    ],
+    "record": {
+      "items": [
+        {
+          "description": "Overall Record",
+          "stats": [
+            {
+              "name": "OTLosses",
+              "value": 0.0
+            },
+            {
+              "name": "OTWins",
+              "value": 0.0
+            },
+            {
+              "name": "avgPointsAgainst",
+              "value": 105.0
+            },
+            {
+              "name": "avgPointsFor",
+              "value": 127.0
+            },
+            {
+              "name": "differential",
+              "value": 22.0
+            },
+            {
+              "name": "divisionWinPercent",
+              "value": 1.0
+            },
+            {
+              "name": "gamesBehind",
+              "value": 0.0
+            },
+            {
+              "name": "gamesPlayed",
+              "value": 1.0
+            },
+            {
+              "name": "leagueWinPercent",
+              "value": 1.0
+            },
+            {
+              "name": "losses",
+              "value": 0.0
+            },
+            {
+              "name": "playoffSeed",
+              "value": 4.0
+            },
+            {
+              "name": "pointDifferential",
+              "value": 22.0
+            },
+            {
+              "name": "points",
+              "value": 0.5
+            },
+            {
+              "name": "pointsAgainst",
+              "value": 105.0
+            },
+            {
+              "name": "pointsFor",
+              "value": 127.0
+            },
+            {
+              "name": "streak",
+              "value": 1.0
+            },
+            {
+              "name": "ties",
+              "value": 0.0
+            },
+            {
+              "name": "winPercent",
+              "value": 1.0
+            },
+            {
+              "name": "wins",
+              "value": 1.0
+            },
+            {
+              "name": "gamesAhead",
+              "value": 1.0
+            }
+          ],
+          "summary": "1-0",
+          "type": "total"
+        },
+        {
+          "description": "Home Record",
+          "stats": [
+            {
+              "name": "wins",
+              "value": 1.0
+            },
+            {
+              "name": "losses",
+              "value": 0.0
+            },
+            {
+              "name": "ties",
+              "value": 0.0
+            },
+            {
+              "name": "winPercent",
+              "value": 1.0
+            },
+            {
+              "name": "OTLosses",
+              "value": 0.0
+            }
+          ],
+          "summary": "1-0",
+          "type": "home"
+        },
+        {
+          "description": "Away Record",
+          "stats": [
+            {
+              "name": "wins",
+              "value": 0.0
+            },
+            {
+              "name": "losses",
+              "value": 0.0
+            },
+            {
+              "name": "ties",
+              "value": 0.0
+            },
+            {
+              "name": "winPercent",
+              "value": 0.0
+            },
+            {
+              "name": "OTLosses",
+              "value": 0.0
+            }
+          ],
+          "summary": "0-0",
+          "type": "road"
+        }
+      ]
+    },
+    "shortDisplayName": "Lakers",
+    "slug": "los-angeles-lakers",
+    "standingSummary": "1st in Pacific Division",
+    "uid": "s:40~l:46~t:13"
+  }
+}

@@ -1,6 +1,6 @@
-import PagePlaceholder from "@/app/components/PagePlaceholder";
-import { Hydrate } from "@/app/lib/query/server";
-import { strings } from "@/app/lib/strings";
+import { notFound } from "next/navigation";
+import TeamHeader from "@/app/components/TeamHeader";
+import { fetchTeamDetail, fetchTeamIdBySlug } from "@/app/lib/espn";
 
 type TeamPageProps = {
   params: Promise<{ slug: string }>;
@@ -8,10 +8,14 @@ type TeamPageProps = {
 
 export default async function TeamPage({ params }: TeamPageProps) {
   const { slug } = await params;
+  const teamId = await fetchTeamIdBySlug(slug);
+  if (!teamId) notFound();
+
+  const team = await fetchTeamDetail(teamId);
 
   return (
-    <Hydrate>
-      <PagePlaceholder title={strings.team.title(slug)} />
-    </Hydrate>
+    <section className="flex flex-col gap-4 py-8">
+      <TeamHeader team={team} />
+    </section>
   );
 }

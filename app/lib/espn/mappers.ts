@@ -8,11 +8,14 @@ import type {
   SeasonType,
   Team,
 } from "@/app/lib/domain/game";
+import type { ListedTeam, TeamDetail, TeamSlug } from "@/app/lib/domain/team";
 import { nbaDateOf } from "@/app/lib/time/nba-date";
 import type {
   RawCompetition,
   RawCompetitor,
   RawEvent,
+  RawListedTeam,
+  RawTeamDetailResponse,
   RawSeason,
   RawSeries,
   RawStatus,
@@ -77,6 +80,37 @@ function mapTeam(team: RawTeam): Team {
     location: team.location,
     color: team.color ?? null,
     logoUrl: team.logo,
+  };
+}
+
+function teamSlugOf(teamName: string): TeamSlug {
+  return teamName.toLowerCase().trim().replaceAll(/\s+/g, "-");
+}
+
+// The scoreboard variant matches the logo the games list already uses.
+function pickScoreboardLogo(logos: RawListedTeam["logos"]) {
+  const scoreboardLogo = logos.find(
+    (logo) => logo.rel.includes("scoreboard") && !logo.rel.includes("dark"),
+  );
+  return (scoreboardLogo ?? logos[0])?.href ?? "";
+}
+
+export function mapListedTeam(team: RawListedTeam): ListedTeam {
+  return {
+    ...mapTeam({ ...team, logo: pickScoreboardLogo(team.logos) }),
+    slug: teamSlugOf(team.name),
+  };
+}
+
+export function mapTeamDetail(team: RawTeamDetailResponse["team"]): TeamDetail {
+  const overallRecord = team.record?.items?.find(
+    (recordItem) => recordItem.type === "total",
+  );
+
+  return {
+    ...mapListedTeam(team),
+    record: overallRecord?.summary ?? null,
+    standingSummary: team.standingSummary ?? null,
   };
 }
 

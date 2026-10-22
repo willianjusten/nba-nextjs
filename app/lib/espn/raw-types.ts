@@ -60,6 +60,22 @@ export type RawCompetitor = {
   team: RawTeam;
 };
 
+export type RawTeamsList = {
+  sports: { leagues: { teams: { team: RawListedTeam }[] }[] }[];
+};
+
+export type RawTeamDetailResponse = {
+  team: RawListedTeam & {
+    record?: { items?: { type: string; summary: string }[] };
+    standingSummary?: string;
+  };
+};
+
+// Team as listed by the teams endpoints, which send a logo list instead of a single logo.
+export type RawListedTeam = Omit<RawTeam, "logo"> & {
+  logos: { href: string; rel: string[] }[];
+};
+
 export type RawTeam = {
   id: string;
   abbreviation: string;

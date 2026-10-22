@@ -12,6 +12,14 @@ import StandingsPage from "./standings/page";
 import TeamPage from "./teams/[slug]/page";
 import PlayoffsPage from "./playoffs/page";
 import finalDay from "./lib/espn/__fixtures__/scoreboard-final-day.json";
+import teamsList from "./lib/espn/__fixtures__/teams-list.json";
+import lakersDetail from "./lib/espn/__fixtures__/team-detail-lakers.json";
+
+function espnFixtureFor(url: string) {
+  if (url.includes("/teams/13")) return lakersDetail;
+  if (url.endsWith("/teams")) return teamsList;
+  return finalDay;
+}
 
 function render(ui: ReactElement) {
   return renderWithoutProviders(ui, { wrapper: Providers });
@@ -21,7 +29,10 @@ describe("routes", () => {
   beforeEach(() => {
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () => new Response(JSON.stringify(finalDay))),
+      vi.fn(
+        async (url: string) =>
+          new Response(JSON.stringify(espnFixtureFor(url))),
+      ),
     );
   });
 
@@ -76,13 +87,19 @@ describe("routes", () => {
   });
 
   it("renders the team page for the requested slug", async () => {
-    const teamSlug = "lakers";
-
-    render(await TeamPage({ params: Promise.resolve({ slug: teamSlug }) }));
+    render(await TeamPage({ params: Promise.resolve({ slug: "lakers" }) }));
 
     expect(
-      screen.getByRole("heading", { name: strings.team.title(teamSlug) }),
+      screen.getByRole("heading", { name: "Los Angeles Lakers" }),
     ).toBeDefined();
+    expect(screen.getByText(strings.team.record("1-0"))).toBeDefined();
+    expect(screen.getByText("1st in Pacific Division")).toBeDefined();
+  });
+
+  it("returns not found for an unknown team slug", async () => {
+    await expect(
+      TeamPage({ params: Promise.resolve({ slug: "supersonics" }) }),
+    ).rejects.toThrow("NEXT_HTTP_ERROR_FALLBACK;404");
   });
 
   it("renders the playoffs page", () => {

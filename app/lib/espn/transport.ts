@@ -1,6 +1,7 @@
 import {
   ESPN_ENDPOINTS,
   ESPN_HOSTS,
+  endpointCacheOptions,
   type EspnEndpoint,
   type EspnEndpointName,
 } from "./config";
@@ -21,14 +22,24 @@ const PUBLIC_CORE_ORIGIN = ESPN_HOSTS.core.origin;
 
 const isServer = typeof window === "undefined";
 
-function buildEspnUrl(endpoint: EspnEndpoint, searchParams: URLSearchParams) {
+type EspnRequestOptions = {
+  searchParams?: URLSearchParams;
+  // Appended to the endpoint path, e.g. "/13" for one team under the teams endpoint.
+  subpath?: string;
+};
+
+function buildEspnUrl(
+  endpoint: EspnEndpoint,
+  { searchParams = new URLSearchParams(), subpath = "" }: EspnRequestOptions,
+) {
+  const path = `${endpoint.path}${subpath}`;
   const query = searchParams.size > 0 ? `?${searchParams}` : "";
 
   if (isServer || endpoint.access === "direct") {
-    return `${ESPN_HOSTS[endpoint.host].origin}${endpoint.path}${query}`;
+    return `${ESPN_HOSTS[endpoint.host].origin}${path}${query}`;
   }
 
-  return `/api/espn/${endpoint.host}${endpoint.path}${query}`;
+  return `/api/espn/${endpoint.host}${path}${query}`;
 }
 
 export function rewritePrivateCoreHosts(rawText: string) {
@@ -37,11 +48,13 @@ export function rewritePrivateCoreHosts(rawText: string) {
 
 export async function espnGet<RawResponse>(
   endpointName: EspnEndpointName,
-  searchParams: URLSearchParams = new URLSearchParams(),
+  options: EspnRequestOptions = {},
 ): Promise<RawResponse> {
-  const url = buildEspnUrl(ESPN_ENDPOINTS[endpointName], searchParams);
+  const endpoint: EspnEndpoint = ESPN_ENDPOINTS[endpointName];
+  const url = buildEspnUrl(endpoint, options);
   const response = await fetch(url, {
     headers: { accept: "application/json" },
+    ...endpointCacheOptions(endpoint),
   });
 
   if (!response.ok) throw new EspnRequestError(url, response.status);

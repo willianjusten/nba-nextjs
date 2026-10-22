@@ -39,7 +39,7 @@ export const strings = {
     title: "Standings",
   },
   team: {
-    title: (slug: string) => `Team ${slug}`,
+    record: (record: string) => `Record ${record}`,
   },
   playoffs: {
     title: "Playoffs",

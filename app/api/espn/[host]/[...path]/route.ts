@@ -1,4 +1,9 @@
-import { ESPN_HOSTS, type EspnHost } from "@/app/lib/espn/config";
+import {
+  ESPN_HOSTS,
+  endpointCacheOptions,
+  findEndpointForPath,
+  type EspnHost,
+} from "@/app/lib/espn/config";
 
 type RouteContext = {
   params: Promise<{ host: string; path: string[] }>;
@@ -22,6 +27,7 @@ export async function GET(request: Request, { params }: RouteContext) {
 
   const upstreamResponse = await fetch(upstreamUrl.toString(), {
     headers: { accept: "application/json" },
+    ...endpointCacheOptions(findEndpointForPath(host, upstreamUrl.pathname)),
   });
 
   return new Response(upstreamResponse.body, {

@@ -1,5 +1,6 @@
 import { GET } from "./route";
 
+const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
 const fetchMock = vi.fn();
 
 function callRoute(host: string, path: string[], search = "") {
@@ -40,6 +41,60 @@ describe("ESPN proxy route", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toBe("max-age=9");
     expect(await response.json()).toEqual({ events: [] });
+  });
+
+  it("revalidates a team detail once a day", async () => {
+    fetchMock.mockResolvedValueOnce(new Response("{}", { status: 200 }));
+
+    await callRoute("site", [
+      "apis",
+      "site",
+      "v2",
+      "sports",
+      "basketball",
+      "nba",
+      "teams",
+      "13",
+    ]);
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/13",
+      expect.objectContaining({ next: { revalidate: ONE_DAY_IN_SECONDS } }),
+    );
+  });
+
+  it("does not give paths below a team detail the team detail cache", async () => {
+    fetchMock.mockResolvedValueOnce(new Response("{}", { status: 200 }));
+
+    await callRoute("site", [
+      "apis",
+      "site",
+      "v2",
+      "sports",
+      "basketball",
+      "nba",
+      "teams",
+      "13",
+      "schedule",
+    ]);
+
+    expect(fetchMock.mock.calls[0][1]).not.toHaveProperty("next");
+  });
+
+  it("does not cache endpoints without a revalidation period", async () => {
+    fetchMock.mockResolvedValueOnce(new Response("{}", { status: 200 }));
+
+    await callRoute("site", [
+      "apis",
+      "site",
+      "v2",
+      "sports",
+      "basketball",
+      "nba",
+      "scoreboard",
+    ]);
+
+    expect(fetchMock.mock.calls[0][1]).not.toHaveProperty("next");
   });
 
   it("passes ESPN error statuses through", async () => {
