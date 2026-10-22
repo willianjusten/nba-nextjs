@@ -1,0 +1,1124 @@
+{
+  "leagues": [
+    {
+      "id": "46",
+      "uid": "s:40~l:46",
+      "name": "National Basketball Association",
+      "abbreviation": "NBA",
+      "slug": "nba",
+      "season": {
+        "year": 2026,
+        "startDate": "2025-10-01T07:00Z",
+        "endDate": "2026-06-27T06:59Z",
+        "displayName": "2025-26",
+        "type": {
+          "id": "2",
+          "type": 2,
+          "name": "Regular Season",
+          "abbreviation": "reg"
+        }
+      },
+      "logos": [
+        {
+          "href": "https://a.espncdn.com/i/teamlogos/leagues/500/nba.png",
+          "width": 500,
+          "height": 500,
+          "alt": "",
+          "rel": ["full", "default"],
+          "lastUpdated": "2018-06-05T12:07Z"
+        },
+        {
+          "href": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500-dark/nba.png&w=500&h=500&transparent=true",
+          "width": 500,
+          "height": 500,
+          "alt": "",
+          "rel": ["full", "dark"],
+          "lastUpdated": "2026-10-21T11:39Z"
+        }
+      ],
+      "calendarType": "day",
+      "calendarIsWhitelist": true,
+      "calendarStartDate": "2025-10-01T07:00Z",
+      "calendarEndDate": "2026-06-27T06:59Z",
+      "calendar": [
+        "2025-10-02T07:00Z",
+        "2025-10-03T07:00Z",
+        "2025-10-04T07:00Z",
+        "2025-10-05T07:00Z",
+        "2025-10-06T07:00Z",
+        "2025-10-07T07:00Z",
+        "2025-10-08T07:00Z",
+        "2025-10-09T07:00Z",
+        "2025-10-10T07:00Z",
+        "2025-10-11T07:00Z",
+        "2025-10-12T07:00Z",
+        "2025-10-13T07:00Z",
+        "2025-10-14T07:00Z",
+        "2025-10-15T07:00Z",
+        "2025-10-16T07:00Z",
+        "2025-10-17T07:00Z",
+        "2025-10-21T07:00Z",
+        "2025-10-22T07:00Z",
+        "2025-10-23T07:00Z",
+        "2025-10-24T07:00Z",
+        "2025-10-25T07:00Z",
+        "2025-10-26T07:00Z",
+        "2025-10-27T07:00Z",
+        "2025-10-28T07:00Z",
+        "2025-10-29T07:00Z",
+        "2025-10-30T07:00Z",
+        "2025-10-31T07:00Z",
+        "2025-11-01T07:00Z",
+        "2025-11-02T07:00Z",
+        "2025-11-03T08:00Z",
+        "2025-11-04T08:00Z",
+        "2025-11-05T08:00Z",
+        "2025-11-06T08:00Z",
+        "2025-11-07T08:00Z",
+        "2025-11-08T08:00Z",
+        "2025-11-09T08:00Z",
+        "2025-11-10T08:00Z",
+        "2025-11-11T08:00Z",
+        "2025-11-12T08:00Z",
+        "2025-11-13T08:00Z",
+        "2025-11-14T08:00Z",
+        "2025-11-15T08:00Z",
+        "2025-11-16T08:00Z",
+        "2025-11-17T08:00Z",
+        "2025-11-18T08:00Z",
+        "2025-11-19T08:00Z",
+        "2025-11-20T08:00Z",
+        "2025-11-21T08:00Z",
+        "2025-11-22T08:00Z",
+        "2025-11-23T08:00Z",
+        "2025-11-24T08:00Z",
+        "2025-11-25T08:00Z",
+        "2025-11-26T08:00Z",
+        "2025-11-28T08:00Z",
+        "2025-11-29T08:00Z",
+        "2025-11-30T08:00Z",
+        "2025-12-01T08:00Z",
+        "2025-12-02T08:00Z",
+        "2025-12-03T08:00Z",
+        "2025-12-04T08:00Z",
+        "2025-12-05T08:00Z",
+        "2025-12-06T08:00Z",
+        "2025-12-07T08:00Z",
+        "2025-12-08T08:00Z",
+        "2025-12-09T08:00Z",
+        "2025-12-10T08:00Z",
+        "2025-12-11T08:00Z",
+        "2025-12-12T08:00Z",
+        "2025-12-13T08:00Z",
+        "2025-12-14T08:00Z",
+        "2025-12-15T08:00Z",
+        "2025-12-16T08:00Z",
+        "2025-12-17T08:00Z",
+        "2025-12-18T08:00Z",
+        "2025-12-19T08:00Z",
+        "2025-12-20T08:00Z",
+        "2025-12-21T08:00Z",
+        "2025-12-22T08:00Z",
+        "2025-12-23T08:00Z",
+        "2025-12-25T08:00Z",
+        "2025-12-26T08:00Z",
+        "2025-12-27T08:00Z",
+        "2025-12-28T08:00Z",
+        "2025-12-29T08:00Z",
+        "2025-12-30T08:00Z",
+        "2025-12-31T08:00Z",
+        "2026-01-01T08:00Z",
+        "2026-01-02T08:00Z",
+        "2026-01-03T08:00Z",
+        "2026-01-04T08:00Z",
+        "2026-01-05T08:00Z",
+        "2026-01-06T08:00Z",
+        "2026-01-07T08:00Z",
+        "2026-01-08T08:00Z",
+        "2026-01-09T08:00Z",
+        "2026-01-10T08:00Z",
+        "2026-01-11T08:00Z",
+        "2026-01-12T08:00Z",
+        "2026-01-13T08:00Z",
+        "2026-01-14T08:00Z",
+        "2026-01-15T08:00Z",
+        "2026-01-16T08:00Z",
+        "2026-01-17T08:00Z",
+        "2026-01-18T08:00Z",
+        "2026-01-19T08:00Z",
+        "2026-01-20T08:00Z",
+        "2026-01-21T08:00Z",
+        "2026-01-22T08:00Z",
+        "2026-01-23T08:00Z",
+        "2026-01-24T08:00Z",
+        "2026-01-25T08:00Z",
+        "2026-01-26T08:00Z",
+        "2026-01-27T08:00Z",
+        "2026-01-28T08:00Z",
+        "2026-01-29T08:00Z",
+        "2026-01-30T08:00Z",
+        "2026-01-31T08:00Z",
+        "2026-02-01T08:00Z",
+        "2026-02-02T08:00Z",
+        "2026-02-03T08:00Z",
+        "2026-02-04T08:00Z",
+        "2026-02-05T08:00Z",
+        "2026-02-06T08:00Z",
+        "2026-02-07T08:00Z",
+        "2026-02-08T08:00Z",
+        "2026-02-09T08:00Z",
+        "2026-02-10T08:00Z",
+        "2026-02-11T08:00Z",
+        "2026-02-12T08:00Z",
+        "2026-02-15T08:00Z",
+        "2026-02-19T08:00Z",
+        "2026-02-20T08:00Z",
+        "2026-02-21T08:00Z",
+        "2026-02-22T08:00Z",
+        "2026-02-23T08:00Z",
+        "2026-02-24T08:00Z",
+        "2026-02-25T08:00Z",
+        "2026-02-26T08:00Z",
+        "2026-02-27T08:00Z",
+        "2026-02-28T08:00Z",
+        "2026-03-01T08:00Z",
+        "2026-03-02T08:00Z",
+        "2026-03-03T08:00Z",
+        "2026-03-04T08:00Z",
+        "2026-03-05T08:00Z",
+        "2026-03-06T08:00Z",
+        "2026-03-07T08:00Z",
+        "2026-03-08T08:00Z",
+        "2026-03-09T07:00Z",
+        "2026-03-10T07:00Z",
+        "2026-03-11T07:00Z",
+        "2026-03-12T07:00Z",
+        "2026-03-13T07:00Z",
+        "2026-03-14T07:00Z",
+        "2026-03-15T07:00Z",
+        "2026-03-16T07:00Z",
+        "2026-03-17T07:00Z",
+        "2026-03-18T07:00Z",
+        "2026-03-19T07:00Z",
+        "2026-03-20T07:00Z",
+        "2026-03-21T07:00Z",
+        "2026-03-22T07:00Z",
+        "2026-03-23T07:00Z",
+        "2026-03-24T07:00Z",
+        "2026-03-25T07:00Z",
+        "2026-03-26T07:00Z",
+        "2026-03-27T07:00Z",
+        "2026-03-28T07:00Z",
+        "2026-03-29T07:00Z",
+        "2026-03-30T07:00Z",
+        "2026-03-31T07:00Z",
+        "2026-04-01T07:00Z",
+        "2026-04-02T07:00Z",
+        "2026-04-03T07:00Z",
+        "2026-04-04T07:00Z",
+        "2026-04-05T07:00Z",
+        "2026-04-06T07:00Z",
+        "2026-04-07T07:00Z",
+        "2026-04-08T07:00Z",
+        "2026-04-09T07:00Z",
+        "2026-04-10T07:00Z",
+        "2026-04-12T07:00Z",
+        "2026-04-14T07:00Z",
+        "2026-04-15T07:00Z",
+        "2026-04-17T07:00Z",
+        "2026-04-18T07:00Z",
+        "2026-04-19T07:00Z",
+        "2026-04-20T07:00Z",
+        "2026-04-21T07:00Z",
+        "2026-04-22T07:00Z",
+        "2026-04-23T07:00Z",
+        "2026-04-24T07:00Z",
+        "2026-04-25T07:00Z",
+        "2026-04-26T07:00Z",
+        "2026-04-27T07:00Z",
+        "2026-04-28T07:00Z",
+        "2026-04-29T07:00Z",
+        "2026-04-30T07:00Z",
+        "2026-05-01T07:00Z",
+        "2026-05-02T07:00Z",
+        "2026-05-03T07:00Z",
+        "2026-05-04T07:00Z",
+        "2026-05-05T07:00Z",
+        "2026-05-06T07:00Z",
+        "2026-05-07T07:00Z",
+        "2026-05-08T07:00Z",
+        "2026-05-09T07:00Z",
+        "2026-05-10T07:00Z",
+        "2026-05-11T07:00Z",
+        "2026-05-12T07:00Z",
+        "2026-05-13T07:00Z",
+        "2026-05-15T07:00Z",
+        "2026-05-17T07:00Z",
+        "2026-05-18T07:00Z",
+        "2026-05-19T07:00Z",
+        "2026-05-20T07:00Z",
+        "2026-05-21T07:00Z",
+        "2026-05-22T07:00Z",
+        "2026-05-23T07:00Z",
+        "2026-05-24T07:00Z",
+        "2026-05-25T07:00Z",
+        "2026-05-26T07:00Z",
+        "2026-05-28T07:00Z",
+        "2026-05-30T07:00Z",
+        "2026-06-03T07:00Z",
+        "2026-06-05T07:00Z",
+        "2026-06-08T07:00Z",
+        "2026-06-10T07:00Z",
+        "2026-06-13T07:00Z"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "401866757",
+      "uid": "s:40~l:46~e:401866757",
+      "date": "2026-04-15T23:30Z",
+      "name": "Orlando Magic at Philadelphia 76ers",
+      "shortName": "ORL @ PHI",
+      "season": {
+        "year": 2026,
+        "type": 5,
+        "slug": "play-in-season"
+      },
+      "competitions": [
+        {
+          "id": "401866757",
+          "uid": "s:40~l:46~e:401866757~c:401866757",
+          "date": "2026-04-15T23:30Z",
+          "attendance": 19746,
+          "type": {
+            "id": "1",
+            "abbreviation": "STD"
+          },
+          "timeValid": true,
+          "neutralSite": false,
+          "conferenceCompetition": false,
+          "playByPlayAvailable": true,
+          "recent": false,
+          "venue": {
+            "id": "1845",
+            "fullName": "Xfinity Mobile Arena",
+            "address": {
+              "city": "Philadelphia",
+              "state": "PA"
+            },
+            "indoor": true
+          },
+          "competitors": [
+            {
+              "id": "20",
+              "uid": "s:40~l:46~t:20",
+              "type": "team",
+              "order": 0,
+              "homeAway": "home",
+              "winner": true,
+              "team": {
+                "id": "20",
+                "uid": "s:40~l:46~t:20",
+                "location": "Philadelphia",
+                "name": "76ers",
+                "abbreviation": "PHI",
+                "displayName": "Philadelphia 76ers",
+                "shortDisplayName": "76ers",
+                "color": "1d428a",
+                "alternateColor": "e01234",
+                "isActive": true,
+                "venue": {
+                  "id": "1845"
+                },
+                "links": [
+                  {
+                    "rel": ["clubhouse", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/_/name/phi/philadelphia-76ers",
+                    "text": "Clubhouse",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/roster/_/name/phi/philadelphia-76ers",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:20&section=roster",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/stats/_/name/phi/philadelphia-76ers",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:20&section=stats",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/schedule/_/name/phi",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:20&section=scores",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  }
+                ],
+                "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/phi.png",
+                "logoDark": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/phi.png"
+              },
+              "score": "109",
+              "linescores": [
+                {
+                  "value": 28.0,
+                  "displayValue": "28",
+                  "period": 1
+                },
+                {
+                  "value": 31.0,
+                  "displayValue": "31",
+                  "period": 2
+                },
+                {
+                  "value": 20.0,
+                  "displayValue": "20",
+                  "period": 3
+                },
+                {
+                  "value": 30.0,
+                  "displayValue": "30",
+                  "period": 4
+                }
+              ],
+              "statistics": [
+                {
+                  "name": "rebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "40"
+                },
+                {
+                  "name": "avgRebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "40.0"
+                },
+                {
+                  "name": "assists",
+                  "abbreviation": "AST",
+                  "displayValue": "17"
+                },
+                {
+                  "name": "fieldGoalsAttempted",
+                  "abbreviation": "FGA",
+                  "displayValue": "85"
+                },
+                {
+                  "name": "fieldGoalsMade",
+                  "abbreviation": "FGM",
+                  "displayValue": "38"
+                },
+                {
+                  "name": "fieldGoalPct",
+                  "abbreviation": "FG%",
+                  "displayValue": "44.7"
+                },
+                {
+                  "name": "freeThrowPct",
+                  "abbreviation": "FT%",
+                  "displayValue": "84.0"
+                },
+                {
+                  "name": "freeThrowsAttempted",
+                  "abbreviation": "FTA",
+                  "displayValue": "25"
+                },
+                {
+                  "name": "freeThrowsMade",
+                  "abbreviation": "FTM",
+                  "displayValue": "21"
+                },
+                {
+                  "name": "points",
+                  "abbreviation": "PTS",
+                  "displayValue": "109"
+                },
+                {
+                  "name": "threePointPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "34.3"
+                },
+                {
+                  "name": "threePointFieldGoalsAttempted",
+                  "abbreviation": "3PA",
+                  "displayValue": "35"
+                },
+                {
+                  "name": "threePointFieldGoalsMade",
+                  "abbreviation": "3PM",
+                  "displayValue": "12"
+                },
+                {
+                  "name": "avgPoints",
+                  "abbreviation": "PTS",
+                  "displayValue": "109.0"
+                },
+                {
+                  "name": "avgAssists",
+                  "abbreviation": "AST",
+                  "displayValue": "17.0"
+                },
+                {
+                  "name": "threePointFieldGoalPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "34.3"
+                }
+              ],
+              "leaders": [
+                {
+                  "name": "points",
+                  "displayName": "Points",
+                  "shortDisplayName": "Pts",
+                  "abbreviation": "Pts",
+                  "leaders": [
+                    {
+                      "displayValue": "31",
+                      "value": 31.0,
+                      "athlete": {
+                        "id": "4431678",
+                        "fullName": "Tyrese Maxey",
+                        "displayName": "Tyrese Maxey",
+                        "shortName": "T. Maxey",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4431678/tyrese-maxey"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4431678.png",
+                        "jersey": "0",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "20"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "20"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rebounds",
+                  "displayName": "Rebounds",
+                  "shortDisplayName": "Reb",
+                  "abbreviation": "Reb",
+                  "leaders": [
+                    {
+                      "displayValue": "11",
+                      "value": 11.0,
+                      "athlete": {
+                        "id": "5124612",
+                        "fullName": "VJ Edgecombe",
+                        "displayName": "VJ Edgecombe",
+                        "shortName": "V. Edgecombe",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/5124612/vj-edgecombe"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5124612.png",
+                        "jersey": "77",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "20"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "20"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "assists",
+                  "displayName": "Assists",
+                  "shortDisplayName": "Ast",
+                  "abbreviation": "Ast",
+                  "leaders": [
+                    {
+                      "displayValue": "6",
+                      "value": 6.0,
+                      "athlete": {
+                        "id": "4431678",
+                        "fullName": "Tyrese Maxey",
+                        "displayName": "Tyrese Maxey",
+                        "shortName": "T. Maxey",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4431678/tyrese-maxey"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4431678.png",
+                        "jersey": "0",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "20"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "20"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rating",
+                  "displayName": "Rating",
+                  "shortDisplayName": "RAT",
+                  "abbreviation": "RAT",
+                  "leaders": [
+                    {
+                      "displayValue": "31 PTS, 6 AST",
+                      "value": 42.900001525878906,
+                      "athlete": {
+                        "id": "4431678",
+                        "fullName": "Tyrese Maxey",
+                        "displayName": "Tyrese Maxey",
+                        "shortName": "T. Maxey",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4431678/tyrese-maxey"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4431678.png",
+                        "jersey": "0",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "20"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "20"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "records": [
+                {
+                  "name": "overall",
+                  "abbreviation": "Total",
+                  "type": "total",
+                  "summary": "45-37"
+                },
+                {
+                  "name": "Home",
+                  "type": "home",
+                  "summary": "23-18"
+                },
+                {
+                  "name": "Road",
+                  "type": "road",
+                  "summary": "22-19"
+                }
+              ]
+            },
+            {
+              "id": "19",
+              "uid": "s:40~l:46~t:19",
+              "type": "team",
+              "order": 1,
+              "homeAway": "away",
+              "winner": false,
+              "team": {
+                "id": "19",
+                "uid": "s:40~l:46~t:19",
+                "location": "Orlando",
+                "name": "Magic",
+                "abbreviation": "ORL",
+                "displayName": "Orlando Magic",
+                "shortDisplayName": "Magic",
+                "color": "0150b5",
+                "alternateColor": "9ca0a3",
+                "isActive": true,
+                "venue": {
+                  "id": "3432"
+                },
+                "links": [
+                  {
+                    "rel": ["clubhouse", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/_/name/orl/orlando-magic",
+                    "text": "Clubhouse",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/roster/_/name/orl/orlando-magic",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:19&section=roster",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/stats/_/name/orl/orlando-magic",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:19&section=stats",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/schedule/_/name/orl",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:19&section=scores",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  }
+                ],
+                "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/orl.png",
+                "logoDark": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/orl.png"
+              },
+              "score": "97",
+              "linescores": [
+                {
+                  "value": 24.0,
+                  "displayValue": "24",
+                  "period": 1
+                },
+                {
+                  "value": 31.0,
+                  "displayValue": "31",
+                  "period": 2
+                },
+                {
+                  "value": 19.0,
+                  "displayValue": "19",
+                  "period": 3
+                },
+                {
+                  "value": 23.0,
+                  "displayValue": "23",
+                  "period": 4
+                }
+              ],
+              "statistics": [
+                {
+                  "name": "rebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "41"
+                },
+                {
+                  "name": "avgRebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "41.0"
+                },
+                {
+                  "name": "assists",
+                  "abbreviation": "AST",
+                  "displayValue": "19"
+                },
+                {
+                  "name": "fieldGoalsAttempted",
+                  "abbreviation": "FGA",
+                  "displayValue": "81"
+                },
+                {
+                  "name": "fieldGoalsMade",
+                  "abbreviation": "FGM",
+                  "displayValue": "33"
+                },
+                {
+                  "name": "fieldGoalPct",
+                  "abbreviation": "FG%",
+                  "displayValue": "40.7"
+                },
+                {
+                  "name": "freeThrowPct",
+                  "abbreviation": "FT%",
+                  "displayValue": "77.4"
+                },
+                {
+                  "name": "freeThrowsAttempted",
+                  "abbreviation": "FTA",
+                  "displayValue": "31"
+                },
+                {
+                  "name": "freeThrowsMade",
+                  "abbreviation": "FTM",
+                  "displayValue": "24"
+                },
+                {
+                  "name": "points",
+                  "abbreviation": "PTS",
+                  "displayValue": "97"
+                },
+                {
+                  "name": "threePointPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "25.9"
+                },
+                {
+                  "name": "threePointFieldGoalsAttempted",
+                  "abbreviation": "3PA",
+                  "displayValue": "27"
+                },
+                {
+                  "name": "threePointFieldGoalsMade",
+                  "abbreviation": "3PM",
+                  "displayValue": "7"
+                },
+                {
+                  "name": "avgPoints",
+                  "abbreviation": "PTS",
+                  "displayValue": "97.0"
+                },
+                {
+                  "name": "avgAssists",
+                  "abbreviation": "AST",
+                  "displayValue": "19.0"
+                },
+                {
+                  "name": "threePointFieldGoalPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "25.9"
+                }
+              ],
+              "leaders": [
+                {
+                  "name": "points",
+                  "displayName": "Points",
+                  "shortDisplayName": "Pts",
+                  "abbreviation": "Pts",
+                  "leaders": [
+                    {
+                      "displayValue": "34",
+                      "value": 34.0,
+                      "athlete": {
+                        "id": "4066320",
+                        "fullName": "Desmond Bane",
+                        "displayName": "Desmond Bane",
+                        "shortName": "D. Bane",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4066320/desmond-bane"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4066320.png",
+                        "jersey": "3",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "19"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "19"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rebounds",
+                  "displayName": "Rebounds",
+                  "shortDisplayName": "Reb",
+                  "abbreviation": "Reb",
+                  "leaders": [
+                    {
+                      "displayValue": "11",
+                      "value": 11.0,
+                      "athlete": {
+                        "id": "4277847",
+                        "fullName": "Wendell Carter Jr.",
+                        "displayName": "Wendell Carter Jr.",
+                        "shortName": "W. Carter Jr.",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4277847/wendell-carter-jr"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4277847.png",
+                        "jersey": "34",
+                        "position": {
+                          "abbreviation": "C"
+                        },
+                        "team": {
+                          "id": "19"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "19"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "assists",
+                  "displayName": "Assists",
+                  "shortDisplayName": "Ast",
+                  "abbreviation": "Ast",
+                  "leaders": [
+                    {
+                      "displayValue": "4",
+                      "value": 4.0,
+                      "athlete": {
+                        "id": "4432573",
+                        "fullName": "Paolo Banchero",
+                        "displayName": "Paolo Banchero",
+                        "shortName": "P. Banchero",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4432573/paolo-banchero"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4432573.png",
+                        "jersey": "5",
+                        "position": {
+                          "abbreviation": "F"
+                        },
+                        "team": {
+                          "id": "19"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "19"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rating",
+                  "displayName": "Rating",
+                  "shortDisplayName": "RAT",
+                  "abbreviation": "RAT",
+                  "leaders": [
+                    {
+                      "displayValue": "34 PTS",
+                      "value": 48.0,
+                      "athlete": {
+                        "id": "4066320",
+                        "fullName": "Desmond Bane",
+                        "displayName": "Desmond Bane",
+                        "shortName": "D. Bane",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4066320/desmond-bane"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4066320.png",
+                        "jersey": "3",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "19"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "19"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "records": [
+                {
+                  "name": "overall",
+                  "abbreviation": "Total",
+                  "type": "total",
+                  "summary": "45-37"
+                },
+                {
+                  "name": "Home",
+                  "type": "home",
+                  "summary": "25-15"
+                },
+                {
+                  "name": "Road",
+                  "type": "road",
+                  "summary": "19-20"
+                }
+              ]
+            }
+          ],
+          "notes": [
+            {
+              "type": "event",
+              "headline": "NBA Play-In - East - 7th Place vs 8th Place"
+            }
+          ],
+          "status": {
+            "clock": 0.0,
+            "displayClock": "0.0",
+            "period": 4,
+            "type": {
+              "id": "3",
+              "name": "STATUS_FINAL",
+              "state": "post",
+              "completed": true,
+              "description": "Final",
+              "detail": "Final",
+              "shortDetail": "Final"
+            }
+          },
+          "broadcasts": [
+            {
+              "market": "national",
+              "names": ["Prime Video"]
+            }
+          ],
+          "format": {
+            "regulation": {
+              "periods": 4
+            }
+          },
+          "startDate": "2026-04-15T23:30Z",
+          "broadcast": "Prime Video",
+          "geoBroadcasts": [
+            {
+              "type": {
+                "id": "4",
+                "shortName": "Streaming"
+              },
+              "market": {
+                "id": "1",
+                "type": "National"
+              },
+              "media": {
+                "shortName": "Prime Video"
+              },
+              "lang": "en",
+              "region": "us"
+            }
+          ],
+          "highlights": [],
+          "headlines": [
+            {
+              "type": "Recap",
+              "description": "\u2014 Tyrese Maxey scored 31 points, V.J. Edgecombe added 19 points and 11 rebounds, and the Philadelphia 76ers weathered the absence of Joel Embiid to...",
+              "shortLinkText": "Tyrese Maxey scores 31 and Sixers beat Magic 109-97 in play-in game, advance to series vs. Celtics"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "language": "en-US",
+          "rel": ["summary", "desktop", "event"],
+          "href": "https://www.espn.com/nba/game/_/gameId/401866757/magic-76ers",
+          "text": "Gamecast",
+          "shortText": "Gamecast",
+          "isExternal": false,
+          "isPremium": false
+        },
+        {
+          "language": "en-US",
+          "rel": ["boxscore", "desktop", "event"],
+          "href": "https://www.espn.com/nba/boxscore/_/gameId/401866757",
+          "text": "Box Score",
+          "shortText": "Box Score",
+          "isExternal": false,
+          "isPremium": false
+        },
+        {
+          "language": "en-US",
+          "rel": ["pbp", "desktop", "event"],
+          "href": "https://www.espn.com/nba/playbyplay/_/gameId/401866757",
+          "text": "Play-by-Play",
+          "shortText": "Play-by-Play",
+          "isExternal": false,
+          "isPremium": false
+        },
+        {
+          "language": "en-US",
+          "rel": ["recap", "desktop", "event"],
+          "href": "https://www.espn.com/nba/recap?gameId=401866757",
+          "text": "Recap",
+          "shortText": "Recap",
+          "isExternal": false,
+          "isPremium": false
+        }
+      ],
+      "status": {
+        "clock": 0.0,
+        "displayClock": "0.0",
+        "period": 4,
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final",
+          "detail": "Final",
+          "shortDetail": "Final"
+        }
+      }
+    }
+  ],
+  "provider": {
+    "id": "100",
+    "name": "Draft Kings",
+    "displayName": "Draft Kings",
+    "priority": 1
+  }
+}

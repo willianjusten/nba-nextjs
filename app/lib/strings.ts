@@ -10,7 +10,20 @@ export const strings = {
     title: "Today's games",
   },
   games: {
-    title: (date: string) => `Games on ${date}`,
+    title: (formattedDate: string) => `Games on ${formattedDate}`,
+    loading: "Loading games...",
+    error: "Couldn't load games. Try again in a moment.",
+    empty: "No games scheduled for this day.",
+  },
+  gameStatus: {
+    quarter: (period: number) => `Q${period}`,
+    overtime: (overtimeNumber: number) =>
+      overtimeNumber === 1 ? "OT" : `${overtimeNumber}OT`,
+    halftime: "Halftime",
+    final: "Final",
+    finalAfter: (periodLabel: string) => `Final/${periodLabel}`,
+    postponed: "Postponed",
+    canceled: "Canceled",
   },
   game: {
     title: (gameId: string) => `Game ${gameId}`,

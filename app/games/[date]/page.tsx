@@ -1,17 +1,26 @@
-import PagePlaceholder from "@/app/components/PagePlaceholder";
-import { Hydrate } from "@/app/lib/query/server";
+import { notFound } from "next/navigation";
+import DayScoreboard from "@/app/components/DayScoreboard";
+import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
+import { getServerQueryClient, Hydrate } from "@/app/lib/query/server";
 import { strings } from "@/app/lib/strings";
+import { formatNbaDate, parseNbaDate } from "@/app/lib/time/nba-date";
 
 type GamesPageProps = {
   params: Promise<{ date: string }>;
 };
 
 export default async function GamesPage({ params }: GamesPageProps) {
-  const { date } = await params;
+  const nbaDate = parseNbaDate((await params).date);
+  if (!nbaDate) notFound();
+
+  await getServerQueryClient().prefetchQuery(scoreboardQueryOptions(nbaDate));
 
   return (
     <Hydrate>
-      <PagePlaceholder title={strings.games.title(date)} />
+      <DayScoreboard
+        title={strings.games.title(formatNbaDate(nbaDate))}
+        nbaDate={nbaDate}
+      />
     </Hydrate>
   );
 }

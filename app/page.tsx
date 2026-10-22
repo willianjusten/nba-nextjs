@@ -1,11 +1,19 @@
-import PagePlaceholder from "@/app/components/PagePlaceholder";
-import { Hydrate } from "@/app/lib/query/server";
+import DayScoreboard from "@/app/components/DayScoreboard";
+import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
+import { getServerQueryClient, Hydrate } from "@/app/lib/query/server";
 import { strings } from "@/app/lib/strings";
+import { currentNbaDate } from "@/app/lib/time/nba-date";
 
-export default function HomePage() {
+// The current NBA date depends on request time, so the page cannot be prerendered at build time.
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const nbaDate = currentNbaDate();
+  await getServerQueryClient().prefetchQuery(scoreboardQueryOptions(nbaDate));
+
   return (
     <Hydrate>
-      <PagePlaceholder title={strings.home.title} />
+      <DayScoreboard title={strings.home.title} nbaDate={nbaDate} />
     </Hydrate>
   );
 }
