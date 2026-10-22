@@ -26,6 +26,21 @@ export type GameCompetitor = {
   winner: boolean;
 };
 
+export type BroadcastMarket = "national" | "home" | "away";
+
+export type Broadcast = {
+  name: string;
+  market: BroadcastMarket;
+};
+
+export type PlayoffSeries = {
+  summary: string;
+  completed: boolean;
+  totalGames: number;
+  homeWins: number;
+  awayWins: number;
+};
+
 export type Game = {
   id: string;
   startTime: string;
@@ -35,6 +50,9 @@ export type Game = {
   status: GameStatus;
   home: GameCompetitor;
   away: GameCompetitor;
+  // Ordered national first; empty when ESPN lists no US broadcast.
+  broadcasts: Broadcast[];
+  series: PlayoffSeries | null;
 };
 
 export type Scoreboard = {

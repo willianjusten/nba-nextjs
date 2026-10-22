@@ -1,15 +1,20 @@
 import type {
+  Broadcast,
+  BroadcastMarket,
   Game,
   GameCompetitor,
   GameStatus,
+  PlayoffSeries,
   SeasonType,
   Team,
 } from "@/app/lib/domain/game";
 import { nbaDateOf } from "@/app/lib/time/nba-date";
 import type {
+  RawCompetition,
   RawCompetitor,
   RawEvent,
   RawSeason,
+  RawSeries,
   RawStatus,
   RawTeam,
 } from "./raw-types";
@@ -95,7 +100,71 @@ function findCompetitor(event: RawEvent, side: RawCompetitor["homeAway"]) {
   return competitor;
 }
 
+const MARKET_PRIORITY: BroadcastMarket[] = ["national", "home", "away"];
+
+function toMarket(rawMarket: string): BroadcastMarket | undefined {
+  const market = rawMarket.toLowerCase();
+  return MARKET_PRIORITY.find((candidate) => candidate === market);
+}
+
+function mapBroadcasts(competition: RawCompetition | undefined): Broadcast[] {
+  const listedBroadcasts = (competition?.broadcasts ?? []).flatMap(
+    (broadcast) => {
+      const market = toMarket(broadcast.market);
+      return market ? broadcast.names.map((name) => ({ name, market })) : [];
+    },
+  );
+  const usVideoGeoBroadcasts = (competition?.geoBroadcasts ?? []).flatMap(
+    (broadcast) => {
+      const market = toMarket(broadcast.market.type);
+      // Radio is not a place to watch the game, and other regions are out of scope.
+      const isUsVideo =
+        broadcast.type.shortName !== "Radio" &&
+        (broadcast.region ?? "us") === "us";
+      return market && isUsVideo
+        ? [{ name: broadcast.media.shortName, market }]
+        : [];
+    },
+  );
+
+  const broadcastByNormalizedName = new Map<string, Broadcast>();
+  for (const market of MARKET_PRIORITY) {
+    for (const broadcast of [...listedBroadcasts, ...usVideoGeoBroadcasts]) {
+      const key = broadcast.name.toLowerCase();
+      if (broadcast.market === market && !broadcastByNormalizedName.has(key)) {
+        broadcastByNormalizedName.set(key, broadcast);
+      }
+    }
+  }
+  return [...broadcastByNormalizedName.values()];
+}
+
+function mapSeries(
+  series: RawSeries | undefined,
+  homeTeamId: string,
+  awayTeamId: string,
+): PlayoffSeries | null {
+  if (series?.type !== "playoff") {
+    return null;
+  }
+  const winsOf = (teamId: string) =>
+    series.competitors.find((competitor) => competitor.id === teamId)?.wins ??
+    0;
+
+  return {
+    summary: series.summary,
+    completed: series.completed,
+    totalGames: series.totalCompetitions,
+    homeWins: winsOf(homeTeamId),
+    awayWins: winsOf(awayTeamId),
+  };
+}
+
 export function mapGame(event: RawEvent): Game {
+  const competition = event.competitions[0];
+  const home = findCompetitor(event, "home");
+  const away = findCompetitor(event, "away");
+
   return {
     id: event.id,
     startTime: event.date,
@@ -103,7 +172,9 @@ export function mapGame(event: RawEvent): Game {
     seasonYear: event.season.year,
     seasonType: mapSeasonType(event.season),
     status: mapStatus(event.status),
-    home: mapCompetitor(findCompetitor(event, "home")),
-    away: mapCompetitor(findCompetitor(event, "away")),
+    home: mapCompetitor(home),
+    away: mapCompetitor(away),
+    broadcasts: mapBroadcasts(competition),
+    series: mapSeries(competition?.series, home.team.id, away.team.id),
   };
 }

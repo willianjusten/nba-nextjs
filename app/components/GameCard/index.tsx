@@ -1,4 +1,9 @@
-import type { Game, GameCompetitor, GameStatus } from "@/app/lib/domain/game";
+import type {
+  Broadcast,
+  Game,
+  GameCompetitor,
+  GameStatus,
+} from "@/app/lib/domain/game";
 import { resizedLogoUrl } from "@/app/lib/espn";
 import { strings } from "@/app/lib/strings";
 import GameTime from "@/app/components/GameTime";
@@ -70,6 +75,21 @@ function CompetitorRow({
   );
 }
 
+function BroadcastLine({ broadcasts }: { broadcasts: Broadcast[] }) {
+  if (broadcasts.length === 0) {
+    return null;
+  }
+
+  return (
+    <p className="text-xs text-slate-400">
+      <span className="sr-only">{strings.broadcast.label}</span>
+      {broadcasts
+        .map((broadcast) => broadcast.name)
+        .join(strings.broadcast.separator)}
+    </p>
+  );
+}
+
 export default function GameCard({ game }: { game: Game }) {
   const showScore = !STATUSES_WITHOUT_SCORE.includes(game.status.kind);
 
@@ -80,6 +100,7 @@ export default function GameCard({ game }: { game: Game }) {
       </p>
       <CompetitorRow competitor={game.away} showScore={showScore} />
       <CompetitorRow competitor={game.home} showScore={showScore} />
+      <BroadcastLine broadcasts={game.broadcasts} />
     </article>
   );
 }

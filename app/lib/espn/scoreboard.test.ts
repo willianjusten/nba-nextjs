@@ -7,6 +7,7 @@ import playoffGame from "./__fixtures__/scoreboard-playoff-game.json";
 import playInGame from "./__fixtures__/scoreboard-play-in.json";
 import liveDay from "./__fixtures__/scoreboard-live-day-simulated.json";
 import endOfPeriod from "./__fixtures__/scoreboard-end-of-period-simulated.json";
+import preseasonDay from "./__fixtures__/scoreboard-preseason-day.json";
 
 const fetchMock = vi.fn();
 
@@ -79,6 +80,8 @@ describe("fetchScoreboard", () => {
         score: 132,
         winner: true,
       },
+      broadcasts: [{ name: "NBA League Pass", market: "away" }],
+      series: null,
     });
   });
 
@@ -148,6 +151,96 @@ describe("fetchScoreboard", () => {
     const scoreboard = await fetchScoreboard(parseNbaDate("2026-04-15")!);
 
     expect(scoreboard.games[0].seasonType).toBe("play-in");
+  });
+
+  it("merges broadcasts and geo broadcasts without duplicates", async () => {
+    respondWith(finalDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
+
+    expect(scoreboard.games[1].broadcasts).toEqual([
+      { name: "MNMT", market: "home" },
+      { name: "NBA League Pass", market: "away" },
+      { name: "MyMi", market: "away" },
+      { name: "Bucks App", market: "away" },
+    ]);
+  });
+
+  it("lists the national broadcast before local ones", async () => {
+    respondWith(preseasonDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-15")!);
+
+    expect(scoreboard.games[1].broadcasts).toEqual([
+      { name: "NBA TV", market: "national" },
+      { name: "KSBI", market: "away" },
+      { name: "Thunder App", market: "away" },
+    ]);
+  });
+
+  it("adds a channel listed only in geo broadcasts", async () => {
+    const geoOnly = structuredClone(finalDay);
+    geoOnly.events[0].competitions[0].geoBroadcasts = structuredClone(
+      finalDay.events[2].competitions[0].geoBroadcasts,
+    );
+    respondWith(geoOnly);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
+
+    expect(scoreboard.games[0].broadcasts).toEqual([
+      { name: "ESPN", market: "national" },
+      { name: "NBA League Pass", market: "away" },
+    ]);
+  });
+
+  it("returns an empty broadcast list when none is listed", async () => {
+    respondWith(preseasonDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-15")!);
+
+    expect(scoreboard.games[0].broadcasts).toEqual([]);
+  });
+
+  it("leaves out radio broadcasts", async () => {
+    respondWith(playoffGame);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-06-10")!);
+
+    expect(scoreboard.games[0].broadcasts).toEqual([
+      { name: "ABC", market: "national" },
+    ]);
+  });
+
+  it("exposes the series of a playoff game by side", async () => {
+    respondWith(playoffGame);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-06-10")!);
+
+    expect(scoreboard.games[0].series).toEqual({
+      summary: "NY leads series 3-1",
+      completed: false,
+      totalGames: 7,
+      homeWins: 3,
+      awayWins: 1,
+    });
+  });
+
+  it("ignores a series that is not a playoff series", async () => {
+    const seasonSeries = structuredClone(playoffGame);
+    seasonSeries.events[0].competitions[0].series.type = "season";
+    respondWith(seasonSeries);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-06-10")!);
+
+    expect(scoreboard.games[0].series).toBeNull();
+  });
+
+  it("has no series outside the playoffs", async () => {
+    respondWith(playInGame);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-04-15")!);
+
+    expect(scoreboard.games[0].series).toBeNull();
   });
 
   it("throws instead of reporting an empty day when the response has no events list", async () => {

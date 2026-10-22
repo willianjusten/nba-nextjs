@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import type { Game, GameStatus } from "@/app/lib/domain/game";
+import type { Broadcast, Game, GameStatus } from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import GameCard from ".";
 
-function buildGame(status: GameStatus): Game {
+function buildGame(status: GameStatus, broadcasts: Broadcast[] = []): Game {
   const team = (abbreviation: string, displayName: string) => ({
     id: abbreviation,
     abbreviation,
@@ -27,6 +27,8 @@ function buildGame(status: GameStatus): Game {
       score: 110,
       winner: true,
     },
+    broadcasts,
+    series: null,
   };
 }
 
@@ -77,5 +79,26 @@ describe("GameCard", () => {
     expect(logoSources).toContain(
       "https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/scoreboard/den.png&w=80&h=80",
     );
+  });
+
+  it("shows the broadcast channels in the order given", () => {
+    render(
+      <GameCard
+        game={buildGame({ kind: "scheduled" }, [
+          { name: "ESPN", market: "national" },
+          { name: "Altitude", market: "home" },
+        ])}
+      />,
+    );
+
+    expect(screen.getByText("ESPN · Altitude").textContent).toBe(
+      "Broadcast: ESPN · Altitude",
+    );
+  });
+
+  it("renders no channel element when no broadcast is listed", () => {
+    render(<GameCard game={buildGame({ kind: "scheduled" })} />);
+
+    expect(screen.queryByText(/Broadcast/)).toBeNull();
   });
 });

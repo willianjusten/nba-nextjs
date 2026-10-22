@@ -28,6 +28,10 @@ export const strings = {
     postponed: "Postponed",
     canceled: "Canceled",
   },
+  broadcast: {
+    label: "Broadcast: ",
+    separator: " · ",
+  },
   game: {
     title: (gameId: string) => `Game ${gameId}`,
   },

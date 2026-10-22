@@ -29,6 +29,29 @@ export type RawStatus = {
 
 export type RawCompetition = {
   competitors: RawCompetitor[];
+  broadcasts?: RawBroadcast[];
+  geoBroadcasts?: RawGeoBroadcast[];
+  series?: RawSeries;
+};
+
+export type RawBroadcast = {
+  market: string;
+  names: string[];
+};
+
+export type RawGeoBroadcast = {
+  type: { shortName: string };
+  market: { type: string };
+  media: { shortName: string };
+  region?: string;
+};
+
+export type RawSeries = {
+  type: string;
+  summary: string;
+  completed: boolean;
+  totalCompetitions: number;
+  competitors: { id: string; wins: number }[];
 };
 
 export type RawCompetitor = {
