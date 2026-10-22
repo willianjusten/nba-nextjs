@@ -47,6 +47,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 describe("fetchLeaders", () => {
@@ -72,7 +73,7 @@ describe("fetchLeaders", () => {
     const categories = await fetchLeaders();
 
     expect(
-      categories.map(({ stat, leaders }) => [stat, leaders.length]),
+      categories.map(({ stat, leaders }) => [stat, leaders?.length]),
     ).toEqual([
       ["points", 5],
       ["rebounds", 5],
@@ -85,7 +86,7 @@ describe("fetchLeaders", () => {
 
     const [points, rebounds] = await fetchLeaders();
 
-    expect(points.leaders[0]).toEqual({
+    expect(points.leaders?.[0]).toEqual({
       athlete: {
         id: "4065733",
         displayName: "Ty Jerome",
@@ -96,7 +97,7 @@ describe("fetchLeaders", () => {
       displayValue: "45.0",
     });
     expect(
-      rebounds.leaders.map((leader) => [
+      rebounds.leaders?.map((leader) => [
         leader.athlete.displayName,
         leader.displayValue,
       ]),
@@ -132,7 +133,7 @@ describe("fetchLeaders", () => {
 
     const [, , assistsLeaders] = await fetchLeaders();
 
-    expect(assistsLeaders.leaders[0].athlete.displayName).toBe("Ty Jerome");
+    expect(assistsLeaders.leaders?.[0].athlete.displayName).toBe("Ty Jerome");
     expect(
       athleteRequests().filter((url) => url.endsWith("/athletes/4065733")),
     ).toHaveLength(1);
@@ -149,7 +150,7 @@ describe("fetchLeaders", () => {
 
     const [points] = await fetchLeaders();
 
-    expect(points.leaders[0].athlete.displayName).toBe("Ty Jerome");
+    expect(points.leaders?.[0].athlete.displayName).toBe("Ty Jerome");
     expect(athleteRequests()).toContain(
       `${CORE_NBA_URL}/seasons/2027/athletes/4065733`,
     );
@@ -165,7 +166,7 @@ describe("fetchLeaders", () => {
 
     const [points] = await fetchLeaders();
 
-    expect(points.leaders[0].athlete.headshotUrl).toBeNull();
+    expect(points.leaders?.[0].athlete.headshotUrl).toBeNull();
   });
 
   it("returns empty categories when ESPN has no stats for the season yet", async () => {
@@ -203,20 +204,57 @@ describe("fetchLeaders", () => {
     await expect(fetchLeaders()).rejects.toThrow(/reboundsPerGame/);
   });
 
-  it("throws when an athlete cannot be resolved", async () => {
+  it("marks only the category of an unresolved athlete as failed", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
     const { "4065733": _tyJerome, ...athletesWithoutTyJerome } = leaderAthletes;
     respondWithEspn({ athletes: athletesWithoutTyJerome });
 
-    await expect(fetchLeaders()).rejects.toThrow(/4065733/);
+    const categories = await fetchLeaders();
+
+    expect(
+      categories.map(({ stat, leaders }) => [stat, leaders?.length ?? null]),
+    ).toEqual([
+      ["points", null],
+      ["rebounds", 5],
+      ["assists", 5],
+    ]);
   });
 
-  it("throws when a leader refers to a resource outside ESPN's NBA API", async () => {
+  it("fails every category an unresolved athlete leads", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const withRepeatedLeader = structuredClone(regularSeasonLeaders);
+    const [points, assists] = withRepeatedLeader.categories;
+    assists.leaders[0] = {
+      ...assists.leaders[0],
+      athlete: points.leaders[0].athlete,
+    };
+    const { "4065733": _tyJerome, ...athletesWithoutTyJerome } = leaderAthletes;
+    respondWithEspn({
+      leaders: withRepeatedLeader,
+      athletes: athletesWithoutTyJerome,
+    });
+
+    const categories = await fetchLeaders();
+
+    expect(
+      categories.map(({ stat, leaders }) => [stat, leaders?.length ?? null]),
+    ).toEqual([
+      ["points", null],
+      ["rebounds", 5],
+      ["assists", null],
+    ]);
+  });
+
+  it("fails the category of a leader that refers to a resource outside ESPN's NBA API", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
     const withForeignRef = structuredClone(regularSeasonLeaders);
     withForeignRef.categories[0].leaders[0].athlete.$ref =
       "https://example.com/v2/sports/basketball/leagues/nba/seasons/2027/athletes/1";
     respondWithEspn({ leaders: withForeignRef });
 
-    await expect(fetchLeaders()).rejects.toThrow(/example\.com/);
+    const [points] = await fetchLeaders();
+
+    expect(points.leaders).toBeNull();
     expect(fetchMock).not.toHaveBeenCalledWith(
       expect.stringContaining("example.com"),
       expect.anything(),

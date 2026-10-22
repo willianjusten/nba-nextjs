@@ -21,7 +21,11 @@ function LeaderCategoryCard({ category }: { category: LeaderCategory }) {
       <h3 id={headingId} className="font-bold">
         {title}
       </h3>
-      {category.leaders.length === 0 ? (
+      {category.leaders === null ? (
+        <p role="alert" className="text-sm text-slate-400">
+          {strings.leaders.categoryError}
+        </p>
+      ) : category.leaders.length === 0 ? (
         <p className="text-sm text-slate-400">{strings.leaders.empty}</p>
       ) : (
         <ol className="flex flex-col gap-2">

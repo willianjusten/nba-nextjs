@@ -198,6 +198,31 @@ describe("routes", () => {
     expect(screen.getAllByText(strings.leaders.empty)).toHaveLength(3);
   });
 
+  it("shows an error only in the leaders category whose players cannot be loaded", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) =>
+        url.endsWith("/athletes/4065733")
+          ? new Response(null, { status: 500 })
+          : new Response(JSON.stringify(espnFixtureFor(url))),
+      ),
+    );
+
+    render(await StandingsPage());
+
+    const points = screen.getByRole("region", {
+      name: strings.leaders.categories.points.title,
+    });
+    const rebounds = screen.getByRole("region", {
+      name: strings.leaders.categories.rebounds.title,
+    });
+    expect(
+      within(points).getByText(strings.leaders.categoryError),
+    ).toBeDefined();
+    expect(within(rebounds).getAllByRole("listitem")).toHaveLength(5);
+  });
+
   it("still shows the standings when the leaders cannot be loaded", async () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     vi.stubGlobal(

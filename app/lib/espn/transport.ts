@@ -76,7 +76,9 @@ export function espnGet<RawResponse>(
 }
 
 // Follows a core API $ref link. Only refs to a configured core endpoint are followed, so a ref can never reach another host or API.
-export function espnGetRef<RawResponse>(ref: string): Promise<RawResponse> {
+export async function espnGetRef<RawResponse>(
+  ref: string,
+): Promise<RawResponse> {
   const refUrl = new URL(ref);
   const endpoint =
     refUrl.hostname === new URL(PUBLIC_CORE_ORIGIN).hostname

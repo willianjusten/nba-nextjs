@@ -4,6 +4,7 @@ import { REGULAR_SEASON_TYPE_ID } from "./config";
 import { mapLeader } from "./mappers";
 import type {
   RawCurrentSeason,
+  RawLeader,
   RawLeaderAthlete,
   RawLeaderCategory,
   RawLeadersResponse,
@@ -65,13 +66,40 @@ function findRawCategory(
   return rawCategory;
 }
 
-async function resolveAthletes(refs: string[]) {
-  const uniqueRefs = [...new Set(refs)];
-  const athletes = await Promise.all(
-    uniqueRefs.map((ref) => espnGetRef<RawLeaderAthlete>(ref)),
-  );
+// Shares one request per athlete across categories, since a player can lead more than one.
+function createAthleteResolver() {
+  const athleteRequestsByRef = new Map<string, Promise<RawLeaderAthlete>>();
 
-  return new Map(uniqueRefs.map((ref, index) => [ref, athletes[index]]));
+  return (ref: string) => {
+    let athleteRequest = athleteRequestsByRef.get(ref);
+    if (!athleteRequest) {
+      athleteRequest = espnGetRef<RawLeaderAthlete>(ref);
+      athleteRequestsByRef.set(ref, athleteRequest);
+    }
+    return athleteRequest;
+  };
+}
+
+// A category fails on its own, so one unresolvable athlete never hides the other categories. Dropping just that athlete would shift the ranking.
+async function resolveCategory(
+  stat: LeaderStat,
+  topRawLeaders: RawLeader[],
+  resolveAthlete: (ref: string) => Promise<RawLeaderAthlete>,
+): Promise<LeaderCategory> {
+  try {
+    const athletes = await Promise.all(
+      topRawLeaders.map((rawLeader) => resolveAthlete(rawLeader.athlete.$ref)),
+    );
+    return {
+      stat,
+      leaders: topRawLeaders.map((rawLeader, index) =>
+        mapLeader(rawLeader, athletes[index]),
+      ),
+    };
+  } catch (error) {
+    console.error(`Failed to resolve the ${stat} leaders`, error);
+    return { stat, leaders: null };
+  }
 }
 
 // Regular season points, rebounds, and assists leaders of the current season, with athletes resolved. Server only, so the browser never follows ESPN's $ref links itself.
@@ -83,27 +111,18 @@ export async function fetchLeaders(): Promise<LeaderCategory[]> {
     return LEADER_STATS.map((stat) => ({ stat, leaders: [] }));
   }
 
-  const topRawCategories = LEADER_STATS.map((stat) => {
-    const rawCategory = findRawCategory(rawLeaders, stat);
-    return {
-      stat,
-      topRawLeaders: rawCategory.leaders.slice(0, LEADERS_PER_CATEGORY),
-    };
-  });
-  const athletesByRef = await resolveAthletes(
-    topRawCategories.flatMap(({ topRawLeaders }) =>
-      topRawLeaders.map((rawLeader) => rawLeader.athlete.$ref),
+  const topRawCategories = LEADER_STATS.map((stat) => ({
+    stat,
+    topRawLeaders: findRawCategory(rawLeaders, stat).leaders.slice(
+      0,
+      LEADERS_PER_CATEGORY,
+    ),
+  }));
+  const resolveAthlete = createAthleteResolver();
+
+  return Promise.all(
+    topRawCategories.map(({ stat, topRawLeaders }) =>
+      resolveCategory(stat, topRawLeaders, resolveAthlete),
     ),
   );
-
-  return topRawCategories.map(({ stat, topRawLeaders }) => ({
-    stat,
-    leaders: topRawLeaders.map((rawLeader) => {
-      const athlete = athletesByRef.get(rawLeader.athlete.$ref);
-      if (!athlete) {
-        throw new Error(`Unresolved ESPN athlete: ${rawLeader.athlete.$ref}`);
-      }
-      return mapLeader(rawLeader, athlete);
-    }),
-  }));
 }

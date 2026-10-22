@@ -62,6 +62,7 @@ export const strings = {
     },
     empty: "No leaders yet.",
     error: "We couldn't load the league leaders right now.",
+    categoryError: "We couldn't load these leaders right now.",
   },
   team: {
     record: (record: string) => `Record ${record}`,

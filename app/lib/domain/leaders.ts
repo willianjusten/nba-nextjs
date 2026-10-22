@@ -15,6 +15,6 @@ export type Leader = {
 
 export type LeaderCategory = {
   stat: LeaderStat;
-  // Best first. Empty before any regular season game has been played.
-  leaders: Leader[];
+  // Best first. Empty before any regular season game has been played; null when the category's athletes could not be loaded.
+  leaders: Leader[] | null;
 };
