@@ -101,6 +101,12 @@ function findCompetitor(event: RawEvent, side: RawCompetitor["homeAway"]) {
 }
 
 const MARKET_PRIORITY: BroadcastMarket[] = ["national", "home", "away"];
+// Product decision: only these channels are shown, local networks and team apps are left out.
+const SUPPORTED_BROADCAST_NAMES = new Set([
+  "espn",
+  "prime video",
+  "nba league pass",
+]);
 
 function toMarket(rawMarket: string): BroadcastMarket | undefined {
   const market = rawMarket.toLowerCase();
@@ -114,14 +120,11 @@ function mapBroadcasts(competition: RawCompetition | undefined): Broadcast[] {
       return market ? broadcast.names.map((name) => ({ name, market })) : [];
     },
   );
-  const usVideoGeoBroadcasts = (competition?.geoBroadcasts ?? []).flatMap(
+  const usGeoBroadcasts = (competition?.geoBroadcasts ?? []).flatMap(
     (broadcast) => {
       const market = toMarket(broadcast.market.type);
-      // Radio is not a place to watch the game, and other regions are out of scope.
-      const isUsVideo =
-        broadcast.type.shortName !== "Radio" &&
-        (broadcast.region ?? "us") === "us";
-      return market && isUsVideo
+      const isUs = (broadcast.region ?? "us") === "us";
+      return market && isUs
         ? [{ name: broadcast.media.shortName, market }]
         : [];
     },
@@ -129,9 +132,13 @@ function mapBroadcasts(competition: RawCompetition | undefined): Broadcast[] {
 
   const broadcastByNormalizedName = new Map<string, Broadcast>();
   for (const market of MARKET_PRIORITY) {
-    for (const broadcast of [...listedBroadcasts, ...usVideoGeoBroadcasts]) {
+    for (const broadcast of [...listedBroadcasts, ...usGeoBroadcasts]) {
       const key = broadcast.name.toLowerCase();
-      if (broadcast.market === market && !broadcastByNormalizedName.has(key)) {
+      if (
+        broadcast.market === market &&
+        SUPPORTED_BROADCAST_NAMES.has(key) &&
+        !broadcastByNormalizedName.has(key)
+      ) {
         broadcastByNormalizedName.set(key, broadcast);
       }
     }

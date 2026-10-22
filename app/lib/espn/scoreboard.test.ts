@@ -153,32 +153,17 @@ describe("fetchScoreboard", () => {
     expect(scoreboard.games[0].seasonType).toBe("play-in");
   });
 
-  it("merges broadcasts and geo broadcasts without duplicates", async () => {
+  it("removes duplicates between broadcasts and geo broadcasts", async () => {
     respondWith(finalDay);
 
     const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
 
-    expect(scoreboard.games[1].broadcasts).toEqual([
-      { name: "MNMT", market: "home" },
-      { name: "NBA League Pass", market: "away" },
-      { name: "MyMi", market: "away" },
-      { name: "Bucks App", market: "away" },
+    expect(scoreboard.games[2].broadcasts).toEqual([
+      { name: "ESPN", market: "national" },
     ]);
   });
 
-  it("lists the national broadcast before local ones", async () => {
-    respondWith(preseasonDay);
-
-    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-15")!);
-
-    expect(scoreboard.games[1].broadcasts).toEqual([
-      { name: "NBA TV", market: "national" },
-      { name: "KSBI", market: "away" },
-      { name: "Thunder App", market: "away" },
-    ]);
-  });
-
-  it("adds a channel listed only in geo broadcasts", async () => {
+  it("adds a channel listed only in geo broadcasts, national first", async () => {
     const geoOnly = structuredClone(finalDay);
     geoOnly.events[0].competitions[0].geoBroadcasts = structuredClone(
       finalDay.events[2].competitions[0].geoBroadcasts,
@@ -193,22 +178,33 @@ describe("fetchScoreboard", () => {
     ]);
   });
 
-  it("returns an empty broadcast list when none is listed", async () => {
+  it("keeps Prime Video broadcasts", async () => {
+    respondWith(playInGame);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-04-15")!);
+
+    expect(scoreboard.games[0].broadcasts).toEqual([
+      { name: "Prime Video", market: "national" },
+    ]);
+  });
+
+  it("leaves out channels other than ESPN, Prime Video, and NBA League Pass", async () => {
+    respondWith(finalDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
+
+    expect(scoreboard.games[1].broadcasts).toEqual([
+      { name: "NBA League Pass", market: "away" },
+    ]);
+  });
+
+  it("returns an empty broadcast list when no supported channel is listed", async () => {
     respondWith(preseasonDay);
 
     const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-15")!);
 
     expect(scoreboard.games[0].broadcasts).toEqual([]);
-  });
-
-  it("leaves out radio broadcasts", async () => {
-    respondWith(playoffGame);
-
-    const scoreboard = await fetchScoreboard(parseNbaDate("2026-06-10")!);
-
-    expect(scoreboard.games[0].broadcasts).toEqual([
-      { name: "ABC", market: "national" },
-    ]);
+    expect(scoreboard.games[1].broadcasts).toEqual([]);
   });
 
   it("exposes the series of a playoff game by side", async () => {

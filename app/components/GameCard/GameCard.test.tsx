@@ -86,13 +86,13 @@ describe("GameCard", () => {
       <GameCard
         game={buildGame({ kind: "scheduled" }, [
           { name: "ESPN", market: "national" },
-          { name: "Altitude", market: "home" },
+          { name: "NBA League Pass", market: "home" },
         ])}
       />,
     );
 
-    expect(screen.getByText("ESPN · Altitude").textContent).toBe(
-      "Broadcast: ESPN · Altitude",
+    expect(screen.getByText("ESPN · NBA League Pass").textContent).toBe(
+      "Broadcast: ESPN · NBA League Pass",
     );
   });
 

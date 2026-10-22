@@ -40,7 +40,6 @@ export type RawBroadcast = {
 };
 
 export type RawGeoBroadcast = {
-  type: { shortName: string };
   market: { type: string };
   media: { shortName: string };
   region?: string;
