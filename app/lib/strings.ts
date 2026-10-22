@@ -40,6 +40,26 @@ export const strings = {
   },
   team: {
     record: (record: string) => `Record ${record}`,
+    schedule: {
+      results: "Results",
+      upcoming: "Upcoming",
+      noResults: "No games played yet.",
+      noUpcoming: "No upcoming games.",
+      versus: (opponentName: string) => `vs ${opponentName}`,
+      at: (opponentName: string) => `@ ${opponentName}`,
+      result: (won: boolean, teamScore: number, opponentScore: number) =>
+        `${won ? "W" : "L"} ${teamScore}-${opponentScore}`,
+      inProgress: "In progress",
+    },
+    roster: {
+      title: "Roster",
+      jersey: "#",
+      player: "Player",
+      position: "Pos",
+      height: "Ht",
+      weight: "Wt",
+      age: "Age",
+    },
   },
   playoffs: {
     title: "Playoffs",

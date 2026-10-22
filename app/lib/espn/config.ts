@@ -17,12 +17,15 @@ export type EspnAccess = "direct" | "proxy";
 
 export type EspnEndpoint = {
   host: EspnHost;
+  // May contain {placeholders}, filled from the request's path params.
   path: string;
   access: EspnAccess;
   revalidateSeconds?: number;
 };
 
 const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
+const FIVE_MINUTES_IN_SECONDS = 5 * 60;
+const TEAMS_PATH = "/apis/site/v2/sports/basketball/nba/teams";
 
 export const ESPN_ENDPOINTS = {
   scoreboard: {
@@ -30,12 +33,29 @@ export const ESPN_ENDPOINTS = {
     path: "/apis/site/v2/sports/basketball/nba/scoreboard",
     access: "direct",
   },
-  // Covers the teams list and each team detail (/teams/{id}). ESPN sends no CORS headers here.
+  // ESPN sends no CORS headers on the teams list and team detail.
   teams: {
     host: "site",
-    path: "/apis/site/v2/sports/basketball/nba/teams",
+    path: TEAMS_PATH,
     access: "proxy",
     revalidateSeconds: ONE_DAY_IN_SECONDS,
+  },
+  team: {
+    host: "site",
+    path: `${TEAMS_PATH}/{teamId}`,
+    access: "proxy",
+    revalidateSeconds: ONE_DAY_IN_SECONDS,
+  },
+  teamSchedule: {
+    host: "site",
+    path: `${TEAMS_PATH}/{teamId}/schedule`,
+    access: "direct",
+    revalidateSeconds: FIVE_MINUTES_IN_SECONDS,
+  },
+  teamRoster: {
+    host: "site",
+    path: `${TEAMS_PATH}/{teamId}/roster`,
+    access: "direct",
   },
 } satisfies Record<string, EspnEndpoint>;
 
@@ -47,16 +67,32 @@ export function endpointCacheOptions(endpoint: EspnEndpoint | undefined) {
     : { next: { revalidate: endpoint.revalidateSeconds } };
 }
 
-// Matches the endpoint path or one segment below it (e.g. /teams/13), so deeper resources like
-// /teams/13/schedule never inherit an endpoint's cache period.
-export function findEndpointForPath(host: EspnHost, pathname: string) {
-  return Object.values<EspnEndpoint>(ESPN_ENDPOINTS).find((endpoint) => {
-    if (endpoint.host !== host) return false;
-    if (pathname === endpoint.path) return true;
+const PATH_PLACEHOLDER_PATTERN = /\{(\w+)\}/g;
 
-    const isOneSegmentBelow = /^\/[^/]+$/.test(
-      pathname.slice(endpoint.path.length),
-    );
-    return pathname.startsWith(endpoint.path) && isOneSegmentBelow;
+function pathTemplatePattern(pathTemplate: string) {
+  return new RegExp(
+    `^${pathTemplate.replaceAll(PATH_PLACEHOLDER_PATTERN, "[^/]+")}$`,
+  );
+}
+
+export function fillPathTemplate(
+  pathTemplate: string,
+  pathParams: Record<string, string>,
+) {
+  return pathTemplate.replaceAll(PATH_PLACEHOLDER_PATTERN, (_match, name) => {
+    const value = pathParams[name];
+    if (value === undefined) {
+      throw new Error(`Missing ESPN path param "${name}" for ${pathTemplate}`);
+    }
+    return encodeURIComponent(value);
   });
+}
+
+// Exact template match, so a deeper resource like /teams/13/roster never inherits /teams/{teamId}'s cache period.
+export function findEndpointForPath(host: EspnHost, pathname: string) {
+  return Object.values<EspnEndpoint>(ESPN_ENDPOINTS).find(
+    (endpoint) =>
+      endpoint.host === host &&
+      pathTemplatePattern(endpoint.path).test(pathname),
+  );
 }

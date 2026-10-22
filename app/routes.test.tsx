@@ -1,6 +1,7 @@
 import {
   render as renderWithoutProviders,
   screen,
+  within,
 } from "@testing-library/react";
 import type { ReactElement } from "react";
 import Providers from "./providers";
@@ -14,9 +15,13 @@ import PlayoffsPage from "./playoffs/page";
 import finalDay from "./lib/espn/__fixtures__/scoreboard-final-day.json";
 import teamsList from "./lib/espn/__fixtures__/teams-list.json";
 import lakersDetail from "./lib/espn/__fixtures__/team-detail-lakers.json";
+import lakersSchedule from "./lib/espn/__fixtures__/team-schedule-lakers.json";
+import lakersRoster from "./lib/espn/__fixtures__/team-roster-lakers.json";
 
 function espnFixtureFor(url: string) {
-  if (url.includes("/teams/13")) return lakersDetail;
+  if (url.endsWith("/teams/13/schedule")) return lakersSchedule;
+  if (url.endsWith("/teams/13/roster")) return lakersRoster;
+  if (url.endsWith("/teams/13")) return lakersDetail;
   if (url.endsWith("/teams")) return teamsList;
   return finalDay;
 }
@@ -94,6 +99,45 @@ describe("routes", () => {
     ).toBeDefined();
     expect(screen.getByText(strings.team.record("1-0"))).toBeDefined();
     expect(screen.getByText("1st in Pacific Division")).toBeDefined();
+  });
+
+  it("lists the team's past games with final scores", async () => {
+    render(await TeamPage({ params: Promise.resolve({ slug: "lakers" }) }));
+
+    const results = screen.getByRole("region", {
+      name: strings.team.schedule.results,
+    });
+    expect(within(results).getAllByRole("listitem")).toHaveLength(1);
+    expect(within(results).getByText(/Golden State Warriors/)).toBeDefined();
+    expect(
+      within(results).getByText(strings.team.schedule.result(true, 127, 105)),
+    ).toBeDefined();
+  });
+
+  it("lists the team's upcoming games with their start times", async () => {
+    render(await TeamPage({ params: Promise.resolve({ slug: "lakers" }) }));
+
+    const upcoming = screen.getByRole("region", {
+      name: strings.team.schedule.upcoming,
+    });
+    const upcomingGames = within(upcoming).getAllByRole("listitem");
+    expect(upcomingGames).toHaveLength(4);
+    expect(within(upcomingGames[0]).getByText(/LA Clippers/)).toBeDefined();
+    expect(
+      upcomingGames[0].querySelector("time")?.getAttribute("dateTime"),
+    ).toBe("2026-10-24T02:00Z");
+  });
+
+  it("shows the team's roster", async () => {
+    render(await TeamPage({ params: Promise.resolve({ slug: "lakers" }) }));
+
+    const roster = screen.getByRole("region", {
+      name: strings.team.roster.title,
+    });
+    expect(within(roster).getAllByRole("row")).toHaveLength(19);
+    expect(
+      within(roster).getByRole("row", { name: /Luka Doncic/ }),
+    ).toBeDefined();
   });
 
   it("returns not found for an unknown team slug", async () => {

@@ -2,6 +2,7 @@ import {
   ESPN_ENDPOINTS,
   ESPN_HOSTS,
   endpointCacheOptions,
+  fillPathTemplate,
   type EspnEndpoint,
   type EspnEndpointName,
 } from "./config";
@@ -24,15 +25,15 @@ const isServer = typeof window === "undefined";
 
 type EspnRequestOptions = {
   searchParams?: URLSearchParams;
-  // Appended to the endpoint path, e.g. "/13" for one team under the teams endpoint.
-  subpath?: string;
+  // Fills the endpoint path placeholders, e.g. { teamId: "13" } for /teams/{teamId}.
+  pathParams?: Record<string, string>;
 };
 
 function buildEspnUrl(
   endpoint: EspnEndpoint,
-  { searchParams = new URLSearchParams(), subpath = "" }: EspnRequestOptions,
+  { searchParams = new URLSearchParams(), pathParams = {} }: EspnRequestOptions,
 ) {
-  const path = `${endpoint.path}${subpath}`;
+  const path = fillPathTemplate(endpoint.path, pathParams);
   const query = searchParams.size > 0 ? `?${searchParams}` : "";
 
   if (isServer || endpoint.access === "direct") {

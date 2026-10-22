@@ -12,3 +12,16 @@ export type TeamDetail = ListedTeam & {
   record: string | null;
   standingSummary: string | null;
 };
+
+export type RosterPlayer = {
+  id: string;
+  displayName: string;
+  jersey: string | null;
+  // Position abbreviation, e.g. "G", "F", or "C".
+  position: string | null;
+  // Display strings as sent by ESPN, e.g. 6' 8" and "230 lbs".
+  height: string | null;
+  weight: string | null;
+  age: number | null;
+  headshotUrl: string | null;
+};

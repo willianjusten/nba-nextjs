@@ -1,0 +1,1504 @@
+{
+  "leagues": [
+    {
+      "id": "46",
+      "uid": "s:40~l:46",
+      "name": "National Basketball Association",
+      "abbreviation": "NBA",
+      "slug": "nba",
+      "season": {
+        "year": 2027,
+        "startDate": "2026-09-30T07:00Z",
+        "endDate": "2027-06-26T06:59Z",
+        "displayName": "2026-27",
+        "type": {
+          "id": "2",
+          "type": 2,
+          "name": "Regular Season",
+          "abbreviation": "reg"
+        }
+      },
+      "logos": [
+        {
+          "href": "https://a.espncdn.com/i/teamlogos/leagues/500/nba.png",
+          "width": 500,
+          "height": 500,
+          "alt": "",
+          "rel": ["full", "default"],
+          "lastUpdated": "2018-06-05T12:07Z"
+        },
+        {
+          "href": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500-dark/nba.png&w=500&h=500&transparent=true",
+          "width": 500,
+          "height": 500,
+          "alt": "",
+          "rel": ["full", "dark"],
+          "lastUpdated": "2026-10-21T11:39Z"
+        }
+      ],
+      "calendarType": "day",
+      "calendarIsWhitelist": true,
+      "calendarStartDate": "2026-09-30T07:00Z",
+      "calendarEndDate": "2027-06-26T06:59Z",
+      "calendar": [
+        "2026-10-03T07:00Z",
+        "2026-10-04T07:00Z",
+        "2026-10-05T07:00Z",
+        "2026-10-06T07:00Z",
+        "2026-10-07T07:00Z",
+        "2026-10-08T07:00Z",
+        "2026-10-09T07:00Z",
+        "2026-10-10T07:00Z",
+        "2026-10-11T07:00Z",
+        "2026-10-12T07:00Z",
+        "2026-10-13T07:00Z",
+        "2026-10-14T07:00Z",
+        "2026-10-15T07:00Z",
+        "2026-10-16T07:00Z",
+        "2026-10-20T07:00Z",
+        "2026-10-21T07:00Z",
+        "2026-10-22T07:00Z",
+        "2026-10-23T07:00Z",
+        "2026-10-24T07:00Z",
+        "2026-10-25T07:00Z",
+        "2026-10-26T07:00Z",
+        "2026-10-27T07:00Z",
+        "2026-10-28T07:00Z",
+        "2026-10-29T07:00Z",
+        "2026-10-30T07:00Z",
+        "2026-10-31T07:00Z",
+        "2026-11-01T07:00Z",
+        "2026-11-02T08:00Z",
+        "2026-11-04T08:00Z",
+        "2026-11-05T08:00Z",
+        "2026-11-06T08:00Z",
+        "2026-11-07T08:00Z",
+        "2026-11-08T08:00Z",
+        "2026-11-09T08:00Z",
+        "2026-11-10T08:00Z",
+        "2026-11-11T08:00Z",
+        "2026-11-12T08:00Z",
+        "2026-11-13T08:00Z",
+        "2026-11-14T08:00Z",
+        "2026-11-15T08:00Z",
+        "2026-11-16T08:00Z",
+        "2026-11-17T08:00Z",
+        "2026-11-18T08:00Z",
+        "2026-11-19T08:00Z",
+        "2026-11-20T08:00Z",
+        "2026-11-21T08:00Z",
+        "2026-11-22T08:00Z",
+        "2026-11-23T08:00Z",
+        "2026-11-24T08:00Z",
+        "2026-11-25T08:00Z",
+        "2026-11-27T08:00Z",
+        "2026-11-28T08:00Z",
+        "2026-11-29T08:00Z",
+        "2026-11-30T08:00Z",
+        "2026-12-01T08:00Z",
+        "2026-12-02T08:00Z",
+        "2026-12-03T08:00Z",
+        "2026-12-04T08:00Z",
+        "2026-12-05T08:00Z",
+        "2026-12-08T08:00Z",
+        "2026-12-11T08:00Z",
+        "2026-12-12T08:00Z",
+        "2026-12-13T08:00Z",
+        "2026-12-14T08:00Z",
+        "2026-12-15T08:00Z",
+        "2026-12-16T08:00Z",
+        "2026-12-17T08:00Z",
+        "2026-12-18T08:00Z",
+        "2026-12-19T08:00Z",
+        "2026-12-20T08:00Z",
+        "2026-12-21T08:00Z",
+        "2026-12-22T08:00Z",
+        "2026-12-23T08:00Z",
+        "2026-12-25T08:00Z",
+        "2026-12-26T08:00Z",
+        "2026-12-27T08:00Z",
+        "2026-12-28T08:00Z",
+        "2026-12-29T08:00Z",
+        "2026-12-30T08:00Z",
+        "2026-12-31T08:00Z",
+        "2027-01-01T08:00Z",
+        "2027-01-02T08:00Z",
+        "2027-01-03T08:00Z",
+        "2027-01-04T08:00Z",
+        "2027-01-05T08:00Z",
+        "2027-01-06T08:00Z",
+        "2027-01-07T08:00Z",
+        "2027-01-08T08:00Z",
+        "2027-01-09T08:00Z",
+        "2027-01-10T08:00Z",
+        "2027-01-11T08:00Z",
+        "2027-01-12T08:00Z",
+        "2027-01-13T08:00Z",
+        "2027-01-14T08:00Z",
+        "2027-01-15T08:00Z",
+        "2027-01-16T08:00Z",
+        "2027-01-17T08:00Z",
+        "2027-01-18T08:00Z",
+        "2027-01-19T08:00Z",
+        "2027-01-20T08:00Z",
+        "2027-01-21T08:00Z",
+        "2027-01-22T08:00Z",
+        "2027-01-23T08:00Z",
+        "2027-01-24T08:00Z",
+        "2027-01-25T08:00Z",
+        "2027-01-26T08:00Z",
+        "2027-01-27T08:00Z",
+        "2027-01-28T08:00Z",
+        "2027-01-29T08:00Z",
+        "2027-01-30T08:00Z",
+        "2027-01-31T08:00Z",
+        "2027-02-01T08:00Z",
+        "2027-02-02T08:00Z",
+        "2027-02-03T08:00Z",
+        "2027-02-04T08:00Z",
+        "2027-02-05T08:00Z",
+        "2027-02-06T08:00Z",
+        "2027-02-07T08:00Z",
+        "2027-02-08T08:00Z",
+        "2027-02-09T08:00Z",
+        "2027-02-10T08:00Z",
+        "2027-02-11T08:00Z",
+        "2027-02-12T08:00Z",
+        "2027-02-13T08:00Z",
+        "2027-02-14T08:00Z",
+        "2027-02-15T08:00Z",
+        "2027-02-16T08:00Z",
+        "2027-02-17T08:00Z",
+        "2027-02-18T08:00Z",
+        "2027-02-25T08:00Z",
+        "2027-02-26T08:00Z",
+        "2027-02-27T08:00Z",
+        "2027-02-28T08:00Z",
+        "2027-03-01T08:00Z",
+        "2027-03-02T08:00Z",
+        "2027-03-03T08:00Z",
+        "2027-03-04T08:00Z",
+        "2027-03-05T08:00Z",
+        "2027-03-06T08:00Z",
+        "2027-03-07T08:00Z",
+        "2027-03-08T08:00Z",
+        "2027-03-09T08:00Z",
+        "2027-03-10T08:00Z",
+        "2027-03-11T08:00Z",
+        "2027-03-12T08:00Z",
+        "2027-03-13T08:00Z",
+        "2027-03-14T08:00Z",
+        "2027-03-15T07:00Z",
+        "2027-03-16T07:00Z",
+        "2027-03-17T07:00Z",
+        "2027-03-18T07:00Z",
+        "2027-03-19T07:00Z",
+        "2027-03-20T07:00Z",
+        "2027-03-21T07:00Z",
+        "2027-03-22T07:00Z",
+        "2027-03-23T07:00Z",
+        "2027-03-24T07:00Z",
+        "2027-03-25T07:00Z",
+        "2027-03-26T07:00Z",
+        "2027-03-27T07:00Z",
+        "2027-03-28T07:00Z",
+        "2027-03-29T07:00Z",
+        "2027-03-30T07:00Z",
+        "2027-03-31T07:00Z",
+        "2027-04-01T07:00Z",
+        "2027-04-02T07:00Z",
+        "2027-04-03T07:00Z",
+        "2027-04-04T07:00Z",
+        "2027-04-05T07:00Z",
+        "2027-04-06T07:00Z",
+        "2027-04-07T07:00Z",
+        "2027-04-08T07:00Z",
+        "2027-04-09T07:00Z",
+        "2027-04-11T07:00Z"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "401909092",
+      "uid": "s:40~l:46~e:401909092",
+      "date": "2026-10-22T02:00Z",
+      "name": "Golden State Warriors at Los Angeles Lakers",
+      "shortName": "GS @ LAL",
+      "season": {
+        "year": 2027,
+        "type": 2,
+        "slug": "regular-season"
+      },
+      "competitions": [
+        {
+          "id": "401909092",
+          "uid": "s:40~l:46~e:401909092~c:401909092",
+          "date": "2026-10-22T02:00Z",
+          "attendance": 19057,
+          "type": {
+            "id": "1",
+            "abbreviation": "STD"
+          },
+          "timeValid": true,
+          "neutralSite": false,
+          "conferenceCompetition": false,
+          "playByPlayAvailable": true,
+          "recent": false,
+          "venue": {
+            "id": "1841",
+            "fullName": "crypto.com Arena",
+            "address": {
+              "city": "Los Angeles",
+              "state": "CA"
+            },
+            "indoor": true
+          },
+          "competitors": [
+            {
+              "id": "13",
+              "uid": "s:40~l:46~t:13",
+              "type": "team",
+              "order": 0,
+              "homeAway": "home",
+              "winner": true,
+              "team": {
+                "id": "13",
+                "uid": "s:40~l:46~t:13",
+                "location": "Los Angeles",
+                "name": "Lakers",
+                "abbreviation": "LAL",
+                "displayName": "Los Angeles Lakers",
+                "shortDisplayName": "Lakers",
+                "color": "552583",
+                "alternateColor": "fdb927",
+                "isActive": true,
+                "venue": {
+                  "id": "1841"
+                },
+                "links": [
+                  {
+                    "rel": ["clubhouse", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/_/name/lal/los-angeles-lakers",
+                    "text": "Clubhouse",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/roster/_/name/lal/los-angeles-lakers",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=roster",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/stats/_/name/lal/los-angeles-lakers",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=stats",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/schedule/_/name/lal",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:13&section=scores",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  }
+                ],
+                "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
+                "logoDark": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/lal.png"
+              },
+              "score": "127",
+              "linescores": [
+                {
+                  "value": 34.0,
+                  "displayValue": "34",
+                  "period": 1
+                },
+                {
+                  "value": 32.0,
+                  "displayValue": "32",
+                  "period": 2
+                },
+                {
+                  "value": 36.0,
+                  "displayValue": "36",
+                  "period": 3
+                },
+                {
+                  "value": 25.0,
+                  "displayValue": "25",
+                  "period": 4
+                }
+              ],
+              "statistics": [
+                {
+                  "name": "rebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "43"
+                },
+                {
+                  "name": "avgRebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "43.0"
+                },
+                {
+                  "name": "assists",
+                  "abbreviation": "AST",
+                  "displayValue": "28"
+                },
+                {
+                  "name": "fieldGoalsAttempted",
+                  "abbreviation": "FGA",
+                  "displayValue": "81"
+                },
+                {
+                  "name": "fieldGoalsMade",
+                  "abbreviation": "FGM",
+                  "displayValue": "46"
+                },
+                {
+                  "name": "fieldGoalPct",
+                  "abbreviation": "FG%",
+                  "displayValue": "56.8"
+                },
+                {
+                  "name": "freeThrowPct",
+                  "abbreviation": "FT%",
+                  "displayValue": "88.9"
+                },
+                {
+                  "name": "freeThrowsAttempted",
+                  "abbreviation": "FTA",
+                  "displayValue": "27"
+                },
+                {
+                  "name": "freeThrowsMade",
+                  "abbreviation": "FTM",
+                  "displayValue": "24"
+                },
+                {
+                  "name": "points",
+                  "abbreviation": "PTS",
+                  "displayValue": "127"
+                },
+                {
+                  "name": "threePointPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "39.3"
+                },
+                {
+                  "name": "threePointFieldGoalsAttempted",
+                  "abbreviation": "3PA",
+                  "displayValue": "28"
+                },
+                {
+                  "name": "threePointFieldGoalsMade",
+                  "abbreviation": "3PM",
+                  "displayValue": "11"
+                },
+                {
+                  "name": "avgPoints",
+                  "abbreviation": "PTS",
+                  "displayValue": "127.0"
+                },
+                {
+                  "name": "avgAssists",
+                  "abbreviation": "AST",
+                  "displayValue": "28.0"
+                },
+                {
+                  "name": "threePointFieldGoalPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "39.3"
+                }
+              ],
+              "leaders": [
+                {
+                  "name": "points",
+                  "displayName": "Points",
+                  "shortDisplayName": "Pts",
+                  "abbreviation": "Pts",
+                  "leaders": [
+                    {
+                      "displayValue": "28",
+                      "value": 28.0,
+                      "athlete": {
+                        "id": "3945274",
+                        "fullName": "Luka Doncic",
+                        "displayName": "Luka Doncic",
+                        "shortName": "L. Doncic",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/3945274/luka-doncic"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3945274.png",
+                        "jersey": "77",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "13"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "13"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rebounds",
+                  "displayName": "Rebounds",
+                  "shortDisplayName": "Reb",
+                  "abbreviation": "Reb",
+                  "leaders": [
+                    {
+                      "displayValue": "9",
+                      "value": 9.0,
+                      "athlete": {
+                        "id": "4433136",
+                        "fullName": "Walker Kessler",
+                        "displayName": "Walker Kessler",
+                        "shortName": "W. Kessler",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4433136/walker-kessler"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4433136.png",
+                        "jersey": "14",
+                        "position": {
+                          "abbreviation": "C"
+                        },
+                        "team": {
+                          "id": "13"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "13"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "assists",
+                  "displayName": "Assists",
+                  "shortDisplayName": "Ast",
+                  "abbreviation": "Ast",
+                  "leaders": [
+                    {
+                      "displayValue": "7",
+                      "value": 7.0,
+                      "athlete": {
+                        "id": "3945274",
+                        "fullName": "Luka Doncic",
+                        "displayName": "Luka Doncic",
+                        "shortName": "L. Doncic",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/3945274/luka-doncic"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3945274.png",
+                        "jersey": "77",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "13"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "13"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rating",
+                  "displayName": "Rating",
+                  "shortDisplayName": "RAT",
+                  "abbreviation": "RAT",
+                  "leaders": [
+                    {
+                      "displayValue": "26 PTS, 9 REB",
+                      "value": 48.70000076293945,
+                      "athlete": {
+                        "id": "4433136",
+                        "fullName": "Walker Kessler",
+                        "displayName": "Walker Kessler",
+                        "shortName": "W. Kessler",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4433136/walker-kessler"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4433136.png",
+                        "jersey": "14",
+                        "position": {
+                          "abbreviation": "C"
+                        },
+                        "team": {
+                          "id": "13"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "13"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "records": [
+                {
+                  "name": "overall",
+                  "abbreviation": "Game",
+                  "type": "total",
+                  "summary": "1-0"
+                },
+                {
+                  "name": "Home",
+                  "type": "home",
+                  "summary": "1-0"
+                },
+                {
+                  "name": "Road",
+                  "type": "road",
+                  "summary": "0-0"
+                }
+              ]
+            },
+            {
+              "id": "9",
+              "uid": "s:40~l:46~t:9",
+              "type": "team",
+              "order": 1,
+              "homeAway": "away",
+              "winner": false,
+              "team": {
+                "id": "9",
+                "uid": "s:40~l:46~t:9",
+                "location": "Golden State",
+                "name": "Warriors",
+                "abbreviation": "GS",
+                "displayName": "Golden State Warriors",
+                "shortDisplayName": "Warriors",
+                "color": "fdb927",
+                "alternateColor": "1d428a",
+                "isActive": true,
+                "venue": {
+                  "id": "2465"
+                },
+                "links": [
+                  {
+                    "rel": ["clubhouse", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/_/name/gs/golden-state-warriors",
+                    "text": "Clubhouse",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/roster/_/name/gs/golden-state-warriors",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["roster", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:9&section=roster",
+                    "text": "Roster",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/stats/_/name/gs/golden-state-warriors",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["stats", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:9&section=stats",
+                    "text": "Statistics",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "desktop", "team"],
+                    "href": "https://www.espn.com/nba/team/schedule/_/name/gs",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  },
+                  {
+                    "rel": ["schedule", "sportscenter", "app", "team"],
+                    "href": "sportscenter://x-callback-url/showClubhouse?uid=s:40~l:46~t:9&section=scores",
+                    "text": "Schedule",
+                    "isExternal": false,
+                    "isPremium": false
+                  }
+                ],
+                "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/gs.png",
+                "logoDark": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/gs.png"
+              },
+              "score": "105",
+              "linescores": [
+                {
+                  "value": 33.0,
+                  "displayValue": "33",
+                  "period": 1
+                },
+                {
+                  "value": 19.0,
+                  "displayValue": "19",
+                  "period": 2
+                },
+                {
+                  "value": 16.0,
+                  "displayValue": "16",
+                  "period": 3
+                },
+                {
+                  "value": 37.0,
+                  "displayValue": "37",
+                  "period": 4
+                }
+              ],
+              "statistics": [
+                {
+                  "name": "rebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "36"
+                },
+                {
+                  "name": "avgRebounds",
+                  "abbreviation": "REB",
+                  "displayValue": "36.0"
+                },
+                {
+                  "name": "assists",
+                  "abbreviation": "AST",
+                  "displayValue": "25"
+                },
+                {
+                  "name": "fieldGoalsAttempted",
+                  "abbreviation": "FGA",
+                  "displayValue": "92"
+                },
+                {
+                  "name": "fieldGoalsMade",
+                  "abbreviation": "FGM",
+                  "displayValue": "38"
+                },
+                {
+                  "name": "fieldGoalPct",
+                  "abbreviation": "FG%",
+                  "displayValue": "41.3"
+                },
+                {
+                  "name": "freeThrowPct",
+                  "abbreviation": "FT%",
+                  "displayValue": "77.8"
+                },
+                {
+                  "name": "freeThrowsAttempted",
+                  "abbreviation": "FTA",
+                  "displayValue": "27"
+                },
+                {
+                  "name": "freeThrowsMade",
+                  "abbreviation": "FTM",
+                  "displayValue": "21"
+                },
+                {
+                  "name": "points",
+                  "abbreviation": "PTS",
+                  "displayValue": "105"
+                },
+                {
+                  "name": "threePointPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "22.2"
+                },
+                {
+                  "name": "threePointFieldGoalsAttempted",
+                  "abbreviation": "3PA",
+                  "displayValue": "36"
+                },
+                {
+                  "name": "threePointFieldGoalsMade",
+                  "abbreviation": "3PM",
+                  "displayValue": "8"
+                },
+                {
+                  "name": "avgPoints",
+                  "abbreviation": "PTS",
+                  "displayValue": "105.0"
+                },
+                {
+                  "name": "avgAssists",
+                  "abbreviation": "AST",
+                  "displayValue": "25.0"
+                },
+                {
+                  "name": "threePointFieldGoalPct",
+                  "abbreviation": "3P%",
+                  "displayValue": "22.2"
+                }
+              ],
+              "leaders": [
+                {
+                  "name": "points",
+                  "displayName": "Points",
+                  "shortDisplayName": "Pts",
+                  "abbreviation": "Pts",
+                  "leaders": [
+                    {
+                      "displayValue": "23",
+                      "value": 23.0,
+                      "athlete": {
+                        "id": "3975",
+                        "fullName": "Stephen Curry",
+                        "displayName": "Stephen Curry",
+                        "shortName": "S. Curry",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/3975/stephen-curry"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3975.png",
+                        "jersey": "30",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "9"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "9"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rebounds",
+                  "displayName": "Rebounds",
+                  "shortDisplayName": "Reb",
+                  "abbreviation": "Reb",
+                  "leaders": [
+                    {
+                      "displayValue": "5",
+                      "value": 5.0,
+                      "athlete": {
+                        "id": "4997536",
+                        "fullName": "Gui Santos",
+                        "displayName": "Gui Santos",
+                        "shortName": "G. Santos",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/4997536/gui-santos"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4997536.png",
+                        "jersey": "15",
+                        "position": {
+                          "abbreviation": "F"
+                        },
+                        "team": {
+                          "id": "9"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "9"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "assists",
+                  "displayName": "Assists",
+                  "shortDisplayName": "Ast",
+                  "abbreviation": "Ast",
+                  "leaders": [
+                    {
+                      "displayValue": "8",
+                      "value": 8.0,
+                      "athlete": {
+                        "id": "6589",
+                        "fullName": "Draymond Green",
+                        "displayName": "Draymond Green",
+                        "shortName": "D. Green",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/6589/draymond-green"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/6589.png",
+                        "jersey": "23",
+                        "position": {
+                          "abbreviation": "F"
+                        },
+                        "team": {
+                          "id": "9"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "9"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "rating",
+                  "displayName": "Rating",
+                  "shortDisplayName": "RAT",
+                  "abbreviation": "RAT",
+                  "leaders": [
+                    {
+                      "displayValue": "23 PTS",
+                      "value": 30.350000381469727,
+                      "athlete": {
+                        "id": "3975",
+                        "fullName": "Stephen Curry",
+                        "displayName": "Stephen Curry",
+                        "shortName": "S. Curry",
+                        "links": [
+                          {
+                            "rel": ["playercard", "desktop", "athlete"],
+                            "href": "https://www.espn.com/nba/player/_/id/3975/stephen-curry"
+                          }
+                        ],
+                        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3975.png",
+                        "jersey": "30",
+                        "position": {
+                          "abbreviation": "G"
+                        },
+                        "team": {
+                          "id": "9"
+                        },
+                        "active": true
+                      },
+                      "team": {
+                        "id": "9"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "records": [
+                {
+                  "name": "overall",
+                  "abbreviation": "Game",
+                  "type": "total",
+                  "summary": "0-1"
+                },
+                {
+                  "name": "Home",
+                  "type": "home",
+                  "summary": "0-0"
+                },
+                {
+                  "name": "Road",
+                  "type": "road",
+                  "summary": "0-1"
+                }
+              ]
+            }
+          ],
+          "notes": [],
+          "status": {
+            "clock": 0.0,
+            "displayClock": "0.0",
+            "period": 4,
+            "type": {
+              "id": "3",
+              "name": "STATUS_FINAL",
+              "state": "post",
+              "completed": true,
+              "description": "Final",
+              "detail": "Final",
+              "shortDetail": "Final"
+            }
+          },
+          "broadcasts": [
+            {
+              "market": "national",
+              "names": ["ESPN"]
+            }
+          ],
+          "format": {
+            "regulation": {
+              "periods": 4
+            }
+          },
+          "startDate": "2026-10-22T02:00Z",
+          "broadcast": "ESPN",
+          "geoBroadcasts": [
+            {
+              "type": {
+                "id": "1",
+                "shortName": "TV"
+              },
+              "market": {
+                "id": "1",
+                "type": "National"
+              },
+              "media": {
+                "shortName": "ESPN",
+                "logo": "https://a.espncdn.com/guid/335fd2d2-97b9-336b-81ee-573eb6bdcffc/logos/default.png",
+                "darkLogo": ""
+              },
+              "lang": "en",
+              "region": "us"
+            }
+          ],
+          "highlights": [
+            {
+              "id": 50245265,
+              "cerebroId": "6ad9947f5b1c8b13e05362fb",
+              "source": "espn",
+              "headline": "Lakers thrash Warriors to open the season",
+              "description": "Lakers thrash Warriors to open the season",
+              "lastModified": "2026-10-22T04:45:15Z",
+              "originalPublishDate": "2026-10-22T04:43:43Z",
+              "duration": 70,
+              "timeRestrictions": {
+                "embargoDate": "2026-10-22T04:43:35Z",
+                "expirationDate": "2027-07-31T04:00:00Z"
+              },
+              "deviceRestrictions": {
+                "devices": ["settop", "tablet", "handset", "ipad", "desktop"],
+                "type": "whitelist"
+              },
+              "geoRestrictions": {
+                "countries": [
+                  "PR",
+                  "HN",
+                  "PY",
+                  "HT",
+                  "IE",
+                  "AG",
+                  "ZA",
+                  "AI",
+                  "AM",
+                  "AO",
+                  "AR",
+                  "AS",
+                  "ZM",
+                  "RE",
+                  "AU",
+                  "AW",
+                  "ZW",
+                  "BB",
+                  "JM",
+                  "BF",
+                  "RW",
+                  "BI",
+                  "BJ",
+                  "BM",
+                  "BO",
+                  "BQ",
+                  "BR",
+                  "SC",
+                  "BS",
+                  "BW",
+                  "BZ",
+                  "SL",
+                  "KE",
+                  "SN",
+                  "SR",
+                  "SS",
+                  "ST",
+                  "CD",
+                  "KM",
+                  "CF",
+                  "KN",
+                  "SV",
+                  "CG",
+                  "SX",
+                  "CI",
+                  "SZ",
+                  "CL",
+                  "CM",
+                  "CO",
+                  "KY",
+                  "TC",
+                  "CR",
+                  "CU",
+                  "CV",
+                  "TG",
+                  "LC",
+                  "TT",
+                  "LR",
+                  "TZ",
+                  "LS",
+                  "DO",
+                  "UG",
+                  "UK",
+                  "UM",
+                  "MF",
+                  "MG",
+                  "EC",
+                  "US",
+                  "ML",
+                  "MP",
+                  "MQ",
+                  "UY",
+                  "MS",
+                  "MU",
+                  "MW",
+                  "MX",
+                  "VC",
+                  "MZ",
+                  "ER",
+                  "VE",
+                  "ET",
+                  "VG",
+                  "VI",
+                  "NA",
+                  "NE",
+                  "NG",
+                  "NI",
+                  "NZ",
+                  "GA",
+                  "GB",
+                  "GD",
+                  "GF",
+                  "GH",
+                  "GM",
+                  "GN",
+                  "GP",
+                  "GQ",
+                  "GT",
+                  "GU",
+                  "GW",
+                  "PA",
+                  "GY",
+                  "PE",
+                  "PH"
+                ],
+                "type": "whitelist"
+              },
+              "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.jpg",
+              "links": {
+                "api": {
+                  "artwork": {
+                    "href": "https://artwork.api.espn.com/artwork/collections/media/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce"
+                  },
+                  "self": {
+                    "href": "https://content.core.api.espn.com/v1/video/clips/50245265"
+                  }
+                },
+                "mobile": {
+                  "href": "https://watch.auth.api.espn.com/video/auth/brightcove/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset?UMADPARAMreferer=https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season",
+                  "alert": {
+                    "href": "https://m.espn.com/general/video/videoAlert?vid=50245265"
+                  },
+                  "progressiveDownload": {
+                    "href": "https://watch.auth.api.espn.com/video/auth/brightcove/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset?UMADPARAMreferer=https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season"
+                  },
+                  "source": {
+                    "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                  },
+                  "streaming": {
+                    "href": "https://watch.auth.api.espn.com/video/auth/brightcove/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset?UMADPARAMreferer=https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season"
+                  }
+                },
+                "source": {
+                  "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4",
+                  "HD": {
+                    "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                  },
+                  "HLS": {
+                    "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8",
+                    "9x16": {
+                      "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/9x16/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                    },
+                    "HD": {
+                      "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                    },
+                    "cmaf": {
+                      "href": "https://cmp-espn.media.dssott.com/opp/cmaf/espn/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8",
+                      "9x16": {
+                        "href": "https://cmp-espn.media.dssott.com/opp/cmaf/espn/9x16/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                      },
+                      "cmb": {
+                        "href": "https://cmp-espn.media.dssott.com/opp/cmaf/espn/cmb/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                      }
+                    },
+                    "cmb": {
+                      "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/cmb/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                    },
+                    "shield": {
+                      "href": "https://watch.auth.api.espn.com/video/auth/media/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset"
+                    }
+                  },
+                  "flash": {
+                    "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                  },
+                  "full": {
+                    "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                  },
+                  "mezzanine": {
+                    "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                  }
+                },
+                "sportscenter": {
+                  "href": "sportscenter://x-callback-url/showVideo?videoID=50245265&videoDSI=2dbc792e1c531"
+                },
+                "web": {
+                  "href": "https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season",
+                  "self": {
+                    "href": "https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season",
+                    "dsi": {
+                      "href": "https://www.espn.com/video/clip?id=2dbc792e1c531"
+                    }
+                  }
+                }
+              },
+              "ad": {
+                "bundle": "nba_top_plays",
+                "sport": "nba"
+              },
+              "tracking": {
+                "coverageType": "Final Game Highlight",
+                "leagueName": "NBA",
+                "program": "ESPN",
+                "sportName": "basketball",
+                "trackingId": "dm_20261022_NBA_lakers_thrash_warriors_to_open_the_season",
+                "trackingName": "COM_NBA Highlight (Lakers thrash Warriors to open the season) 2026/10/22 ESHEET"
+              }
+            }
+          ],
+          "headlines": [
+            {
+              "type": "Recap",
+              "description": "— Walker Kessler scored 26 points on 12-for-12 shooting and grabbed nine rebounds during his auspicious debut for the Los Angeles Lakers in a 127-105 victory over the Golden State Warriors on Wednesday night.",
+              "shortLinkText": "Walker Kessler has perfect Lakers debut with 12-for-12 shooting in 127-105 win over Warriors",
+              "video": [
+                {
+                  "id": 50245265,
+                  "source": "espn",
+                  "headline": "Lakers thrash Warriors to open the season",
+                  "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.jpg",
+                  "duration": 70,
+                  "tracking": {
+                    "coverageType": "Final Game Highlight",
+                    "leagueName": "NBA",
+                    "program": "ESPN",
+                    "sportName": "basketball",
+                    "trackingId": "dm_20261022_NBA_lakers_thrash_warriors_to_open_the_season",
+                    "trackingName": "COM_NBA Highlight (Lakers thrash Warriors to open the season) 2026/10/22 ESHEET"
+                  },
+                  "deviceRestrictions": {
+                    "devices": [
+                      "settop",
+                      "tablet",
+                      "handset",
+                      "ipad",
+                      "desktop"
+                    ],
+                    "type": "whitelist"
+                  },
+                  "geoRestrictions": {
+                    "countries": [
+                      "PR",
+                      "HN",
+                      "PY",
+                      "HT",
+                      "IE",
+                      "AG",
+                      "ZA",
+                      "AI",
+                      "AM",
+                      "AO",
+                      "AR",
+                      "AS",
+                      "ZM",
+                      "RE",
+                      "AU",
+                      "AW",
+                      "ZW",
+                      "BB",
+                      "JM",
+                      "BF",
+                      "RW",
+                      "BI",
+                      "BJ",
+                      "BM",
+                      "BO",
+                      "BQ",
+                      "BR",
+                      "SC",
+                      "BS",
+                      "BW",
+                      "BZ",
+                      "SL",
+                      "KE",
+                      "SN",
+                      "SR",
+                      "SS",
+                      "ST",
+                      "CD",
+                      "KM",
+                      "CF",
+                      "KN",
+                      "SV",
+                      "CG",
+                      "SX",
+                      "CI",
+                      "SZ",
+                      "CL",
+                      "CM",
+                      "CO",
+                      "KY",
+                      "TC",
+                      "CR",
+                      "CU",
+                      "CV",
+                      "TG",
+                      "LC",
+                      "TT",
+                      "LR",
+                      "TZ",
+                      "LS",
+                      "DO",
+                      "UG",
+                      "UK",
+                      "UM",
+                      "MF",
+                      "MG",
+                      "EC",
+                      "US",
+                      "ML",
+                      "MP",
+                      "MQ",
+                      "UY",
+                      "MS",
+                      "MU",
+                      "MW",
+                      "MX",
+                      "VC",
+                      "MZ",
+                      "ER",
+                      "VE",
+                      "ET",
+                      "VG",
+                      "VI",
+                      "NA",
+                      "NE",
+                      "NG",
+                      "NI",
+                      "NZ",
+                      "GA",
+                      "GB",
+                      "GD",
+                      "GF",
+                      "GH",
+                      "GM",
+                      "GN",
+                      "GP",
+                      "GQ",
+                      "GT",
+                      "GU",
+                      "GW",
+                      "PA",
+                      "GY",
+                      "PE",
+                      "PH"
+                    ],
+                    "type": "whitelist"
+                  },
+                  "links": {
+                    "api": {
+                      "artwork": {
+                        "href": "https://artwork.api.espn.com/artwork/collections/media/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce"
+                      },
+                      "self": {
+                        "href": "https://content.core.api.espn.com/v1/video/clips/50245265"
+                      }
+                    },
+                    "mobile": {
+                      "href": "https://watch.auth.api.espn.com/video/auth/brightcove/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset?UMADPARAMreferer=https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season",
+                      "alert": {
+                        "href": "https://m.espn.com/general/video/videoAlert?vid=50245265"
+                      },
+                      "progressiveDownload": {
+                        "href": "https://watch.auth.api.espn.com/video/auth/brightcove/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset?UMADPARAMreferer=https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season"
+                      },
+                      "source": {
+                        "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                      },
+                      "streaming": {
+                        "href": "https://watch.auth.api.espn.com/video/auth/brightcove/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset?UMADPARAMreferer=https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season"
+                      }
+                    },
+                    "source": {
+                      "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4",
+                      "HD": {
+                        "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                      },
+                      "HLS": {
+                        "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8",
+                        "9x16": {
+                          "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/9x16/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                        },
+                        "HD": {
+                          "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                        },
+                        "cmaf": {
+                          "href": "https://cmp-espn.media.dssott.com/opp/cmaf/espn/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8",
+                          "9x16": {
+                            "href": "https://cmp-espn.media.dssott.com/opp/cmaf/espn/9x16/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                          },
+                          "cmb": {
+                            "href": "https://cmp-espn.media.dssott.com/opp/cmaf/espn/cmb/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                          }
+                        },
+                        "cmb": {
+                          "href": "https://cmp-espn.media.dssott.com/opp/hls/espn/cmb/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d/playlist.m3u8"
+                        },
+                        "shield": {
+                          "href": "https://watch.auth.api.espn.com/video/auth/media/e27d17d2-d8da-4f23-ace3-0ef4b0fac7ce/asset"
+                        }
+                      },
+                      "flash": {
+                        "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                      },
+                      "full": {
+                        "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                      },
+                      "mezzanine": {
+                        "href": "https://espnmedia-cdn.akamaized.net/espn/media/16x9/wsc/2026/1022/50c605ee-8586-481f-8326-bfa6fdc8d98d/50c605ee-8586-481f-8326-bfa6fdc8d98d.mp4"
+                      }
+                    },
+                    "sportscenter": {
+                      "href": "sportscenter://x-callback-url/showVideo?videoID=50245265&videoDSI=2dbc792e1c531"
+                    },
+                    "web": {
+                      "href": "https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season",
+                      "self": {
+                        "href": "https://www.espn.com/video/clip/_/id/50245265/lakers-thrash-warriors-open-season",
+                        "dsi": {
+                          "href": "https://www.espn.com/video/clip?id=2dbc792e1c531"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "language": "en-US",
+          "rel": ["summary", "desktop", "event"],
+          "href": "https://www.espn.com/nba/game/_/gameId/401909092/warriors-lakers",
+          "text": "Gamecast",
+          "shortText": "Gamecast",
+          "isExternal": false,
+          "isPremium": false
+        },
+        {
+          "language": "en-US",
+          "rel": ["boxscore", "desktop", "event"],
+          "href": "https://www.espn.com/nba/boxscore/_/gameId/401909092",
+          "text": "Box Score",
+          "shortText": "Box Score",
+          "isExternal": false,
+          "isPremium": false
+        },
+        {
+          "language": "en-US",
+          "rel": ["highlights", "desktop"],
+          "href": "https://www.espn.com/nba/video?gameId=401909092",
+          "text": "Highlights",
+          "shortText": "Highlights",
+          "isExternal": false,
+          "isPremium": false
+        },
+        {
+          "language": "en-US",
+          "rel": ["pbp", "desktop", "event"],
+          "href": "https://www.espn.com/nba/playbyplay/_/gameId/401909092",
+          "text": "Play-by-Play",
+          "shortText": "Play-by-Play",
+          "isExternal": false,
+          "isPremium": false
+        },
+        {
+          "language": "en-US",
+          "rel": ["recap", "desktop", "event"],
+          "href": "https://www.espn.com/nba/recap?gameId=401909092",
+          "text": "Recap",
+          "shortText": "Recap",
+          "isExternal": false,
+          "isPremium": false
+        }
+      ],
+      "status": {
+        "clock": 0.0,
+        "displayClock": "0.0",
+        "period": 4,
+        "type": {
+          "id": "3",
+          "name": "STATUS_FINAL",
+          "state": "post",
+          "completed": true,
+          "description": "Final",
+          "detail": "Final",
+          "shortDetail": "Final"
+        }
+      }
+    }
+  ],
+  "provider": {
+    "id": "100",
+    "name": "Draft Kings",
+    "displayName": "Draft Kings",
+    "priority": 1
+  }
+}

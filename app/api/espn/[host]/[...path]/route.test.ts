@@ -1,6 +1,7 @@
 import { GET } from "./route";
 
 const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
+const FIVE_MINUTES_IN_SECONDS = 5 * 60;
 const fetchMock = vi.fn();
 
 function callRoute(host: string, path: string[], search = "") {
@@ -63,7 +64,7 @@ describe("ESPN proxy route", () => {
     );
   });
 
-  it("does not give paths below a team detail the team detail cache", async () => {
+  it("revalidates a team schedule every 5 minutes instead of inheriting the team detail cache", async () => {
     fetchMock.mockResolvedValueOnce(new Response("{}", { status: 200 }));
 
     await callRoute("site", [
@@ -76,6 +77,29 @@ describe("ESPN proxy route", () => {
       "teams",
       "13",
       "schedule",
+    ]);
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/13/schedule",
+      expect.objectContaining({
+        next: { revalidate: FIVE_MINUTES_IN_SECONDS },
+      }),
+    );
+  });
+
+  it("does not give paths below a team resource the team detail cache", async () => {
+    fetchMock.mockResolvedValueOnce(new Response("{}", { status: 200 }));
+
+    await callRoute("site", [
+      "apis",
+      "site",
+      "v2",
+      "sports",
+      "basketball",
+      "nba",
+      "teams",
+      "13",
+      "roster",
     ]);
 
     expect(fetchMock.mock.calls[0][1]).not.toHaveProperty("next");

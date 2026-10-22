@@ -8,13 +8,23 @@ import type {
   SeasonType,
   Team,
 } from "@/app/lib/domain/game";
-import type { ListedTeam, TeamDetail, TeamSlug } from "@/app/lib/domain/team";
+import type {
+  ListedTeam,
+  RosterPlayer,
+  TeamDetail,
+  TeamSlug,
+} from "@/app/lib/domain/team";
 import { nbaDateOf } from "@/app/lib/time/nba-date";
 import type {
-  RawCompetition,
+  RawBroadcast,
   RawCompetitor,
   RawEvent,
+  RawGeoBroadcast,
   RawListedTeam,
+  RawRosterAthlete,
+  RawScheduleCompetitor,
+  RawScheduleEvent,
+  RawScheduleTeam,
   RawTeamDetailResponse,
   RawSeason,
   RawSeries,
@@ -36,7 +46,7 @@ const SEASON_TYPE_BY_SLUG: Record<string, SeasonType> = {
   "play-in-season": "play-in",
 };
 
-function mapSeasonType(season: RawSeason): SeasonType {
+function mapSeasonType(season: Pick<RawSeason, "type" | "slug">): SeasonType {
   return (
     SEASON_TYPE_BY_ID[season.type] ??
     (season.slug ? SEASON_TYPE_BY_SLUG[season.slug] : undefined) ??
@@ -114,22 +124,53 @@ export function mapTeamDetail(team: RawTeamDetailResponse["team"]): TeamDetail {
   };
 }
 
-function mapCompetitor(competitor: RawCompetitor): GameCompetitor {
-  const score = Number(competitor.score);
+// The scoreboard sends scores as strings and the team schedule as { value, displayValue } objects.
+function normalizeScore(
+  rawScore: RawCompetitor["score"] | RawScheduleCompetitor["score"],
+) {
+  const score =
+    typeof rawScore === "object" && rawScore !== null
+      ? rawScore.value
+      : Number(rawScore);
+  return Number.isFinite(score) ? score : 0;
+}
 
+function mapCompetitor(competitor: RawCompetitor): GameCompetitor {
   return {
     team: mapTeam(competitor.team),
-    score: Number.isFinite(score) ? score : 0,
+    score: normalizeScore(competitor.score),
     winner: competitor.winner ?? false,
   };
 }
 
-function findCompetitor(event: RawEvent, side: RawCompetitor["homeAway"]) {
-  const competitor = event.competitions[0]?.competitors.find(
+function mapScheduleTeam(team: RawScheduleTeam): Team {
+  return mapTeam({
+    ...team,
+    name: team.shortDisplayName,
+    logo: pickScoreboardLogo(team.logos),
+  });
+}
+
+function mapScheduleCompetitor(
+  competitor: RawScheduleCompetitor,
+): GameCompetitor {
+  return {
+    team: mapScheduleTeam(competitor.team),
+    score: normalizeScore(competitor.score),
+    winner: competitor.winner ?? false,
+  };
+}
+
+function findCompetitor<Competitor extends { homeAway: "home" | "away" }>(
+  eventId: string,
+  competitors: Competitor[] | undefined,
+  side: Competitor["homeAway"],
+) {
+  const competitor = competitors?.find(
     (candidate) => candidate.homeAway === side,
   );
   if (!competitor) {
-    throw new Error(`ESPN event ${event.id} has no ${side} competitor`);
+    throw new Error(`ESPN event ${eventId} has no ${side} competitor`);
   }
   return competitor;
 }
@@ -152,24 +193,19 @@ function toMarket(rawMarket: string): BroadcastMarket | undefined {
   return MARKET_PRIORITY.find((candidate) => candidate === market);
 }
 
-function mapBroadcasts(competition: RawCompetition | undefined): Broadcast[] {
-  const listedBroadcasts = (competition?.broadcasts ?? []).flatMap(
-    (broadcast) => {
-      const market = toMarket(broadcast.market);
-      return market ? broadcast.names.map((name) => ({ name, market })) : [];
-    },
-  );
-  const usGeoBroadcasts = (competition?.geoBroadcasts ?? []).flatMap(
-    (broadcast) => {
-      const market = toMarket(broadcast.market.type);
-      const isUs = (broadcast.region ?? "us") === "us";
-      return market && isUs
-        ? [{ name: broadcast.media.shortName, market }]
-        : [];
-    },
-  );
-
-  console.log("listedBroadcasts:", listedBroadcasts);
+function mapBroadcasts(
+  rawBroadcasts: RawBroadcast[] = [],
+  rawGeoBroadcasts: RawGeoBroadcast[] = [],
+): Broadcast[] {
+  const listedBroadcasts = rawBroadcasts.flatMap((broadcast) => {
+    const market = toMarket(broadcast.market);
+    return market ? broadcast.names.map((name) => ({ name, market })) : [];
+  });
+  const usGeoBroadcasts = rawGeoBroadcasts.flatMap((broadcast) => {
+    const market = toMarket(broadcast.market.type);
+    const isUs = (broadcast.region ?? "us") === "us";
+    return market && isUs ? [{ name: broadcast.media.shortName, market }] : [];
+  });
 
   const broadcastByNormalizedName = new Map<string, Broadcast>();
   for (const market of MARKET_PRIORITY) {
@@ -212,8 +248,8 @@ function mapSeries(
 
 export function mapGame(event: RawEvent): Game {
   const competition = event.competitions[0];
-  const home = findCompetitor(event, "home");
-  const away = findCompetitor(event, "away");
+  const home = findCompetitor(event.id, competition?.competitors, "home");
+  const away = findCompetitor(event.id, competition?.competitors, "away");
 
   return {
     id: event.id,
@@ -224,7 +260,46 @@ export function mapGame(event: RawEvent): Game {
     status: mapStatus(event.status),
     home: mapCompetitor(home),
     away: mapCompetitor(away),
-    broadcasts: mapBroadcasts(competition),
+    broadcasts: mapBroadcasts(
+      competition?.broadcasts,
+      competition?.geoBroadcasts,
+    ),
     series: mapSeries(competition?.series, home.team.id, away.team.id),
+  };
+}
+
+export function mapScheduleGame(event: RawScheduleEvent): Game {
+  const competition = event.competitions[0];
+  if (!competition) {
+    throw new Error(`ESPN schedule event ${event.id} has no competition`);
+  }
+  const home = findCompetitor(event.id, competition.competitors, "home");
+  const away = findCompetitor(event.id, competition.competitors, "away");
+
+  return {
+    id: event.id,
+    startTime: event.date,
+    nbaDate: nbaDateOf(event.date),
+    seasonYear: event.season.year,
+    seasonType: mapSeasonType(event.seasonType),
+    status: mapStatus(competition.status),
+    home: mapScheduleCompetitor(home),
+    away: mapScheduleCompetitor(away),
+    // The schedule sends its broadcasts in the geoBroadcast shape.
+    broadcasts: mapBroadcasts([], competition.broadcasts),
+    series: mapSeries(competition.series, home.team.id, away.team.id),
+  };
+}
+
+export function mapRosterPlayer(athlete: RawRosterAthlete): RosterPlayer {
+  return {
+    id: athlete.id,
+    displayName: athlete.displayName,
+    jersey: athlete.jersey ?? null,
+    position: athlete.position?.abbreviation ?? null,
+    height: athlete.displayHeight ?? null,
+    weight: athlete.displayWeight ?? null,
+    age: athlete.age ?? null,
+    headshotUrl: athlete.headshot?.href ?? null,
   };
 }
