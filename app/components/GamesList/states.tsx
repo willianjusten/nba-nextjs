@@ -48,3 +48,11 @@ export function GamesListEmpty() {
     </p>
   );
 }
+
+export function StaleScoresNotice() {
+  return (
+    <p role="status" className="text-sm text-amber-300">
+      {strings.games.stale}
+    </p>
+  );
+}

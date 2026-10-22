@@ -1,14 +1,14 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
-import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
+import { useScoreboard } from "@/app/lib/queries/use-scoreboard";
 import GameCard from "@/app/components/GameCard";
 import {
   GAMES_GRID_CLASS_NAME,
   GamesListEmpty,
   GamesListError,
   GamesListLoading,
+  StaleScoresNotice,
 } from "./states";
 
 export default function GamesList({ nbaDate }: { nbaDate: NbaDate }) {
@@ -16,18 +16,22 @@ export default function GamesList({ nbaDate }: { nbaDate: NbaDate }) {
     data: scoreboard,
     error,
     isFetching,
+    isRefetchError,
     refetch,
-  } = useQuery(scoreboardQueryOptions(nbaDate));
+  } = useScoreboard(nbaDate);
 
   // Data is checked before the error: a failed refetch keeps the last valid scoreboard instead of hiding it.
   if (scoreboard) {
     if (scoreboard.games.length === 0) return <GamesListEmpty />;
 
     return (
-      <div className={GAMES_GRID_CLASS_NAME}>
-        {scoreboard.games.map((game) => (
-          <GameCard key={game.id} game={game} />
-        ))}
+      <div className="flex flex-col gap-3">
+        {isRefetchError && <StaleScoresNotice />}
+        <div className={GAMES_GRID_CLASS_NAME}>
+          {scoreboard.games.map((game) => (
+            <GameCard key={game.id} game={game} />
+          ))}
+        </div>
       </div>
     );
   }

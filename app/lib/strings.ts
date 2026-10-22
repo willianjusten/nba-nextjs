@@ -16,6 +16,7 @@ export const strings = {
     retry: "Try again",
     retrying: "Trying again...",
     empty: "No games scheduled for this day.",
+    stale: "Scores may be out of date. Retrying automatically.",
   },
   gameStatus: {
     quarter: (period: number) => `Q${period}`,
