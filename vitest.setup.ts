@@ -12,14 +12,5 @@ vi.mock("next/link", () => ({
     React.createElement("a", { href, ...props }, children),
 }));
 
-vi.mock("@bprogress/next/app", () => ({
-  __esModule: true,
-  useRouter: () => ({
-    push: vi.fn(),
-    replace: vi.fn(),
-    prefetch: vi.fn(),
-    back: vi.fn(),
-    forward: vi.fn(),
-    refresh: vi.fn(),
-  }),
-}));
+// server-only throws outside the react-server condition, which Vitest does not use.
+vi.mock("server-only", () => ({}));

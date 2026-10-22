@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Header, Footer } from "@/app/components";
-import NProgressProvider from "@/app/components/NProgressProvider";
-import GoogleAnalytics from "@/app/components/GoogleAnalytics";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import Providers from "@/app/providers";
+import { strings } from "@/app/lib/strings";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nba.willianjusten.com.br"),
-  title: "Games for today | NBA Next.js",
-  description: "See NBA game results and standings powered by Next.js",
+  title: strings.app.name,
+  description: strings.app.description,
 };
 
 export const viewport: Viewport = {
@@ -23,18 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
-        <NProgressProvider>
+        <Providers>
           <div className="bg-layout">
-            <div className="z-1 flex grow flex-col">
-              <Header />
-              <main className="container mx-auto flex grow flex-col px-4">
-                {children}
-              </main>
-              <Footer />
-            </div>
+            <main className="z-1 container mx-auto flex grow flex-col px-4">
+              {children}
+            </main>
           </div>
-        </NProgressProvider>
-        <GoogleAnalytics />
+        </Providers>
+        <SpeedInsights />
       </body>
     </html>
   );

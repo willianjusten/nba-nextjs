@@ -2,7 +2,7 @@ name: PR CI
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, feat/update-ui-api]
 
 jobs:
   ci:
@@ -20,10 +20,10 @@ jobs:
         run: npm ci
 
       - name: Run lint (OXC)
-        run: npx oxlint .
+        run: npm run lint
 
       - name: Run type-check
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
       - name: Run tests
         run: npm test
