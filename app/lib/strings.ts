@@ -53,6 +53,16 @@ export const strings = {
     leaderGamesBehind: "-",
     noStreak: "-",
   },
+  leaders: {
+    title: "League Leaders",
+    categories: {
+      points: { title: "Points", unit: "PPG" },
+      rebounds: { title: "Rebounds", unit: "RPG" },
+      assists: { title: "Assists", unit: "APG" },
+    },
+    empty: "No leaders yet.",
+    error: "We couldn't load the league leaders right now.",
+  },
   team: {
     record: (record: string) => `Record ${record}`,
     schedule: {

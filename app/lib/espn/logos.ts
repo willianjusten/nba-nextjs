@@ -1,7 +1,15 @@
 const ESPN_IMAGE_RESIZER = "https://a.espncdn.com/combiner/i";
 
-// The ESPN CDN resizes logos server-side, so the app ships small PNGs without Next image optimization.
+// The ESPN CDN resizes images server-side, so the app ships small PNGs without Next image optimization.
+export function resizedImageUrl(
+  imageUrl: string,
+  width: number,
+  height: number,
+) {
+  const imagePath = new URL(imageUrl).pathname;
+  return `${ESPN_IMAGE_RESIZER}?img=${imagePath}&w=${width}&h=${height}`;
+}
+
 export function resizedLogoUrl(logoUrl: string, size: number) {
-  const imagePath = new URL(logoUrl).pathname;
-  return `${ESPN_IMAGE_RESIZER}?img=${imagePath}&w=${size}&h=${size}`;
+  return resizedImageUrl(logoUrl, size, size);
 }

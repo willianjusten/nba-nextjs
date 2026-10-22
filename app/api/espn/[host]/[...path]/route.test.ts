@@ -2,6 +2,7 @@ import { GET } from "./route";
 
 const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
 const FIVE_MINUTES_IN_SECONDS = 5 * 60;
+const ONE_HOUR_IN_SECONDS = 60 * 60;
 const fetchMock = vi.fn();
 
 function callRoute(host: string, path: string[], search = "") {
@@ -42,6 +43,32 @@ describe("ESPN proxy route", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toBe("max-age=9");
     expect(await response.json()).toEqual({ events: [] });
+  });
+
+  it("revalidates league leaders every hour", async () => {
+    fetchMock.mockResolvedValueOnce(new Response("{}", { status: 200 }));
+
+    await callRoute(
+      "core",
+      [
+        "v2",
+        "sports",
+        "basketball",
+        "leagues",
+        "nba",
+        "seasons",
+        "2027",
+        "types",
+        "2",
+        "leaders",
+      ],
+      "?limit=5",
+    );
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/leaders?limit=5",
+      expect.objectContaining({ next: { revalidate: ONE_HOUR_IN_SECONDS } }),
+    );
   });
 
   it("revalidates a team detail once a day", async () => {

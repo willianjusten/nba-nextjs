@@ -3,6 +3,7 @@ import {
   ESPN_HOSTS,
   endpointCacheOptions,
   fillPathTemplate,
+  findEndpointForPath,
   type EspnEndpoint,
   type EspnEndpointName,
 } from "./config";
@@ -11,6 +12,7 @@ export class EspnRequestError extends Error {
   constructor(
     readonly url: string,
     readonly status: number,
+    readonly responseText: string,
   ) {
     super(`ESPN request failed with status ${status}: ${url}`);
     this.name = "EspnRequestError";
@@ -31,9 +33,9 @@ type EspnRequestOptions = {
 
 function buildEspnUrl(
   endpoint: EspnEndpoint,
-  { searchParams = new URLSearchParams(), pathParams = {} }: EspnRequestOptions,
+  path: string,
+  searchParams = new URLSearchParams(),
 ) {
-  const path = fillPathTemplate(endpoint.path, pathParams);
   const query = searchParams.size > 0 ? `?${searchParams}` : "";
 
   if (isServer || endpoint.access === "direct") {
@@ -47,20 +49,43 @@ export function rewritePrivateCoreHosts(rawText: string) {
   return rawText.replace(PRIVATE_CORE_HOST_PATTERN, PUBLIC_CORE_ORIGIN);
 }
 
-export async function espnGet<RawResponse>(
-  endpointName: EspnEndpointName,
-  options: EspnRequestOptions = {},
+async function requestEspn<RawResponse>(
+  endpoint: EspnEndpoint,
+  url: string,
 ): Promise<RawResponse> {
-  const endpoint: EspnEndpoint = ESPN_ENDPOINTS[endpointName];
-  const url = buildEspnUrl(endpoint, options);
   const response = await fetch(url, {
     headers: { accept: "application/json" },
     ...endpointCacheOptions(endpoint),
   });
 
-  if (!response.ok) throw new EspnRequestError(url, response.status);
+  const responseText = await response.text();
+  if (!response.ok) {
+    throw new EspnRequestError(url, response.status, responseText);
+  }
 
-  return JSON.parse(
-    rewritePrivateCoreHosts(await response.text()),
-  ) as RawResponse;
+  return JSON.parse(rewritePrivateCoreHosts(responseText)) as RawResponse;
+}
+
+export function espnGet<RawResponse>(
+  endpointName: EspnEndpointName,
+  { searchParams, pathParams = {} }: EspnRequestOptions = {},
+): Promise<RawResponse> {
+  const endpoint: EspnEndpoint = ESPN_ENDPOINTS[endpointName];
+  const path = fillPathTemplate(endpoint.path, pathParams);
+  return requestEspn(endpoint, buildEspnUrl(endpoint, path, searchParams));
+}
+
+// Follows a core API $ref link. Only refs to a configured core endpoint are followed, so a ref can never reach another host or API.
+export function espnGetRef<RawResponse>(ref: string): Promise<RawResponse> {
+  const refUrl = new URL(ref);
+  const endpoint =
+    refUrl.hostname === new URL(PUBLIC_CORE_ORIGIN).hostname
+      ? findEndpointForPath("core", refUrl.pathname)
+      : undefined;
+  if (!endpoint) {
+    throw new Error(`ESPN $ref does not match a configured endpoint: ${ref}`);
+  }
+
+  // Refs come over http and carry lang/region params; dropping them keeps one cache entry per resource.
+  return requestEspn(endpoint, buildEspnUrl(endpoint, refUrl.pathname));
 }

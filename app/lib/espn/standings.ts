@@ -1,9 +1,8 @@
 import type { Standings } from "@/app/lib/domain/standings";
 import { mapConferenceStandings, mapSeason } from "./mappers";
 import type { RawStandingsResponse } from "./raw-types";
+import { REGULAR_SEASON_TYPE_ID } from "./config";
 import { espnGet } from "./transport";
-
-const REGULAR_SEASON_TYPE_ID = "2";
 
 // Always the regular season table, even during preseason or playoffs. Leaving out the season makes ESPN pick the current one.
 export async function fetchStandings(): Promise<Standings> {

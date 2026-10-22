@@ -27,9 +27,13 @@ export type EspnEndpoint = {
   revalidateSeconds?: number;
 };
 
+export const REGULAR_SEASON_TYPE_ID = "2";
+
 const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
+const ONE_HOUR_IN_SECONDS = 60 * 60;
 const FIVE_MINUTES_IN_SECONDS = 5 * 60;
 const TEAMS_PATH = "/apis/site/v2/sports/basketball/nba/teams";
+const CORE_NBA_PATH = "/v2/sports/basketball/leagues/nba";
 
 export const ESPN_ENDPOINTS = {
   scoreboard: {
@@ -65,6 +69,25 @@ export const ESPN_ENDPOINTS = {
     host: "site",
     path: `${TEAMS_PATH}/{teamId}/roster`,
     access: "direct",
+  },
+  // Leaders are assembled from these three on the server; "proxy" keeps any browser access off ESPN directly.
+  currentSeason: {
+    host: "core",
+    path: `${CORE_NBA_PATH}/season`,
+    access: "proxy",
+    revalidateSeconds: ONE_HOUR_IN_SECONDS,
+  },
+  leaders: {
+    host: "core",
+    path: `${CORE_NBA_PATH}/seasons/{seasonYear}/types/{seasonTypeId}/leaders`,
+    access: "proxy",
+    revalidateSeconds: ONE_HOUR_IN_SECONDS,
+  },
+  seasonAthlete: {
+    host: "core",
+    path: `${CORE_NBA_PATH}/seasons/{seasonYear}/athletes/{athleteId}`,
+    access: "proxy",
+    revalidateSeconds: ONE_HOUR_IN_SECONDS,
   },
 } satisfies Record<string, EspnEndpoint>;
 

@@ -1,3 +1,4 @@
+import type { Leader } from "@/app/lib/domain/leaders";
 import type {
   Broadcast,
   BroadcastMarket,
@@ -27,6 +28,8 @@ import type {
   RawConferenceStandings,
   RawEvent,
   RawGeoBroadcast,
+  RawLeader,
+  RawLeaderAthlete,
   RawListedTeam,
   RawRosterAthlete,
   RawScheduleCompetitor,
@@ -298,6 +301,21 @@ export function mapScheduleGame(event: RawScheduleEvent): Game {
     // The schedule sends its broadcasts in the geoBroadcast shape.
     broadcasts: mapBroadcasts([], competition.broadcasts),
     series: mapSeries(competition.series, home.team.id, away.team.id),
+  };
+}
+
+export function mapLeader(
+  { value, displayValue }: RawLeader,
+  athlete: RawLeaderAthlete,
+): Leader {
+  return {
+    athlete: {
+      id: athlete.id,
+      displayName: athlete.displayName,
+      headshotUrl: athlete.headshot?.href ?? null,
+    },
+    value,
+    displayValue,
   };
 }
 

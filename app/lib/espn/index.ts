@@ -7,5 +7,5 @@ export {
   fetchTeamSchedule,
   fetchTeams,
 } from "./teams";
-export { resizedLogoUrl } from "./logos";
+export { resizedImageUrl, resizedLogoUrl } from "./logos";
 export { EspnRequestError } from "./transport";

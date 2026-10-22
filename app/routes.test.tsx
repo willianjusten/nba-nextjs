@@ -18,6 +18,12 @@ import lakersDetail from "./lib/espn/__fixtures__/team-detail-lakers.json";
 import lakersSchedule from "./lib/espn/__fixtures__/team-schedule-lakers.json";
 import lakersRoster from "./lib/espn/__fixtures__/team-roster-lakers.json";
 import standings from "./lib/espn/__fixtures__/standings-regular-season.json";
+import currentSeason from "./lib/espn/__fixtures__/season-current.json";
+import regularSeasonLeaders from "./lib/espn/__fixtures__/leaders-regular-season.json";
+import leaderAthletes from "./lib/espn/__fixtures__/leaders-athletes.json";
+
+const LEADERS_URL_PATTERN = /\/types\/2\/leaders\?limit=5$/;
+const ATHLETE_URL_PATTERN = /\/athletes\/(\d+)$/;
 
 function espnFixtureFor(url: string) {
   if (url.endsWith("/teams/13/schedule")) return lakersSchedule;
@@ -25,6 +31,11 @@ function espnFixtureFor(url: string) {
   if (url.endsWith("/teams/13")) return lakersDetail;
   if (url.endsWith("/teams")) return teamsList;
   if (url.endsWith("/standings?seasontype=2")) return standings;
+  if (url.endsWith("/leagues/nba/season")) return currentSeason;
+  if (LEADERS_URL_PATTERN.test(url)) return regularSeasonLeaders;
+  const athleteId = url.match(ATHLETE_URL_PATTERN)?.[1];
+  if (athleteId)
+    return leaderAthletes[athleteId as keyof typeof leaderAthletes];
   return finalDay;
 }
 
@@ -45,6 +56,7 @@ describe("routes", () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   it("renders the home page with the current NBA date's games", async () => {
@@ -142,6 +154,67 @@ describe("routes", () => {
     expect(
       screen.getByRole("link", { name: "Indiana Pacers" }).getAttribute("href"),
     ).toBe("/teams/pacers");
+  });
+
+  it.each([
+    ["points", "Ty Jerome", "45.0"],
+    ["rebounds", "Domantas Sabonis", "18.0"],
+    ["assists", "Trae Young", "13.0"],
+  ] as const)(
+    "shows the %s leaders with player names and photos",
+    async (stat, topPlayerName, topValue) => {
+      render(await StandingsPage());
+
+      const category = screen.getByRole("region", {
+        name: strings.leaders.categories[stat].title,
+      });
+      const [topLeader] = within(category).getAllByRole("listitem");
+      expect(within(category).getAllByRole("listitem")).toHaveLength(5);
+      expect(within(topLeader).getByText(topPlayerName)).toBeDefined();
+      expect(within(topLeader).getByText(topValue)).toBeDefined();
+      expect(
+        within(topLeader).getByRole("img", { name: topPlayerName }),
+      ).toBeDefined();
+    },
+  );
+
+  it("shows that there are no leaders yet before the regular season has stats", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) =>
+        LEADERS_URL_PATTERN.test(url)
+          ? new Response(
+              JSON.stringify({
+                error: { message: "No stats found.", code: 404 },
+              }),
+              { status: 404 },
+            )
+          : new Response(JSON.stringify(espnFixtureFor(url))),
+      ),
+    );
+
+    render(await StandingsPage());
+
+    expect(screen.getAllByText(strings.leaders.empty)).toHaveLength(3);
+  });
+
+  it("still shows the standings when the leaders cannot be loaded", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) =>
+        LEADERS_URL_PATTERN.test(url)
+          ? new Response(null, { status: 500 })
+          : new Response(JSON.stringify(espnFixtureFor(url))),
+      ),
+    );
+
+    render(await StandingsPage());
+
+    expect(screen.getByText(strings.leaders.error)).toBeDefined();
+    expect(
+      screen.getByRole("region", { name: "Eastern Conference" }),
+    ).toBeDefined();
   });
 
   it("renders the team page for the requested slug", async () => {

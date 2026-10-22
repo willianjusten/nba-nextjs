@@ -177,3 +177,32 @@ export type RawStandingsStat = {
   displayValue?: string;
   summary?: string;
 };
+
+export type RawCurrentSeason = {
+  year: number;
+};
+
+export type RawRef = {
+  $ref: string;
+};
+
+export type RawLeadersResponse = {
+  categories?: RawLeaderCategory[];
+};
+
+export type RawLeaderCategory = {
+  name: string;
+  leaders: RawLeader[];
+};
+
+export type RawLeader = {
+  value: number;
+  displayValue: string;
+  athlete: RawRef;
+};
+
+export type RawLeaderAthlete = {
+  id: string;
+  displayName: string;
+  headshot?: { href: string };
+};
