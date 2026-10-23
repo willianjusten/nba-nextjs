@@ -133,7 +133,27 @@ describe("fetchScoreboard", () => {
 
     const scoreboard = await fetchScoreboard(parseNbaDate("2026-08-01")!);
 
-    expect(scoreboard).toEqual({ nbaDate: "2026-08-01", games: [] });
+    expect(scoreboard).toEqual({
+      nbaDate: "2026-08-01",
+      games: [],
+      nextGameDate: null,
+    });
+  });
+
+  it("finds the next game day on the league calendar, skipping days without games", async () => {
+    respondWith(finalDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-17")!);
+
+    expect(scoreboard.nextGameDate).toBe("2026-10-20");
+  });
+
+  it("treats the next game day as the one after the requested date", async () => {
+    respondWith(finalDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
+
+    expect(scoreboard.nextGameDate).toBe("2026-10-22");
   });
 
   it("reads the season type from the event, not the league header", async () => {

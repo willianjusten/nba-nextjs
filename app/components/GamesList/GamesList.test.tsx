@@ -68,7 +68,8 @@ describe("GamesList", () => {
 
     const errorAlert = await screen.findByRole("alert");
     expect(errorAlert.textContent).toContain(strings.games.error);
-    expect(screen.queryByText(strings.games.empty)).toBeNull();
+    expect(errorAlert.textContent).toContain(strings.games.errorDetail);
+    expect(screen.queryByText(/No games on/)).toBeNull();
     expect(screen.queryByText("Orlando Magic")).toBeNull();
 
     fetchMock.mockResolvedValueOnce(jsonResponse(finalDay));
@@ -83,9 +84,36 @@ describe("GamesList", () => {
 
     renderGamesList();
 
-    expect(await screen.findByText(strings.games.empty)).toBeDefined();
+    expect(
+      await screen.findByText(strings.games.empty("Wed, Oct 21")),
+    ).toBeDefined();
     expect(screen.queryByRole("alert")).toBeNull();
     expect(screen.queryByRole("status")).toBeNull();
+  });
+
+  it("links a day without games to the next game day", async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({
+        ...noGames,
+        leagues: [{ calendar: ["2026-10-20T07:00Z", "2026-10-23T07:00Z"] }],
+      }),
+    );
+
+    renderGamesList();
+
+    const nextGamesLink = await screen.findByRole("link", {
+      name: strings.games.nextGames("Fri, Oct 23"),
+    });
+    expect(nextGamesLink.getAttribute("href")).toBe("/games/2026-10-23");
+  });
+
+  it("offers no next games link once the season has no game days left", async () => {
+    fetchMock.mockResolvedValue(jsonResponse(noGames));
+
+    renderGamesList();
+
+    await screen.findByText(strings.games.empty("Wed, Oct 21"));
+    expect(screen.queryByRole("link")).toBeNull();
   });
 
   it("keeps the last scores with a stale notice when a refetch fails, and clears it after a successful one", async () => {
@@ -100,7 +128,10 @@ describe("GamesList", () => {
     fetchMock.mockResolvedValueOnce(new Response("", { status: 503 }));
     returnToTab();
 
-    expect(await screen.findByText(strings.games.stale)).toBeDefined();
+    const staleNotice = await screen.findByText(strings.games.stale(1));
+    expect(staleNotice.closest("[role=status]")?.textContent).toContain(
+      strings.games.retryingAutomatically,
+    );
     expect(screen.getByText("Philadelphia 76ers")).toBeDefined();
     expect(screen.queryByRole("alert")).toBeNull();
 
@@ -108,7 +139,7 @@ describe("GamesList", () => {
     returnToTab();
 
     await vi.waitFor(() =>
-      expect(screen.queryByText(strings.games.stale)).toBeNull(),
+      expect(screen.queryByText(strings.games.stale(1))).toBeNull(),
     );
     expect(screen.getByText("Philadelphia 76ers")).toBeDefined();
     vi.useRealTimers();

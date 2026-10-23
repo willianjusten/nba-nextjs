@@ -8,12 +8,12 @@ export default function TeamRoster({ players }: { players: RosterPlayer[] }) {
 
   return (
     <section aria-labelledby={HEADING_ID} className="flex flex-col gap-2">
-      <h2 id={HEADING_ID} className="text-xl font-bold">
+      <h2 id={HEADING_ID} className="font-display text-2xl tracking-[0.06em]">
         {roster.title}
       </h2>
-      <div className="overflow-x-auto rounded-lg bg-glass">
+      <div className="overflow-x-auto card">
         <table className="w-full text-left text-sm">
-          <thead className="text-slate-400">
+          <thead className="text-muted">
             <tr>
               <th className="px-4 py-2">{roster.jersey}</th>
               <th className="px-4 py-2">{roster.player}</th>

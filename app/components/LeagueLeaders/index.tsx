@@ -16,17 +16,17 @@ function LeaderCategoryCard({ category }: { category: LeaderCategory }) {
   return (
     <section
       aria-labelledby={headingId}
-      className="flex flex-col gap-2 rounded-lg bg-glass p-4"
+      className="flex flex-col gap-2 card p-4"
     >
       <h3 id={headingId} className="font-bold">
         {title}
       </h3>
       {category.leaders === null ? (
-        <p role="alert" className="text-sm text-slate-400">
+        <p role="alert" className="text-sm text-muted">
           {strings.leaders.categoryError}
         </p>
       ) : category.leaders.length === 0 ? (
-        <p className="text-sm text-slate-400">{strings.leaders.empty}</p>
+        <p className="text-sm text-muted">{strings.leaders.empty}</p>
       ) : (
         <ol className="flex flex-col gap-2">
           {category.leaders.map(({ athlete, displayValue }) => (
@@ -56,7 +56,7 @@ function LeaderCategoryCard({ category }: { category: LeaderCategory }) {
               )}
               <span className="flex-1 font-medium">{athlete.displayName}</span>
               <span className="tabular-nums">{displayValue}</span>
-              <span className="text-xs text-slate-400">{unit}</span>
+              <span className="text-xs text-muted">{unit}</span>
             </li>
           ))}
         </ol>
@@ -73,7 +73,7 @@ export default function LeagueLeaders({
 }) {
   return (
     <section aria-labelledby={HEADING_ID} className="flex flex-col gap-2">
-      <h2 id={HEADING_ID} className="text-xl font-bold">
+      <h2 id={HEADING_ID} className="font-display text-2xl tracking-[0.06em]">
         {strings.leaders.title}
       </h2>
       {categories ? (
@@ -83,7 +83,7 @@ export default function LeagueLeaders({
           ))}
         </div>
       ) : (
-        <p role="alert" className="text-slate-300">
+        <p role="alert" className="text-secondary">
           {strings.leaders.error}
         </p>
       )}

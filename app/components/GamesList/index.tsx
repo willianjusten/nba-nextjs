@@ -14,6 +14,7 @@ import {
 export default function GamesList({ nbaDate }: { nbaDate: NbaDate }) {
   const {
     data: scoreboard,
+    dataUpdatedAt,
     error,
     isFetching,
     isRefetchError,
@@ -22,11 +23,18 @@ export default function GamesList({ nbaDate }: { nbaDate: NbaDate }) {
 
   // Data is checked before the error: a failed refetch keeps the last valid scoreboard instead of hiding it.
   if (scoreboard) {
-    if (scoreboard.games.length === 0) return <GamesListEmpty />;
+    if (scoreboard.games.length === 0) {
+      return (
+        <GamesListEmpty
+          nbaDate={nbaDate}
+          nextGameDate={scoreboard.nextGameDate}
+        />
+      );
+    }
 
     return (
       <div className="flex flex-col gap-3">
-        {isRefetchError && <StaleScoresNotice />}
+        {isRefetchError && <StaleScoresNotice updatedAt={dataUpdatedAt} />}
         <div className={GAMES_GRID_CLASS_NAME}>
           {scoreboard.games.map((game) => (
             <GameCard key={game.id} game={game} />

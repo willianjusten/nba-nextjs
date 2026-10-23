@@ -2,6 +2,8 @@
 
 export type RawScoreboard = {
   events?: RawEvent[];
+  // Each entry is a day with games, as an instant at the start of that Eastern day.
+  leagues?: { calendar?: string[] }[];
 };
 
 export type RawEvent = {

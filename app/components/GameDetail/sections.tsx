@@ -37,7 +37,7 @@ function Section({
 }) {
   return (
     <section aria-labelledby={headingId} className="flex flex-col gap-2">
-      <h2 id={headingId} className="text-xl font-bold">
+      <h2 id={headingId} className="font-display text-2xl tracking-[0.06em]">
         {title}
       </h2>
       {children}
@@ -62,7 +62,7 @@ function HeaderTeam({
       />
       <span className="font-medium">{competitor.team.displayName}</span>
       {showScore && (
-        <span className="text-3xl font-bold tabular-nums">
+        <span className="font-display text-5xl leading-none">
           {competitor.score}
         </span>
       )}
@@ -74,8 +74,8 @@ export function GameHeader({ game }: { game: Game }) {
   const showScore = hasScore(game.status);
 
   return (
-    <header className="flex flex-col gap-4 rounded-lg bg-glass p-4">
-      <h1 className="text-center text-2xl font-bold">
+    <header className="flex flex-col gap-4 card p-4">
+      <h1 className="text-center font-display text-4xl leading-none tracking-[0.01em]">
         {strings.game.title(
           game.away.team.displayName,
           game.home.team.displayName,
@@ -83,12 +83,12 @@ export function GameHeader({ game }: { game: Game }) {
       </h1>
       <div className="grid grid-cols-3 items-center">
         <HeaderTeam competitor={game.away} showScore={showScore} />
-        <p className="text-center text-slate-300">
+        <p className="text-center text-secondary">
           <GameStatusLabel status={game.status} startTime={game.startTime} />
         </p>
         <HeaderTeam competitor={game.home} showScore={showScore} />
       </div>
-      <p className="text-center text-xs text-slate-400">
+      <p className="text-center text-xs text-muted">
         <span className="sr-only">{strings.broadcast.label}</span>
         {game.broadcasts
           .map((broadcast) => broadcast.name)
@@ -118,7 +118,7 @@ export function LineScore({
     <Section headingId="game-line-score" title={strings.game.lineScore.title}>
       <table className="w-full text-sm tabular-nums">
         <thead>
-          <tr className="text-slate-400">
+          <tr className="text-muted">
             <th scope="col" className="text-left">
               {strings.game.lineScore.team}
             </th>
@@ -152,15 +152,15 @@ export function LineScore({
 
 function TeamLeaders({ team, leaders }: { team: Team; leaders: GameLeader[] }) {
   return (
-    <div className="flex flex-col gap-2 rounded-lg bg-glass p-4">
+    <div className="flex flex-col gap-2 card p-4">
       <h3 className="font-bold">{team.displayName}</h3>
       {leaders.length === 0 ? (
-        <p className="text-sm text-slate-400">{strings.game.leaders.empty}</p>
+        <p className="text-sm text-muted">{strings.game.leaders.empty}</p>
       ) : (
         <ul className="flex flex-col gap-1 text-sm">
           {leaders.map(({ stat, leader }) => (
             <li key={stat} className="flex gap-2">
-              <span className="w-24 text-slate-400">
+              <span className="w-24 text-muted">
                 {strings.leaders.categories[stat].title}
               </span>
               <span className="grow font-medium">
@@ -207,7 +207,7 @@ export function WinProbability({
       title={strings.game.winProbability.title}
     >
       {latestPoint ? (
-        <div className="flex flex-col gap-2 rounded-lg bg-glass p-4 text-sm">
+        <div className="flex flex-col gap-2 card p-4 text-sm">
           <p className="flex justify-between tabular-nums">
             <span>
               {strings.game.winProbability.chance(
@@ -224,7 +224,7 @@ export function WinProbability({
           </p>
         </div>
       ) : (
-        <p className="text-slate-400">{strings.game.winProbability.empty}</p>
+        <p className="text-muted">{strings.game.winProbability.empty}</p>
       )}
     </Section>
   );
@@ -255,7 +255,7 @@ export function BoxScore({
       <div className="overflow-x-auto">
         <table className="w-full text-sm whitespace-nowrap tabular-nums">
           <thead>
-            <tr className="text-slate-400">
+            <tr className="text-muted">
               <th scope="col" className="text-left">
                 {strings.game.boxScore.player}
               </th>
@@ -273,7 +273,7 @@ export function BoxScore({
                   <th scope="row" className="text-left font-medium">
                     {athlete.shortName}
                     {starter && (
-                      <span className="ml-1 text-xs text-slate-400">
+                      <span className="ml-1 text-xs text-muted">
                         {athlete.position}
                       </span>
                     )}
@@ -283,7 +283,7 @@ export function BoxScore({
                   ) : (
                     <td
                       colSpan={BOX_SCORE_COLUMNS.length}
-                      className="px-2 text-slate-400"
+                      className="px-2 text-muted"
                     >
                       {didNotPlayReason &&
                         strings.game.boxScore.didNotPlay(didNotPlayReason)}
@@ -320,19 +320,19 @@ export function PlayByPlay({ game, plays }: { game: Game; plays: Play[] }) {
   return (
     <Section headingId="game-plays" title={strings.game.plays.title}>
       {plays.length === 0 ? (
-        <p className="text-slate-400">{strings.game.plays.empty}</p>
+        <p className="text-muted">{strings.game.plays.empty}</p>
       ) : (
         // Newest first, so a live game's latest plays are on top.
         <ol reversed className="flex flex-col-reverse gap-1 text-sm">
           {plays.map((play) => (
             <li
               key={play.id}
-              className={`flex gap-3 rounded px-2 py-1 ${play.scoringPlay ? "bg-glass" : ""}`}
+              className={`flex gap-3 rounded px-2 py-1 ${play.scoringPlay ? "bg-white/5" : ""}`}
             >
-              <span className="w-16 shrink-0 text-slate-400 tabular-nums">
+              <span className="w-16 shrink-0 text-muted tabular-nums">
                 {periodLabel(play.period)} {play.clock}
               </span>
-              <span className="w-10 shrink-0 text-slate-400">
+              <span className="w-10 shrink-0 text-muted">
                 {play.teamId ? abbreviationByTeamId.get(play.teamId) : ""}
               </span>
               <span className="grow">{play.text}</span>

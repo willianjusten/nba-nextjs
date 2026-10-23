@@ -85,6 +85,18 @@ describe("PrimaryNavigation", () => {
     expect(sectionLabels(primaryNavigation())).toEqual([games, standings]);
   });
 
+  it("gives every bottom navigation tab a decorative icon beside its label", async () => {
+    respondWith(playoffDay);
+
+    render(await PrimaryNavigation());
+
+    for (const link of within(bottomNavigation()).getAllByRole("link")) {
+      expect(link.querySelector("svg")?.getAttribute("aria-hidden")).toBe(
+        "true",
+      );
+    }
+  });
+
   it("marks Games as the current section on a games date page", async () => {
     vi.mocked(usePathname).mockReturnValue("/games/2026-10-21");
     respondWith(regularSeasonDay);

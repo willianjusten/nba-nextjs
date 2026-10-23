@@ -28,12 +28,12 @@ export default function ConferenceStandings({
 
   return (
     <section aria-labelledby={headingId} className="flex flex-col gap-2">
-      <h2 id={headingId} className="text-xl font-bold">
+      <h2 id={headingId} className="font-display text-2xl tracking-[0.06em]">
         {conference.name}
       </h2>
-      <div className="overflow-x-auto rounded-lg bg-glass">
+      <div className="overflow-x-auto card">
         <table className="w-full text-left text-sm">
-          <thead className="text-slate-400">
+          <thead className="text-muted">
             <tr>
               <th className="px-3 py-2">{columns.seed}</th>
               <th className="px-3 py-2">{columns.team}</th>

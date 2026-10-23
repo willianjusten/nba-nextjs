@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import type { Broadcast, Game, GameStatus } from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
+import { strings } from "@/app/lib/strings";
 import GameCard from ".";
 
 function buildGame(status: GameStatus, broadcasts: Broadcast[] = []): Game {
@@ -52,6 +53,35 @@ describe("GameCard", () => {
     render(<GameCard game={buildGame(status)} />);
 
     expect(screen.getByText(expectedLabel)).toBeDefined();
+  });
+
+  it.each<[string, GameStatus]>([
+    ["live", { kind: "live", period: 3, clock: "4:12" }],
+    ["at halftime", { kind: "halftime", period: 2 }],
+  ])("marks a game %s with the live chip", (_case, status) => {
+    render(<GameCard game={buildGame(status)} />);
+
+    expect(screen.getByText(strings.gameStatus.live)).toBeDefined();
+  });
+
+  it.each<[string, GameStatus, string]>([
+    ["postponed", { kind: "postponed" }, "Postponed"],
+    ["canceled", { kind: "canceled" }, "Canceled"],
+  ])(
+    "shows the PPD chip for a %s game, spelled out for screen readers",
+    (_case, status, spokenLabel) => {
+      render(<GameCard game={buildGame(status)} />);
+
+      const chip = screen.getByText(strings.gameStatus.postponedShort);
+      expect(chip.getAttribute("aria-hidden")).toBe("true");
+      expect(screen.getByText(spokenLabel).className).toContain("sr-only");
+    },
+  );
+
+  it("does not show the live chip for a finished game", () => {
+    render(<GameCard game={buildGame({ kind: "final", period: 4 })} />);
+
+    expect(screen.queryByText(strings.gameStatus.live)).toBeNull();
   });
 
   it("shows scores once the game has started", () => {

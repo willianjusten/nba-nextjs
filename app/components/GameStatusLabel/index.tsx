@@ -13,6 +13,10 @@ export function hasScore(status: GameStatus) {
   return !STATUSES_WITHOUT_SCORE.includes(status.kind);
 }
 
+export function isInProgress(status: GameStatus) {
+  return status.kind === "live" || status.kind === "halftime";
+}
+
 export function periodLabel(period: number) {
   return period <= REGULATION_PERIODS
     ? strings.gameStatus.quarter(period)

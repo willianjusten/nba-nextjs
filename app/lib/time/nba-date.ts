@@ -16,6 +16,13 @@ const displayDateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+const shortDisplayDateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  weekday: "short",
+  month: "short",
+  day: "numeric",
+});
+
 export function nbaDateOf(instant: string | Date): NbaDate {
   const parts = easternDateFormatter.formatToParts(new Date(instant));
   const partValue = (type: Intl.DateTimeFormatPartTypes) =>
@@ -42,4 +49,8 @@ export function parseNbaDate(value: string): NbaDate | null {
 // An NbaDate is already a calendar day, so it is formatted in UTC to avoid shifting it by the runtime timezone.
 export function formatNbaDate(nbaDate: NbaDate): string {
   return displayDateFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
+}
+
+export function formatShortNbaDate(nbaDate: NbaDate): string {
+  return shortDisplayDateFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
 }

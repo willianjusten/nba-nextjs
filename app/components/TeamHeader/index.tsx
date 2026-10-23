@@ -16,12 +16,14 @@ export default function TeamHeader({ team }: { team: TeamDetail }) {
         height={LOGO_DISPLAY_SIZE}
       />
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">{team.displayName}</h1>
+        <h1 className="font-display text-5xl leading-none tracking-[0.01em]">
+          {team.displayName}
+        </h1>
         {team.record && (
-          <p className="text-slate-300">{strings.team.record(team.record)}</p>
+          <p className="text-secondary">{strings.team.record(team.record)}</p>
         )}
         {team.standingSummary && (
-          <p className="text-sm text-slate-400">{team.standingSummary}</p>
+          <p className="text-sm text-muted">{team.standingSummary}</p>
         )}
       </div>
     </header>

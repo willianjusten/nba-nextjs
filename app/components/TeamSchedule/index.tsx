@@ -74,20 +74,19 @@ function ScheduleSection({
 }) {
   return (
     <section aria-labelledby={headingId} className="flex flex-col gap-2">
-      <h2 id={headingId} className="text-xl font-bold">
+      <h2 id={headingId} className="font-display text-2xl tracking-[0.06em]">
         {title}
       </h2>
       {children.length > 0 ? (
         <ul className="flex flex-col gap-2">{children}</ul>
       ) : (
-        <p className="text-slate-400">{emptyMessage}</p>
+        <p className="text-muted">{emptyMessage}</p>
       )}
     </section>
   );
 }
 
-const ROW_CLASS_NAME =
-  "flex items-center gap-3 rounded-lg bg-glass px-4 py-3 text-sm";
+const ROW_CLASS_NAME = "flex items-center gap-3 card px-4 py-3 text-sm";
 
 export default function TeamSchedule({ teamId, games }: TeamScheduleProps) {
   const pastGames = games.filter((game) => game.status.kind === "final");
@@ -104,7 +103,7 @@ export default function TeamSchedule({ teamId, games }: TeamScheduleProps) {
           const { isHome, team, opponent } = sidesOf(game, teamId);
           return (
             <li key={game.id} className={ROW_CLASS_NAME}>
-              <span className="w-48 text-slate-300">
+              <span className="w-48 text-secondary">
                 {formatNbaDate(game.nbaDate)}
               </span>
               <Opponent opponent={opponent} isHome={isHome} />
@@ -129,7 +128,7 @@ export default function TeamSchedule({ teamId, games }: TeamScheduleProps) {
           const { isHome, opponent } = sidesOf(game, teamId);
           return (
             <li key={game.id} className={ROW_CLASS_NAME}>
-              <span className="w-48 text-slate-300">
+              <span className="w-48 text-secondary">
                 <UpcomingStatus game={game} />
               </span>
               <Opponent opponent={opponent} isHome={isHome} />

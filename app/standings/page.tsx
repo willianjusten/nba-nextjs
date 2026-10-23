@@ -21,8 +21,10 @@ export default async function StandingsPage() {
   return (
     <section className="flex flex-col gap-8 py-8">
       <header className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">{strings.standings.title}</h1>
-        <p className="text-slate-300">
+        <h1 className="font-display text-5xl leading-none tracking-[0.01em]">
+          {strings.standings.title}
+        </h1>
+        <p className="text-secondary">
           {strings.standings.regularSeason(season.displayName)}
         </p>
       </header>

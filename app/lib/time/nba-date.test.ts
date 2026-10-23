@@ -1,6 +1,7 @@
 import {
   currentNbaDate,
   formatNbaDate,
+  formatShortNbaDate,
   nbaDateOf,
   parseNbaDate,
 } from "./nba-date";
@@ -43,5 +44,11 @@ describe("formatNbaDate", () => {
     expect(formatNbaDate(parseNbaDate("2026-10-22")!)).toBe(
       "Thursday, October 22",
     );
+  });
+});
+
+describe("formatShortNbaDate", () => {
+  it("formats the date with abbreviated weekday and month", () => {
+    expect(formatShortNbaDate(parseNbaDate("2026-10-23")!)).toBe("Fri, Oct 23");
   });
 });

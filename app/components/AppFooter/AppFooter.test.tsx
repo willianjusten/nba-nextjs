@@ -3,7 +3,7 @@ import { strings } from "@/app/lib/strings";
 import AppFooter from ".";
 
 describe("AppFooter", () => {
-  it("credits ESPN as the data source", () => {
+  it("credits the people who made the app", () => {
     render(<AppFooter />);
 
     expect(screen.getByRole("contentinfo").textContent).toBe(

@@ -15,7 +15,7 @@ export const strings = {
       standings: "Standings",
       playoffs: "Playoffs",
     },
-    footer: "Data from ESPN",
+    footer: "Create with s2 by Willian Justen, Marcus, Bruna",
   },
   home: {
     title: "Today's games",
@@ -23,13 +23,21 @@ export const strings = {
   games: {
     title: (formattedDate: string) => `Games on ${formattedDate}`,
     loading: "Loading games...",
-    error: "We couldn't load the games right now.",
+    error: "Couldn't load the games",
+    errorDetail:
+      "The data source didn't respond. This isn't a day without games.",
     retry: "Try again",
     retrying: "Trying again...",
-    empty: "No games scheduled for this day.",
-    stale: "Scores may be out of date. Retrying automatically.",
+    empty: (formattedDate: string) => `No games on ${formattedDate}`,
+    nextGames: (formattedDate: string) => `Next games: ${formattedDate}`,
+    stale: (minutesAgo: number) =>
+      `Can't reach live data. Showing scores from ${minutesAgo} min ago.`,
+    retryingAutomatically: "retrying…",
   },
   gameStatus: {
+    live: "Live",
+    postponedShort: "PPD",
+    myTeam: "My team",
     quarter: (period: number) => `Q${period}`,
     overtime: (overtimeNumber: number) =>
       overtimeNumber === 1 ? "OT" : `${overtimeNumber}OT`,

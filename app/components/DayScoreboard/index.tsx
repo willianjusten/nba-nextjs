@@ -11,8 +11,10 @@ export default function DayScoreboard({ title, nbaDate }: DayScoreboardProps) {
   return (
     <section className="flex flex-col gap-4 py-8">
       <header>
-        <h1 className="text-2xl font-bold">{title}</h1>
-        <p className="text-slate-300">{formatNbaDate(nbaDate)}</p>
+        <h1 className="font-display text-5xl leading-none tracking-[0.01em]">
+          {title}
+        </h1>
+        <p className="text-secondary">{formatNbaDate(nbaDate)}</p>
       </header>
       <GamesList nbaDate={nbaDate} />
     </section>

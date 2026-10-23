@@ -18,24 +18,66 @@
   }
 }
 
+/* Court Night foundations. Dark only; tokens are named by role so a light theme can redefine them later. */
 @theme {
-  --color-slate-750: #293649;
+  --color-ink: #080b14;
+  --color-elevated: #121728;
+  --color-accent: #ff7a33;
+  --color-accent-soft: #ffb184;
+  --color-on-accent: #1a0a02;
+  --color-link: #ff9a5e;
+  --color-live: #ff4757;
+  --color-on-live: #15070a;
+  --color-win: #3ddc97;
+  --color-playoff: #4d8df7;
+  --color-play-in: #b07cff;
+  --color-favorite: #fdb927;
+  --color-favorite-soft: #fdd77a;
+  --color-warning: #ffc94d;
+  --color-warning-soft: #ffe1a0;
 
-  --color-glass: rgba(112, 115, 133, 0.16);
+  --color-foreground: #f2f4f8;
+  --color-secondary: #c9d0de;
+  --color-muted: #9aa3b5;
 
-  --border-color-main: rgba(255, 255, 255, 0.24);
+  --radius-tile: 13px;
+  --radius-card: 16px;
 
-  --background-image-glass: linear-gradient(
-    262.6deg,
-    rgba(48, 49, 58, 0.5) 0%,
-    rgba(48, 49, 58, 0.3) 101.18%,
-    rgba(48, 49, 58, 0.3) 101.18%
-  );
-  --background-image-main: url("/images/nba-logo-blue.svg");
+  --text-meta: 11px;
+  --text-meta--letter-spacing: 0.14em;
 
   --grid-template-columns-auto-fill: repeat(auto-fill, minmax(320px, 1fr));
 
-  --drop-shadow-smoth: 0 0 1px rgba(255, 255, 255, 0.6);
+  --animate-live-pulse: live-pulse 1.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+
+  @keyframes live-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.35;
+      transform: scale(0.72);
+    }
+  }
+
+  @keyframes shimmer {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 0.9;
+    }
+  }
+}
+
+/* The font variables are set by next/font on <html>, so they are resolved at use time instead of inlined. */
+@theme inline {
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bebas-neue), ui-sans-serif, sans-serif;
 }
 
 @layer base {
@@ -44,17 +86,29 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: rgb(255 255 255 / 0.1);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-ink text-foreground;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::after,
+    ::before {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 }
 
-@utility bg-layout {
-  background: linear-gradient(
-    160deg,
-    rgb(14 25 44 / 30%) 55%,
-    rgb(200 15 46 / 30%) 100%
-  );
-  @apply flex min-h-screen flex-col bg-slate-900 text-white before:absolute before:h-full before:w-full before:bg-main before:bg-center before:bg-no-repeat before:opacity-50 before:blur-[105px] before:content-[''];
+@utility card {
+  @apply rounded-card border border-white/8 bg-elevated;
 }
 
 @utility text-balance {
@@ -69,16 +123,15 @@
 
   ::-webkit-scrollbar-track {
     border-radius: 100vh;
-    background: #f8fafc;
+    background: var(--color-ink);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #b9b9b9;
+    background: rgb(255 255 255 / 0.18);
     border-radius: 100vh;
-    border: 1px solid white;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #5d5d5d;
+    background: rgb(255 255 255 / 0.32);
   }
 }
