@@ -4,7 +4,9 @@ import type { NbaDate } from "@/app/lib/domain/nba-date";
 import finalDay from "@/app/lib/espn/__fixtures__/scoreboard-final-day.json";
 import headerWeek from "@/app/lib/espn/__fixtures__/scoreboard-header-week.json";
 import noGames from "@/app/lib/espn/__fixtures__/scoreboard-no-games.json";
+import teamsList from "@/app/lib/espn/__fixtures__/teams-list.json";
 import liveDay from "@/app/lib/espn/__fixtures__/scoreboard-live-day-simulated.json";
+import { favoritesStore } from "@/app/lib/favorites/use-favorite-team-ids";
 import { makeQueryClient } from "@/app/lib/query/make-query-client";
 import { strings } from "@/app/lib/strings";
 import DayScoreboard from ".";
@@ -67,6 +69,7 @@ function dateRail() {
 }
 
 beforeEach(() => {
+  favoritesStore().list().forEach(favoritesStore().remove);
   window.history.replaceState(null, "", `/games/${nbaDate}`);
   scrollBy.mockReset();
   HTMLElement.prototype.scrollBy = scrollBy;
@@ -175,18 +178,34 @@ describe("DayScoreboard", () => {
     expect(screen.queryByRole("link", { name: /^Next games/ })).toBeNull();
   });
 
-  it("offers adding a favorite team from the standings while there are none", async () => {
-    fetchMock.mockResolvedValue(jsonResponse(noGames));
-
+  it("pins a team's games and adds it to my teams once it is followed from the picker", async () => {
+    fetchMock.mockImplementation(async (url: string) =>
+      jsonResponse(url.includes("/nba/teams") ? teamsList : finalDay),
+    );
     renderDayScoreboard();
-
+    await screen.findByText("Heat");
     const myTeams = screen.getByRole("navigation", {
       name: strings.myTeams.label,
     });
-    const addLink = within(myTeams).getByRole("link", {
-      name: strings.myTeams.add,
+
+    fireEvent.click(
+      within(myTeams).getByRole("button", { name: strings.myTeams.pick }),
+    );
+    const followHeat = await screen.findByRole("button", {
+      name: strings.myTeams.follow("Miami Heat"),
     });
-    expect(addLink.getAttribute("href")).toBe("/standings");
+    fireEvent.click(followHeat);
+
+    expect(followHeat.getAttribute("aria-pressed")).toBe("true");
+    const heatLink = await within(myTeams).findByRole("link", {
+      name: "Miami Heat",
+    });
+    expect(heatLink.getAttribute("href")).toBe("/teams/heat");
+    const [firstCard] = screen.getAllByRole("article");
+    expect(within(firstCard).getByText("Heat")).toBeDefined();
+    expect(
+      within(firstCard).getByText(strings.gameStatus.myTeam),
+    ).toBeDefined();
   });
 
   it("keeps the last scores with a stale notice when a refetch fails, and clears it after a successful one", async () => {

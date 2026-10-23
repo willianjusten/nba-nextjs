@@ -9,8 +9,6 @@ type DateHeadingProps = {
   summary: GamesSummary | null;
   // Sits at the end of the heading row on mobile, such as the date picker.
   children?: React.ReactNode;
-  // Wraps below the heading on mobile and sits at the end of the row on desktop.
-  myTeams?: React.ReactNode;
 };
 
 // Mobile and desktop show different date shapes, so both are hidden from assistive tech and the full date is read once.
@@ -18,10 +16,9 @@ export default function DateHeading({
   heading,
   summary,
   children,
-  myTeams,
 }: DateHeadingProps) {
   return (
-    <header className="flex flex-wrap items-center gap-3">
+    <header className="flex items-center gap-3">
       <div className="flex grow flex-col gap-1 md:flex-row md:flex-wrap md:items-end md:gap-4">
         <h1 className="flex flex-col gap-1">
           <span className="sr-only">{heading.label}</span>
@@ -51,7 +48,6 @@ export default function DateHeading({
         )}
       </div>
       {children}
-      {myTeams && <div className="max-md:basis-full">{myTeams}</div>}
     </header>
   );
 }

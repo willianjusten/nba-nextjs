@@ -4,10 +4,8 @@ import finalDay from "@/app/lib/espn/__fixtures__/scoreboard-final-day.json";
 import internationalExhibition from "@/app/lib/espn/__fixtures__/scoreboard-international-exhibition.json";
 import liveDay from "@/app/lib/espn/__fixtures__/scoreboard-live-day-simulated.json";
 import scheduledDay from "@/app/lib/espn/__fixtures__/scoreboard-scheduled-day.json";
-import teamsList from "@/app/lib/espn/__fixtures__/teams-list.json";
-import type { ListedTeam } from "@/app/lib/domain/team";
-import { mapGame, mapListedTeam } from "@/app/lib/espn/mappers";
-import type { RawEvent, RawTeamsList } from "@/app/lib/espn/raw-types";
+import { mapGame } from "@/app/lib/espn/mappers";
+import type { RawEvent } from "@/app/lib/espn/raw-types";
 import {
   buildCalendarMonth,
   buildHomeView,
@@ -33,9 +31,6 @@ const [liveGame, halftimeGame] = gamesOf(liveDay);
 const [, scheduledLate] = gamesOf(scheduledDay);
 const [exhibitionGame] = gamesOf(internationalExhibition);
 const postponedGame: Game = { ...finalLate, status: { kind: "postponed" } };
-const teams: ListedTeam[] = (
-  teamsList as RawTeamsList
-).sports[0].leagues[0].teams.map(({ team }) => mapListedTeam(team));
 
 function scoreboardWith(games: Game[]): Scoreboard {
   return { nbaDate, games };
@@ -56,7 +51,6 @@ function viewFor(
     gameCounts: null,
     seasonCalendar: seasonCalendar as NbaDate[] | null,
     favoriteTeamIds: [],
-    teams: null,
     now,
     timeZone,
   });
@@ -80,7 +74,6 @@ function railFor(
     gameCounts,
     seasonCalendar: null,
     favoriteTeamIds: [],
-    teams: null,
     now,
     timeZone: "America/New_York",
   }).dateRail;
@@ -842,11 +835,9 @@ describe("buildHomeView", () => {
       {
         games = mixedDay,
         filter = "all",
-        listedTeams = teams,
       }: {
         games?: Game[];
         filter?: GameFilter;
-        listedTeams?: ListedTeam[] | null;
       } = {},
     ) =>
       buildHomeView({
@@ -858,7 +849,6 @@ describe("buildHomeView", () => {
         gameCounts: null,
         seasonCalendar: null,
         favoriteTeamIds,
-        teams: listedTeams,
         now,
         timeZone: "America/New_York",
       });
@@ -926,44 +916,6 @@ describe("buildHomeView", () => {
       );
 
       expect(card.favoriteSides).toEqual({ away: true, home: true });
-    });
-
-    it("lists the favorite teams in the order they were followed, linking to their pages", () => {
-      const { myTeams } = favoritesViewFor(["13", "18"]);
-
-      expect(myTeams).toEqual([
-        {
-          teamId: "13",
-          name: "Lakers",
-          displayName: "Los Angeles Lakers",
-          logoUrl: expect.stringContaining("lal.png"),
-          href: "/teams/lakers",
-        },
-        {
-          teamId: "18",
-          name: "Knicks",
-          displayName: "New York Knicks",
-          logoUrl: expect.stringContaining("ny.png"),
-          href: "/teams/knicks",
-        },
-      ]);
-    });
-
-    it("leaves out favorite ids that match no team", () => {
-      const { myTeams } = favoritesViewFor(["unknown", "13"]);
-
-      expect(myTeams?.map((team) => team.teamId)).toEqual(["13"]);
-    });
-
-    it("lists no teams without favorites, even before the teams list loads", () => {
-      expect(favoritesViewFor([]).myTeams).toEqual([]);
-      expect(favoritesViewFor([], { listedTeams: null }).myTeams).toEqual([]);
-    });
-
-    it("holds the favorite teams back while the teams list is pending", () => {
-      expect(
-        favoritesViewFor(["13"], { listedTeams: null }).myTeams,
-      ).toBeNull();
     });
   });
 });

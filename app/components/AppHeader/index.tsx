@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import MyTeamsStrip from "@/app/components/MyTeamsStrip";
 import PrimaryNavigation, {
   PrimaryNavigationFallback,
 } from "@/app/components/PrimaryNavigation";
@@ -30,6 +31,9 @@ export default function AppHeader() {
         <Suspense fallback={<PrimaryNavigationFallback />}>
           <PrimaryNavigation />
         </Suspense>
+        <div className="ml-auto">
+          <MyTeamsStrip placement="header" />
+        </div>
       </div>
     </header>
   );

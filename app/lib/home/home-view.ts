@@ -5,7 +5,6 @@ import type {
   Scoreboard,
 } from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
-import type { ListedTeam } from "@/app/lib/domain/team";
 import {
   finalLabel,
   hasScore,
@@ -33,7 +32,6 @@ const MILLISECONDS_PER_MINUTE = 60_000;
 // Dates further out are reached through the calendar instead of the rail.
 const RAIL_DAYS_PER_SIDE = 7;
 const GAMES_PATH_PREFIX = "/games/";
-const TEAMS_PATH_PREFIX = "/teams/";
 
 export type ScoreboardQueryState =
   | { status: "loading" }
@@ -55,8 +53,6 @@ export type HomeViewInput = {
   seasonCalendar: NbaDate[] | null;
   // ESPN team ids in the order they were followed.
   favoriteTeamIds: string[];
-  // Resolves favorite ids to names and logos; null until it loads, empty when it fails.
-  teams: ListedTeam[] | null;
   now: Date;
   // The browser timezone; null while server rendering, where the viewer's timezone is unknown.
   timeZone: string | null;
@@ -107,14 +103,6 @@ export type HomeCard = {
   favoriteSides: Record<TeamSide, boolean>;
 };
 
-export type MyTeamLink = {
-  teamId: string;
-  name: string;
-  displayName: string;
-  logoUrl: string | null;
-  href: string;
-};
-
 export type RailDay = {
   nbaDate: NbaDate;
   href: string;
@@ -160,8 +148,6 @@ export type HomeView = {
   summary: GamesSummary | null;
   // Null until there are games, so a pending or failed request offers nothing to filter.
   filters: GameFilterOption[] | null;
-  // Null while favorites wait on the teams list, so the strip never flashes its empty state.
-  myTeams: MyTeamLink[] | null;
   screen: HomeScreen;
 };
 
@@ -372,26 +358,6 @@ function nextGameDayOf(
   };
 }
 
-function myTeamsOf(
-  favoriteTeamIds: string[],
-  teams: ListedTeam[] | null,
-): MyTeamLink[] | null {
-  if (favoriteTeamIds.length === 0) return [];
-  if (!teams) return null;
-
-  return favoriteTeamIds.flatMap((teamId) => {
-    const team = teams.find((listedTeam) => listedTeam.id === teamId);
-    if (!team) return [];
-    return {
-      teamId,
-      name: team.name,
-      displayName: team.displayName,
-      logoUrl: team.logoUrl,
-      href: `${TEAMS_PATH_PREFIX}${team.slug}`,
-    };
-  });
-}
-
 function screenOf({
   query,
   filter,
@@ -510,16 +476,8 @@ function dateRailOf(
 }
 
 export function buildHomeView(input: HomeViewInput): HomeView {
-  const {
-    selectedDate,
-    railCenterDate,
-    today,
-    query,
-    filter,
-    gameCounts,
-    favoriteTeamIds,
-    teams,
-  } = input;
+  const { selectedDate, railCenterDate, today, query, filter, gameCounts } =
+    input;
   const games =
     query.status === "success" || query.status === "stale"
       ? query.scoreboard.games
@@ -531,7 +489,6 @@ export function buildHomeView(input: HomeViewInput): HomeView {
     dateRail: dateRailOf(railCenterDate, selectedDate, today, gameCounts),
     summary: hasGames ? summarize(games) : null,
     filters: hasGames ? filterOptionsOf(filter) : null,
-    myTeams: myTeamsOf(favoriteTeamIds, teams),
     screen: screenOf(input),
   };
 }

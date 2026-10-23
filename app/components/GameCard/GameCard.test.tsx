@@ -36,7 +36,6 @@ function cardFor(
     gameCounts: null,
     seasonCalendar: null,
     favoriteTeamIds,
-    teams: null,
     now: new Date("2026-10-23T00:00:00Z"),
     timeZone,
   });

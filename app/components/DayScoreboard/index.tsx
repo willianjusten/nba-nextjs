@@ -16,7 +16,6 @@ import { useFavoriteTeamIds } from "@/app/lib/favorites/use-favorite-team-ids";
 import { gameCountsQueryOptions } from "@/app/lib/queries/game-counts";
 import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
 import { seasonCalendarQueryOptions } from "@/app/lib/queries/season-calendar";
-import { teamsQueryOptions } from "@/app/lib/queries/teams";
 import { seasonStartYearOf } from "@/app/lib/season/season-year";
 import { useScoreboard } from "@/app/lib/queries/use-scoreboard";
 import { strings } from "@/app/lib/strings";
@@ -67,11 +66,6 @@ export default function DayScoreboard({
     seasonCalendarQueryOptions(seasonStartYearOf(selectedDate)),
   );
   const favoriteTeamIds = useFavoriteTeamIds();
-  // Only favorites need the teams list, to resolve their names and logos.
-  const { data: teams, isError: isTeamsError } = useQuery({
-    ...teamsQueryOptions(),
-    enabled: favoriteTeamIds.length > 0,
-  });
   const timeZone = useBrowserTimeZone();
 
   // Data is checked before the error: a failed refetch keeps the last valid scoreboard instead of hiding it.
@@ -92,8 +86,6 @@ export default function DayScoreboard({
     gameCounts: gameCounts ?? null,
     seasonCalendar: seasonCalendar ?? null,
     favoriteTeamIds,
-    // A failed teams list falls back to the add button instead of an empty strip.
-    teams: teams ?? (isTeamsError ? [] : null),
     now: new Date(),
     timeZone,
   });
@@ -109,13 +101,10 @@ export default function DayScoreboard({
 
   return (
     <section className="flex flex-col gap-6 py-6 md:py-8">
-      <DateHeading
-        heading={homeView.heading}
-        summary={homeView.summary}
-        myTeams={<MyTeamsStrip teams={homeView.myTeams} />}
-      >
+      <DateHeading heading={homeView.heading} summary={homeView.summary}>
         <DatePicker placement="header" {...datePickerProps} />
       </DateHeading>
+      <MyTeamsStrip placement="home" />
       <DateRail
         rail={homeView.dateRail}
         onSelect={selectDay}

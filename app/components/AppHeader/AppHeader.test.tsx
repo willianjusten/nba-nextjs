@@ -1,4 +1,6 @@
+import { QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
+import { makeQueryClient } from "@/app/lib/query/make-query-client";
 import { strings } from "@/app/lib/strings";
 import AppHeader from ".";
 
@@ -10,7 +12,11 @@ vi.mock("@/app/components/PrimaryNavigation", () => ({
 
 describe("AppHeader", () => {
   it("links the NBA logo to the home page", () => {
-    render(<AppHeader />);
+    render(
+      <QueryClientProvider client={makeQueryClient()}>
+        <AppHeader />
+      </QueryClientProvider>,
+    );
 
     const logoLink = screen.getByRole("link", {
       name: strings.shell.logoLabel,
