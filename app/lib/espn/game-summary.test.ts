@@ -80,6 +80,8 @@ describe("fetchGameSummary", () => {
         },
         broadcasts: [{ name: "ESPN", market: "national" }],
         series: null,
+        homeWinProbability: null,
+        topScorer: null,
       });
     });
 

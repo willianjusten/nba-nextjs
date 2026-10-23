@@ -308,6 +308,65 @@ describe("buildHomeView", () => {
       expect(cardFor(postponedGame).leadingSide).toBeNull();
     });
 
+    describe("win probability", () => {
+      const withProbability = (game: Game): Game => ({
+        ...game,
+        homeWinProbability: 0.684,
+      });
+
+      it("splits the bar between both teams in whole percents", () => {
+        expect(cardFor(withProbability(liveGame)).winProbability).toEqual({
+          away: { abbreviation: "CLE", percent: 32 },
+          home: { abbreviation: "PHI", percent: 68 },
+        });
+      });
+
+      it("shows the bar at halftime", () => {
+        expect(
+          cardFor(withProbability(halftimeGame)).winProbability,
+        ).not.toBeNull();
+      });
+
+      it("hides the bar when ESPN sends no probability", () => {
+        expect(cardFor(liveGame).winProbability).toBeNull();
+      });
+
+      it("hides the bar once the game is over", () => {
+        expect(
+          cardFor(withProbability(finalOrlando)).winProbability,
+        ).toBeNull();
+      });
+    });
+
+    describe("top scorer", () => {
+      it("names the top scorer with ESPN's stat line", () => {
+        const game: Game = { ...liveGame, topScorer: finalOrlando.topScorer };
+
+        expect(cardFor(game).topScorerLabel).toBe(
+          "P. Banchero · 35 PTS 7 REB 10 AST",
+        );
+      });
+
+      it("falls back to points when ESPN has no stat line for the top scorer", () => {
+        const game: Game = {
+          ...liveGame,
+          topScorer: { ...finalOrlando.topScorer!, statLine: null },
+        };
+
+        expect(cardFor(game).topScorerLabel).toBe("P. Banchero · 35 PTS");
+      });
+
+      it("hides the top scorer when ESPN sends no leaders", () => {
+        expect(
+          cardFor({ ...liveGame, topScorer: null }).topScorerLabel,
+        ).toBeNull();
+      });
+
+      it("shows the top scorer only while the game is live", () => {
+        expect(cardFor(finalOrlando).topScorerLabel).toBeNull();
+      });
+    });
+
     it("offers highlights only for finished games", () => {
       expect(cardFor(finalOrlando).showHighlights).toBe(true);
       expect(cardFor(liveGame).showHighlights).toBe(false);

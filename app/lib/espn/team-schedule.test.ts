@@ -95,6 +95,8 @@ describe("fetchTeamSchedule", () => {
       },
       broadcasts: [{ name: "ESPN", market: "national" }],
       series: null,
+      homeWinProbability: null,
+      topScorer: null,
     });
   });
 

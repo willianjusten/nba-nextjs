@@ -88,6 +88,12 @@ describe("fetchScoreboard", () => {
       },
       broadcasts: [{ name: "NBA League Pass", market: "away" }],
       series: null,
+      homeWinProbability: null,
+      topScorer: {
+        shortName: "P. Banchero",
+        points: 35,
+        statLine: "35 PTS, 7 REB, 10 AST",
+      },
     });
   });
 
@@ -232,6 +238,90 @@ describe("fetchScoreboard", () => {
 
     expect(scoreboard.games[0].broadcasts).toEqual(leaguePassOnly);
     expect(scoreboard.games[1].broadcasts).toEqual(leaguePassOnly);
+  });
+
+  it("maps the home team's chance to win as of the last play", async () => {
+    const withProbability = structuredClone(liveDay);
+    Object.assign(withProbability.events[0].competitions[0], {
+      situation: {
+        lastPlay: {
+          probability: {
+            homeWinPercentage: 0.68,
+            awayWinPercentage: 0.32,
+            tiePercentage: 0,
+          },
+        },
+      },
+    });
+    respondWith(withProbability);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-22")!);
+
+    expect(scoreboard.games[0].homeWinProbability).toBe(0.68);
+  });
+
+  it("has no win probability when ESPN sends no situation", async () => {
+    respondWith(liveDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-22")!);
+
+    expect(scoreboard.games[0].homeWinProbability).toBeNull();
+  });
+
+  it("picks the top scorer across both teams with ESPN's stat line", async () => {
+    respondWith(finalDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
+
+    expect(scoreboard.games[0].topScorer).toEqual({
+      shortName: "P. Banchero",
+      points: 35,
+      statLine: "35 PTS, 7 REB, 10 AST",
+    });
+    expect(scoreboard.games[2].topScorer).toMatchObject({
+      shortName: "A. Edwards",
+      points: 45,
+    });
+  });
+
+  it("leaves the stat line out when ESPN rates another player higher", async () => {
+    const otherRatingLeader = structuredClone(finalDay);
+    const homeLeaders =
+      otherRatingLeader.events[0].competitions[0].competitors[0].leaders;
+    const ratingCategory = homeLeaders.find(
+      (category) => category.name === "rating",
+    )!;
+    ratingCategory.leaders[0].athlete.id = "another-athlete";
+    respondWith(otherRatingLeader);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
+
+    expect(scoreboard.games[0].topScorer).toMatchObject({
+      shortName: "P. Banchero",
+      points: 35,
+      statLine: null,
+    });
+  });
+
+  it("has no top scorer before tip-off, when ESPN lists season averages", async () => {
+    respondWith(scheduledDay);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-22")!);
+
+    expect(scoreboard.games[0].topScorer).toBeNull();
+  });
+
+  it("has no top scorer when ESPN sends no leaders", async () => {
+    const withoutLeaders = structuredClone(finalDay);
+    for (const competitor of withoutLeaders.events[0].competitions[0]
+      .competitors) {
+      Reflect.deleteProperty(competitor, "leaders");
+    }
+    respondWith(withoutLeaders);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
+
+    expect(scoreboard.games[0].topScorer).toBeNull();
   });
 
   it("maps a team without an ESPN logo to no logo", async () => {

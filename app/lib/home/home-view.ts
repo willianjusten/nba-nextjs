@@ -1,6 +1,11 @@
 import type { Game, GameStatus, Scoreboard } from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
-import { finalLabel, hasScore, periodLabel } from "@/app/lib/game/status";
+import {
+  finalLabel,
+  hasScore,
+  isInProgress,
+  periodLabel,
+} from "@/app/lib/game/status";
 import { strings } from "@/app/lib/strings";
 import {
   formatNbaDate,
@@ -41,6 +46,12 @@ export type GamesSummary = {
   final: number;
 };
 
+export type TeamWinProbability = {
+  abbreviation: string;
+  // Whole percent; both sides add up to 100.
+  percent: number;
+};
+
 export type HomeCard = {
   game: Game;
   // Null only for a scheduled game until the browser timezone is known.
@@ -52,6 +63,9 @@ export type HomeCard = {
   leadingSide: TeamSide | null;
   teamColors: Record<TeamSide, string>;
   showHighlights: boolean;
+  // Both are live only, and null when ESPN sends nothing to show.
+  winProbability: Record<TeamSide, TeamWinProbability> | null;
+  topScorerLabel: string | null;
 };
 
 export type HomeScreen =
@@ -141,6 +155,31 @@ function leadingSideOf({ status, home, away }: Game): TeamSide | null {
   return home.score > away.score ? "home" : "away";
 }
 
+function winProbabilityOf({
+  status,
+  homeWinProbability,
+  home,
+  away,
+}: Game): HomeCard["winProbability"] {
+  if (!isInProgress(status) || homeWinProbability === null) return null;
+
+  const homePercent = Math.round(homeWinProbability * 100);
+  return {
+    away: { abbreviation: away.team.abbreviation, percent: 100 - homePercent },
+    home: { abbreviation: home.team.abbreviation, percent: homePercent },
+  };
+}
+
+function topScorerLabelOf({ status, topScorer }: Game) {
+  if (!isInProgress(status) || !topScorer) return null;
+
+  // ESPN separates the stats with commas, e.g. "28 PTS, 7 REB".
+  const statLine =
+    topScorer.statLine?.replaceAll(", ", " ") ??
+    strings.gameCard.points(topScorer.points);
+  return [topScorer.shortName, statLine].join(META_SEPARATOR);
+}
+
 function cardOf(game: Game, timeZone: string | null): HomeCard {
   const channelLabel = game.broadcasts
     .map((broadcast) => broadcast.name)
@@ -155,6 +194,8 @@ function cardOf(game: Game, timeZone: string | null): HomeCard {
     leadingSide: leadingSideOf(game),
     teamColors: readableTeamColors(game.home.team, game.away.team),
     showHighlights: game.status.kind === "final",
+    winProbability: winProbabilityOf(game),
+    topScorerLabel: topScorerLabelOf(game),
   };
 }
 

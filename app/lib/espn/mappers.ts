@@ -18,6 +18,7 @@ import type {
   PlayoffSeries,
   SeasonType,
   Team,
+  TopScorer,
 } from "@/app/lib/domain/game";
 import type {
   ConferenceStandings,
@@ -286,6 +287,38 @@ function mapSeries(
   };
 }
 
+function leaderOf(competitor: RawCompetitor, categoryName: string) {
+  return competitor.leaders?.find((category) => category.name === categoryName)
+    ?.leaders[0];
+}
+
+function topScorerOf(
+  home: RawCompetitor,
+  away: RawCompetitor,
+): TopScorer | null {
+  const [topScorer] = [home, away]
+    .flatMap((competitor) => {
+      const pointsLeader = leaderOf(competitor, "points");
+      return pointsLeader ? [{ competitor, pointsLeader }] : [];
+    })
+    .toSorted(
+      (first, second) => second.pointsLeader.value - first.pointsLeader.value,
+    );
+  if (!topScorer) return null;
+
+  const { competitor, pointsLeader } = topScorer;
+  // ESPN's rating leader comes with the line of stats that stood out, which reads better than points alone.
+  const ratingLeader = leaderOf(competitor, "rating");
+  return {
+    shortName: pointsLeader.athlete.shortName,
+    points: pointsLeader.value,
+    statLine:
+      ratingLeader?.athlete.id === pointsLeader.athlete.id
+        ? ratingLeader.displayValue
+        : null,
+  };
+}
+
 export function mapGame(event: RawEvent): Game {
   const competition = event.competitions[0];
   const home = findCompetitor(event.id, competition?.competitors, "home");
@@ -306,6 +339,9 @@ export function mapGame(event: RawEvent): Game {
       competition?.geoBroadcasts,
     ),
     series: mapSeries(competition?.series, home.team.id, away.team.id),
+    homeWinProbability:
+      competition?.situation?.lastPlay?.probability?.homeWinPercentage ?? null,
+    topScorer: topScorerOf(home, away),
   };
 }
 
@@ -330,6 +366,9 @@ export function mapScheduleGame(event: RawScheduleEvent): Game {
     // The schedule sends its broadcasts in the geoBroadcast shape.
     broadcasts: mapBroadcasts([], competition.broadcasts),
     series: mapSeries(competition.series, home.team.id, away.team.id),
+    // The team schedule sends neither.
+    homeWinProbability: null,
+    topScorer: null,
   };
 }
 
@@ -656,6 +695,9 @@ export function mapGameSummary(summary: RawSummary): GameSummary {
       // The summary sends its broadcasts in the geoBroadcast shape.
       broadcasts: mapBroadcasts([], competition.broadcasts),
       series: mapSeries(playoffSeries, home.team.id, away.team.id),
+      // The game detail reads both from the summary's own win probability and leaders sections.
+      homeWinProbability: null,
+      topScorer: null,
     },
     lineScore: bySide(home, away, mapLineScore),
     boxScore: bySide(home, away, (competitor) =>

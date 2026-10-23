@@ -45,6 +45,13 @@ export type PlayoffSeries = {
   awayWins: number;
 };
 
+export type TopScorer = {
+  shortName: string;
+  points: number;
+  // ESPN's line of the athlete's notable stats, e.g. "28 PTS, 7 REB"; null when ESPN rates another player higher.
+  statLine: string | null;
+};
+
 export type Game = {
   id: string;
   startTime: string;
@@ -58,6 +65,10 @@ export type Game = {
   // Ordered national first; never empty, since NBA League Pass is the fallback.
   broadcasts: Broadcast[];
   series: PlayoffSeries | null;
+  // From 0 to 1, as of the last play; null when ESPN sends none, as outside live games.
+  homeWinProbability: number | null;
+  // Null before tip-off, when ESPN lists season averages instead of game stats.
+  topScorer: TopScorer | null;
 };
 
 export type Scoreboard = {

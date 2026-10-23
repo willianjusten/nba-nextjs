@@ -35,6 +35,10 @@ export type RawCompetition = {
   geoBroadcasts?: RawGeoBroadcast[];
   series?: RawSeries;
   venue?: RawVenue;
+  // Only while the game is live.
+  situation?: {
+    lastPlay?: { probability?: { homeWinPercentage: number } };
+  };
 };
 
 export type RawRecord = {
@@ -71,6 +75,17 @@ export type RawCompetitor = {
   winner?: boolean;
   team: RawTeam;
   records?: RawRecord[];
+  leaders?: RawCompetitorLeaderCategory[];
+};
+
+// Game stats once the game starts ("points", "rating"); season averages before it ("pointsPerGame").
+export type RawCompetitorLeaderCategory = {
+  name: string;
+  leaders: {
+    value: number;
+    displayValue: string;
+    athlete: { id: string; shortName: string };
+  }[];
 };
 
 export type RawTeamScheduleResponse = {

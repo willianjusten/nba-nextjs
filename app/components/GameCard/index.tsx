@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { GameCompetitor } from "@/app/lib/domain/game";
 import { hasScore, isInProgress } from "@/app/lib/game/status";
-import type { HomeCard } from "@/app/lib/home/home-view";
+import type { HomeCard, TeamWinProbability } from "@/app/lib/home/home-view";
 import type { TeamSide } from "@/app/lib/home/team-colors";
 import { strings } from "@/app/lib/strings";
 import TeamLogo from "@/app/components/TeamLogo";
@@ -93,6 +93,59 @@ function MatchupTeam({
       <span className={TEAM_NAME_CLASS_NAME}>{competitor.team.name}</span>
       <TeamRecord record={competitor.record} />
     </div>
+  );
+}
+
+function WinProbabilityBar({
+  winProbability,
+  teamColors,
+}: {
+  winProbability: Record<TeamSide, TeamWinProbability>;
+  teamColors: Record<TeamSide, string>;
+}) {
+  const teamLabelOf = (side: TeamSide) =>
+    strings.gameCard.teamWinProbability(
+      winProbability[side].abbreviation,
+      winProbability[side].percent,
+    );
+  const segmentOf = (side: TeamSide) => (
+    <span
+      className="basis-0"
+      style={{
+        // Grows from zero so both segments share what the gap leaves, in proportion.
+        flexGrow: winProbability[side].percent,
+        backgroundColor: teamColors[side],
+      }}
+    />
+  );
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className="flex justify-between text-[10px] tracking-[0.14em] text-muted uppercase">
+        <span>{teamLabelOf("away")}</span>
+        <span>{strings.gameCard.winProbability}</span>
+        <span>{teamLabelOf("home")}</span>
+      </div>
+      {/* The labels above carry the numbers, so the bar is decoration. */}
+      <div
+        aria-hidden="true"
+        className="flex h-1.5 gap-[2%] overflow-hidden rounded-full bg-white/8"
+      >
+        {segmentOf("away")}
+        {segmentOf("home")}
+      </div>
+    </div>
+  );
+}
+
+function TopScorerTile({ label }: { label: string }) {
+  return (
+    <p className="flex flex-col rounded-tile border border-white/9 bg-white/5 px-3 py-2">
+      <span className="text-[9px] tracking-[0.14em] text-muted uppercase">
+        {strings.gameCard.topScorer}
+      </span>
+      <span className="text-xs font-medium">{label}</span>
+    </p>
   );
 }
 
@@ -209,6 +262,14 @@ export default function GameCard({ card }: { card: HomeCard }) {
           <MatchupTeam competitor={game.home} color={teamColors.home} />
         </div>
       )}
+
+      {card.winProbability && (
+        <WinProbabilityBar
+          winProbability={card.winProbability}
+          teamColors={teamColors}
+        />
+      )}
+      {card.topScorerLabel && <TopScorerTile label={card.topScorerLabel} />}
 
       {card.venueLabel && (
         <p className="truncate text-center text-meta text-muted">

@@ -47,6 +47,11 @@ export const strings = {
     winner: "Winner",
     highlights: "Highlights · recap",
     gameCenter: "Game center",
+    winProbability: "Win probability",
+    teamWinProbability: (abbreviation: string, percent: number) =>
+      `${abbreviation} ${percent}%`,
+    topScorer: "Top scorer",
+    points: (points: number) => `${points} PTS`,
   },
   gameStatus: {
     live: "Live",

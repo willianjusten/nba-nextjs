@@ -70,6 +70,30 @@ describe("GameCard", () => {
     ).toBeNull();
   });
 
+  it("shows the win probability of both teams on a live game", () => {
+    renderCard(cardFor({ ...liveGame, homeWinProbability: 0.68 }));
+
+    expect(screen.getByText("CLE 32%")).toBeDefined();
+    expect(screen.getByText(strings.gameCard.winProbability)).toBeDefined();
+    expect(screen.getByText("PHI 68%")).toBeDefined();
+  });
+
+  it("shows the top scorer on a live game", () => {
+    renderCard(cardFor({ ...liveGame, topScorer: finalGame.topScorer }));
+
+    expect(screen.getByText(strings.gameCard.topScorer)).toBeDefined();
+    expect(screen.getByText("P. Banchero · 35 PTS 7 REB 10 AST")).toBeDefined();
+  });
+
+  it("hides the win probability and top scorer when ESPN sends neither", () => {
+    renderCard(
+      cardFor({ ...liveGame, homeWinProbability: null, topScorer: null }),
+    );
+
+    expect(screen.queryByText(strings.gameCard.winProbability)).toBeNull();
+    expect(screen.queryByText(strings.gameCard.topScorer)).toBeNull();
+  });
+
   it("shows team names, records, and scores", () => {
     renderCard(cardFor(liveGame));
 
