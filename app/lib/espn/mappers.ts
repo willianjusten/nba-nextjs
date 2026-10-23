@@ -380,6 +380,7 @@ export function mapLeader(
     athlete: {
       id: athlete.id,
       displayName: athlete.displayName,
+      shortName: athlete.shortName ?? athlete.displayName,
       headshotUrl: athlete.headshot?.href ?? null,
     },
     value,

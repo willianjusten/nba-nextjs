@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import {
@@ -30,11 +30,14 @@ import DateHeading from "./DateHeading";
 type DayScoreboardProps = {
   initialDate: NbaDate;
   today: NbaDate;
+  // Sits beside the game list on desktop.
+  sidebar?: ReactNode;
 };
 
 export default function DayScoreboard({
   initialDate,
   today,
+  sidebar,
 }: DayScoreboardProps) {
   // Days are chosen through native history calls, which Next.js mirrors in usePathname without a server round trip.
   const selectedDate = nbaDateOfPath(usePathname(), today) ?? initialDate;
@@ -114,22 +117,27 @@ export default function DayScoreboard({
       >
         <DatePicker placement="rail" {...datePickerProps} />
       </DateRail>
-      {homeView.filters && (
-        <GameFilters
-          filters={homeView.filters}
-          countLabel={
-            homeView.summary &&
-            strings.dateRail.gameCount(homeView.summary.total)
-          }
-          onSelect={setFilter}
-        />
-      )}
-      <GamesList
-        nbaDate={selectedDate}
-        screen={homeView.screen}
-        onRetry={() => refetch()}
-        isRetrying={isFetching}
-      />
+      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
+        <div className="flex min-w-0 flex-col gap-6">
+          {homeView.filters && (
+            <GameFilters
+              filters={homeView.filters}
+              countLabel={
+                homeView.summary &&
+                strings.dateRail.gameCount(homeView.summary.total)
+              }
+              onSelect={setFilter}
+            />
+          )}
+          <GamesList
+            nbaDate={selectedDate}
+            screen={homeView.screen}
+            onRetry={() => refetch()}
+            isRetrying={isFetching}
+          />
+        </div>
+        {sidebar}
+      </div>
     </section>
   );
 }

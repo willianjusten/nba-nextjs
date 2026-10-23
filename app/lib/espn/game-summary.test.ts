@@ -170,6 +170,7 @@ describe("fetchGameSummary", () => {
         athlete: {
           id: "3945274",
           displayName: "Luka Doncic",
+          shortName: "L. Doncic",
           headshotUrl:
             "https://a.espncdn.com/i/headshots/nba/players/full/3945274.png",
         },

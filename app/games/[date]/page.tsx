@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import DayScoreboard from "@/app/components/DayScoreboard";
+import HomeSidebar from "@/app/components/HomeSidebar";
 import { prefetchDayScoreboard } from "@/app/lib/queries/prefetch-day";
 import { Hydrate } from "@/app/lib/query/server";
 import { currentNbaDate, parseNbaDate } from "@/app/lib/time/nba-date";
@@ -16,7 +18,15 @@ export default async function GamesPage({ params }: GamesPageProps) {
 
   return (
     <Hydrate>
-      <DayScoreboard initialDate={nbaDate} today={currentNbaDate()} />
+      <DayScoreboard
+        initialDate={nbaDate}
+        today={currentNbaDate()}
+        sidebar={
+          <Suspense>
+            <HomeSidebar />
+          </Suspense>
+        }
+      />
     </Hydrate>
   );
 }

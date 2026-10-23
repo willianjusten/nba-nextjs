@@ -32,6 +32,9 @@ const FINAL_GAME_ID = "401909092";
 const LIVE_GAME_ID = "401909093";
 const PRE_GAME_ID = "401909094";
 
+// The sidebar is an async server component, which the client renderer here cannot render; it has its own tests.
+vi.mock("./components/HomeSidebar", () => ({ default: () => null }));
+
 vi.mock("next/navigation", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/navigation")>()),
   usePathname: () => window.location.pathname,

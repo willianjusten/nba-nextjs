@@ -81,7 +81,7 @@ describe("fetchLeaders", () => {
     ]);
   });
 
-  it("maps each leader with the resolved athlete's name and photo", async () => {
+  it("maps each leader with the resolved athlete's names and photo", async () => {
     respondWithEspn();
 
     const [points, rebounds] = await fetchLeaders();
@@ -90,6 +90,7 @@ describe("fetchLeaders", () => {
       athlete: {
         id: "4065733",
         displayName: "Ty Jerome",
+        shortName: "T. Jerome",
         headshotUrl:
           "https://a.espncdn.com/i/headshots/nba/players/full/4065733.png",
       },

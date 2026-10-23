@@ -243,6 +243,7 @@ export type RawLeader = {
 export type RawLeaderAthlete = {
   id: string;
   displayName: string;
+  shortName?: string;
   headshot?: { href: string };
 };
 

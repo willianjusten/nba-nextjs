@@ -3,6 +3,8 @@ export type LeaderStat = "points" | "rebounds" | "assists";
 export type LeaderAthlete = {
   id: string;
   displayName: string;
+  // Initial and last name, e.g. "L. Dončić".
+  shortName: string;
   headshotUrl: string | null;
 };
 

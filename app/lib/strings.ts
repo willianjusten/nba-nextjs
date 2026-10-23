@@ -1,4 +1,5 @@
 import type { GamesSummary } from "@/app/lib/home/home-view";
+import type { SidebarRunnerUp } from "@/app/lib/home/sidebar";
 
 export const strings = {
   app: {
@@ -28,6 +29,23 @@ export const strings = {
       ]
         .filter(Boolean)
         .join(" · "),
+    sidebar: {
+      label: "Standings and league leaders",
+      topFive: (conferenceAbbreviation: string) =>
+        `${conferenceAbbreviation} top 5`,
+      allStandings: "All",
+      allStandingsLabel: "All standings",
+      standingsError: "We couldn't load the standings right now.",
+      favorite: "Favorite team",
+      leadersTitle: "League leaders",
+      categories: {
+        points: "Points / game",
+        rebounds: "Rebounds / game",
+        assists: "Assists / game",
+      },
+      runnerUp: ({ rank, shortName, displayValue }: SidebarRunnerUp) =>
+        `${rank}. ${shortName} ${displayValue}`,
+    },
   },
   myTeams: {
     label: "My teams",
