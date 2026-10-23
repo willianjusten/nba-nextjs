@@ -154,7 +154,7 @@ function SlideArrowButton({ label, onClick, children }: SlideArrowButtonProps) {
       type="button"
       aria-label={label}
       onClick={onClick}
-      className={`hidden size-11 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/4 text-secondary transition-colors hover:bg-white/8 md:flex ${FOCUS_RING_CLASS_NAME}`}
+      className={`hidden cursor-pointer size-11 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/4 text-secondary transition-colors hover:bg-white/8 md:flex ${FOCUS_RING_CLASS_NAME}`}
     >
       <svg
         width="18"
