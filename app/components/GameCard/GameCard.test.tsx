@@ -21,7 +21,8 @@ const [exhibitionGame] = gamesOf(internationalExhibition);
 
 function cardFor(game: Game, timeZone: string | null = "America/New_York") {
   const { screen: homeScreen } = buildHomeView({
-    nbaDate: game.nbaDate as NbaDate,
+    selectedDate: game.nbaDate as NbaDate,
+    railCenterDate: game.nbaDate as NbaDate,
     today: game.nbaDate as NbaDate,
     query: {
       status: "success",

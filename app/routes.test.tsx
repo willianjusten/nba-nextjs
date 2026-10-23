@@ -34,7 +34,7 @@ const PRE_GAME_ID = "401909094";
 
 vi.mock("next/navigation", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/navigation")>()),
-  useRouter: () => ({ push: vi.fn() }),
+  usePathname: () => window.location.pathname,
 }));
 
 function espnFixtureFor(url: string) {
@@ -73,6 +73,7 @@ describe("routes", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
+    window.history.replaceState(null, "", "/");
   });
 
   it("renders the home page with the current NBA date's heading, summary, and games", async () => {
@@ -91,6 +92,7 @@ describe("routes", () => {
   });
 
   it("renders the games page with the requested date's heading, summary, and games", async () => {
+    window.history.replaceState(null, "", "/games/2026-10-21");
     render(
       await GamesPage({ params: Promise.resolve({ date: "2026-10-21" }) }),
     );
@@ -105,6 +107,7 @@ describe("routes", () => {
   });
 
   it("renders the date rail with the server-prefetched game counts", async () => {
+    window.history.replaceState(null, "", "/games/2026-10-21");
     render(
       await GamesPage({ params: Promise.resolve({ date: "2026-10-21" }) }),
     );

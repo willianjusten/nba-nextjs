@@ -12,7 +12,7 @@ export default async function HomePage() {
 
   return (
     <Hydrate>
-      <DayScoreboard nbaDate={nbaDate} today={nbaDate} />
+      <DayScoreboard initialDate={nbaDate} today={nbaDate} />
     </Hydrate>
   );
 }

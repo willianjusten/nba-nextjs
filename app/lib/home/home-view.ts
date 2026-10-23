@@ -20,14 +20,15 @@ import {
   formatNbaWeekday,
   formatShortNbaDate,
   formatShortNbaWeekday,
+  parseNbaDate,
 } from "@/app/lib/time/nba-date";
 import { formatTipOff } from "@/app/lib/time/tip-off";
 import { readableTeamColors, type TeamSide } from "./team-colors";
 
 const MILLISECONDS_PER_MINUTE = 60_000;
-const DAYS_PER_WEEK = 7;
-// The rail shows one week, so the arrows move by exactly one rail width.
-const RAIL_DAYS_PER_SIDE = (DAYS_PER_WEEK - 1) / 2;
+// Dates further out are reached through the calendar instead of the rail.
+const RAIL_DAYS_PER_SIDE = 7;
+const GAMES_PATH_PREFIX = "/games/";
 
 export type ScoreboardQueryState =
   | { status: "loading" }
@@ -37,7 +38,9 @@ export type ScoreboardQueryState =
   | { status: "stale"; scoreboard: Scoreboard; updatedAt: number };
 
 export type HomeViewInput = {
-  nbaDate: NbaDate;
+  selectedDate: NbaDate;
+  // The date the page opened with; the rail stays centered on it while other days are selected.
+  railCenterDate: NbaDate;
   // The current NBA date, which lives at "/" instead of its own games page.
   today: NbaDate;
   query: ScoreboardQueryState;
@@ -93,12 +96,11 @@ export type RailDay = {
   // Both null until the counts load, so a pending or failed request never reads as "No games".
   gameCount: number | null;
   countLabel: string | null;
+  hasGames: boolean;
 };
 
 export type DateRailView = {
   days: RailDay[];
-  previousWeekHref: string;
-  nextWeekHref: string;
 };
 
 export type HomeScreen =
@@ -288,7 +290,17 @@ export function dateRailRange(nbaDate: NbaDate) {
 }
 
 function hrefOf(nbaDate: NbaDate, today: NbaDate) {
-  return nbaDate === today ? "/" : `/games/${nbaDate}`;
+  return nbaDate === today ? "/" : `${GAMES_PATH_PREFIX}${nbaDate}`;
+}
+
+// The inverse of a rail day's href, so the selection follows the URL, back and forward buttons included.
+export function nbaDateOfPath(
+  pathname: string,
+  today: NbaDate,
+): NbaDate | null {
+  if (pathname === "/") return today;
+  if (!pathname.startsWith(GAMES_PATH_PREFIX)) return null;
+  return parseNbaDate(pathname.slice(GAMES_PATH_PREFIX.length));
 }
 
 function railDayOf(
@@ -310,33 +322,34 @@ function railDayOf(
     isSelected: nbaDate === selectedDate,
     gameCount,
     countLabel,
+    hasGames: gameCount !== null && gameCount > 0,
   };
 }
 
 function dateRailOf(
-  nbaDate: NbaDate,
+  railCenterDate: NbaDate,
+  selectedDate: NbaDate,
   today: NbaDate,
   gameCounts: GameCounts | null,
 ): DateRailView {
-  const { firstDate } = dateRailRange(nbaDate);
-  const days = Array.from({ length: DAYS_PER_WEEK }, (_, dayOffset) =>
-    railDayOf(
-      addDaysToNbaDate(firstDate, dayOffset),
-      nbaDate,
-      today,
-      gameCounts,
-    ),
+  const { firstDate } = dateRailRange(railCenterDate);
+  const days = Array.from(
+    { length: RAIL_DAYS_PER_SIDE * 2 + 1 },
+    (_, dayOffset) =>
+      railDayOf(
+        addDaysToNbaDate(firstDate, dayOffset),
+        selectedDate,
+        today,
+        gameCounts,
+      ),
   );
 
-  return {
-    days,
-    previousWeekHref: hrefOf(addDaysToNbaDate(nbaDate, -DAYS_PER_WEEK), today),
-    nextWeekHref: hrefOf(addDaysToNbaDate(nbaDate, DAYS_PER_WEEK), today),
-  };
+  return { days };
 }
 
 export function buildHomeView({
-  nbaDate,
+  selectedDate,
+  railCenterDate,
   today,
   query,
   gameCounts,
@@ -349,8 +362,8 @@ export function buildHomeView({
       : [];
 
   return {
-    heading: headingOf(nbaDate),
-    dateRail: dateRailOf(nbaDate, today, gameCounts),
+    heading: headingOf(selectedDate),
+    dateRail: dateRailOf(railCenterDate, selectedDate, today, gameCounts),
     summary: games.length > 0 ? summarize(games) : null,
     screen: screenOf(query, now, timeZone),
   };

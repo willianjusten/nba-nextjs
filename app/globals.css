@@ -110,14 +110,6 @@
   @apply rounded-card border border-white/8 bg-elevated;
 }
 
-@utility scrollbar-hidden {
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 @utility text-balance {
   text-wrap: balance;
 }

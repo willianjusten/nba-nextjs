@@ -1,47 +1,107 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import type { DateRailView, RailDay } from "@/app/lib/home/home-view";
 import { strings } from "@/app/lib/strings";
+
+// The rail fits 7 days at a time, so the selected day sits in the middle with 3 on each side.
+const DAYS_BESIDE_CENTER = 3;
 
 const FOCUS_RING_CLASS_NAME =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
-export default function DateRail({ rail }: { rail: DateRailView }) {
-  const router = useRouter();
+type DateRailProps = {
+  rail: DateRailView;
+  onSelect: (day: RailDay) => void;
+  onPreview: (day: RailDay) => void;
+};
+
+export default function DateRail({ rail, onSelect, onPreview }: DateRailProps) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const hasCenteredRef = useRef(false);
+  const selectedIndex = rail.days.findIndex((day) => day.isSelected);
+
+  const measureDayStepPixels = () => {
+    const [firstPill, secondPill] = scrollerRef.current?.children ?? [];
+    return firstPill instanceof HTMLElement && secondPill instanceof HTMLElement
+      ? secondPill.offsetLeft - firstPill.offsetLeft
+      : 0;
+  };
+
+  const slide = (direction: -1 | 1) =>
+    scrollerRef.current?.scrollBy({
+      left: direction * measureDayStepPixels(),
+      behavior: "smooth",
+    });
+
+  useLayoutEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || hasCenteredRef.current || selectedIndex < 0) return;
+    hasCenteredRef.current = true;
+    scroller.scrollLeft =
+      (selectedIndex - DAYS_BESIDE_CENTER) * measureDayStepPixels();
+  }, [selectedIndex]);
+
+  // Later selections, such as going back in history, only scroll when the day is out of view.
+  // Scrolling the rail itself, unlike scrollIntoView, never moves the page vertically.
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || !hasCenteredRef.current || selectedIndex < 0) return;
+    const dayStepPixels = measureDayStepPixels();
+    const firstVisibleIndex = Math.round(scroller.scrollLeft / dayStepPixels);
+    const visibleDayCount = DAYS_BESIDE_CENTER * 2 + 1;
+    if (
+      selectedIndex >= firstVisibleIndex &&
+      selectedIndex < firstVisibleIndex + visibleDayCount
+    ) {
+      return;
+    }
+    scroller.scrollTo({
+      left: (selectedIndex - DAYS_BESIDE_CENTER) * dayStepPixels,
+      behavior: "smooth",
+    });
+  }, [selectedIndex]);
 
   return (
     <div className="flex items-center gap-2.5">
-      <WeekArrowButton
-        label={strings.dateRail.previousWeek}
-        onClick={() => router.push(rail.previousWeekHref)}
+      <SlideArrowButton
+        label={strings.dateRail.previousDays}
+        onClick={() => slide(-1)}
       >
         <path d="M15 6l-6 6 6 6" />
-      </WeekArrowButton>
+      </SlideArrowButton>
       <div
+        ref={scrollerRef}
         role="group"
         aria-label={strings.dateRail.label}
-        className="-mx-4 flex min-w-0 grow scrollbar-hidden gap-2 overflow-x-auto px-4 py-1 md:mx-0 md:gap-2.5 md:px-0"
+        className="relative -mx-4 flex min-w-0 grow snap-x snap-mandatory scroll-px-4 gap-2 overflow-x-auto px-4 py-1 [scrollbar-width:none] md:mx-0 md:scroll-px-0 md:gap-2.5 md:px-0 [&::-webkit-scrollbar]:hidden"
       >
         {rail.days.map((day) => (
           <DayPill
             key={day.nbaDate}
             day={day}
-            onClick={() => router.push(day.href)}
+            onClick={() => onSelect(day)}
+            onPreview={() => onPreview(day)}
           />
         ))}
       </div>
-      <WeekArrowButton
-        label={strings.dateRail.nextWeek}
-        onClick={() => router.push(rail.nextWeekHref)}
+      <SlideArrowButton
+        label={strings.dateRail.nextDays}
+        onClick={() => slide(1)}
       >
         <path d="M9 6l6 6-6 6" />
-      </WeekArrowButton>
+      </SlideArrowButton>
     </div>
   );
 }
 
-function DayPill({ day, onClick }: { day: RailDay; onClick: () => void }) {
+type DayPillProps = {
+  day: RailDay;
+  onClick: () => void;
+  onPreview: () => void;
+};
+
+function DayPill({ day, onClick, onPreview }: DayPillProps) {
   const toneClassName = day.isSelected
     ? "-translate-y-0.5 border-accent bg-accent text-on-accent md:-translate-y-0.75"
     : "border-white/10 bg-white/5 text-foreground hover:bg-white/8";
@@ -53,7 +113,9 @@ function DayPill({ day, onClick }: { day: RailDay; onClick: () => void }) {
       aria-label={day.label}
       aria-pressed={day.isSelected}
       onClick={onClick}
-      className={`relative flex min-h-16 min-w-11 flex-1 basis-0 flex-col items-center gap-0.75 rounded-tile border py-2.25 transition-[background-color,translate] md:min-h-21 md:rounded-card md:px-3.5 md:py-3 ${FOCUS_RING_CLASS_NAME} ${toneClassName}`}
+      onPointerEnter={onPreview}
+      onFocus={onPreview}
+      className={`relative cursor-pointer flex min-h-16 shrink-0 basis-[calc((100%-6*0.5rem)/7)] snap-start flex-col items-center gap-0.75 rounded-tile border py-2.25 transition-[background-color,translate] md:min-h-21 md:basis-[calc((100%-6*0.625rem)/7)] md:rounded-card md:px-3.5 md:py-3 ${FOCUS_RING_CLASS_NAME} ${toneClassName}`}
     >
       <span
         className={`text-[10px] tracking-[0.14em] ${secondaryTextClassName}`}
@@ -70,7 +132,7 @@ function DayPill({ day, onClick }: { day: RailDay; onClick: () => void }) {
           {day.countLabel}
         </span>
       )}
-      {day.gameCount !== null && day.gameCount > 0 && (
+      {day.hasGames && (
         <span
           aria-hidden="true"
           className={`absolute bottom-1.5 size-1 rounded-full md:hidden ${day.isSelected ? "bg-on-accent" : "bg-accent"}`}
@@ -80,13 +142,13 @@ function DayPill({ day, onClick }: { day: RailDay; onClick: () => void }) {
   );
 }
 
-type WeekArrowButtonProps = {
+type SlideArrowButtonProps = {
   label: string;
   onClick: () => void;
   children: React.ReactNode;
 };
 
-function WeekArrowButton({ label, onClick, children }: WeekArrowButtonProps) {
+function SlideArrowButton({ label, onClick, children }: SlideArrowButtonProps) {
   return (
     <button
       type="button"

@@ -31,8 +31,8 @@ export const strings = {
   },
   dateRail: {
     label: "Choose a date",
-    previousWeek: "Previous week",
-    nextWeek: "Next week",
+    previousDays: "Show earlier days",
+    nextDays: "Show later days",
     gameCount: (count: number) =>
       count === 0 ? "No games" : `${count} ${count === 1 ? "game" : "games"}`,
     dayLabel: (formattedDate: string, countLabel: string | null) =>

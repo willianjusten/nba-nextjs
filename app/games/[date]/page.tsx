@@ -16,7 +16,7 @@ export default async function GamesPage({ params }: GamesPageProps) {
 
   return (
     <Hydrate>
-      <DayScoreboard nbaDate={nbaDate} today={currentNbaDate()} />
+      <DayScoreboard initialDate={nbaDate} today={currentNbaDate()} />
     </Hydrate>
   );
 }

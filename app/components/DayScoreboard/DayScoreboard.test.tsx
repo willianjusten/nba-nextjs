@@ -13,11 +13,33 @@ const nbaDate = "2026-10-21" as NbaDate;
 const today = "2026-10-23" as NbaDate;
 const fetchMock = vi.fn();
 const gameCountsFetchMock = vi.fn();
-const routerPush = vi.fn();
+const scrollBy = vi.fn();
 
-vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: routerPush }),
-}));
+// Next.js keeps usePathname in sync with native history calls; this stand-in does the same over happy-dom's history.
+vi.mock("next/navigation", async () => {
+  const { useSyncExternalStore } = await import("react");
+  const pathnameListeners = new Set<() => void>();
+  const notifyPathnameListeners = () =>
+    pathnameListeners.forEach((listener) => listener());
+
+  for (const method of ["pushState", "replaceState"] as const) {
+    const originalMethod = window.history[method].bind(window.history);
+    window.history[method] = (...args) => {
+      originalMethod(...args);
+      notifyPathnameListeners();
+    };
+  }
+  window.addEventListener("popstate", notifyPathnameListeners);
+
+  const subscribe = (listener: () => void) => {
+    pathnameListeners.add(listener);
+    return () => pathnameListeners.delete(listener);
+  };
+  return {
+    usePathname: () =>
+      useSyncExternalStore(subscribe, () => window.location.pathname),
+  };
+});
 
 function renderDayScoreboard(currentDate: NbaDate = today) {
   const queryClient = makeQueryClient();
@@ -25,7 +47,7 @@ function renderDayScoreboard(currentDate: NbaDate = today) {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <DayScoreboard nbaDate={nbaDate} today={currentDate} />
+      <DayScoreboard initialDate={nbaDate} today={currentDate} />
     </QueryClientProvider>,
   );
 }
@@ -45,8 +67,11 @@ function dateRail() {
 }
 
 beforeEach(() => {
+  window.history.replaceState(null, "", `/games/${nbaDate}`);
+  scrollBy.mockReset();
+  HTMLElement.prototype.scrollBy = scrollBy;
+  HTMLElement.prototype.scrollTo = vi.fn();
   fetchMock.mockReset();
-  routerPush.mockReset();
   gameCountsFetchMock.mockReset();
   gameCountsFetchMock.mockImplementation(async () => jsonResponse(headerWeek));
   // The rail's game counts come from their own endpoint, so each test scripts the scoreboard alone.
@@ -179,33 +204,36 @@ describe("DayScoreboard", () => {
   });
 
   describe("date rail", () => {
+    const dayButtons = () => within(dateRail()).getAllByRole("button");
+
     beforeEach(() => {
-      fetchMock.mockResolvedValue(jsonResponse(finalDay));
+      fetchMock.mockImplementation(async (url: string) =>
+        jsonResponse(url.includes("dates=20261022") ? liveDay : finalDay),
+      );
     });
 
-    it("shows a week of days centered on the date, with the date pressed", () => {
+    it("shows 15 days centered on the page's date, with that date pressed", () => {
       renderDayScoreboard();
 
-      const dayButtons = within(dateRail()).getAllByRole("button");
+      const buttons = dayButtons();
+      expect(buttons).toHaveLength(15);
+      expect(buttons[0].getAttribute("aria-label")).toBe(
+        "Wednesday, October 14",
+      );
+      expect(buttons[14].getAttribute("aria-label")).toBe(
+        "Wednesday, October 28",
+      );
+      expect(buttons[7].getAttribute("aria-pressed")).toBe("true");
+      expect(buttons[7].textContent).toContain("WED");
+      expect(buttons[7].textContent).toContain("21");
       expect(
-        dayButtons.map((button) => button.getAttribute("aria-label")),
-      ).toEqual([
-        "Sunday, October 18",
-        "Monday, October 19",
-        "Tuesday, October 20",
-        "Wednesday, October 21",
-        "Thursday, October 22",
-        "Friday, October 23",
-        "Saturday, October 24",
-      ]);
-      expect(
-        dayButtons.map((button) => button.getAttribute("aria-pressed")),
-      ).toEqual(["false", "false", "false", "true", "false", "false", "false"]);
-      expect(dayButtons[3].textContent).toContain("WED");
-      expect(dayButtons[3].textContent).toContain("21");
+        buttons.filter(
+          (button) => button.getAttribute("aria-pressed") === "true",
+        ),
+      ).toHaveLength(1);
     });
 
-    it("shows each day's game count, and marks days without games, once the counts load", async () => {
+    it("shows each day's game count, and marks days without games, from one request for the whole rail", async () => {
       renderDayScoreboard();
 
       expect(
@@ -215,12 +243,12 @@ describe("DayScoreboard", () => {
       ).toBeDefined();
       expect(
         within(dateRail()).getByRole("button", {
-          name: "Sunday, October 18, No games",
+          name: "Wednesday, October 14, No games",
         }).textContent,
       ).toContain("No games");
       expect(gameCountsFetchMock).toHaveBeenCalledOnce();
       expect(gameCountsFetchMock.mock.calls[0][0]).toContain(
-        "dates=20261018-20261024",
+        "dates=20261014-20261028",
       );
     });
 
@@ -233,43 +261,95 @@ describe("DayScoreboard", () => {
 
       await screen.findByText("Magic");
       expect(within(dateRail()).queryByText("No games")).toBeNull();
-      expect(within(dateRail()).getAllByRole("button")).toHaveLength(7);
+      expect(dayButtons()).toHaveLength(15);
     });
 
-    it("navigates client-side to the chosen day", () => {
+    it("switches to the chosen day's games at once, updating the URL without a server navigation", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+
+      fireEvent.click(
+        within(dateRail()).getByRole("button", {
+          name: /^Thursday, October 22/,
+        }),
+      );
+
+      expect(window.location.pathname).toBe("/games/2026-10-22");
+      expect(
+        screen.getByRole("heading", { name: "Thursday, October 22" }),
+      ).toBeDefined();
+      expect(
+        within(dateRail())
+          .getByRole("button", { name: /^Thursday, October 22/ })
+          .getAttribute("aria-pressed"),
+      ).toBe("true");
+      expect(await screen.findByText("76ers")).toBeDefined();
+      expect(dayButtons()[0].getAttribute("aria-label")).toMatch(
+        /^Wednesday, October 14/,
+      );
+    });
+
+    it("adds no history entry when the selected day is chosen again", () => {
+      renderDayScoreboard();
+      const historyLength = window.history.length;
+
+      fireEvent.click(
+        within(dateRail()).getByRole("button", {
+          name: /^Wednesday, October 21/,
+        }),
+      );
+
+      expect(window.history.length).toBe(historyLength);
+      expect(window.location.pathname).toBe(`/games/${nbaDate}`);
+    });
+
+    it("puts today at the home page URL", () => {
       renderDayScoreboard();
 
       fireEvent.click(
-        within(dateRail()).getByRole("button", { name: /^Thursday/ }),
+        within(dateRail()).getByRole("button", { name: /^Friday, October 23/ }),
       );
 
-      expect(routerPush).toHaveBeenCalledWith("/games/2026-10-22");
+      expect(window.location.pathname).toBe("/");
+      expect(
+        screen.getByRole("heading", { name: "Friday, October 23" }),
+      ).toBeDefined();
     });
 
-    it("navigates to the home page when today is chosen", () => {
-      renderDayScoreboard("2026-10-22" as NbaDate);
-
+    it("follows the URL when the browser goes back", () => {
+      renderDayScoreboard();
       fireEvent.click(
-        within(dateRail()).getByRole("button", { name: /^Thursday/ }),
+        within(dateRail()).getByRole("button", {
+          name: /^Thursday, October 22/,
+        }),
       );
 
-      expect(routerPush).toHaveBeenCalledWith("/");
+      act(() => {
+        window.history.replaceState(null, "", `/games/${nbaDate}`);
+        window.dispatchEvent(new PopStateEvent("popstate"));
+      });
+
+      expect(
+        screen.getByRole("heading", { name: "Wednesday, October 21" }),
+      ).toBeDefined();
     });
 
-    it("moves a week back and forward with the arrows", () => {
+    it("slides the rail one day back and forward with the arrows, keeping the selected day", () => {
       renderDayScoreboard();
 
       fireEvent.click(
-        screen.getByRole("button", { name: strings.dateRail.previousWeek }),
+        screen.getByRole("button", { name: strings.dateRail.previousDays }),
       );
       fireEvent.click(
-        screen.getByRole("button", { name: strings.dateRail.nextWeek }),
+        screen.getByRole("button", { name: strings.dateRail.nextDays }),
       );
 
-      expect(routerPush.mock.calls).toEqual([
-        ["/games/2026-10-14"],
-        ["/games/2026-10-28"],
-      ]);
+      expect(scrollBy).toHaveBeenCalledTimes(2);
+      expect(scrollBy.mock.calls[0][0]).toMatchObject({ behavior: "smooth" });
+      expect(window.location.pathname).toBe(`/games/${nbaDate}`);
+      expect(
+        screen.getByRole("heading", { name: "Wednesday, October 21" }),
+      ).toBeDefined();
     });
   });
 });

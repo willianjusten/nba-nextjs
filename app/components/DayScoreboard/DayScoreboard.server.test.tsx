@@ -10,9 +10,7 @@ import DayScoreboard from ".";
 
 const nbaDate = "2026-10-22" as NbaDate;
 
-vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: vi.fn() }),
-}));
+vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -32,7 +30,7 @@ describe("DayScoreboard on the server", () => {
 
     const html = renderToString(
       <QueryClientProvider client={queryClient}>
-        <DayScoreboard nbaDate={nbaDate} today={nbaDate} />
+        <DayScoreboard initialDate={nbaDate} today={nbaDate} />
       </QueryClientProvider>,
     );
 
