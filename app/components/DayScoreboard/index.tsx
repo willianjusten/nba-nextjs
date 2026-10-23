@@ -1,17 +1,20 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import {
   buildHomeView,
   dateRailRange,
+  isInDateRail,
   nbaDateOfPath,
   type ScoreboardQueryState,
 } from "@/app/lib/home/home-view";
 import { gameCountsQueryOptions } from "@/app/lib/queries/game-counts";
 import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
 import { seasonCalendarQueryOptions } from "@/app/lib/queries/season-calendar";
+import { seasonStartYearOf } from "@/app/lib/season/season-year";
 import { useScoreboard } from "@/app/lib/queries/use-scoreboard";
 import { useBrowserTimeZone } from "@/app/lib/time/use-browser-time-zone";
 import DatePicker from "@/app/components/DatePicker";
@@ -39,20 +42,18 @@ export default function DayScoreboard({
     isRefetchError,
     refetch,
   } = useScoreboard(selectedDate);
-  const { firstDate, lastDate } = dateRailRange(initialDate);
+  // The rail stays put while days on it are chosen, and recenters, as if the page opened there, on a day off it.
+  const [railCenterDate, setRailCenterDate] = useState(initialDate);
+  if (!isInDateRail(selectedDate, railCenterDate)) {
+    setRailCenterDate(selectedDate);
+  }
+  const { firstDate, lastDate } = dateRailRange(railCenterDate);
   const { data: gameCounts } = useQuery(
     gameCountsQueryOptions(firstDate, lastDate),
   );
-  // The previous day's calendar stays while the next one loads, but only when it covers the new day, so another season's days are never marked.
-  const { data: seasonCalendar } = useQuery({
-    ...seasonCalendarQueryOptions(selectedDate),
-    placeholderData: (previousCalendar) =>
-      previousCalendar?.length &&
-      previousCalendar[0] <= selectedDate &&
-      selectedDate <= previousCalendar[previousCalendar.length - 1]
-        ? previousCalendar
-        : undefined,
-  });
+  const { data: seasonCalendar } = useQuery(
+    seasonCalendarQueryOptions(seasonStartYearOf(selectedDate)),
+  );
   const timeZone = useBrowserTimeZone();
 
   // Data is checked before the error: a failed refetch keeps the last valid scoreboard instead of hiding it.
@@ -66,7 +67,7 @@ export default function DayScoreboard({
 
   const homeView = buildHomeView({
     selectedDate,
-    railCenterDate: initialDate,
+    railCenterDate,
     today,
     query,
     gameCounts: gameCounts ?? null,
@@ -81,7 +82,6 @@ export default function DayScoreboard({
   const datePickerProps = {
     selectedDate,
     today,
-    seasonCalendar: seasonCalendar ?? null,
     onSelect: selectDay,
   };
 

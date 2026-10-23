@@ -150,7 +150,8 @@ describe("DayScoreboard", () => {
   });
 
   it("links a day without games to the next game day on the season calendar", async () => {
-    fetchMock.mockResolvedValue(
+    // The day's scoreboard and its season calendar are separate requests, each needing its own response.
+    fetchMock.mockImplementation(async () =>
       jsonResponse({
         ...noGames,
         leagues: [{ calendar: ["2026-10-20T07:00Z", "2026-10-24T07:00Z"] }],
@@ -275,6 +276,104 @@ describe("DayScoreboard", () => {
       expect(
         within(calendar).getByRole("button", {
           name: "Tuesday, November 3, Game day",
+        }),
+      ).toBeDefined();
+    });
+
+    it("recenters the rail on a picked date outside it, loading that range's game counts", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+      const calendar = await openCalendar();
+      fireEvent.click(
+        within(calendar).getByRole("button", {
+          name: strings.calendar.nextMonth,
+        }),
+      );
+
+      fireEvent.click(
+        within(calendar).getByRole("button", { name: /^Friday, November 20/ }),
+      );
+
+      const railButtons = within(dateRail()).getAllByRole("button");
+      expect(railButtons).toHaveLength(15);
+      expect(railButtons[0].getAttribute("aria-label")).toMatch(
+        /^Friday, November 13/,
+      );
+      expect(railButtons[7].getAttribute("aria-pressed")).toBe("true");
+      expect(railButtons[7].getAttribute("aria-label")).toMatch(
+        /^Friday, November 20/,
+      );
+      await vi.waitFor(() =>
+        expect(gameCountsFetchMock.mock.calls.at(-1)?.[0]).toContain(
+          "dates=20261113-20261127",
+        ),
+      );
+    });
+
+    it("keeps the rail in place when the picked date is already on it", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+      const calendar = await openCalendar();
+
+      fireEvent.click(
+        within(calendar).getByRole("button", { name: /^Sunday, October 25/ }),
+      );
+
+      const railButtons = within(dateRail()).getAllByRole("button");
+      expect(railButtons[0].getAttribute("aria-label")).toMatch(
+        /^Wednesday, October 14/,
+      );
+      expect(
+        within(dateRail())
+          .getByRole("button", { name: /^Sunday, October 25/ })
+          .getAttribute("aria-pressed"),
+      ).toBe("true");
+    });
+
+    it("keeps marking each season's game days after an offseason day is picked", async () => {
+      // ESPN answers an offseason day with the season that just ended, so each season is read from its own first day.
+      const seasonCalendars: Record<string, string[]> = {
+        "dates=20251001": ["2026-06-10T07:00Z"],
+        "dates=20261001": ["2026-10-21T07:00Z", "2026-11-03T07:00Z"],
+      };
+      fetchMock.mockImplementation(async (url: string) => {
+        const seasonQuery = Object.keys(seasonCalendars).find((query) =>
+          url.includes(query),
+        );
+        return jsonResponse(
+          seasonQuery
+            ? {
+                ...noGames,
+                leagues: [{ calendar: seasonCalendars[seasonQuery] }],
+              }
+            : { ...noGames, leagues: [{ calendar: ["2026-06-10T07:00Z"] }] },
+        );
+      });
+      renderDayScoreboard();
+      const previousMonthName = { name: strings.calendar.previousMonth };
+      const nextMonthName = { name: strings.calendar.nextMonth };
+
+      let calendar = await openCalendar();
+      fireEvent.click(within(calendar).getByRole("button", previousMonthName));
+      fireEvent.click(within(calendar).getByRole("button", previousMonthName));
+      fireEvent.click(
+        within(calendar).getByRole("button", { name: /^Saturday, August 15/ }),
+      );
+      expect(window.location.pathname).toBe("/games/2026-08-15");
+      expect(
+        await screen.findByRole("link", {
+          name: strings.games.nextGames("Wed, Oct 21"),
+        }),
+      ).toBeDefined();
+
+      calendar = await openCalendar();
+      fireEvent.click(within(calendar).getByRole("button", nextMonthName));
+      fireEvent.click(within(calendar).getByRole("button", nextMonthName));
+
+      expect(within(calendar).getByText("October 2026")).toBeDefined();
+      expect(
+        await within(calendar).findByRole("button", {
+          name: "Wednesday, October 21, Game day",
         }),
       ).toBeDefined();
     });

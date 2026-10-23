@@ -48,6 +48,13 @@ export const ESPN_ENDPOINTS = {
     access: "direct",
     isLive: true,
   },
+  // The same scoreboard, read only for its season calendar, which changes far less often than the scores.
+  seasonCalendar: {
+    host: "site",
+    path: "/apis/site/v2/sports/basketball/nba/scoreboard",
+    access: "direct",
+    revalidateSeconds: ONE_HOUR_IN_SECONDS,
+  },
   // The site scoreboard rejects date ranges, but the header scoreboard serves a whole range in one response.
   scoreboardHeader: {
     host: "siteWeb",

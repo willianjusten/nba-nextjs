@@ -10,6 +10,7 @@ import {
   buildCalendarMonth,
   buildHomeView,
   dateRailRange,
+  isInDateRail,
   nbaDateOfPath,
   type HomeCard,
   type HomeView,
@@ -31,7 +32,7 @@ const [exhibitionGame] = gamesOf(internationalExhibition);
 const postponedGame: Game = { ...finalLate, status: { kind: "postponed" } };
 
 function scoreboardWith(games: Game[]): Scoreboard {
-  return { nbaDate, games, seasonCalendar: [] };
+  return { nbaDate, games };
 }
 
 function viewFor(
@@ -388,6 +389,20 @@ describe("buildHomeView", () => {
     ])("reads the selected date of %s", (pathname, expectedDate) => {
       expect(nbaDateOfPath(pathname, today)).toBe(expectedDate);
     });
+
+    it.each<[string, boolean]>([
+      ["2026-10-13", true],
+      ["2026-10-27", true],
+      ["2026-10-12", false],
+      ["2026-10-28", false],
+    ])(
+      "tells whether %s is on the rail centered on October 20",
+      (nbaDate, expected) => {
+        expect(isInDateRail(nbaDate as NbaDate, "2026-10-20" as NbaDate)).toBe(
+          expected,
+        );
+      },
+    );
 
     it("exposes the range whose game counts the rail needs", () => {
       expect(dateRailRange("2026-12-31" as NbaDate)).toEqual({

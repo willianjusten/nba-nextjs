@@ -148,33 +148,6 @@ describe("fetchScoreboard", () => {
     expect(scoreboard.games).toEqual([]);
   });
 
-  it("lists the season's game days from the league calendar as NBA dates, in order", async () => {
-    respondWith({
-      ...finalDay,
-      leagues: [
-        {
-          calendar: [
-            "2026-10-22T07:00Z",
-            "2026-10-20T07:00Z",
-            "2026-10-22T07:00Z",
-          ],
-        },
-      ],
-    });
-
-    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
-
-    expect(scoreboard.seasonCalendar).toEqual(["2026-10-20", "2026-10-22"]);
-  });
-
-  it("returns an empty season calendar when ESPN sends none", async () => {
-    respondWith({ ...finalDay, leagues: [] });
-
-    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-21")!);
-
-    expect(scoreboard.seasonCalendar).toEqual([]);
-  });
-
   it("reads the season type from the event, not the league header", async () => {
     respondWith(playoffGame);
 

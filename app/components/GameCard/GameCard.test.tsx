@@ -26,7 +26,7 @@ function cardFor(game: Game, timeZone: string | null = "America/New_York") {
     today: game.nbaDate as NbaDate,
     query: {
       status: "success",
-      scoreboard: { nbaDate: game.nbaDate, games: [game], seasonCalendar: [] },
+      scoreboard: { nbaDate: game.nbaDate, games: [game] },
     },
     gameCounts: null,
     seasonCalendar: null,

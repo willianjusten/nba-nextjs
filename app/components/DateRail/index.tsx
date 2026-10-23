@@ -25,7 +25,9 @@ export default function DateRail({
   children,
 }: DateRailProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const hasCenteredRef = useRef(false);
+  // The first day of the rail last centered, so a recentered rail is centered again.
+  const centeredRailStartRef = useRef<string | null>(null);
+  const railStart = rail.days[0]?.nbaDate;
   const selectedIndex = rail.days.findIndex((day) => day.isSelected);
 
   const measureDayStepPixels = () => {
@@ -43,17 +45,24 @@ export default function DateRail({
 
   useLayoutEffect(() => {
     const scroller = scrollerRef.current;
-    if (!scroller || hasCenteredRef.current || selectedIndex < 0) return;
-    hasCenteredRef.current = true;
+    if (
+      !scroller ||
+      centeredRailStartRef.current === railStart ||
+      selectedIndex < 0
+    ) {
+      return;
+    }
+    centeredRailStartRef.current = railStart;
     scroller.scrollLeft =
       (selectedIndex - DAYS_BESIDE_CENTER) * measureDayStepPixels();
-  }, [selectedIndex]);
+  }, [railStart, selectedIndex]);
 
   // Later selections, such as going back in history, only scroll when the day is out of view.
   // Scrolling the rail itself, unlike scrollIntoView, never moves the page vertically.
   useEffect(() => {
     const scroller = scrollerRef.current;
-    if (!scroller || !hasCenteredRef.current || selectedIndex < 0) return;
+    if (!scroller || centeredRailStartRef.current === null || selectedIndex < 0)
+      return;
     const dayStepPixels = measureDayStepPixels();
     const firstVisibleIndex = Math.round(scroller.scrollLeft / dayStepPixels);
     const visibleDayCount = DAYS_BESIDE_CENTER * 2 + 1;

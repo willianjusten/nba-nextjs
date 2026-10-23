@@ -42,13 +42,13 @@ export type ScoreboardQueryState =
 
 export type HomeViewInput = {
   selectedDate: NbaDate;
-  // The date the page opened with; the rail stays centered on it while other days are selected.
+  // The date the page opened with, or the last date picked off the rail; the rail stays centered on it while days on it are selected.
   railCenterDate: NbaDate;
   // The current NBA date, which lives at "/" instead of its own games page.
   today: NbaDate;
   query: ScoreboardQueryState;
   gameCounts: GameCounts | null;
-  // Every game day of the selected date's season; null until it loads.
+  // Every game day of the selected date's season, the offseason counting toward the next one; null until it loads.
   seasonCalendar: NbaDate[] | null;
   now: Date;
   // The browser timezone; null while server rendering, where the viewer's timezone is unknown.
@@ -325,6 +325,12 @@ export function dateRailRange(nbaDate: NbaDate) {
     firstDate: addDaysToNbaDate(nbaDate, -RAIL_DAYS_PER_SIDE),
     lastDate: addDaysToNbaDate(nbaDate, RAIL_DAYS_PER_SIDE),
   };
+}
+
+export function isInDateRail(nbaDate: NbaDate, railCenterDate: NbaDate) {
+  const { firstDate, lastDate } = dateRailRange(railCenterDate);
+  // NbaDate strings are YYYY-MM-DD, so string order is calendar order.
+  return firstDate <= nbaDate && nbaDate <= lastDate;
 }
 
 function hrefOf(nbaDate: NbaDate, today: NbaDate) {

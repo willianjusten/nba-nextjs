@@ -2,8 +2,11 @@
 
 import { useRef, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
+import { useQuery } from "@tanstack/react-query";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import { buildCalendarMonth, type CalendarDay } from "@/app/lib/home/home-view";
+import { seasonCalendarQueryOptions } from "@/app/lib/queries/season-calendar";
+import { seasonStartYearOf } from "@/app/lib/season/season-year";
 import { strings } from "@/app/lib/strings";
 import { startOfNbaMonth } from "@/app/lib/time/nba-date";
 import DatePickerTrigger, {
@@ -15,7 +18,6 @@ export type CalendarPopoverProps = {
   placement: DatePickerPlacement;
   selectedDate: NbaDate;
   today: NbaDate;
-  seasonCalendar: NbaDate[] | null;
   onSelect: (day: CalendarDay) => void;
 };
 
@@ -24,19 +26,22 @@ export default function CalendarPopover({
   placement,
   selectedDate,
   today,
-  seasonCalendar,
   onSelect,
 }: CalendarPopoverProps) {
   const [isOpen, setIsOpen] = useState(true);
   const [monthStart, setMonthStart] = useState(() =>
     startOfNbaMonth(selectedDate),
   );
+  // The shown month's own season, so browsing past an offseason still marks the next season's game days.
+  const { data: seasonCalendar } = useQuery(
+    seasonCalendarQueryOptions(seasonStartYearOf(monthStart)),
+  );
   const contentRef = useRef<HTMLDivElement>(null);
   const month = buildCalendarMonth({
     monthStart,
     selectedDate,
     today,
-    seasonCalendar,
+    seasonCalendar: seasonCalendar ?? null,
   });
 
   return (
@@ -65,7 +70,7 @@ export default function CalendarPopover({
             event.preventDefault();
             selectedDay.focus();
           }}
-          className="z-50 flex w-[min(22.5rem,calc(100vw-2rem))] flex-col gap-3 rounded-card border border-white/10 bg-elevated p-3 md:p-4 text-foreground shadow-[0_24px_48px_rgb(0_0_0/0.45)]"
+          className="z-50 flex w-[min(22.5rem,calc(100vw-2rem))] flex-col gap-3 card border-white/10 bg-white/4.5 backdrop-blur-xl p-3 md:p-4 text-foreground shadow-[0_24px_48px_rgb(0_0_0/0.45)]"
         >
           <div className="flex items-center justify-between gap-2">
             <MonthArrowButton
