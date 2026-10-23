@@ -11,7 +11,7 @@ import {
   type StreakKind,
 } from "@/app/lib/home/sidebar";
 import { strings } from "@/app/lib/strings";
-import { PANEL_HEADING_CLASS_NAME } from "./styles";
+import { PANEL_HEADING_CLASS_NAME, PANEL_SURFACE_CLASS_NAME } from "./styles";
 
 const LOGO_SIZE = 22;
 const HEADING_ID = "sidebar-standings";
@@ -62,7 +62,10 @@ export default function StandingsPanel({
 
   if (!sidebarStandings) {
     return (
-      <p role="alert" className="card p-4.5 text-sm text-secondary">
+      <p
+        role="alert"
+        className={`text-sm text-secondary ${PANEL_SURFACE_CLASS_NAME}`}
+      >
         {sidebar.standingsError}
       </p>
     );
@@ -71,7 +74,7 @@ export default function StandingsPanel({
   return (
     <section
       aria-labelledby={HEADING_ID}
-      className="flex flex-col gap-3 card p-4.5"
+      className={`flex flex-col gap-3 ${PANEL_SURFACE_CLASS_NAME}`}
     >
       <div className="flex items-center justify-between">
         <h2 id={HEADING_ID} className={PANEL_HEADING_CLASS_NAME}>

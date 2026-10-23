@@ -5,7 +5,7 @@ import {
   type SidebarLeaderCategory,
 } from "@/app/lib/home/sidebar";
 import { strings } from "@/app/lib/strings";
-import { PANEL_HEADING_CLASS_NAME } from "./styles";
+import { PANEL_HEADING_CLASS_NAME, PANEL_SURFACE_CLASS_NAME } from "./styles";
 
 // ESPN headshots are 1040x760, so this keeps their aspect ratio.
 const HEADSHOT_DISPLAY_WIDTH = 56;
@@ -103,7 +103,7 @@ export default function LeadersPanel({
   return (
     <section
       aria-labelledby={HEADING_ID}
-      className="flex flex-col gap-3.5 card p-4.5"
+      className={`flex flex-col gap-3.5 ${PANEL_SURFACE_CLASS_NAME}`}
     >
       <h2 id={HEADING_ID} className={PANEL_HEADING_CLASS_NAME}>
         {strings.home.sidebar.leadersTitle}
