@@ -40,11 +40,12 @@ export function LiveChip() {
   );
 }
 
+// Star only, so the channel beside it keeps its room; the label is still read out.
 export function MyTeamChip() {
   return (
     <StatusChip tone="my-team">
       <StarIcon />
-      {strings.gameStatus.myTeam}
+      <span className="sr-only">{strings.gameStatus.myTeam}</span>
     </StatusChip>
   );
 }

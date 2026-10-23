@@ -10,33 +10,19 @@ import { useFavoriteTeamIds } from "@/app/lib/favorites/use-favorite-team-ids";
 import { teamsQueryOptions } from "@/app/lib/queries/teams";
 import { strings } from "@/app/lib/strings";
 
-// The site header on desktop, below the date heading on the mobile home page, as the two artboards draw it.
+// The site header on desktop, below the date heading on the mobile home page.
 export type MyTeamsPlacement = "header" | "home";
 
-const PILL_CLASS_NAMES: Record<MyTeamsPlacement, string> = {
-  header: "size-11 justify-center",
-  home: "min-h-11 gap-1.5 py-1 pr-3 pl-1.5 text-xs font-bold",
-};
-const LOGO_SIZES: Record<MyTeamsPlacement, number> = {
-  header: 28,
-  home: 24,
-};
+const LOGO_SIZE = 28;
 
-function MyTeamPill({
-  team,
-  placement,
-}: {
-  team: MyTeamLink;
-  placement: MyTeamsPlacement;
-}) {
+function MyTeamLogoLink({ team }: { team: MyTeamLink }) {
   return (
     <Link
       href={team.href}
       aria-label={team.displayName}
-      className={`flex shrink-0 items-center rounded-full border border-favorite/40 bg-favorite/10 transition-colors hover:bg-favorite/18 ${PILL_CLASS_NAMES[placement]} ${FOCUS_RING_CLASS_NAME}`}
+      className={`flex size-11 shrink-0 items-center justify-center rounded-full border border-favorite/40 bg-favorite/10 transition-colors hover:bg-favorite/18 ${FOCUS_RING_CLASS_NAME}`}
     >
-      <TeamLogo logoUrl={team.logoUrl} size={LOGO_SIZES[placement]} />
-      {placement === "home" && <span aria-hidden="true">{team.name}</span>}
+      <TeamLogo logoUrl={team.logoUrl} size={LOGO_SIZE} />
     </Link>
   );
 }
@@ -62,7 +48,7 @@ export default function MyTeamsStrip({
     >
       <TeamPicker />
       {myTeams?.map((team) => (
-        <MyTeamPill key={team.teamId} team={team} placement={placement} />
+        <MyTeamLogoLink key={team.teamId} team={team} />
       ))}
     </nav>
   );
