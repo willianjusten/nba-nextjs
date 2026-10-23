@@ -18,7 +18,6 @@
   }
 }
 
-/* Court Night foundations. Dark only; tokens are named by role so a light theme can redefine them later. */
 @theme {
   --color-ink: #080b14;
   --color-elevated: #121728;
