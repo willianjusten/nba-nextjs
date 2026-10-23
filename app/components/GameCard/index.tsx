@@ -210,6 +210,12 @@ export default function GameCard({ card }: { card: HomeCard }) {
         </div>
       )}
 
+      {card.venueLabel && (
+        <p className="truncate text-center text-meta text-muted">
+          {card.venueLabel}
+        </p>
+      )}
+
       {card.showHighlights && (
         <CardAction href={gameCenterHref} tone="neutral">
           <PlayIcon />

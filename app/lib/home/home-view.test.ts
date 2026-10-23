@@ -275,14 +275,21 @@ describe("buildHomeView", () => {
       ],
       ["halftime", halftimeGame, "Halftime · ESPN"],
       ["finals", finalOrlando, "NBA League Pass"],
-      ["scheduled games", scheduledLate, "Paycom Center · ESPN"],
-      ["postponed games", postponedGame, "Kaseya Center · ESPN"],
+      ["scheduled games", scheduledLate, "ESPN"],
+      ["postponed games", postponedGame, "ESPN"],
     ])("builds the meta line of %s", (_case, game, expectedMeta) => {
       expect(cardFor(game).metaLabel).toBe(expectedMeta);
     });
 
-    it("leaves the venue out of the meta line when ESPN has none", () => {
-      expect(cardFor({ ...scheduledLate, venue: null }).metaLabel).toBe("ESPN");
+    it("gives the venue its own line on games that have not been played", () => {
+      expect(cardFor(scheduledLate).venueLabel).toBe("Paycom Center");
+      expect(cardFor(postponedGame).venueLabel).toBe("Kaseya Center");
+    });
+
+    it("leaves the venue out once the game has started or when ESPN has none", () => {
+      expect(cardFor(liveGame).venueLabel).toBeNull();
+      expect(cardFor(finalOrlando).venueLabel).toBeNull();
+      expect(cardFor({ ...scheduledLate, venue: null }).venueLabel).toBeNull();
     });
 
     it("marks the leading team once the game has a score", () => {

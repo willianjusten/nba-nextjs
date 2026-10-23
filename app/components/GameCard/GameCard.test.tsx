@@ -83,7 +83,8 @@ describe("GameCard", () => {
     renderCard(cardFor(scheduledGame));
 
     expect(screen.getByText("9:30 PM")).toBeDefined();
-    expect(screen.getByText("Paycom Center · ESPN")).toBeDefined();
+    expect(screen.getByText("ESPN")).toBeDefined();
+    expect(screen.getByText("Paycom Center")).toBeDefined();
     expect(screen.queryByText("0")).toBeNull();
   });
 

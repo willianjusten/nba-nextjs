@@ -47,6 +47,8 @@ export type HomeCard = {
   statusLabel: string | null;
   channelLabel: string;
   metaLabel: string;
+  // Only for games not yet played, where it sits on its own line so the channel isn't truncated.
+  venueLabel: string | null;
   leadingSide: TeamSide | null;
   teamColors: Record<TeamSide, string>;
   showHighlights: boolean;
@@ -125,14 +127,13 @@ function metaLabelOf(game: Game, channelLabel: string) {
       case "halftime":
         return [strings.gameStatus.halftime, channelLabel];
       case "final":
-        return [channelLabel];
       case "scheduled":
       case "postponed":
       case "canceled":
-        return [game.venue, channelLabel];
+        return [channelLabel];
     }
   })();
-  return parts.filter(Boolean).join(META_SEPARATOR);
+  return parts.join(META_SEPARATOR);
 }
 
 function leadingSideOf({ status, home, away }: Game): TeamSide | null {
@@ -150,6 +151,7 @@ function cardOf(game: Game, timeZone: string | null): HomeCard {
     statusLabel: statusLabelOf(game, timeZone),
     channelLabel,
     metaLabel: metaLabelOf(game, channelLabel),
+    venueLabel: hasScore(game.status) ? null : game.venue,
     leadingSide: leadingSideOf(game),
     teamColors: readableTeamColors(game.home.team, game.away.team),
     showHighlights: game.status.kind === "final",
