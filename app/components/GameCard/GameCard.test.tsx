@@ -63,7 +63,7 @@ describe("GameCard", () => {
     expect(screen.getByText(strings.gameStatus.live)).toBeDefined();
     expect(screen.getByText("Q2 · 7:11 · ESPN")).toBeDefined();
     expect(
-      screen.getByRole("link", { name: strings.gameCard.gameCenter }),
+      screen.getByRole("link", { name: strings.gameCard.gameDetails }),
     ).toBeDefined();
     expect(
       screen.queryByRole("link", { name: strings.gameCard.highlights }),

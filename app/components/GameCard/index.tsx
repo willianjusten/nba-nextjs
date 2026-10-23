@@ -164,10 +164,10 @@ function CardAction({
       : "border-white/14 bg-white/5 text-foreground hover:bg-white/10";
 
   return (
-    // Sits above the card-wide link so it stays clickable on its own.
+    // Sits above the card-wide link so it stays clickable on its own, and at the bottom so actions line up across a row of cards.
     <Link
       href={href}
-      className={`relative z-10 flex min-h-11 items-center justify-center gap-2 rounded-tile border text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${toneClassName}`}
+      className={`relative z-10 mt-auto flex min-h-11 items-center justify-center gap-2 rounded-tile border text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${toneClassName}`}
     >
       {children}
     </Link>
@@ -285,7 +285,7 @@ export default function GameCard({ card }: { card: HomeCard }) {
       )}
       {isLive && (
         <CardAction href={gameCenterHref} tone="accent">
-          {strings.gameCard.gameCenter}
+          {strings.gameCard.gameDetails}
           <ArrowIcon />
         </CardAction>
       )}
