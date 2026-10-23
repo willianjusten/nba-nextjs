@@ -74,8 +74,8 @@ export type Game = {
 export type Scoreboard = {
   nbaDate: NbaDate;
   games: Game[];
-  // The first later day with games on the season calendar; null once the season has none left.
-  nextGameDate: NbaDate | null;
+  // Every day of the scoreboard's season that has games, in calendar order.
+  seasonCalendar: NbaDate[];
 };
 
 // Games per NBA date; every day of the requested range has an entry, zero when it has no games.

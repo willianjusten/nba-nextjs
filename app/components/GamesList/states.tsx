@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
+import type { NextGameDay } from "@/app/lib/home/home-view";
 import { strings } from "@/app/lib/strings";
 import { formatShortNbaDate } from "@/app/lib/time/nba-date";
 
@@ -64,22 +65,22 @@ export function GamesListError({ onRetry, isRetrying }: GamesListErrorProps) {
 
 type GamesListEmptyProps = {
   nbaDate: NbaDate;
-  nextGameDate: NbaDate | null;
+  nextGameDay: NextGameDay | null;
 };
 
-export function GamesListEmpty({ nbaDate, nextGameDate }: GamesListEmptyProps) {
+export function GamesListEmpty({ nbaDate, nextGameDay }: GamesListEmptyProps) {
   return (
     <div className="flex flex-col items-center gap-2.5 rounded-card border border-dashed border-white/16 p-5 text-center">
       <BasketballIcon className="size-7 text-muted" />
       <p className="font-bold">
         {strings.games.empty(formatShortNbaDate(nbaDate))}
       </p>
-      {nextGameDate && (
+      {nextGameDay && (
         <Link
-          href={`/games/${nextGameDate}`}
+          href={nextGameDay.href}
           className="inline-flex min-h-11 items-center text-sm font-bold text-link transition-colors hover:text-accent"
         >
-          {strings.games.nextGames(formatShortNbaDate(nextGameDate))}
+          {strings.games.nextGames(nextGameDay.label)}
           <span aria-hidden="true">&nbsp;→</span>
         </Link>
       )}

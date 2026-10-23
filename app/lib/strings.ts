@@ -38,6 +38,16 @@ export const strings = {
     dayLabel: (formattedDate: string, countLabel: string | null) =>
       countLabel ? `${formattedDate}, ${countLabel}` : formattedDate,
   },
+  calendar: {
+    pickDate: "Pick date",
+    pickDateLabel: "Pick a date",
+    openCalendar: "Open calendar",
+    previousMonth: "Previous month",
+    nextMonth: "Next month",
+    weekdays: ["S", "M", "T", "W", "T", "F", "S"],
+    dayLabel: (formattedDate: string, hasGames: boolean) =>
+      hasGames ? `${formattedDate}, Game day` : formattedDate,
+  },
   games: {
     loading: "Loading games...",
     error: "Couldn't load the games",

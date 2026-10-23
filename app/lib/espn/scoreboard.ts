@@ -19,15 +19,12 @@ export async function fetchScoreboard(nbaDate: NbaDate): Promise<Scoreboard> {
   return {
     nbaDate,
     games: rawScoreboard.events.map(mapGame),
-    nextGameDate: nextGameDateOf(rawScoreboard, nbaDate),
+    seasonCalendar: seasonCalendarOf(rawScoreboard),
   };
 }
 
-function nextGameDateOf(
-  rawScoreboard: RawScoreboard,
-  nbaDate: NbaDate,
-): NbaDate | null {
+function seasonCalendarOf(rawScoreboard: RawScoreboard): NbaDate[] {
   const gameDates = (rawScoreboard.leagues?.[0]?.calendar ?? []).map(nbaDateOf);
   // NbaDate strings are YYYY-MM-DD, so string order is calendar order.
-  return gameDates.filter((gameDate) => gameDate > nbaDate).sort()[0] ?? null;
+  return [...new Set(gameDates)].sort();
 }

@@ -14,9 +14,16 @@ type DateRailProps = {
   rail: DateRailView;
   onSelect: (day: RailDay) => void;
   onPreview: (day: RailDay) => void;
+  // Rendered at the end of the row, after the arrows, such as the date picker.
+  children?: React.ReactNode;
 };
 
-export default function DateRail({ rail, onSelect, onPreview }: DateRailProps) {
+export default function DateRail({
+  rail,
+  onSelect,
+  onPreview,
+  children,
+}: DateRailProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const hasCenteredRef = useRef(false);
   const selectedIndex = rail.days.findIndex((day) => day.isSelected);
@@ -91,6 +98,7 @@ export default function DateRail({ rail, onSelect, onPreview }: DateRailProps) {
       >
         <path d="M9 6l6 6-6 6" />
       </SlideArrowButton>
+      {children}
     </div>
   );
 }

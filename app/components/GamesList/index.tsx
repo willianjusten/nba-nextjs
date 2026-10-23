@@ -29,7 +29,7 @@ export default function GamesList({
       return <GamesListError onRetry={onRetry} isRetrying={isRetrying} />;
     case "empty":
       return (
-        <GamesListEmpty nbaDate={nbaDate} nextGameDate={screen.nextGameDate} />
+        <GamesListEmpty nbaDate={nbaDate} nextGameDay={screen.nextGameDay} />
       );
     case "games":
     case "stale":

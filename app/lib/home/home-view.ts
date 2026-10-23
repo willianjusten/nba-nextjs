@@ -14,12 +14,15 @@ import {
 import { strings } from "@/app/lib/strings";
 import {
   addDaysToNbaDate,
+  addMonthsToNbaMonth,
   formatNbaDate,
   formatNbaDayNumber,
   formatNbaMonthDay,
+  formatNbaMonthYear,
   formatNbaWeekday,
   formatShortNbaDate,
   formatShortNbaWeekday,
+  nbaDayOfWeek,
   parseNbaDate,
 } from "@/app/lib/time/nba-date";
 import { formatTipOff } from "@/app/lib/time/tip-off";
@@ -45,6 +48,8 @@ export type HomeViewInput = {
   today: NbaDate;
   query: ScoreboardQueryState;
   gameCounts: GameCounts | null;
+  // Every game day of the selected date's season; null until it loads.
+  seasonCalendar: NbaDate[] | null;
   now: Date;
   // The browser timezone; null while server rendering, where the viewer's timezone is unknown.
   timeZone: string | null;
@@ -103,10 +108,17 @@ export type DateRailView = {
   days: RailDay[];
 };
 
+export type NextGameDay = {
+  nbaDate: NbaDate;
+  href: string;
+  label: string;
+};
+
 export type HomeScreen =
   | { kind: "loading" }
   | { kind: "error" }
-  | { kind: "empty"; nextGameDate: NbaDate | null }
+  // The next game day is null once the season has none left, or while its calendar is unknown.
+  | { kind: "empty"; nextGameDay: NextGameDay | null }
   | { kind: "games"; cards: HomeCard[] }
   | { kind: "stale"; cards: HomeCard[]; minutesAgo: number };
 
@@ -255,11 +267,32 @@ function headingOf(nbaDate: NbaDate): DateHeading {
   };
 }
 
-function screenOf(
-  query: ScoreboardQueryState,
-  now: Date,
-  timeZone: string | null,
-): HomeScreen {
+function nextGameDayOf(
+  selectedDate: NbaDate,
+  today: NbaDate,
+  seasonCalendar: NbaDate[] | null,
+): NextGameDay | null {
+  // NbaDate strings are YYYY-MM-DD, so string order is calendar order.
+  const nextGameDate = seasonCalendar?.find(
+    (gameDate) => gameDate > selectedDate,
+  );
+  if (!nextGameDate) return null;
+
+  return {
+    nbaDate: nextGameDate,
+    href: hrefOf(nextGameDate, today),
+    label: formatShortNbaDate(nextGameDate),
+  };
+}
+
+function screenOf({
+  query,
+  selectedDate,
+  today,
+  seasonCalendar,
+  now,
+  timeZone,
+}: HomeViewInput): HomeScreen {
   switch (query.status) {
     case "loading":
       return { kind: "loading" };
@@ -267,8 +300,13 @@ function screenOf(
       return { kind: "error" };
     case "success":
     case "stale": {
-      const { games, nextGameDate } = query.scoreboard;
-      if (games.length === 0) return { kind: "empty", nextGameDate };
+      const { games } = query.scoreboard;
+      if (games.length === 0) {
+        return {
+          kind: "empty",
+          nextGameDay: nextGameDayOf(selectedDate, today, seasonCalendar),
+        };
+      }
 
       const cards = orderGames(games).map((game) => cardOf(game, timeZone));
       if (query.status === "success") return { kind: "games", cards };
@@ -347,15 +385,8 @@ function dateRailOf(
   return { days };
 }
 
-export function buildHomeView({
-  selectedDate,
-  railCenterDate,
-  today,
-  query,
-  gameCounts,
-  now,
-  timeZone,
-}: HomeViewInput): HomeView {
+export function buildHomeView(input: HomeViewInput): HomeView {
+  const { selectedDate, railCenterDate, today, query, gameCounts } = input;
   const games =
     query.status === "success" || query.status === "stale"
       ? query.scoreboard.games
@@ -365,6 +396,81 @@ export function buildHomeView({
     heading: headingOf(selectedDate),
     dateRail: dateRailOf(railCenterDate, selectedDate, today, gameCounts),
     summary: games.length > 0 ? summarize(games) : null,
-    screen: screenOf(query, now, timeZone),
+    screen: screenOf(input),
+  };
+}
+
+export type CalendarDay = {
+  nbaDate: NbaDate;
+  href: string;
+  dayNumber: string;
+  // The full date, plus whether it has games, read in place of the day number.
+  label: string;
+  isSelected: boolean;
+  isToday: boolean;
+  // False while the season calendar is unknown, so no day reads as a game day by mistake.
+  hasGames: boolean;
+};
+
+export type CalendarMonthView = {
+  title: string;
+  previousMonthStart: NbaDate;
+  nextMonthStart: NbaDate;
+  weekdays: readonly string[];
+  // Sunday-first weeks of 7, with null for the days of the months around it.
+  weeks: (CalendarDay | null)[][];
+};
+
+export type CalendarMonthInput = {
+  monthStart: NbaDate;
+  selectedDate: NbaDate;
+  today: NbaDate;
+  seasonCalendar: NbaDate[] | null;
+};
+
+const DAYS_PER_WEEK = 7;
+
+export function buildCalendarMonth({
+  monthStart,
+  selectedDate,
+  today,
+  seasonCalendar,
+}: CalendarMonthInput): CalendarMonthView {
+  const gameDates = new Set(seasonCalendar);
+  const nextMonthStart = addMonthsToNbaMonth(monthStart, 1);
+
+  const cells: (CalendarDay | null)[] = Array.from(
+    { length: nbaDayOfWeek(monthStart) },
+    () => null,
+  );
+  // NbaDate strings are YYYY-MM-DD, so string order is calendar order.
+  for (
+    let nbaDate = monthStart;
+    nbaDate < nextMonthStart;
+    nbaDate = addDaysToNbaDate(nbaDate, 1)
+  ) {
+    const hasGames = gameDates.has(nbaDate);
+    cells.push({
+      nbaDate,
+      href: hrefOf(nbaDate, today),
+      dayNumber: formatNbaDayNumber(nbaDate),
+      label: strings.calendar.dayLabel(formatNbaDate(nbaDate), hasGames),
+      isSelected: nbaDate === selectedDate,
+      isToday: nbaDate === today,
+      hasGames,
+    });
+  }
+  while (cells.length % DAYS_PER_WEEK !== 0) cells.push(null);
+
+  return {
+    title: formatNbaMonthYear(monthStart),
+    previousMonthStart: addMonthsToNbaMonth(monthStart, -1),
+    nextMonthStart,
+    weekdays: strings.calendar.weekdays,
+    weeks: Array.from(
+      { length: cells.length / DAYS_PER_WEEK },
+      (_, weekIndex) =>
+        cells.slice(weekIndex * DAYS_PER_WEEK, (weekIndex + 1) * DAYS_PER_WEEK),
+    ),
   };
 }

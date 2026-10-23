@@ -149,20 +149,20 @@ describe("DayScoreboard", () => {
     expect(screen.queryByRole("status")).toBeNull();
   });
 
-  it("links a day without games to the next game day", async () => {
+  it("links a day without games to the next game day on the season calendar", async () => {
     fetchMock.mockResolvedValue(
       jsonResponse({
         ...noGames,
-        leagues: [{ calendar: ["2026-10-20T07:00Z", "2026-10-23T07:00Z"] }],
+        leagues: [{ calendar: ["2026-10-20T07:00Z", "2026-10-24T07:00Z"] }],
       }),
     );
 
     renderDayScoreboard();
 
     const nextGamesLink = await screen.findByRole("link", {
-      name: strings.games.nextGames("Fri, Oct 23"),
+      name: strings.games.nextGames("Sat, Oct 24"),
     });
-    expect(nextGamesLink.getAttribute("href")).toBe("/games/2026-10-23");
+    expect(nextGamesLink.getAttribute("href")).toBe("/games/2026-10-24");
   });
 
   it("offers no next games link once the season has no game days left", async () => {
@@ -201,6 +201,106 @@ describe("DayScoreboard", () => {
     );
     expect(screen.getByText("76ers")).toBeDefined();
     vi.useRealTimers();
+  });
+
+  describe("date picker", () => {
+    const seasonDay = {
+      ...finalDay,
+      leagues: [
+        {
+          calendar: [
+            "2026-10-21T07:00Z",
+            "2026-11-03T07:00Z",
+            "2026-11-20T07:00Z",
+          ],
+        },
+      ],
+    };
+
+    beforeEach(() => {
+      fetchMock.mockImplementation(async () => jsonResponse(seasonDay));
+    });
+
+    async function openCalendar(name: string = strings.calendar.pickDateLabel) {
+      fireEvent.click(screen.getByRole("button", { name }));
+      return screen.findByRole("dialog", {
+        name: strings.calendar.pickDateLabel,
+      });
+    }
+
+    it("offers the calendar in the rail row and in the header", () => {
+      renderDayScoreboard();
+
+      const pickDateButton = within(dateRail().parentElement!).getByRole(
+        "button",
+        { name: strings.calendar.pickDateLabel },
+      );
+      expect(pickDateButton.textContent).toContain(strings.calendar.pickDate);
+      const dateHeading = screen.getByRole("heading").closest("header")!;
+      expect(
+        within(dateHeading).getByRole("button", {
+          name: strings.calendar.openCalendar,
+        }),
+      ).toBeDefined();
+    });
+
+    it("opens on the selected month, marking the season's game days", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+
+      const calendar = await openCalendar(strings.calendar.openCalendar);
+
+      expect(within(calendar).getByText("October 2026")).toBeDefined();
+      const selectedDay = within(calendar).getByRole("button", {
+        name: "Wednesday, October 21, Game day",
+      });
+      expect(selectedDay.getAttribute("aria-pressed")).toBe("true");
+      expect(
+        within(calendar).getByRole("button", { name: "Thursday, October 22" }),
+      ).toBeDefined();
+    });
+
+    it("moves between months", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+      const calendar = await openCalendar();
+
+      fireEvent.click(
+        within(calendar).getByRole("button", {
+          name: strings.calendar.nextMonth,
+        }),
+      );
+
+      expect(within(calendar).getByText("November 2026")).toBeDefined();
+      expect(
+        within(calendar).getByRole("button", {
+          name: "Tuesday, November 3, Game day",
+        }),
+      ).toBeDefined();
+    });
+
+    it("switches to the chosen date at once and closes", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+      const calendar = await openCalendar();
+      fireEvent.click(
+        within(calendar).getByRole("button", {
+          name: strings.calendar.nextMonth,
+        }),
+      );
+
+      fireEvent.click(
+        within(calendar).getByRole("button", {
+          name: "Friday, November 20, Game day",
+        }),
+      );
+
+      expect(window.location.pathname).toBe("/games/2026-11-20");
+      expect(
+        screen.getByRole("heading", { name: "Friday, November 20" }),
+      ).toBeDefined();
+      await vi.waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    });
   });
 
   describe("date rail", () => {

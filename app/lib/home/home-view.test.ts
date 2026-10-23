@@ -7,6 +7,7 @@ import scheduledDay from "@/app/lib/espn/__fixtures__/scoreboard-scheduled-day.j
 import { mapGame } from "@/app/lib/espn/mappers";
 import type { RawEvent } from "@/app/lib/espn/raw-types";
 import {
+  buildCalendarMonth,
   buildHomeView,
   dateRailRange,
   nbaDateOfPath,
@@ -29,16 +30,14 @@ const [, scheduledLate] = gamesOf(scheduledDay);
 const [exhibitionGame] = gamesOf(internationalExhibition);
 const postponedGame: Game = { ...finalLate, status: { kind: "postponed" } };
 
-function scoreboardWith(
-  games: Game[],
-  nextGameDate: NbaDate | null = null,
-): Scoreboard {
-  return { nbaDate, games, nextGameDate };
+function scoreboardWith(games: Game[]): Scoreboard {
+  return { nbaDate, games, seasonCalendar: [] };
 }
 
 function viewFor(
   query: ScoreboardQueryState,
   timeZone: string | null = "America/New_York",
+  seasonCalendar: string[] | null = null,
 ): HomeView {
   return buildHomeView({
     selectedDate: nbaDate,
@@ -46,6 +45,7 @@ function viewFor(
     today,
     query,
     gameCounts: null,
+    seasonCalendar: seasonCalendar as NbaDate[] | null,
     now,
     timeZone,
   });
@@ -66,6 +66,7 @@ function railFor(
     today,
     query: { status: "loading" },
     gameCounts,
+    seasonCalendar: null,
     now,
     timeZone: "America/New_York",
   }).dateRail;
@@ -201,27 +202,68 @@ describe("buildHomeView", () => {
     expect(view.screen).toMatchObject({ kind: "stale", minutesAgo: 1 });
   });
 
-  it("shows an empty day with the next game date and no summary", () => {
-    const view = viewFor({
+  describe("empty day", () => {
+    const emptyDay = {
       status: "success",
-      scoreboard: scoreboardWith([], "2026-10-23" as NbaDate),
-    });
-
-    expect(view.screen).toEqual({
-      kind: "empty",
-      nextGameDate: "2026-10-23",
-    });
-    expect(view.summary).toBeNull();
-  });
-
-  it("keeps showing an empty day when a refetch of it fails", () => {
-    const view = viewFor({
-      status: "stale",
       scoreboard: scoreboardWith([]),
-      updatedAt: now.getTime(),
+    } as const;
+
+    it("links to the first later game day on the season calendar, with no summary", () => {
+      const view = viewFor(emptyDay, "America/New_York", [
+        "2026-10-18",
+        "2026-10-20",
+        "2026-10-24",
+        "2026-10-25",
+      ]);
+
+      expect(view.screen).toEqual({
+        kind: "empty",
+        nextGameDay: {
+          nbaDate: "2026-10-24",
+          href: "/games/2026-10-24",
+          label: "Sat, Oct 24",
+        },
+      });
+      expect(view.summary).toBeNull();
     });
 
-    expect(view.screen).toEqual({ kind: "empty", nextGameDate: null });
+    it("links the next game day to the home page when it is today", () => {
+      const view = viewFor(emptyDay, "America/New_York", ["2026-10-22"]);
+
+      expect(view.screen).toMatchObject({
+        nextGameDay: { nbaDate: "2026-10-22", href: "/" },
+      });
+    });
+
+    it("offers no next game day once the season has none left", () => {
+      const view = viewFor(emptyDay, "America/New_York", ["2026-10-18"]);
+
+      expect(view.screen).toEqual({ kind: "empty", nextGameDay: null });
+    });
+
+    it("offers no next game day while the season calendar is unknown", () => {
+      expect(viewFor(emptyDay).screen).toEqual({
+        kind: "empty",
+        nextGameDay: null,
+      });
+    });
+
+    it("keeps showing an empty day when a refetch of it fails", () => {
+      const view = viewFor(
+        {
+          status: "stale",
+          scoreboard: scoreboardWith([]),
+          updatedAt: now.getTime(),
+        },
+        "America/New_York",
+        ["2026-10-23"],
+      );
+
+      expect(view.screen).toMatchObject({
+        kind: "empty",
+        nextGameDay: { nbaDate: "2026-10-23" },
+      });
+    });
   });
 
   describe("date rail", () => {
@@ -352,6 +394,80 @@ describe("buildHomeView", () => {
         firstDate: "2026-12-24",
         lastDate: "2027-01-07",
       });
+    });
+  });
+
+  describe("calendar month", () => {
+    const monthFor = (
+      monthStart: string,
+      seasonCalendar: string[] | null = null,
+      selectedDate = "2026-10-20",
+    ) =>
+      buildCalendarMonth({
+        monthStart: monthStart as NbaDate,
+        selectedDate: selectedDate as NbaDate,
+        today,
+        seasonCalendar: seasonCalendar as NbaDate[] | null,
+      });
+    const daysOf = (month: ReturnType<typeof monthFor>) =>
+      month.weeks.flat().filter((day) => day !== null);
+
+    it("titles the month and points to the months around it", () => {
+      expect(monthFor("2026-12-01")).toMatchObject({
+        title: "December 2026",
+        previousMonthStart: "2026-11-01",
+        nextMonthStart: "2027-01-01",
+      });
+    });
+
+    it("lays the month out in Sunday-first weeks, padding days of other months", () => {
+      // October 1, 2026 is a Thursday and October 31 a Saturday.
+      const month = monthFor("2026-10-01");
+
+      expect(month.weekdays).toEqual(["S", "M", "T", "W", "T", "F", "S"]);
+      expect(month.weeks).toHaveLength(5);
+      expect(month.weeks.every((week) => week.length === 7)).toBe(true);
+      expect(month.weeks[0].slice(0, 4)).toEqual([null, null, null, null]);
+      expect(month.weeks[0][4]).toMatchObject({
+        nbaDate: "2026-10-01",
+        dayNumber: "1",
+      });
+      expect(month.weeks[4][6]).toMatchObject({ nbaDate: "2026-10-31" });
+      expect(daysOf(month)).toHaveLength(31);
+    });
+
+    it("handles a leap February", () => {
+      expect(daysOf(monthFor("2028-02-01")).at(-1)?.nbaDate).toBe("2028-02-29");
+    });
+
+    it("marks the days with games on the season calendar", () => {
+      const month = monthFor("2026-10-01", ["2026-10-20", "2026-10-22"]);
+      const gameDays = daysOf(month).filter((day) => day.hasGames);
+
+      expect(gameDays.map((day) => day.nbaDate)).toEqual([
+        "2026-10-20",
+        "2026-10-22",
+      ]);
+      expect(gameDays[0].label).toBe("Tuesday, October 20, Game day");
+    });
+
+    it("marks no day while the season calendar is unknown", () => {
+      const days = daysOf(monthFor("2026-10-01"));
+
+      expect(days.some((day) => day.hasGames)).toBe(false);
+      expect(days[19].label).toBe("Tuesday, October 20");
+    });
+
+    it("marks the selected day and today, linking today to the home page", () => {
+      const days = daysOf(monthFor("2026-10-01"));
+
+      expect(
+        days.filter((day) => day.isSelected).map((day) => day.nbaDate),
+      ).toEqual(["2026-10-20"]);
+      expect(days.filter((day) => day.isToday)).toEqual([
+        expect.objectContaining({ nbaDate: "2026-10-22", href: "/" }),
+      ]);
+      expect(days[0].href).toBe("/games/2026-10-01");
     });
   });
 

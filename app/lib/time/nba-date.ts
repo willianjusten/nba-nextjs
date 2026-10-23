@@ -44,6 +44,12 @@ const dayNumberFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+const monthYearFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  month: "long",
+  year: "numeric",
+});
+
 export function nbaDateOf(instant: string | Date): NbaDate {
   const parts = easternDateFormatter.formatToParts(new Date(instant));
   const partValue = (type: Intl.DateTimeFormatPartTypes) =>
@@ -76,6 +82,24 @@ export function addDaysToNbaDate(nbaDate: NbaDate, days: number): NbaDate {
   return new Date(shiftedTime).toISOString().slice(0, 10) as NbaDate;
 }
 
+export function startOfNbaMonth(nbaDate: NbaDate): NbaDate {
+  return `${nbaDate.slice(0, 7)}-01` as NbaDate;
+}
+
+export function addMonthsToNbaMonth(
+  monthStart: NbaDate,
+  months: number,
+): NbaDate {
+  const shiftedMonth = new Date(`${monthStart}T00:00:00Z`);
+  shiftedMonth.setUTCMonth(shiftedMonth.getUTCMonth() + months, 1);
+  return shiftedMonth.toISOString().slice(0, 10) as NbaDate;
+}
+
+// 0 is Sunday, as in Date.getDay.
+export function nbaDayOfWeek(nbaDate: NbaDate): number {
+  return new Date(`${nbaDate}T00:00:00Z`).getUTCDay();
+}
+
 // An NbaDate is already a calendar day, so it is formatted in UTC to avoid shifting it by the runtime timezone.
 export function formatNbaDate(nbaDate: NbaDate): string {
   return displayDateFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
@@ -99,4 +123,8 @@ export function formatShortNbaWeekday(nbaDate: NbaDate): string {
 
 export function formatNbaDayNumber(nbaDate: NbaDate): string {
   return dayNumberFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
+}
+
+export function formatNbaMonthYear(nbaDate: NbaDate): string {
+  return monthYearFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
 }
