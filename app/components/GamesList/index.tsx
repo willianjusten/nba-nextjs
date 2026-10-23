@@ -1,29 +1,54 @@
-import Link from "next/link";
-import { GameCard } from "@/app/components";
-import { ParsedGames } from "@/app/helpers";
+import type { NbaDate } from "@/app/lib/domain/nba-date";
+import type { HomeScreen } from "@/app/lib/home/home-view";
+import GameCard from "@/app/components/GameCard";
+import {
+  GAMES_GRID_CLASS_NAME,
+  GamesListEmpty,
+  GamesListError,
+  GamesListLoading,
+  GamesListNoMatches,
+  StaleScoresNotice,
+} from "./states";
 
 type GamesListProps = {
-  games?: ParsedGames["games"];
+  nbaDate: NbaDate;
+  screen: HomeScreen;
+  onRetry: () => void;
+  isRetrying: boolean;
 };
 
-function GamesList({ games }: GamesListProps) {
-  if (!games?.length) {
-    return (
-      <p className="flex grow items-center justify-center text-center text-2xl">
-        No games today :(
-      </p>
-    );
+export default function GamesList({
+  nbaDate,
+  screen,
+  onRetry,
+  isRetrying,
+}: GamesListProps) {
+  switch (screen.kind) {
+    case "loading":
+      return <GamesListLoading />;
+    case "error":
+      return <GamesListError onRetry={onRetry} isRetrying={isRetrying} />;
+    case "empty":
+      return (
+        <GamesListEmpty nbaDate={nbaDate} nextGameDay={screen.nextGameDay} />
+      );
+    case "games":
+    case "stale":
+      return (
+        <div className="flex flex-col gap-3">
+          {screen.kind === "stale" && (
+            <StaleScoresNotice minutesAgo={screen.minutesAgo} />
+          )}
+          {screen.emptyFilterMessage ? (
+            <GamesListNoMatches message={screen.emptyFilterMessage} />
+          ) : (
+            <div className={GAMES_GRID_CLASS_NAME}>
+              {screen.cards.map((card) => (
+                <GameCard key={card.game.id} card={card} />
+              ))}
+            </div>
+          )}
+        </div>
+      );
   }
-
-  return (
-    <main className="grid grid-cols-auto-fill gap-5">
-      {games?.map((game) => (
-        <Link key={game.gameId} href={`/game/${game.gameId}`}>
-          <GameCard {...game} />
-        </Link>
-      ))}
-    </main>
-  );
 }
-
-export default GamesList;

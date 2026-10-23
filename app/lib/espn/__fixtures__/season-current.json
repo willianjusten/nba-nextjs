@@ -1,0 +1,195 @@
+{
+  "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027?lang=en&region=us",
+  "year": 2027,
+  "startDate": "2026-09-30T07:00Z",
+  "endDate": "2027-06-26T06:59Z",
+  "displayName": "2026-27",
+  "type": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2?lang=en&region=us",
+    "id": "2",
+    "type": 2,
+    "name": "Regular Season",
+    "abbreviation": "reg",
+    "year": 2027,
+    "startDate": "2026-10-20T07:00Z",
+    "endDate": "2027-04-12T06:59Z",
+    "hasGroups": false,
+    "hasStandings": true,
+    "hasLegs": false,
+    "groups": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/groups?lang=en&region=us"
+    },
+    "week": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/weeks/1?lang=en&region=us",
+      "number": 1,
+      "startDate": "2026-10-20T07:00Z",
+      "endDate": "2026-10-27T06:59Z",
+      "text": "Week 1",
+      "rankings": {
+        "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/weeks/1/rankings?lang=en&region=us"
+      }
+    },
+    "weeks": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/weeks?lang=en&region=us"
+    },
+    "corrections": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/corrections?lang=en&region=us"
+    },
+    "leaders": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/leaders?lang=en&region=us"
+    },
+    "slug": "regular-season"
+  },
+  "types": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types?lang=en&region=us",
+    "count": 5,
+    "pageIndex": 1,
+    "pageSize": 5,
+    "pageCount": 1,
+    "items": [
+      {
+        "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/1?lang=en&region=us",
+        "id": "1",
+        "type": 1,
+        "name": "Preseason",
+        "abbreviation": "pre",
+        "year": 2027,
+        "startDate": "2026-09-30T07:00Z",
+        "endDate": "2026-10-20T06:59Z",
+        "hasGroups": false,
+        "hasStandings": true,
+        "hasLegs": false,
+        "groups": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/1/groups?lang=en&region=us"
+        },
+        "weeks": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/1/weeks?lang=en&region=us"
+        },
+        "corrections": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/1/corrections?lang=en&region=us"
+        },
+        "slug": "preseason"
+      },
+      {
+        "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2?lang=en&region=us",
+        "id": "2",
+        "type": 2,
+        "name": "Regular Season",
+        "abbreviation": "reg",
+        "year": 2027,
+        "startDate": "2026-10-20T07:00Z",
+        "endDate": "2027-04-12T06:59Z",
+        "hasGroups": false,
+        "hasStandings": true,
+        "hasLegs": false,
+        "groups": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/groups?lang=en&region=us"
+        },
+        "week": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/weeks/1?lang=en&region=us",
+          "number": 1,
+          "startDate": "2026-10-20T07:00Z",
+          "endDate": "2026-10-27T06:59Z",
+          "text": "Week 1",
+          "rankings": {
+            "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/weeks/1/rankings?lang=en&region=us"
+          }
+        },
+        "weeks": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/weeks?lang=en&region=us"
+        },
+        "corrections": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/corrections?lang=en&region=us"
+        },
+        "leaders": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/leaders?lang=en&region=us"
+        },
+        "slug": "regular-season"
+      },
+      {
+        "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/3?lang=en&region=us",
+        "id": "3",
+        "type": 3,
+        "name": "Postseason",
+        "abbreviation": "post",
+        "year": 2027,
+        "startDate": "2027-04-17T07:00Z",
+        "endDate": "2027-06-26T06:59Z",
+        "hasGroups": false,
+        "hasStandings": false,
+        "hasLegs": false,
+        "groups": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/3/groups?lang=en&region=us"
+        },
+        "weeks": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/3/weeks?lang=en&region=us"
+        },
+        "corrections": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/3/corrections?lang=en&region=us"
+        },
+        "slug": "post-season"
+      },
+      {
+        "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/4?lang=en&region=us",
+        "id": "4",
+        "type": 4,
+        "name": "Off Season",
+        "abbreviation": "off",
+        "year": 2027,
+        "startDate": "2027-06-26T07:00Z",
+        "endDate": "2027-09-30T06:59Z",
+        "hasGroups": false,
+        "hasStandings": false,
+        "hasLegs": false,
+        "groups": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/4/groups?lang=en&region=us"
+        },
+        "weeks": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/4/weeks?lang=en&region=us"
+        },
+        "slug": "off-season"
+      },
+      {
+        "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/5?lang=en&region=us",
+        "id": "5",
+        "type": 5,
+        "name": "Play-In Season",
+        "abbreviation": "playin",
+        "year": 2027,
+        "startDate": "2027-04-12T07:00Z",
+        "endDate": "2027-04-17T06:59Z",
+        "hasGroups": false,
+        "hasStandings": false,
+        "hasLegs": false,
+        "groups": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/5/groups?lang=en&region=us"
+        },
+        "weeks": {
+          "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/5/weeks?lang=en&region=us"
+        },
+        "slug": "play-in-season"
+      }
+    ]
+  },
+  "rankings": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/rankings?lang=en&region=us"
+  },
+  "powerIndexes": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/powerindex?lang=en&region=us"
+  },
+  "powerIndexLeaders": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/powerindex/leaders?lang=en&region=us"
+  },
+  "coaches": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/coaches?lang=en&region=us"
+  },
+  "athletes": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/athletes?lang=en&region=us"
+  },
+  "futures": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/futures?lang=en&region=us"
+  },
+  "leaders": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/types/2/leaders?lang=en&region=us"
+  }
+}

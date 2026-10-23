@@ -1,0 +1,88 @@
+import Link from "next/link";
+import type { ConferenceStandings as ConferenceStandingsData } from "@/app/lib/domain/standings";
+import TeamLogo from "@/app/components/TeamLogo";
+import { strings } from "@/app/lib/strings";
+
+const LOGO_DISPLAY_SIZE = 24;
+
+// Win percentage as standings tables print it: ".750", or "1.000" for an unbeaten team.
+function formatWinPercent(winPercent: number) {
+  return winPercent.toFixed(3).replace(/^0/, "");
+}
+
+function formatGamesBehind(gamesBehind: number) {
+  return gamesBehind === 0
+    ? strings.standings.leaderGamesBehind
+    : String(gamesBehind);
+}
+
+export default function ConferenceStandings({
+  conference,
+}: {
+  conference: ConferenceStandingsData;
+}) {
+  const { columns } = strings.standings;
+  const headingId = `standings-${conference.id}`;
+
+  return (
+    <section aria-labelledby={headingId} className="flex flex-col gap-2">
+      <h2 id={headingId} className="font-display text-2xl tracking-[0.06em]">
+        {conference.name}
+      </h2>
+      <div className="overflow-x-auto card">
+        <table className="w-full text-left text-sm">
+          <thead className="text-muted">
+            <tr>
+              <th className="px-3 py-2">{columns.seed}</th>
+              <th className="px-3 py-2">{columns.team}</th>
+              <th className="px-3 py-2">{columns.wins}</th>
+              <th className="px-3 py-2">{columns.losses}</th>
+              <th className="px-3 py-2">{columns.winPercent}</th>
+              <th className="px-3 py-2">{columns.gamesBehind}</th>
+              <th className="px-3 py-2">{columns.home}</th>
+              <th className="px-3 py-2">{columns.road}</th>
+              <th className="px-3 py-2">{columns.lastTen}</th>
+              <th className="px-3 py-2">{columns.streak}</th>
+            </tr>
+          </thead>
+          <tbody className="tabular-nums">
+            {conference.rows.map((row) => (
+              <tr key={row.team.id} className="border-t border-white/10">
+                <td className="px-3 py-2">{row.seed}</td>
+                <td className="px-3 py-2">
+                  <span className="flex items-center gap-2">
+                    <TeamLogo
+                      logoUrl={row.team.logoUrl}
+                      size={LOGO_DISPLAY_SIZE}
+                      lazy
+                    />
+                    <Link
+                      href={`/teams/${row.team.slug}`}
+                      className="font-medium whitespace-nowrap hover:underline"
+                    >
+                      {row.team.displayName}
+                    </Link>
+                  </span>
+                </td>
+                <td className="px-3 py-2">{row.wins}</td>
+                <td className="px-3 py-2">{row.losses}</td>
+                <td className="px-3 py-2">
+                  {formatWinPercent(row.winPercent)}
+                </td>
+                <td className="px-3 py-2">
+                  {formatGamesBehind(row.gamesBehind)}
+                </td>
+                <td className="px-3 py-2">{row.homeRecord}</td>
+                <td className="px-3 py-2">{row.roadRecord}</td>
+                <td className="px-3 py-2">{row.lastTenRecord}</td>
+                <td className="px-3 py-2">
+                  {row.streak ?? strings.standings.noStreak}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}

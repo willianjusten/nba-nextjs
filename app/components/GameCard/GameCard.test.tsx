@@ -1,51 +1,193 @@
 import { render, screen } from "@testing-library/react";
-import { GAME_STATUS } from "@/app/constants";
+import type { Game } from "@/app/lib/domain/game";
+import type { NbaDate } from "@/app/lib/domain/nba-date";
+import finalDay from "@/app/lib/espn/__fixtures__/scoreboard-final-day.json";
+import internationalExhibition from "@/app/lib/espn/__fixtures__/scoreboard-international-exhibition.json";
+import liveDay from "@/app/lib/espn/__fixtures__/scoreboard-live-day-simulated.json";
+import scheduledDay from "@/app/lib/espn/__fixtures__/scoreboard-scheduled-day.json";
+import { mapGame } from "@/app/lib/espn/mappers";
+import type { RawEvent } from "@/app/lib/espn/raw-types";
+import { buildHomeView, type HomeCard } from "@/app/lib/home/home-view";
+import { strings } from "@/app/lib/strings";
 import GameCard from ".";
 
+const gamesOf = (fixture: { events: unknown[] }) =>
+  fixture.events.map((event) => mapGame(event as RawEvent));
+
+const [finalGame] = gamesOf(finalDay);
+const [liveGame] = gamesOf(liveDay);
+const [, scheduledGame] = gamesOf(scheduledDay);
+const [exhibitionGame] = gamesOf(internationalExhibition);
+
+function cardFor(
+  game: Game,
+  timeZone: string | null = "America/New_York",
+  favoriteTeamIds: string[] = [],
+) {
+  const { screen: homeScreen } = buildHomeView({
+    selectedDate: game.nbaDate as NbaDate,
+    railCenterDate: game.nbaDate as NbaDate,
+    today: game.nbaDate as NbaDate,
+    query: {
+      status: "success",
+      scoreboard: { nbaDate: game.nbaDate, games: [game] },
+    },
+    filter: "all",
+    gameCounts: null,
+    seasonCalendar: null,
+    favoriteTeamIds,
+    now: new Date("2026-10-23T00:00:00Z"),
+    timeZone,
+  });
+  if (homeScreen.kind !== "games") throw new Error("Expected a games screen");
+  return homeScreen.cards[0];
+}
+
+const renderCard = (card: HomeCard) => render(<GameCard card={card} />);
+
 describe("GameCard", () => {
-  const defaultProps = {
-    gameId: "game-1",
-    awayTeam: {
-      teamId: 1,
-      teamName: "Lakers",
-      teamTricode: "LAL",
-      score: 101,
-      wins: 30,
-      losses: 20,
-    },
-    homeTeam: {
-      teamId: 2,
-      teamName: "Heat",
-      teamTricode: "MIA",
-      score: 99,
-      wins: 28,
-      losses: 22,
-    },
-    gameStatus: GAME_STATUS.ENDED,
-    gameStatusText: "Final",
-    broadcaster: "ABC",
-    gameTimeUTC: new Date("2026-03-31T01:00:00Z"),
-    period: 4,
-  } as const;
+  it("links the whole card to the game center, named after the matchup", () => {
+    renderCard(cardFor(finalGame));
 
-  it("renders teams, scores, and details footer", () => {
-    render(<GameCard {...defaultProps} />);
-
-    expect(screen.getByText(/lakers/i)).toBeDefined();
-    expect(screen.getByText("Heat")).toBeDefined();
-    expect(screen.getByText("99")).toBeDefined();
-    expect(screen.getByText(/view details/i)).toBeDefined();
+    const cardLink = screen.getByRole("link", {
+      name: "Atlanta Hawks at Orlando Magic",
+    });
+    expect(cardLink.getAttribute("href")).toBe(`/game/${finalGame.id}`);
   });
 
-  it("renders the live indicator when the game is in progress", () => {
-    render(
-      <GameCard
-        {...defaultProps}
-        gameStatus={GAME_STATUS.IN_PROGRESS}
-        gameStatusText="Q2 05:00"
-      />,
+  it("offers highlights and recap on a final, linking to the game center", () => {
+    renderCard(cardFor(finalGame));
+
+    const highlightsLink = screen.getByRole("link", {
+      name: strings.gameCard.highlights,
+    });
+    expect(highlightsLink.getAttribute("href")).toBe(`/game/${finalGame.id}`);
+    expect(
+      screen.getByRole("img", { name: strings.gameCard.winner }),
+    ).toBeDefined();
+  });
+
+  it("marks a live game with the live chip, its meta line, and a game center link", () => {
+    renderCard(cardFor(liveGame));
+
+    expect(screen.getByText(strings.gameStatus.live)).toBeDefined();
+    expect(screen.getByText("Q2 · 7:11 · ESPN")).toBeDefined();
+    expect(
+      screen.getByRole("link", { name: strings.gameCard.gameDetails }),
+    ).toBeDefined();
+    expect(
+      screen.queryByRole("link", { name: strings.gameCard.highlights }),
+    ).toBeNull();
+  });
+
+  it("shows the win probability of both teams on a live game", () => {
+    renderCard(cardFor({ ...liveGame, homeWinProbability: 0.68 }));
+
+    expect(screen.getByText("CLE 32%")).toBeDefined();
+    expect(screen.getByText(strings.gameCard.winProbability)).toBeDefined();
+    expect(screen.getByText("PHI 68%")).toBeDefined();
+  });
+
+  it("shows the top scorer on a live game", () => {
+    renderCard(cardFor({ ...liveGame, topScorer: finalGame.topScorer }));
+
+    expect(screen.getByText(strings.gameCard.topScorer)).toBeDefined();
+    expect(screen.getByText("P. Banchero · 35 PTS 7 REB 10 AST")).toBeDefined();
+  });
+
+  it("hides the win probability and top scorer when ESPN sends neither", () => {
+    renderCard(
+      cardFor({ ...liveGame, homeWinProbability: null, topScorer: null }),
     );
 
-    expect(screen.getByText("Live")).toBeDefined();
+    expect(screen.queryByText(strings.gameCard.winProbability)).toBeNull();
+    expect(screen.queryByText(strings.gameCard.topScorer)).toBeNull();
+  });
+
+  it("shows team names, records, and scores", () => {
+    renderCard(cardFor(liveGame));
+
+    expect(screen.getByText("76ers")).toBeDefined();
+    expect(screen.getByText("1-0")).toBeDefined();
+    expect(screen.getByText("52")).toBeDefined();
+    expect(screen.getByText("48")).toBeDefined();
+  });
+
+  it("shows the tip-off, venue, and channel instead of scores before the game", () => {
+    renderCard(cardFor(scheduledGame));
+
+    expect(screen.getByText("9:30 PM")).toBeDefined();
+    expect(screen.getByText("ESPN")).toBeDefined();
+    expect(screen.getByText("Paycom Center")).toBeDefined();
+    expect(screen.queryByText("0")).toBeNull();
+  });
+
+  it("offers a game preview before the game, linking to the game center", () => {
+    renderCard(cardFor(scheduledGame));
+
+    const previewLink = screen.getByRole("link", {
+      name: strings.gameCard.gamePreview,
+    });
+    expect(previewLink.getAttribute("href")).toBe(`/game/${scheduledGame.id}`);
+  });
+
+  it("shows the top scorer on a final", () => {
+    renderCard(cardFor(finalGame));
+
+    expect(screen.getByText(strings.gameCard.topScorer)).toBeDefined();
+  });
+
+  it("keeps the tip-off element empty until the browser timezone is known", () => {
+    renderCard(cardFor(scheduledGame, null));
+
+    const tipOff = document.querySelector(
+      `time[datetime="${scheduledGame.startTime}"]`,
+    );
+    expect(tipOff?.textContent).toBe("");
+  });
+
+  it("shows the PPD chip for a postponed game, spelled out for screen readers", () => {
+    renderCard(cardFor({ ...finalGame, status: { kind: "postponed" } }));
+
+    const chip = screen.getByText(strings.gameStatus.postponedShort);
+    expect(chip.getAttribute("aria-hidden")).toBe("true");
+    expect(screen.getByText(strings.gameStatus.postponed).className).toContain(
+      "sr-only",
+    );
+  });
+
+  it("stars the favorite team on a favorite's game", () => {
+    // The Magic (19) host the Hawks in the final game.
+    renderCard(cardFor(finalGame, "America/New_York", ["19"]));
+
+    expect(
+      screen.getAllByRole("img", { name: strings.myTeams.favorite }),
+    ).toHaveLength(1);
+  });
+
+  it("shows no star without favorites", () => {
+    renderCard(cardFor(finalGame));
+
+    expect(
+      screen.queryByRole("img", { name: strings.myTeams.favorite }),
+    ).toBeNull();
+  });
+
+  it("requests logos from the ESPN resizer instead of the full-size image", () => {
+    renderCard(cardFor(finalGame));
+
+    const logoSources = Array.from(document.querySelectorAll("img")).map(
+      (image) => image.getAttribute("src"),
+    );
+    expect(logoSources).toContain(
+      "https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/scoreboard/orl.png&w=68&h=68",
+    );
+  });
+
+  it("shows a generic shield for a team without an ESPN logo", () => {
+    renderCard(cardFor(exhibitionGame));
+
+    expect(screen.getByTestId("generic-team-logo")).toBeDefined();
+    expect(document.querySelectorAll("img")).toHaveLength(1);
   });
 });

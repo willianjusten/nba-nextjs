@@ -1,17 +1,10 @@
 ## NBA NextJS
 
-> A simple app to show NBA games and scores/details.
+> A simple app to show NBA games and scores/details, powered by the public ESPN API.
 
 ## Getting Started
 
-First, create an `.env.local` file in the root of the project and add the following environment variables:
-
-```bash
-API_DOMAIN=http://localhost:3000
-YOUTUBE_API_KEY=<GET A FREE KEY ON https://console.cloud.google.com/>
-```
-
-Then, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
@@ -25,6 +18,12 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Environment
+
+| Variable             | Purpose                                                                                       |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `FORCE_PLAYOFFS_TAB` | Set to `true` or `1` to show the Playoffs tab outside the postseason (useful in development). |
+
 ## Quality Commands
 
 Use OXC for linting and formatting:
@@ -34,4 +33,6 @@ npm run lint
 npm run lint:oxc:fix
 npm run format:check
 npm run format
+npm run typecheck
+npm test
 ```

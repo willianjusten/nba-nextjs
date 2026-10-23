@@ -1,49 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "@bprogress/next/app";
-import { format, parseISO } from "date-fns";
-import {
-  Calendar,
-  CalendarIcon,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  OutlineButton,
-} from "@/app/components";
-import { DATE_LINK_FORMAT } from "@/app/constants";
+import { lazy, Suspense, useState } from "react";
+import type { CalendarPopoverProps } from "./CalendarPopover";
+import DatePickerTrigger from "./DatePickerTrigger";
 
-function DatePicker({ day }: { day: string }) {
-  const [date, setDate] = useState<Date>(parseISO(day));
-  const router = useRouter();
+// The popover and its Radix dependency load on first use, keeping them out of the initial bundle.
+const loadCalendarPopover = () => import("./CalendarPopover");
+const CalendarPopover = lazy(loadCalendarPopover);
 
-  const handleDateChange = (selectedDate: Date | undefined) => {
-    if (!selectedDate) return;
+export default function DatePicker(props: CalendarPopoverProps) {
+  const [hasOpened, setHasOpened] = useState(false);
+  const plainTrigger = (
+    <DatePickerTrigger
+      placement={props.placement}
+      onClick={() => setHasOpened(true)}
+      onPointerEnter={loadCalendarPopover}
+    />
+  );
 
-    const currentDate = format(selectedDate, DATE_LINK_FORMAT);
-
-    setDate(selectedDate);
-    router.push(`/games/${currentDate}`);
-  };
-
+  if (!hasOpened) return plainTrigger;
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <OutlineButton
-          label={date ? format(date, "PPP") : <span>Pick a date</span>}
-          icon={<CalendarIcon className="mr-2 h-4 w-4" />}
-        />
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={handleDateChange}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
+    <Suspense fallback={plainTrigger}>
+      <CalendarPopover {...props} />
+    </Suspense>
   );
 }
-
-export default DatePicker;

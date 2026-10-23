@@ -1,0 +1,1575 @@
+{
+  "timestamp": "2026-10-22T22:05:40Z",
+  "status": "success",
+  "season": {
+    "year": 2027,
+    "displayName": "2026-27",
+    "type": 2,
+    "name": "Regular Season"
+  },
+  "athletes": [
+    {
+      "id": "5113969",
+      "uid": "s:40~l:46~a:5113969",
+      "guid": "a24923a3-f2e0-334d-942f-3d3689f88655",
+      "firstName": "Cameron",
+      "lastName": "Carr",
+      "fullName": "Cameron Carr",
+      "displayName": "Cameron Carr",
+      "shortName": "C. Carr",
+      "weight": 184.0,
+      "displayWeight": "184 lbs",
+      "height": 77.0,
+      "displayHeight": "6' 5\"",
+      "age": 21,
+      "dateOfBirth": "2004-11-21T08:00Z",
+      "birthPlace": {
+        "city": "Eden Prairie",
+        "state": "MN",
+        "country": "USA"
+      },
+      "college": {
+        "id": "239",
+        "guid": "8f0deb82-f6b1-34ef-b835-d95f4f6689ec",
+        "mascot": "Bears",
+        "name": "Baylor",
+        "shortName": "Baylor",
+        "abbrev": "BAY",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/239.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/239.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          }
+        ]
+      },
+      "slug": "cameron-carr",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/5113969.png",
+        "alt": "Cameron Carr"
+      },
+      "jersey": "43",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [
+        {
+          "status": "Day-To-Day",
+          "date": "2026-10-22T04:56Z"
+        }
+      ],
+      "experience": {
+        "years": 0
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "3945274",
+      "uid": "s:40~l:46~a:3945274",
+      "guid": "583794eb-0f38-9bbd-3e25-9dd33b7f83b8",
+      "firstName": "Luka",
+      "lastName": "Doncic",
+      "fullName": "Luka Doncic",
+      "displayName": "Luka Doncic",
+      "shortName": "L. Doncic",
+      "weight": 230.0,
+      "displayWeight": "230 lbs",
+      "height": 80.0,
+      "displayHeight": "6' 8\"",
+      "age": 27,
+      "dateOfBirth": "1999-02-28T08:00Z",
+      "debutYear": 2018,
+      "birthPlace": {
+        "city": "Ljubljana",
+        "country": "Slovenia"
+      },
+      "slug": "luka-doncic",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/3945274.png",
+        "alt": "Luka Doncic"
+      },
+      "jersey": "77",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 9
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 49500000,
+        "outgoingTradeValue": 49500000,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 49500000,
+        "salaryRemaining": 0,
+        "yearsRemaining": 3,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4397014",
+      "uid": "s:40~l:46~a:4397014",
+      "guid": "dbe4d07d-9166-07d7-19f0-52cc771d179d",
+      "firstName": "Quentin",
+      "lastName": "Grimes",
+      "fullName": "Quentin Grimes",
+      "displayName": "Quentin Grimes",
+      "shortName": "Q. Grimes",
+      "weight": 210.0,
+      "displayWeight": "210 lbs",
+      "height": 76.0,
+      "displayHeight": "6' 4\"",
+      "age": 26,
+      "dateOfBirth": "2000-05-08T07:00Z",
+      "birthPlace": {
+        "city": "The Woodlands",
+        "state": "TX",
+        "country": "USA"
+      },
+      "college": {
+        "id": "248",
+        "guid": "83a95936-1b57-32f2-a56f-9397336f5486",
+        "mascot": "Cougars",
+        "name": "Houston",
+        "shortName": "Houston",
+        "abbrev": "HOU",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/248.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/248.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          }
+        ]
+      },
+      "slug": "quentin-grimes",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4397014.png",
+        "alt": "Quentin Grimes"
+      },
+      "jersey": "5",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 6
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4868423",
+      "uid": "s:40~l:46~a:4868423",
+      "guid": "d4c656b3-e2b5-33c4-b4e7-7aca3e7f153c",
+      "firstName": "Jaden",
+      "lastName": "Hardy",
+      "fullName": "Jaden Hardy",
+      "displayName": "Jaden Hardy",
+      "shortName": "J. Hardy",
+      "weight": 198.0,
+      "displayWeight": "198 lbs",
+      "height": 75.0,
+      "displayHeight": "6' 3\"",
+      "age": 24,
+      "dateOfBirth": "2002-07-05T07:00Z",
+      "birthPlace": {
+        "city": "Henderson",
+        "state": "NV",
+        "country": "USA"
+      },
+      "slug": "jaden-hardy",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4868423.png",
+        "alt": "Jaden Hardy"
+      },
+      "jersey": "7",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 5
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 6000000,
+        "outgoingTradeValue": 6000000,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 6000000,
+        "salaryRemaining": 0,
+        "yearsRemaining": 2,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4683774",
+      "uid": "s:40~l:46~a:4683774",
+      "guid": "456f71fd-2ce5-3f50-8d0d-f30c0159789d",
+      "firstName": "Bronny",
+      "lastName": "James",
+      "fullName": "Bronny James",
+      "displayName": "Bronny James",
+      "shortName": "B. James",
+      "weight": 210.0,
+      "displayWeight": "210 lbs",
+      "height": 74.0,
+      "displayHeight": "6' 2\"",
+      "age": 22,
+      "dateOfBirth": "2004-10-06T07:00Z",
+      "birthPlace": {
+        "city": "Akron",
+        "state": "OH",
+        "country": "USA"
+      },
+      "college": {
+        "id": "30",
+        "guid": "d3f426a4-56b8-3f15-8186-370c3af7daf8",
+        "mascot": "Trojans",
+        "name": "USC",
+        "shortName": "USC",
+        "abbrev": "USC",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/30.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/30.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          }
+        ]
+      },
+      "slug": "bronny-james",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4683774.png",
+        "alt": "Bronny James"
+      },
+      "jersey": "9",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 3
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 2296274,
+        "outgoingTradeValue": 2296274,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 2296274,
+        "salaryRemaining": 0,
+        "yearsRemaining": 2,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4433599",
+      "uid": "s:40~l:46~a:4433599",
+      "guid": "c6d39ebe-f737-3edb-8d40-12a51a5a80af",
+      "firstName": "Arthur",
+      "lastName": "Kaluma",
+      "fullName": "Arthur Kaluma",
+      "displayName": "Arthur Kaluma",
+      "shortName": "A. Kaluma",
+      "weight": 223.0,
+      "displayWeight": "223 lbs",
+      "height": 78.0,
+      "displayHeight": "6' 6\"",
+      "age": 24,
+      "dateOfBirth": "2002-03-01T08:00Z",
+      "birthPlace": {
+        "city": "Glendale",
+        "state": "AZ",
+        "country": "USA"
+      },
+      "college": {
+        "id": "251",
+        "guid": "a5881f63-e491-3e48-9064-916de4a4849a",
+        "mascot": "Longhorns",
+        "name": "Texas",
+        "shortName": "Texas",
+        "abbrev": "TEX",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/251.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/251.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "arthur-kaluma",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4433599.png",
+        "alt": "Arthur Kaluma"
+      },
+      "jersey": "47",
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [],
+      "experience": {
+        "years": 2
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4433136",
+      "uid": "s:40~l:46~a:4433136",
+      "guid": "a362b0ba-25ef-3ceb-9dd3-039b3d8aa4aa",
+      "firstName": "Walker",
+      "lastName": "Kessler",
+      "fullName": "Walker Kessler",
+      "displayName": "Walker Kessler",
+      "shortName": "W. Kessler",
+      "weight": 245.0,
+      "displayWeight": "245 lbs",
+      "height": 86.0,
+      "displayHeight": "7' 2\"",
+      "age": 25,
+      "dateOfBirth": "2001-07-26T07:00Z",
+      "birthPlace": {
+        "city": "Newnan",
+        "state": "GA",
+        "country": "USA"
+      },
+      "college": {
+        "id": "2",
+        "guid": "59618d4c-34bc-3c11-a064-c1359b963d27",
+        "mascot": "Tigers",
+        "name": "Auburn",
+        "shortName": "Auburn",
+        "abbrev": "AUB",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/2.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "walker-kessler",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4433136.png",
+        "alt": "Walker Kessler"
+      },
+      "jersey": "14",
+      "position": {
+        "id": "9",
+        "name": "Center",
+        "displayName": "Center",
+        "abbreviation": "C",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 5
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4592691",
+      "uid": "s:40~l:46~a:4592691",
+      "guid": "a2ffece1-7bf0-3c54-aa59-b150b6ecd315",
+      "firstName": "Jake",
+      "lastName": "LaRavia",
+      "fullName": "Jake LaRavia",
+      "displayName": "Jake LaRavia",
+      "shortName": "J. LaRavia",
+      "weight": 235.0,
+      "displayWeight": "235 lbs",
+      "height": 79.0,
+      "displayHeight": "6' 7\"",
+      "age": 24,
+      "dateOfBirth": "2001-11-03T08:00Z",
+      "birthPlace": {
+        "city": "Indianapolis",
+        "state": "IN",
+        "country": "USA"
+      },
+      "college": {
+        "id": "154",
+        "guid": "877f20e8-720c-32d3-a900-8f7960900cfa",
+        "mascot": "Demon Deacons",
+        "name": "Wake Forest",
+        "shortName": "Wake Forest",
+        "abbrev": "WAKE",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/154.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T22:33Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/154.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T22:35Z"
+          }
+        ]
+      },
+      "slug": "jake-laravia",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4592691.png",
+        "alt": "Jake LaRavia"
+      },
+      "jersey": "12",
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [
+        {
+          "status": "Day-To-Day",
+          "date": "2026-10-22T17:23Z"
+        }
+      ],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 5
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 6000000,
+        "outgoingTradeValue": 6000000,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 6000000,
+        "salaryRemaining": 0,
+        "yearsRemaining": 1,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "3155535",
+      "uid": "s:40~l:46~a:3155535",
+      "guid": "10a8e77b-8773-24c6-9966-f0c4618caad6",
+      "firstName": "Kevon",
+      "lastName": "Looney",
+      "fullName": "Kevon Looney",
+      "displayName": "Kevon Looney",
+      "shortName": "K. Looney",
+      "weight": 222.0,
+      "displayWeight": "222 lbs",
+      "height": 81.0,
+      "displayHeight": "6' 9\"",
+      "age": 30,
+      "dateOfBirth": "1996-02-06T08:00Z",
+      "debutYear": 2015,
+      "birthPlace": {
+        "city": "Milwaukee",
+        "state": "WI",
+        "country": "USA"
+      },
+      "college": {
+        "id": "26",
+        "guid": "5da8e04c-d85c-376d-b336-9342e0bfdd7c",
+        "mascot": "Bruins",
+        "name": "UCLA",
+        "shortName": "UCLA",
+        "abbrev": "UCLA",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/26.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/26.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          }
+        ]
+      },
+      "slug": "kevon-looney",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/3155535.png",
+        "alt": "Kevon Looney"
+      },
+      "jersey": "55",
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 12
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 8000000,
+        "outgoingTradeValue": 8000000,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 8000000,
+        "salaryRemaining": 0,
+        "yearsRemaining": 1,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4278580",
+      "uid": "s:40~l:46~a:4278580",
+      "guid": "e9df9e2a-50ac-901b-9090-1201532b81e8",
+      "firstName": "Sandro",
+      "lastName": "Mamukelashvili",
+      "fullName": "Sandro Mamukelashvili",
+      "displayName": "Sandro Mamukelashvili",
+      "shortName": "S. Mamukelashvili",
+      "weight": 240.0,
+      "displayWeight": "240 lbs",
+      "height": 81.0,
+      "displayHeight": "6' 9\"",
+      "age": 27,
+      "dateOfBirth": "1999-05-23T07:00Z",
+      "birthPlace": {
+        "city": "Tbilisi",
+        "country": "Georgia"
+      },
+      "citizenship": "Georgia",
+      "college": {
+        "id": "2550",
+        "guid": "824ed3e9-d7d7-3fdc-988e-f49cd7dcfb66",
+        "mascot": "Pirates",
+        "name": "Seton Hall",
+        "shortName": "Seton Hall",
+        "abbrev": "HALL",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/2550.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2018-06-05T12:08Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2550.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2018-06-05T12:08Z"
+          }
+        ]
+      },
+      "slug": "sandro-mamukelashvili",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4278580.png",
+        "alt": "Sandro Mamukelashvili"
+      },
+      "jersey": "54",
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 6
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4702972",
+      "uid": "s:40~l:46~a:4702972",
+      "guid": "118cd8ee-2ec4-33e6-949b-8bc9f99421f3",
+      "firstName": "Chris",
+      "lastName": "Manon",
+      "fullName": "Chris Manon",
+      "displayName": "Chris Manon",
+      "shortName": "C. Manon",
+      "weight": 209.0,
+      "displayWeight": "209 lbs",
+      "height": 76.0,
+      "displayHeight": "6' 4\"",
+      "age": 24,
+      "dateOfBirth": "2001-12-09T08:00Z",
+      "birthPlace": {
+        "city": "New Milford",
+        "state": "NJ",
+        "country": "USA"
+      },
+      "college": {
+        "id": "238",
+        "guid": "16289c7a-8f0e-33d7-8027-833c67cb0482",
+        "mascot": "Commodores",
+        "name": "Vanderbilt",
+        "shortName": "Vanderbilt",
+        "abbrev": "VAN",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/238.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/238.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "chris-manon",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4702972.png",
+        "alt": "Chris Manon"
+      },
+      "jersey": "30",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 2
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "5114350",
+      "uid": "s:40~l:46~a:5114350",
+      "guid": "55d8bad0-ecf0-3898-876f-9dd28947a1dc",
+      "firstName": "AK",
+      "lastName": "Okereke",
+      "fullName": "AK Okereke",
+      "displayName": "AK Okereke",
+      "shortName": "A. Okereke",
+      "weight": 244.0,
+      "displayWeight": "244 lbs",
+      "height": 79.0,
+      "displayHeight": "6' 7\"",
+      "age": 23,
+      "dateOfBirth": "2003-07-02T07:00Z",
+      "birthPlace": {
+        "city": "Clovis",
+        "state": "CA",
+        "country": "USA"
+      },
+      "college": {
+        "id": "238",
+        "guid": "16289c7a-8f0e-33d7-8027-833c67cb0482",
+        "mascot": "Commodores",
+        "name": "Vanderbilt",
+        "shortName": "Vanderbilt",
+        "abbrev": "VAN",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/238.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/238.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "ak-okereke",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/5114350.png",
+        "alt": "AK Okereke"
+      },
+      "jersey": "31",
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [],
+      "experience": {
+        "years": 0
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4066457",
+      "uid": "s:40~l:46~a:4066457",
+      "guid": "8a9d9e1c-6174-0009-4883-3b4e16b492d0",
+      "firstName": "Austin",
+      "lastName": "Reaves",
+      "fullName": "Austin Reaves",
+      "displayName": "Austin Reaves",
+      "shortName": "A. Reaves",
+      "weight": 197.0,
+      "displayWeight": "197 lbs",
+      "height": 77.0,
+      "displayHeight": "6' 5\"",
+      "age": 28,
+      "dateOfBirth": "1998-05-29T07:00Z",
+      "birthPlace": {
+        "city": "Newark",
+        "state": "AR",
+        "country": "USA"
+      },
+      "college": {
+        "id": "201",
+        "guid": "5c89e0cf-7ac7-3621-a83e-48a835ee34d1",
+        "mascot": "Sooners",
+        "name": "Oklahoma",
+        "shortName": "Oklahoma",
+        "abbrev": "OU",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/201.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/201.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "austin-reaves",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4066457.png",
+        "alt": "Austin Reaves"
+      },
+      "jersey": "15",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 6
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4277811",
+      "uid": "s:40~l:46~a:4277811",
+      "guid": "2a6515dd-6770-7eac-2141-de08448a6905",
+      "firstName": "Collin",
+      "lastName": "Sexton",
+      "fullName": "Collin Sexton",
+      "displayName": "Collin Sexton",
+      "shortName": "C. Sexton",
+      "weight": 190.0,
+      "displayWeight": "190 lbs",
+      "height": 75.0,
+      "displayHeight": "6' 3\"",
+      "age": 27,
+      "dateOfBirth": "1999-01-04T08:00Z",
+      "debutYear": 2018,
+      "birthPlace": {
+        "city": "Marietta",
+        "state": "GA",
+        "country": "USA"
+      },
+      "college": {
+        "id": "333",
+        "guid": "284484f2-b714-35bc-9162-4dc652590b02",
+        "mascot": "Crimson Tide",
+        "name": "Alabama",
+        "shortName": "Alabama",
+        "abbrev": "ALA",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/333.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/333.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "collin-sexton",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4277811.png",
+        "alt": "Collin Sexton"
+      },
+      "jersey": "10",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [
+        {
+          "status": "Day-To-Day",
+          "date": "2026-10-22T04:56Z"
+        }
+      ],
+      "experience": {
+        "years": 9
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "5060631",
+      "uid": "s:40~l:46~a:5060631",
+      "guid": "ce1ad795-4ef7-3aac-b6b1-837ee61b3c04",
+      "firstName": "Adou",
+      "lastName": "Thiero",
+      "fullName": "Adou Thiero",
+      "displayName": "Adou Thiero",
+      "shortName": "A. Thiero",
+      "weight": 220.0,
+      "displayWeight": "220 lbs",
+      "height": 80.0,
+      "displayHeight": "6' 8\"",
+      "age": 22,
+      "dateOfBirth": "2004-05-08T07:00Z",
+      "birthPlace": {
+        "city": "Pittsburgh",
+        "state": "PA",
+        "country": "USA"
+      },
+      "college": {
+        "id": "8",
+        "guid": "54db9ad2-a897-3768-ae50-f0390c0b5f03",
+        "mascot": "Razorbacks",
+        "name": "Arkansas",
+        "shortName": "Arkansas",
+        "abbrev": "ARK",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/8.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/8.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "adou-thiero",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/5060631.png",
+        "alt": "Adou Thiero"
+      },
+      "jersey": "1",
+      "hand": {
+        "type": "LEFT",
+        "abbreviation": "L",
+        "displayValue": "Left"
+      },
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [
+        {
+          "status": "Day-To-Day",
+          "date": "2026-10-22T04:56Z"
+        }
+      ],
+      "experience": {
+        "years": 2
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 2150917,
+        "outgoingTradeValue": 2150917,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 2150917,
+        "salaryRemaining": 0,
+        "yearsRemaining": 2,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "3907498",
+      "uid": "s:40~l:46~a:3907498",
+      "guid": "0ce4527c-004a-f0c1-5aa5-7b1935e84067",
+      "firstName": "Matisse",
+      "lastName": "Thybulle",
+      "fullName": "Matisse Thybulle",
+      "displayName": "Matisse Thybulle",
+      "shortName": "M. Thybulle",
+      "weight": 202.0,
+      "displayWeight": "202 lbs",
+      "height": 77.0,
+      "displayHeight": "6' 5\"",
+      "age": 29,
+      "dateOfBirth": "1997-03-04T08:00Z",
+      "debutYear": 2019,
+      "birthPlace": {
+        "city": "Issaquah",
+        "state": "WA",
+        "country": "USA"
+      },
+      "college": {
+        "id": "264",
+        "guid": "4de4cba9-6b03-38bf-9d40-78ee1fefc0ec",
+        "mascot": "Huskies",
+        "name": "Washington",
+        "shortName": "Washington",
+        "abbrev": "WASH",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/264.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/264.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-23T01:44Z"
+          }
+        ]
+      },
+      "slug": "matisse-thybulle",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/3907498.png",
+        "alt": "Matisse Thybulle"
+      },
+      "jersey": "4",
+      "position": {
+        "id": "3",
+        "name": "Guard",
+        "displayName": "Guard",
+        "abbreviation": "G",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 8
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4278077",
+      "uid": "s:40~l:46~a:4278077",
+      "guid": "888ccde3-98d4-6ef8-c697-d6a4ce158f87",
+      "firstName": "Jarred",
+      "lastName": "Vanderbilt",
+      "fullName": "Jarred Vanderbilt",
+      "displayName": "Jarred Vanderbilt",
+      "shortName": "J. Vanderbilt",
+      "weight": 214.0,
+      "displayWeight": "214 lbs",
+      "height": 80.0,
+      "displayHeight": "6' 8\"",
+      "age": 27,
+      "dateOfBirth": "1999-04-03T08:00Z",
+      "debutYear": 2018,
+      "birthPlace": {
+        "city": "Houston",
+        "state": "TX",
+        "country": "USA"
+      },
+      "college": {
+        "id": "96",
+        "guid": "c343d2aa-1f76-3d14-8a74-4a12bb54f2ba",
+        "mascot": "Wildcats",
+        "name": "Kentucky",
+        "shortName": "Kentucky",
+        "abbrev": "UK",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/96.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T23:48Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/96.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T23:47Z"
+          }
+        ]
+      },
+      "slug": "jarred-vanderbilt",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4278077.png",
+        "alt": "Jarred Vanderbilt"
+      },
+      "jersey": "2",
+      "hand": {
+        "type": "RIGHT",
+        "abbreviation": "R",
+        "displayValue": "Right"
+      },
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [],
+      "experience": {
+        "years": 9
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 12428571,
+        "outgoingTradeValue": 12428571,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 12428571,
+        "salaryRemaining": 0,
+        "yearsRemaining": 2,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    },
+    {
+      "id": "4433137",
+      "uid": "s:40~l:46~a:4433137",
+      "guid": "ddb32530-906d-3a8e-94c6-e72430294a1a",
+      "firstName": "Ziaire",
+      "lastName": "Williams",
+      "fullName": "Ziaire Williams",
+      "displayName": "Ziaire Williams",
+      "shortName": "Z. Williams",
+      "weight": 185.0,
+      "displayWeight": "185 lbs",
+      "height": 81.0,
+      "displayHeight": "6' 9\"",
+      "age": 25,
+      "dateOfBirth": "2001-09-12T07:00Z",
+      "birthPlace": {
+        "city": "Lancaster",
+        "state": "CA",
+        "country": "USA"
+      },
+      "college": {
+        "id": "24",
+        "guid": "f952d4f1-de28-3323-963d-33c0365c546e",
+        "mascot": "Cardinal",
+        "name": "Stanford",
+        "shortName": "Stanford",
+        "abbrev": "STAN",
+        "logos": [
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500/24.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "default"],
+            "lastUpdated": "2025-12-19T22:33Z"
+          },
+          {
+            "href": "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/24.png",
+            "width": 500,
+            "height": 500,
+            "alt": "",
+            "rel": ["full", "dark"],
+            "lastUpdated": "2025-12-19T22:35Z"
+          }
+        ]
+      },
+      "slug": "ziaire-williams",
+      "headshot": {
+        "href": "https://a.espncdn.com/i/headshots/nba/players/full/4433137.png",
+        "alt": "Ziaire Williams"
+      },
+      "jersey": "11",
+      "position": {
+        "id": "7",
+        "name": "Forward",
+        "displayName": "Forward",
+        "abbreviation": "F",
+        "leaf": false
+      },
+      "injuries": [],
+      "teams": [
+        {
+          "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/13?lang=en&region=us"
+        }
+      ],
+      "experience": {
+        "years": 6
+      },
+      "contract": {
+        "birdStatus": 0,
+        "baseYearCompensation": {
+          "active": false
+        },
+        "poisonPillProvision": {
+          "active": false
+        },
+        "incomingTradeValue": 6250000,
+        "outgoingTradeValue": 6250000,
+        "minimumSalaryException": false,
+        "optionType": 0,
+        "salary": 6250000,
+        "salaryRemaining": 0,
+        "yearsRemaining": 1,
+        "season": {
+          "year": 2027,
+          "startDate": "2026-09-30T07:00Z",
+          "endDate": "2027-06-26T06:59Z"
+        },
+        "tradeKicker": {
+          "active": false,
+          "percentage": 0.0,
+          "value": 0,
+          "tradeValue": 0
+        },
+        "tradeRestriction": false,
+        "unsignedForeignPick": false,
+        "active": true
+      },
+      "status": {
+        "id": "1",
+        "name": "Active",
+        "type": "active",
+        "abbreviation": "Active"
+      }
+    }
+  ],
+  "coach": [
+    {
+      "id": "3024",
+      "firstName": "JJ",
+      "lastName": "Redick",
+      "experience": 2
+    }
+  ],
+  "team": {
+    "id": "13",
+    "abbreviation": "LAL",
+    "location": "Los Angeles",
+    "name": "Lakers",
+    "displayName": "Los Angeles Lakers",
+    "clubhouse": "https://www.espn.com/nba/team/_/name/lal/los-angeles-lakers",
+    "color": "552583",
+    "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+    "recordSummary": "1-0",
+    "seasonSummary": "2026-27",
+    "standingSummary": "1st in Pacific Division"
+  }
+}
