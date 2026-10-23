@@ -196,10 +196,10 @@ function CardAction({
       : "border-white/14 bg-white/5 text-foreground hover:bg-white/10";
 
   return (
-    // Sits above the card-wide link so it stays clickable on its own, and at the bottom so actions line up across a row of cards.
+    // Sits above the card-wide link so it stays clickable on its own.
     <Link
       href={href}
-      className={`relative z-10 mt-auto flex min-h-11 items-center justify-center gap-2 rounded-tile border text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${toneClassName}`}
+      className={`relative z-10 flex min-h-11 items-center justify-center gap-2 rounded-tile border text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${toneClassName}`}
     >
       {children}
     </Link>
@@ -215,6 +215,22 @@ function PlayIcon() {
       className="size-4"
     >
       <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+function PinIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden="true"
+      className="size-3 shrink-0"
+    >
+      <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" />
+      <circle cx="12" cy="9.5" r="2.5" />
     </svg>
   );
 }
@@ -310,26 +326,34 @@ export default function GameCard({ card }: { card: HomeCard }) {
           teamColors={teamColors}
         />
       )}
-      {card.topScorerLabel && <TopScorerTile label={card.topScorerLabel} />}
-
-      {card.venueLabel && (
-        <p className="truncate text-center text-meta text-muted">
-          {card.venueLabel}
-        </p>
-      )}
-
-      {card.showHighlights && (
-        <CardAction href={gameCenterHref} tone="neutral">
-          <PlayIcon />
-          {strings.gameCard.highlights}
-        </CardAction>
-      )}
-      {isLive && (
-        <CardAction href={gameCenterHref} tone="accent">
-          {strings.gameCard.gameDetails}
-          <ArrowIcon />
-        </CardAction>
-      )}
+      {/* Pinned to the bottom so tiles and actions line up across a row of cards. */}
+      <div className="mt-auto flex flex-col gap-3">
+        {card.topScorerLabel && <TopScorerTile label={card.topScorerLabel} />}
+        {card.venueLabel && (
+          <p className="flex items-center justify-center gap-1.5 text-meta text-muted">
+            <PinIcon />
+            <span className="truncate">{card.venueLabel}</span>
+          </p>
+        )}
+        {card.showPreview && (
+          <CardAction href={gameCenterHref} tone="neutral">
+            {strings.gameCard.gamePreview}
+            <ArrowIcon />
+          </CardAction>
+        )}
+        {card.showHighlights && (
+          <CardAction href={gameCenterHref} tone="neutral">
+            <PlayIcon />
+            {strings.gameCard.highlights}
+          </CardAction>
+        )}
+        {isLive && (
+          <CardAction href={gameCenterHref} tone="accent">
+            {strings.gameCard.gameDetails}
+            <ArrowIcon />
+          </CardAction>
+        )}
+      </div>
     </article>
   );
 }

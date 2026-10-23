@@ -96,8 +96,10 @@ export type HomeCard = {
   leadingSide: TeamSide | null;
   teamColors: Record<TeamSide, string>;
   showHighlights: boolean;
-  // Both are live only, and null when ESPN sends nothing to show.
+  showPreview: boolean;
+  // Live only, and null when ESPN sends nothing to show.
   winProbability: Record<TeamSide, TeamWinProbability> | null;
+  // Live and final only, and null when ESPN sends no leaders.
   topScorerLabel: string | null;
   isMyTeam: boolean;
   favoriteSides: Record<TeamSide, boolean>;
@@ -285,7 +287,7 @@ function winProbabilityOf({
 }
 
 function topScorerLabelOf({ status, topScorer }: Game) {
-  if (!isInProgress(status) || !topScorer) return null;
+  if (!hasScore(status) || !topScorer) return null;
 
   // ESPN separates the stats with commas, e.g. "28 PTS, 7 REB".
   const statLine =
@@ -313,6 +315,7 @@ function cardOf(
     leadingSide: leadingSideOf(game),
     teamColors: readableTeamColors(game.home.team, game.away.team),
     showHighlights: game.status.kind === "final",
+    showPreview: game.status.kind === "scheduled",
     winProbability: winProbabilityOf(game),
     topScorerLabel: topScorerLabelOf(game),
     isMyTeam: isMyTeamGame(game, favoriteTeamIds),

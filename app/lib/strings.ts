@@ -109,6 +109,7 @@ export const strings = {
     winner: "Winner",
     highlights: "Highlights · recap",
     gameDetails: "Game details",
+    gamePreview: "Game preview",
     winProbability: "Win probability",
     teamWinProbability: (abbreviation: string, percent: number) =>
       `${abbreviation} ${percent}%`,

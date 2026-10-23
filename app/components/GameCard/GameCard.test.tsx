@@ -122,6 +122,21 @@ describe("GameCard", () => {
     expect(screen.queryByText("0")).toBeNull();
   });
 
+  it("offers a game preview before the game, linking to the game center", () => {
+    renderCard(cardFor(scheduledGame));
+
+    const previewLink = screen.getByRole("link", {
+      name: strings.gameCard.gamePreview,
+    });
+    expect(previewLink.getAttribute("href")).toBe(`/game/${scheduledGame.id}`);
+  });
+
+  it("shows the top scorer on a final", () => {
+    renderCard(cardFor(finalGame));
+
+    expect(screen.getByText(strings.gameCard.topScorer)).toBeDefined();
+  });
+
   it("keeps the tip-off element empty until the browser timezone is known", () => {
     renderCard(cardFor(scheduledGame, null));
 

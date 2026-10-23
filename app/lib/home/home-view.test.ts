@@ -763,9 +763,25 @@ describe("buildHomeView", () => {
         ).toBeNull();
       });
 
-      it("shows the top scorer only while the game is live", () => {
-        expect(cardFor(finalOrlando).topScorerLabel).toBeNull();
+      it("shows the top scorer once the game has started", () => {
+        expect(cardFor(finalOrlando).topScorerLabel).toBe(
+          "P. Banchero · 35 PTS 7 REB 10 AST",
+        );
       });
+
+      it("leaves the top scorer out before the game", () => {
+        expect(
+          cardFor({ ...scheduledLate, topScorer: finalOrlando.topScorer })
+            .topScorerLabel,
+        ).toBeNull();
+      });
+    });
+
+    it("offers a preview only for games yet to be played", () => {
+      expect(cardFor(scheduledLate).showPreview).toBe(true);
+      expect(cardFor(postponedGame).showPreview).toBe(false);
+      expect(cardFor(liveGame).showPreview).toBe(false);
+      expect(cardFor(finalOrlando).showPreview).toBe(false);
     });
 
     it("offers highlights only for finished games", () => {
