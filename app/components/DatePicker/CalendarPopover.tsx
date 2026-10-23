@@ -144,7 +144,8 @@ function CalendarDayButton({
       aria-pressed={day.isSelected}
       aria-current={day.isToday ? "date" : undefined}
       onClick={onClick}
-      className={`relative flex min-h-11 cursor-pointer items-center justify-center rounded-tile text-sm transition-colors ${FOCUS_RING_CLASS_NAME} ${toneClassName} ${todayClassName}`}
+      // On a 375px phone a cell is just under 44px wide, so its hit area also covers half the gap on each side.
+      className={`relative flex min-h-11 cursor-pointer before:absolute before:inset-y-0 before:-inset-x-px items-center justify-center rounded-tile text-sm transition-colors ${FOCUS_RING_CLASS_NAME} ${toneClassName} ${todayClassName}`}
     >
       {day.dayNumber}
       {day.hasGames && (

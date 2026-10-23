@@ -41,7 +41,7 @@ describe("DatePicker", () => {
     expect(onPopoverModuleLoad).not.toHaveBeenCalled();
 
     fireEvent.click(
-      screen.getByRole("button", { name: strings.calendar.pickDateLabel }),
+      screen.getByRole("button", { name: strings.calendar.pickDate }),
     );
 
     expect(await screen.findByRole("dialog")).toBeDefined();
@@ -52,7 +52,7 @@ describe("DatePicker", () => {
     renderDatePicker();
 
     fireEvent.click(
-      screen.getByRole("button", { name: strings.calendar.pickDateLabel }),
+      screen.getByRole("button", { name: strings.calendar.pickDate }),
     );
 
     await vi.waitFor(() =>

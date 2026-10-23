@@ -109,6 +109,17 @@ describe("DayScoreboard", () => {
     expect(screen.queryByRole("alert")).toBeNull();
   });
 
+  it("keeps live scores out of live regions so polling is not announced", async () => {
+    fetchMock.mockResolvedValue(jsonResponse(liveDay));
+
+    const { container } = renderDayScoreboard();
+    await screen.findAllByText(strings.gameStatus.live);
+
+    expect(
+      container.querySelector("[aria-live], [role=status], [role=alert]"),
+    ).toBeNull();
+  });
+
   it("headlines the date with a summary of its live and final games", async () => {
     fetchMock.mockResolvedValue(jsonResponse(liveDay));
 
@@ -322,7 +333,7 @@ describe("DayScoreboard", () => {
       fetchMock.mockImplementation(async () => jsonResponse(seasonDay));
     });
 
-    async function openCalendar(name: string = strings.calendar.pickDateLabel) {
+    async function openCalendar(name: string = strings.calendar.pickDate) {
       fireEvent.click(screen.getByRole("button", { name }));
       return screen.findByRole("dialog", {
         name: strings.calendar.pickDateLabel,
@@ -334,7 +345,7 @@ describe("DayScoreboard", () => {
 
       const pickDateButton = within(dateRail().parentElement!).getByRole(
         "button",
-        { name: strings.calendar.pickDateLabel },
+        { name: strings.calendar.pickDate },
       );
       expect(pickDateButton.textContent).toContain(strings.calendar.pickDate);
       const dateHeading = screen.getByRole("heading").closest("header")!;
@@ -396,12 +407,16 @@ describe("DayScoreboard", () => {
 
       const railButtons = within(dateRail()).getAllByRole("button");
       expect(railButtons).toHaveLength(15);
-      expect(railButtons[0].getAttribute("aria-label")).toMatch(
-        /^Friday, November 13/,
+      expect(railButtons[0]).toBe(
+        within(dateRail()).getByRole("button", {
+          name: /^Friday, November 13/,
+        }),
       );
       expect(railButtons[7].getAttribute("aria-pressed")).toBe("true");
-      expect(railButtons[7].getAttribute("aria-label")).toMatch(
-        /^Friday, November 20/,
+      expect(railButtons[7]).toBe(
+        within(dateRail()).getByRole("button", {
+          name: /^Friday, November 20/,
+        }),
       );
       await vi.waitFor(() =>
         expect(gameCountsFetchMock.mock.calls.at(-1)?.[0]).toContain(
@@ -420,8 +435,10 @@ describe("DayScoreboard", () => {
       );
 
       const railButtons = within(dateRail()).getAllByRole("button");
-      expect(railButtons[0].getAttribute("aria-label")).toMatch(
-        /^Wednesday, October 14/,
+      expect(railButtons[0]).toBe(
+        within(dateRail()).getByRole("button", {
+          name: /^Wednesday, October 14/,
+        }),
       );
       expect(
         within(dateRail())
@@ -516,11 +533,15 @@ describe("DayScoreboard", () => {
 
       const buttons = dayButtons();
       expect(buttons).toHaveLength(15);
-      expect(buttons[0].getAttribute("aria-label")).toBe(
-        "Wednesday, October 14",
+      expect(buttons[0]).toBe(
+        within(dateRail()).getByRole("button", {
+          name: "Wednesday, October 14",
+        }),
       );
-      expect(buttons[14].getAttribute("aria-label")).toBe(
-        "Wednesday, October 28",
+      expect(buttons[14]).toBe(
+        within(dateRail()).getByRole("button", {
+          name: "Wednesday, October 28",
+        }),
       );
       expect(buttons[7].getAttribute("aria-pressed")).toBe("true");
       expect(buttons[7].textContent).toContain("WED");
@@ -583,8 +604,10 @@ describe("DayScoreboard", () => {
           .getAttribute("aria-pressed"),
       ).toBe("true");
       expect(await screen.findByText("76ers")).toBeDefined();
-      expect(dayButtons()[0].getAttribute("aria-label")).toMatch(
-        /^Wednesday, October 14/,
+      expect(dayButtons()[0]).toBe(
+        within(dateRail()).getByRole("button", {
+          name: /^Wednesday, October 14/,
+        }),
       );
     });
 
@@ -649,6 +672,19 @@ describe("DayScoreboard", () => {
       expect(
         screen.getByRole("heading", { name: "Wednesday, October 21" }),
       ).toBeDefined();
+    });
+
+    it("slides the rail without animation when reduced motion is preferred", () => {
+      vi.stubGlobal("matchMedia", (query: string) => ({
+        matches: query === "(prefers-reduced-motion: reduce)",
+      }));
+      renderDayScoreboard();
+
+      fireEvent.click(
+        screen.getByRole("button", { name: strings.dateRail.nextDays }),
+      );
+
+      expect(scrollBy.mock.calls[0][0]).toMatchObject({ behavior: "instant" });
     });
   });
 });

@@ -10,6 +10,17 @@ const DAYS_BESIDE_CENTER = 3;
 const FOCUS_RING_CLASS_NAME =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
+// Seven pills share a phone's width, narrower than a 44px target, so each one's hit area reaches into half the gap beside it.
+const WIDENED_HIT_AREA_CLASS_NAME =
+  "before:absolute before:inset-y-0 before:-inset-x-1";
+
+// Global CSS stops transitions under reduced motion, but scrolls started from script choose their behavior here.
+function railScrollBehavior(): ScrollBehavior {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "instant"
+    : "smooth";
+}
+
 type DateRailProps = {
   rail: DateRailView;
   onSelect: (day: RailDay) => void;
@@ -40,7 +51,7 @@ export default function DateRail({
   const slide = (direction: -1 | 1) =>
     scrollerRef.current?.scrollBy({
       left: direction * measureDayStepPixels(),
-      behavior: "smooth",
+      behavior: railScrollBehavior(),
     });
 
   useLayoutEffect(() => {
@@ -74,7 +85,7 @@ export default function DateRail({
     }
     scroller.scrollTo({
       left: (selectedIndex - DAYS_BESIDE_CENTER) * dayStepPixels,
-      behavior: "smooth",
+      behavior: railScrollBehavior(),
     });
   }, [selectedIndex]);
 
@@ -124,26 +135,32 @@ function DayPill({ day, onClick, onPreview }: DayPillProps) {
     : "border-white/10 bg-white/5 text-foreground hover:bg-white/8";
   const secondaryTextClassName = day.isSelected ? "opacity-75" : "text-muted";
 
+  // Assistive tech reads the full date instead of the abbreviations, without an aria-label that would hide the visible text from the name.
   return (
     <button
       type="button"
-      aria-label={day.label}
       aria-pressed={day.isSelected}
       onClick={onClick}
       onPointerEnter={onPreview}
       onFocus={onPreview}
-      className={`relative cursor-pointer flex min-h-16 shrink-0 basis-[calc((100%-6*0.5rem)/7)] snap-start flex-col items-center gap-0.75 rounded-tile border py-2.25 transition-[background-color,translate] md:min-h-21 md:basis-[calc((100%-6*0.625rem)/7)] md:rounded-card md:px-3.5 md:py-3 ${FOCUS_RING_CLASS_NAME} ${toneClassName}`}
+      className={`relative cursor-pointer flex min-h-16 shrink-0 basis-[calc((100%-6*0.5rem)/7)] snap-start flex-col items-center gap-0.75 rounded-tile border py-2.25 transition-[background-color,translate] md:min-h-21 md:basis-[calc((100%-6*0.625rem)/7)] md:rounded-card md:px-3.5 md:py-3 ${FOCUS_RING_CLASS_NAME} ${WIDENED_HIT_AREA_CLASS_NAME} ${toneClassName}`}
     >
+      <span className="sr-only">{day.label}</span>
       <span
+        aria-hidden="true"
         className={`text-[10px] tracking-[0.14em] ${secondaryTextClassName}`}
       >
         {day.weekday}
       </span>
-      <span className="font-display text-[22px] leading-none md:text-2xl">
+      <span
+        aria-hidden="true"
+        className="font-display text-[22px] leading-none md:text-2xl"
+      >
         {day.dayNumber}
       </span>
       {day.countLabel && (
         <span
+          aria-hidden="true"
           className={`hidden text-[10px] whitespace-nowrap md:block ${secondaryTextClassName}`}
         >
           {day.countLabel}

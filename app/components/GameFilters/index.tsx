@@ -58,7 +58,8 @@ function FilterPill({ option, onClick }: FilterPillProps) {
       type="button"
       aria-pressed={option.isSelected}
       onClick={onClick}
-      className={`min-h-9 cursor-pointer rounded-full border px-3.5 text-xs font-bold tracking-[0.04em] transition-colors ${FOCUS_RING_CLASS_NAME} ${toneClassName}`}
+      // The pill is drawn 36px tall; its hit area reaches 4px into the gap above and below to make a 44px target.
+      className={`relative min-h-9 cursor-pointer rounded-full before:absolute before:inset-x-0 before:-inset-y-1 border px-3.5 text-xs font-bold tracking-[0.04em] transition-colors ${FOCUS_RING_CLASS_NAME} ${toneClassName}`}
     >
       {option.label}
     </button>

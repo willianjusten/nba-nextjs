@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FOCUS_RING_CLASS_NAME } from "@/app/components/DatePicker/DatePickerTrigger";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import type { NextGameDay } from "@/app/lib/home/home-view";
 import { strings } from "@/app/lib/strings";
@@ -58,7 +59,7 @@ export function GamesListError({ onRetry, isRetrying }: GamesListErrorProps) {
         type="button"
         onClick={onRetry}
         disabled={isRetrying}
-        className="min-h-11 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors hover:bg-accent-soft disabled:opacity-60"
+        className={`min-h-11 cursor-pointer rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors hover:bg-accent-soft disabled:cursor-default disabled:opacity-60 ${FOCUS_RING_CLASS_NAME}`}
       >
         {isRetrying ? strings.games.retrying : strings.games.retry}
       </button>

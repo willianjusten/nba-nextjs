@@ -25,10 +25,9 @@ export default function DatePickerTrigger({
   return (
     <button
       type="button"
+      // The rail button is named by its visible text; only the icon-only header button needs a label.
       aria-label={
-        placement === "rail"
-          ? strings.calendar.pickDateLabel
-          : strings.calendar.openCalendar
+        placement === "header" ? strings.calendar.openCalendar : undefined
       }
       {...buttonProps}
       className={`cursor-pointer ${FOCUS_RING_CLASS_NAME} ${PLACEMENT_CLASS_NAMES[placement]}`}

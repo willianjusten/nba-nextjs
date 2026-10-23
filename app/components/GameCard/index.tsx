@@ -40,8 +40,18 @@ function TeamName({
   );
 }
 
-function TeamRecord({ record }: { record: string | null }) {
-  return record && <span className="text-meta text-muted">{record}</span>;
+function TeamRecord({
+  record,
+  isDimmed = false,
+}: {
+  record: string | null;
+  isDimmed?: boolean;
+}) {
+  // Muted text under the loser row's opacity falls below 4.5:1, while dimmed foreground still reads as muted and passes.
+  const colorClassName = isDimmed ? "text-foreground" : "text-muted";
+  return (
+    record && <span className={`text-meta ${colorClassName}`}>{record}</span>
+  );
 }
 
 function ScoreRow({
@@ -73,7 +83,7 @@ function ScoreRow({
       />
       <span className="flex grow flex-wrap items-baseline gap-x-2 gap-y-0.5">
         <TeamName competitor={competitor} isFavorite={isFavorite} />
-        <TeamRecord record={competitor.record} />
+        <TeamRecord record={competitor.record} isDimmed={isFinalLoser} />
       </span>
       <span
         className={`font-display text-3xl leading-none ${isLive && isLeading ? "text-link" : ""}`}
