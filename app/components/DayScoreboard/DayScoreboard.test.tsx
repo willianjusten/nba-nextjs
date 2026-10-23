@@ -204,6 +204,73 @@ describe("DayScoreboard", () => {
     vi.useRealTimers();
   });
 
+  describe("game filters", () => {
+    const filterGroup = () =>
+      screen.getByRole("group", { name: strings.gameFilters.groupLabel });
+    const filterButton = (name: string) =>
+      within(filterGroup()).getByRole("button", { name });
+
+    beforeEach(() => {
+      fetchMock.mockImplementation(async (url: string) =>
+        jsonResponse(url.includes("dates=20261022") ? liveDay : finalDay),
+      );
+    });
+
+    it("starts on All, pressed, under the scoreboard label", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+
+      expect(
+        screen.getByRole("heading", { name: strings.gameFilters.heading }),
+      ).toBeDefined();
+      expect(filterButton("All").getAttribute("aria-pressed")).toBe("true");
+      expect(filterButton("Live").getAttribute("aria-pressed")).toBe("false");
+    });
+
+    it("shows only the matching games, saying so when none match", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+
+      fireEvent.click(filterButton("Live"));
+
+      expect(filterButton("Live").getAttribute("aria-pressed")).toBe("true");
+      expect(filterButton("All").getAttribute("aria-pressed")).toBe("false");
+      expect(
+        screen.getByText(strings.gameFilters.empty.live("Wed, Oct 21")),
+      ).toBeDefined();
+      expect(screen.queryByText("Magic")).toBeNull();
+
+      fireEvent.click(filterButton("Final"));
+
+      expect(screen.getByText("Magic")).toBeDefined();
+      expect(screen.queryByText(/No final games/)).toBeNull();
+    });
+
+    it("resets to All when the date changes", async () => {
+      renderDayScoreboard();
+      await screen.findByText("Magic");
+      fireEvent.click(filterButton("Final"));
+
+      fireEvent.click(
+        within(dateRail()).getByRole("button", {
+          name: /^Thursday, October 22/,
+        }),
+      );
+
+      expect(await screen.findByText("76ers")).toBeDefined();
+      expect(filterButton("All").getAttribute("aria-pressed")).toBe("true");
+
+      fireEvent.click(
+        within(dateRail()).getByRole("button", {
+          name: /^Wednesday, October 21/,
+        }),
+      );
+
+      expect(await screen.findByText("Magic")).toBeDefined();
+      expect(filterButton("All").getAttribute("aria-pressed")).toBe("true");
+    });
+  });
+
   describe("date picker", () => {
     const seasonDay = {
       ...finalDay,

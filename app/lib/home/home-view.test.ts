@@ -12,6 +12,7 @@ import {
   dateRailRange,
   isInDateRail,
   nbaDateOfPath,
+  type GameFilter,
   type HomeCard,
   type HomeView,
   type ScoreboardQueryState,
@@ -39,12 +40,14 @@ function viewFor(
   query: ScoreboardQueryState,
   timeZone: string | null = "America/New_York",
   seasonCalendar: string[] | null = null,
+  filter: GameFilter = "all",
 ): HomeView {
   return buildHomeView({
     selectedDate: nbaDate,
     railCenterDate: nbaDate,
     today,
     query,
+    filter,
     gameCounts: null,
     seasonCalendar: seasonCalendar as NbaDate[] | null,
     now,
@@ -66,6 +69,7 @@ function railFor(
     railCenterDate: railCenterDate as NbaDate,
     today,
     query: { status: "loading" },
+    filter: "all",
     gameCounts,
     seasonCalendar: null,
     now,
@@ -264,6 +268,108 @@ describe("buildHomeView", () => {
         kind: "empty",
         nextGameDay: { nbaDate: "2026-10-23" },
       });
+    });
+  });
+
+  describe("game filters", () => {
+    const mixedDay = {
+      status: "success",
+      scoreboard: scoreboardWith([
+        postponedGame,
+        finalOrlando,
+        scheduledLate,
+        halftimeGame,
+        liveGame,
+      ]),
+    } as const;
+    const filterView = (filter: GameFilter) =>
+      viewFor(mixedDay, "America/New_York", null, filter);
+
+    it("offers All, Live, Final, and Upcoming, pressing the selected one", () => {
+      expect(filterView("final").filters).toEqual([
+        { filter: "all", label: "All", isSelected: false },
+        { filter: "live", label: "Live", isSelected: false },
+        { filter: "final", label: "Final", isSelected: true },
+        { filter: "upcoming", label: "Upcoming", isSelected: false },
+      ]);
+    });
+
+    it("shows every game, postponed ones included, under All", () => {
+      const view = filterView("all");
+
+      expect(cardIds(view)).toEqual([
+        liveGame.id,
+        halftimeGame.id,
+        scheduledLate.id,
+        finalOrlando.id,
+        postponedGame.id,
+      ]);
+      expect(view.screen).toMatchObject({ emptyFilterMessage: null });
+    });
+
+    it("shows live games, halftime included, under Live", () => {
+      expect(cardIds(filterView("live"))).toEqual([
+        liveGame.id,
+        halftimeGame.id,
+      ]);
+    });
+
+    it("shows finished games under Final", () => {
+      expect(cardIds(filterView("final"))).toEqual([finalOrlando.id]);
+    });
+
+    it("shows games yet to tip off under Upcoming", () => {
+      expect(cardIds(filterView("upcoming"))).toEqual([scheduledLate.id]);
+    });
+
+    it("keeps counting the whole day in the summary while filtered", () => {
+      expect(filterView("live").summary).toEqual({
+        total: 5,
+        live: 2,
+        final: 1,
+      });
+    });
+
+    it("says so when no game matches the filter", () => {
+      const view = viewFor(
+        { status: "success", scoreboard: scoreboardWith([finalOrlando]) },
+        "America/New_York",
+        null,
+        "live",
+      );
+
+      expect(view.screen).toEqual({
+        kind: "games",
+        cards: [],
+        emptyFilterMessage: "No live games on Tue, Oct 20",
+      });
+    });
+
+    it("filters the last games kept after a failed refetch", () => {
+      const view = viewFor(
+        {
+          status: "stale",
+          scoreboard: scoreboardWith([finalOrlando, liveGame]),
+          updatedAt: now.getTime(),
+        },
+        "America/New_York",
+        null,
+        "upcoming",
+      );
+
+      expect(view.screen).toMatchObject({
+        kind: "stale",
+        cards: [],
+        emptyFilterMessage: "No upcoming games on Tue, Oct 20",
+      });
+    });
+
+    it("offers no filters until there are games to filter", () => {
+      expect(viewFor({ status: "loading" }).filters).toBeNull();
+      expect(viewFor({ status: "error" }).filters).toBeNull();
+      expect(
+        viewFor({ status: "success", scoreboard: scoreboardWith([]) }).filters,
+      ).toBeNull();
     });
   });
 

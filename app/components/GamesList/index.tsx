@@ -6,6 +6,7 @@ import {
   GamesListEmpty,
   GamesListError,
   GamesListLoading,
+  GamesListNoMatches,
   StaleScoresNotice,
 } from "./states";
 
@@ -38,11 +39,15 @@ export default function GamesList({
           {screen.kind === "stale" && (
             <StaleScoresNotice minutesAgo={screen.minutesAgo} />
           )}
-          <div className={GAMES_GRID_CLASS_NAME}>
-            {screen.cards.map((card) => (
-              <GameCard key={card.game.id} card={card} />
-            ))}
-          </div>
+          {screen.emptyFilterMessage ? (
+            <GamesListNoMatches message={screen.emptyFilterMessage} />
+          ) : (
+            <div className={GAMES_GRID_CLASS_NAME}>
+              {screen.cards.map((card) => (
+                <GameCard key={card.game.id} card={card} />
+              ))}
+            </div>
+          )}
         </div>
       );
   }

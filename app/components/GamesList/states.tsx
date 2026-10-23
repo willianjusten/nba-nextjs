@@ -9,6 +9,9 @@ const LOADING_PLACEHOLDER_COUNT = 4;
 // Shared so the loading skeleton keeps the same layout as the loaded games.
 export const GAMES_GRID_CLASS_NAME = "grid grid-cols-auto-fill gap-4";
 
+const EMPTY_BOX_CLASS_NAME =
+  "flex flex-col items-center gap-2.5 rounded-card border border-dashed border-white/16 p-5 text-center";
+
 function SkeletonTeamRow() {
   return (
     <div className="flex items-center gap-2.5">
@@ -70,7 +73,7 @@ type GamesListEmptyProps = {
 
 export function GamesListEmpty({ nbaDate, nextGameDay }: GamesListEmptyProps) {
   return (
-    <div className="flex flex-col items-center gap-2.5 rounded-card border border-dashed border-white/16 p-5 text-center">
+    <div className={EMPTY_BOX_CLASS_NAME}>
       <BasketballIcon className="size-7 text-muted" />
       <p className="font-bold">
         {strings.games.empty(formatShortNbaDate(nbaDate))}
@@ -84,6 +87,15 @@ export function GamesListEmpty({ nbaDate, nextGameDay }: GamesListEmptyProps) {
           <span aria-hidden="true">&nbsp;→</span>
         </Link>
       )}
+    </div>
+  );
+}
+
+export function GamesListNoMatches({ message }: { message: string }) {
+  return (
+    <div className={EMPTY_BOX_CLASS_NAME}>
+      <BasketballIcon className="size-7 text-muted" />
+      <p className="font-bold">{message}</p>
     </div>
   );
 }

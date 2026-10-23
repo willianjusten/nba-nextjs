@@ -47,12 +47,21 @@ export type HomeViewInput = {
   // The current NBA date, which lives at "/" instead of its own games page.
   today: NbaDate;
   query: ScoreboardQueryState;
+  filter: GameFilter;
   gameCounts: GameCounts | null;
   // Every game day of the selected date's season, the offseason counting toward the next one; null until it loads.
   seasonCalendar: NbaDate[] | null;
   now: Date;
   // The browser timezone; null while server rendering, where the viewer's timezone is unknown.
   timeZone: string | null;
+};
+
+export type GameFilter = "all" | "live" | "final" | "upcoming";
+
+export type GameFilterOption = {
+  filter: GameFilter;
+  label: string;
+  isSelected: boolean;
 };
 
 export type DateHeading = {
@@ -119,14 +128,22 @@ export type HomeScreen =
   | { kind: "error" }
   // The next game day is null once the season has none left, or while its calendar is unknown.
   | { kind: "empty"; nextGameDay: NextGameDay | null }
-  | { kind: "games"; cards: HomeCard[] }
-  | { kind: "stale"; cards: HomeCard[]; minutesAgo: number };
+  // The message is set only when the day has games but none match the filter.
+  | { kind: "games"; cards: HomeCard[]; emptyFilterMessage: string | null }
+  | {
+      kind: "stale";
+      cards: HomeCard[];
+      emptyFilterMessage: string | null;
+      minutesAgo: number;
+    };
 
 export type HomeView = {
   heading: DateHeading;
   dateRail: DateRailView;
   // Null until there are games to count, so a failed or pending request never reads as "0 games".
   summary: GamesSummary | null;
+  // Null until there are games, so a pending or failed request offers nothing to filter.
+  filters: GameFilterOption[] | null;
   screen: HomeScreen;
 };
 
@@ -158,6 +175,30 @@ function orderGames(games: Game[]): Game[] {
       groupRank(first) - groupRank(second) ||
       Date.parse(first.startTime) - Date.parse(second.startTime),
   );
+}
+
+const GAME_FILTERS: GameFilter[] = ["all", "live", "final", "upcoming"];
+
+// Postponed and canceled games match no filter but All.
+function matchesFilter(game: Game, filter: GameFilter) {
+  const group = statusGroupOf(game.status);
+  switch (filter) {
+    case "all":
+      return true;
+    case "live":
+    case "final":
+      return group === filter;
+    case "upcoming":
+      return group === "scheduled";
+  }
+}
+
+function filterOptionsOf(selectedFilter: GameFilter): GameFilterOption[] {
+  return GAME_FILTERS.map((filter) => ({
+    filter,
+    label: strings.gameFilters[filter],
+    isSelected: filter === selectedFilter,
+  }));
 }
 
 const META_SEPARATOR = " · ";
@@ -287,6 +328,7 @@ function nextGameDayOf(
 
 function screenOf({
   query,
+  filter,
   selectedDate,
   today,
   seasonCalendar,
@@ -308,14 +350,22 @@ function screenOf({
         };
       }
 
-      const cards = orderGames(games).map((game) => cardOf(game, timeZone));
-      if (query.status === "success") return { kind: "games", cards };
+      const cards = orderGames(games)
+        .filter((game) => matchesFilter(game, filter))
+        .map((game) => cardOf(game, timeZone));
+      const emptyFilterMessage =
+        cards.length === 0
+          ? strings.gameFilters.empty[filter](formatShortNbaDate(selectedDate))
+          : null;
+      if (query.status === "success") {
+        return { kind: "games", cards, emptyFilterMessage };
+      }
 
       const minutesAgo = Math.max(
         1,
         Math.round((now.getTime() - query.updatedAt) / MILLISECONDS_PER_MINUTE),
       );
-      return { kind: "stale", cards, minutesAgo };
+      return { kind: "stale", cards, emptyFilterMessage, minutesAgo };
     }
   }
 }
@@ -392,16 +442,19 @@ function dateRailOf(
 }
 
 export function buildHomeView(input: HomeViewInput): HomeView {
-  const { selectedDate, railCenterDate, today, query, gameCounts } = input;
+  const { selectedDate, railCenterDate, today, query, filter, gameCounts } =
+    input;
   const games =
     query.status === "success" || query.status === "stale"
       ? query.scoreboard.games
       : [];
+  const hasGames = games.length > 0;
 
   return {
     heading: headingOf(selectedDate),
     dateRail: dateRailOf(railCenterDate, selectedDate, today, gameCounts),
-    summary: games.length > 0 ? summarize(games) : null,
+    summary: hasGames ? summarize(games) : null,
+    filters: hasGames ? filterOptionsOf(filter) : null,
     screen: screenOf(input),
   };
 }

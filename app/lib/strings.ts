@@ -38,6 +38,21 @@ export const strings = {
     dayLabel: (formattedDate: string, countLabel: string | null) =>
       countLabel ? `${formattedDate}, ${countLabel}` : formattedDate,
   },
+  gameFilters: {
+    heading: "Scoreboard",
+    groupLabel: "Filter games",
+    all: "All",
+    live: "Live",
+    final: "Final",
+    upcoming: "Upcoming",
+    empty: {
+      all: (formattedDate: string) => `No games on ${formattedDate}`,
+      live: (formattedDate: string) => `No live games on ${formattedDate}`,
+      final: (formattedDate: string) => `No final games on ${formattedDate}`,
+      upcoming: (formattedDate: string) =>
+        `No upcoming games on ${formattedDate}`,
+    },
+  },
   calendar: {
     pickDate: "Pick date",
     pickDateLabel: "Pick a date",

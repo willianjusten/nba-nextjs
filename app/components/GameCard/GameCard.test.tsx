@@ -28,6 +28,7 @@ function cardFor(game: Game, timeZone: string | null = "America/New_York") {
       status: "success",
       scoreboard: { nbaDate: game.nbaDate, games: [game] },
     },
+    filter: "all",
     gameCounts: null,
     seasonCalendar: null,
     now: new Date("2026-10-23T00:00:00Z"),

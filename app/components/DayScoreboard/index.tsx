@@ -8,6 +8,7 @@ import {
   buildHomeView,
   dateRailRange,
   isInDateRail,
+  type GameFilter,
   nbaDateOfPath,
   type ScoreboardQueryState,
 } from "@/app/lib/home/home-view";
@@ -16,9 +17,11 @@ import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
 import { seasonCalendarQueryOptions } from "@/app/lib/queries/season-calendar";
 import { seasonStartYearOf } from "@/app/lib/season/season-year";
 import { useScoreboard } from "@/app/lib/queries/use-scoreboard";
+import { strings } from "@/app/lib/strings";
 import { useBrowserTimeZone } from "@/app/lib/time/use-browser-time-zone";
 import DatePicker from "@/app/components/DatePicker";
 import DateRail from "@/app/components/DateRail";
+import GameFilters from "@/app/components/GameFilters";
 import GamesList from "@/app/components/GamesList";
 import DateHeading from "./DateHeading";
 
@@ -48,6 +51,12 @@ export default function DayScoreboard({
     setRailCenterDate(selectedDate);
   }
   const { firstDate, lastDate } = dateRailRange(railCenterDate);
+  const [filter, setFilter] = useState<GameFilter>("all");
+  const [filteredDate, setFilteredDate] = useState(selectedDate);
+  if (filteredDate !== selectedDate) {
+    setFilteredDate(selectedDate);
+    setFilter("all");
+  }
   const { data: gameCounts } = useQuery(
     gameCountsQueryOptions(firstDate, lastDate),
   );
@@ -70,6 +79,7 @@ export default function DayScoreboard({
     railCenterDate,
     today,
     query,
+    filter,
     gameCounts: gameCounts ?? null,
     seasonCalendar: seasonCalendar ?? null,
     now: new Date(),
@@ -99,6 +109,16 @@ export default function DayScoreboard({
       >
         <DatePicker placement="rail" {...datePickerProps} />
       </DateRail>
+      {homeView.filters && (
+        <GameFilters
+          filters={homeView.filters}
+          countLabel={
+            homeView.summary &&
+            strings.dateRail.gameCount(homeView.summary.total)
+          }
+          onSelect={setFilter}
+        />
+      )}
       <GamesList
         nbaDate={selectedDate}
         screen={homeView.screen}
