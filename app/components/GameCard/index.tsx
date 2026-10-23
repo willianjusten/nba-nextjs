@@ -220,7 +220,7 @@ export default function GameCard({ card }: { card: HomeCard }) {
 
   return (
     <article
-      className={`card relative flex flex-col gap-3 p-4 ${isLive ? "border-live/34 bg-linear-to-b from-live/14 to-elevated to-50%" : ""}`}
+      className={`card relative flex flex-col gap-3 p-4 ${isLive ? "border-live/34 bg-linear-to-b from-live/14 to-elevated to-50%" : "border-white/10 bg-white/4.5"}`}
     >
       {/* Stretched over the whole card so tapping anywhere opens the game center; first so it is also first in tab order. */}
       <Link
