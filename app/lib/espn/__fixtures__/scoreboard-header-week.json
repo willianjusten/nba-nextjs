@@ -1,0 +1,305 @@
+{
+  "sports": [
+    {
+      "id": "40",
+      "uid": "s:40",
+      "guid": "cd70a58e-a830-330c-93ed-52360b51b632",
+      "name": "Basketball",
+      "slug": "basketball",
+      "leagues": [
+        {
+          "id": "46",
+          "uid": "s:40~l:46",
+          "name": "National Basketball Association",
+          "abbreviation": "NBA",
+          "shortName": "NBA",
+          "slug": "nba",
+          "tag": "nba",
+          "isTournament": false,
+          "events": [
+            {
+              "id": "401909848",
+              "date": "2026-10-23T20:00:00Z",
+              "name": "Chicago Bulls at Milwaukee Bucks",
+              "shortName": "CHI @ MIL",
+              "status": "pre",
+              "summary": "10/23 - 4:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909095",
+              "date": "2026-10-23T23:00:00Z",
+              "name": "New York Knicks at Boston Celtics",
+              "shortName": "NY @ BOS",
+              "status": "pre",
+              "summary": "10/23 - 7:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909843",
+              "date": "2026-10-23T23:00:00Z",
+              "name": "Atlanta Hawks at Charlotte Hornets",
+              "shortName": "ATL @ CHA",
+              "status": "pre",
+              "summary": "10/23 - 7:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909844",
+              "date": "2026-10-23T23:00:00Z",
+              "name": "Dallas Mavericks at Indiana Pacers",
+              "shortName": "DAL @ IND",
+              "status": "pre",
+              "summary": "10/23 - 7:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909845",
+              "date": "2026-10-23T23:00:00Z",
+              "name": "Minnesota Timberwolves at Orlando Magic",
+              "shortName": "MIN @ ORL",
+              "status": "pre",
+              "summary": "10/23 - 7:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909846",
+              "date": "2026-10-23T23:00:00Z",
+              "name": "Toronto Raptors at Washington Wizards",
+              "shortName": "TOR @ WSH",
+              "status": "pre",
+              "summary": "10/23 - 7:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909847",
+              "date": "2026-10-24T00:00:00Z",
+              "name": "Detroit Pistons at Miami Heat",
+              "shortName": "DET @ MIA",
+              "status": "pre",
+              "summary": "10/23 - 8:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909096",
+              "date": "2026-10-24T01:30:00Z",
+              "name": "Houston Rockets at San Antonio Spurs",
+              "shortName": "HOU @ SA",
+              "status": "pre",
+              "summary": "10/23 - 9:30 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909849",
+              "date": "2026-10-24T01:30:00Z",
+              "name": "New Orleans Pelicans at Utah Jazz",
+              "shortName": "NO @ UTAH",
+              "status": "pre",
+              "summary": "10/23 - 9:30 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909850",
+              "date": "2026-10-24T02:00:00Z",
+              "name": "Memphis Grizzlies at Golden State Warriors",
+              "shortName": "MEM @ GS",
+              "status": "pre",
+              "summary": "10/23 - 10:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909851",
+              "date": "2026-10-24T02:00:00Z",
+              "name": "LA Clippers at Los Angeles Lakers",
+              "shortName": "LAC @ LAL",
+              "status": "pre",
+              "summary": "10/23 - 10:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909852",
+              "date": "2026-10-24T02:00:00Z",
+              "name": "Portland Trail Blazers at Sacramento Kings",
+              "shortName": "POR @ SAC",
+              "status": "pre",
+              "summary": "10/23 - 10:00 PM EDT",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909088",
+              "date": "2026-10-20T19:00:00Z",
+              "name": "Boston Celtics at Detroit Pistons",
+              "shortName": "BOS @ DET",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909089",
+              "date": "2026-10-20T23:00:00Z",
+              "name": "Philadelphia 76ers at New York Knicks",
+              "shortName": "PHI @ NY",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909090",
+              "date": "2026-10-21T01:50:00Z",
+              "name": "Oklahoma City Thunder at San Antonio Spurs",
+              "shortName": "OKC @ SA",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909834",
+              "date": "2026-10-21T23:00:00Z",
+              "name": "Atlanta Hawks at Orlando Magic",
+              "shortName": "ATL @ ORL",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909835",
+              "date": "2026-10-21T23:00:00Z",
+              "name": "Milwaukee Bucks at Washington Wizards",
+              "shortName": "MIL @ WSH",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909091",
+              "date": "2026-10-21T23:30:00Z",
+              "name": "Minnesota Timberwolves at Miami Heat",
+              "shortName": "MIN @ MIA",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909836",
+              "date": "2026-10-21T23:30:00Z",
+              "name": "Charlotte Hornets at Brooklyn Nets",
+              "shortName": "CHA @ BKN",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909837",
+              "date": "2026-10-21T23:30:00Z",
+              "name": "Chicago Bulls at Toronto Raptors",
+              "shortName": "CHI @ TOR",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909838",
+              "date": "2026-10-22T00:00:00Z",
+              "name": "Utah Jazz at Memphis Grizzlies",
+              "shortName": "UTAH @ MEM",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909839",
+              "date": "2026-10-22T00:00:00Z",
+              "name": "Indiana Pacers at New Orleans Pelicans",
+              "shortName": "IND @ NO",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909840",
+              "date": "2026-10-22T00:30:00Z",
+              "name": "Dallas Mavericks at Houston Rockets",
+              "shortName": "DAL @ HOU",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909092",
+              "date": "2026-10-22T02:00:00Z",
+              "name": "Golden State Warriors at Los Angeles Lakers",
+              "shortName": "GS @ LAL",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909841",
+              "date": "2026-10-22T02:00:00Z",
+              "name": "Phoenix Suns at Portland Trail Blazers",
+              "shortName": "PHX @ POR",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909842",
+              "date": "2026-10-22T02:30:00Z",
+              "name": "Sacramento Kings at LA Clippers",
+              "shortName": "SAC @ LAC",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909093",
+              "date": "2026-10-22T23:00:00Z",
+              "name": "Cleveland Cavaliers at Philadelphia 76ers",
+              "shortName": "CLE @ PHI",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            },
+            {
+              "id": "401909094",
+              "date": "2026-10-23T01:30:00Z",
+              "name": "Denver Nuggets at Oklahoma City Thunder",
+              "shortName": "DEN @ OKC",
+              "status": "post",
+              "summary": "Final",
+              "season": 2027,
+              "seasonType": "2"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

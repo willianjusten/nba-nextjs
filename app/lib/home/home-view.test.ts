@@ -1,4 +1,4 @@
-import type { Game, Scoreboard } from "@/app/lib/domain/game";
+import type { Game, GameCounts, Scoreboard } from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import finalDay from "@/app/lib/espn/__fixtures__/scoreboard-final-day.json";
 import internationalExhibition from "@/app/lib/espn/__fixtures__/scoreboard-international-exhibition.json";
@@ -8,6 +8,7 @@ import { mapGame } from "@/app/lib/espn/mappers";
 import type { RawEvent } from "@/app/lib/espn/raw-types";
 import {
   buildHomeView,
+  dateRailRange,
   type HomeCard,
   type HomeView,
   type ScoreboardQueryState,
@@ -16,6 +17,7 @@ import { contrastRatio, INK } from "./team-colors";
 
 const nbaDate = "2026-10-20" as NbaDate;
 const now = new Date("2026-10-21T00:30:00Z");
+const today = "2026-10-22" as NbaDate;
 
 const gamesOf = (fixture: { events: unknown[] }) =>
   fixture.events.map((event) => mapGame(event as RawEvent));
@@ -37,7 +39,29 @@ function viewFor(
   query: ScoreboardQueryState,
   timeZone: string | null = "America/New_York",
 ): HomeView {
-  return buildHomeView({ nbaDate, query, now, timeZone });
+  return buildHomeView({
+    nbaDate,
+    today,
+    query,
+    gameCounts: null,
+    now,
+    timeZone,
+  });
+}
+
+function railFor(
+  selectedDate: string,
+  gameCounts: GameCounts | null = null,
+  currentDate: string = today,
+) {
+  return buildHomeView({
+    nbaDate: selectedDate as NbaDate,
+    today: currentDate as NbaDate,
+    query: { status: "loading" },
+    gameCounts,
+    now,
+    timeZone: "America/New_York",
+  }).dateRail;
 }
 
 function cardFor(game: Game, timeZone?: string | null): HomeCard {
@@ -191,6 +215,147 @@ describe("buildHomeView", () => {
     });
 
     expect(view.screen).toEqual({ kind: "empty", nextGameDate: null });
+  });
+
+  describe("date rail", () => {
+    const railDates = (rail: ReturnType<typeof railFor>) =>
+      rail.days.map((day) => day.nbaDate);
+
+    it("shows 7 days centered on the selected date", () => {
+      expect(railDates(railFor("2026-10-20"))).toEqual([
+        "2026-10-17",
+        "2026-10-18",
+        "2026-10-19",
+        "2026-10-20",
+        "2026-10-21",
+        "2026-10-22",
+        "2026-10-23",
+      ]);
+    });
+
+    it("selects only the middle day", () => {
+      const selectedDays = railFor("2026-10-20").days.map(
+        (day) => day.isSelected,
+      );
+
+      expect(selectedDays).toEqual([
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+      ]);
+    });
+
+    it("labels each day with its short weekday, day number, and full date", () => {
+      expect(railFor("2026-10-20").days[2]).toMatchObject({
+        weekday: "MON",
+        dayNumber: "19",
+        label: "Monday, October 19",
+      });
+    });
+
+    it("links today to the home page and every other day to its games page", () => {
+      const hrefs = railFor("2026-10-20").days.map((day) => day.href);
+
+      expect(hrefs).toEqual([
+        "/games/2026-10-17",
+        "/games/2026-10-18",
+        "/games/2026-10-19",
+        "/games/2026-10-20",
+        "/games/2026-10-21",
+        "/",
+        "/games/2026-10-23",
+      ]);
+    });
+
+    it("moves a week back and forward from the selected date", () => {
+      const rail = railFor("2026-10-20");
+
+      expect(rail.previousWeekHref).toBe("/games/2026-10-13");
+      expect(rail.nextWeekHref).toBe("/games/2026-10-27");
+    });
+
+    it("sends a week move that lands on today to the home page", () => {
+      expect(railFor("2026-10-15").nextWeekHref).toBe("/");
+      expect(railFor("2026-10-29").previousWeekHref).toBe("/");
+    });
+
+    it("shows each day's game count once the counts load", () => {
+      const rail = railFor("2026-10-20", {
+        "2026-10-19": 0,
+        "2026-10-20": 3,
+        "2026-10-21": 1,
+      } as GameCounts);
+      const [, , monday, tuesday, wednesday] = rail.days;
+
+      expect(monday).toMatchObject({
+        gameCount: 0,
+        countLabel: "No games",
+        label: "Monday, October 19, No games",
+      });
+      expect(tuesday).toMatchObject({
+        gameCount: 3,
+        countLabel: "3 games",
+        label: "Tuesday, October 20, 3 games",
+      });
+      expect(wednesday).toMatchObject({ gameCount: 1, countLabel: "1 game" });
+    });
+
+    it('shows no count, never "No games", while the counts are pending or failed', () => {
+      const [firstDay] = railFor("2026-10-20", null).days;
+
+      expect(firstDay).toMatchObject({
+        gameCount: null,
+        countLabel: null,
+        label: "Saturday, October 17",
+      });
+    });
+
+    it("crosses a month boundary", () => {
+      const rail = railFor("2026-11-01");
+
+      expect(railDates(rail)).toEqual([
+        "2026-10-29",
+        "2026-10-30",
+        "2026-10-31",
+        "2026-11-01",
+        "2026-11-02",
+        "2026-11-03",
+        "2026-11-04",
+      ]);
+      expect(rail.previousWeekHref).toBe("/games/2026-10-25");
+    });
+
+    it("crosses a year boundary", () => {
+      const rail = railFor("2026-12-31");
+
+      expect(railDates(rail)).toEqual([
+        "2026-12-28",
+        "2026-12-29",
+        "2026-12-30",
+        "2026-12-31",
+        "2027-01-01",
+        "2027-01-02",
+        "2027-01-03",
+      ]);
+      expect(rail.days[4]).toMatchObject({ weekday: "FRI", dayNumber: "1" });
+      expect(rail.nextWeekHref).toBe("/games/2027-01-07");
+    });
+
+    it("keeps whole days across the daylight saving change", () => {
+      expect(railDates(railFor("2026-11-01")).at(-1)).toBe("2026-11-04");
+      expect(railDates(railFor("2027-03-14")).at(0)).toBe("2027-03-11");
+    });
+
+    it("exposes the range whose game counts the rail needs", () => {
+      expect(dateRailRange("2026-12-31" as NbaDate)).toEqual({
+        firstDate: "2026-12-28",
+        lastDate: "2027-01-03",
+      });
+    });
   });
 
   describe("cards", () => {

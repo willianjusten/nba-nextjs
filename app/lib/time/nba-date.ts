@@ -34,6 +34,16 @@ const monthDayFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+const shortWeekdayFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  weekday: "short",
+});
+
+const dayNumberFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  day: "numeric",
+});
+
 export function nbaDateOf(instant: string | Date): NbaDate {
   const parts = easternDateFormatter.formatToParts(new Date(instant));
   const partValue = (type: Intl.DateTimeFormatPartTypes) =>
@@ -57,6 +67,15 @@ export function parseNbaDate(value: string): NbaDate | null {
   return value as NbaDate;
 }
 
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+
+// Calendar arithmetic in UTC, where every day is 24 hours, so daylight saving changes never skip or repeat a day.
+export function addDaysToNbaDate(nbaDate: NbaDate, days: number): NbaDate {
+  const shiftedTime =
+    new Date(`${nbaDate}T00:00:00Z`).getTime() + days * MILLISECONDS_PER_DAY;
+  return new Date(shiftedTime).toISOString().slice(0, 10) as NbaDate;
+}
+
 // An NbaDate is already a calendar day, so it is formatted in UTC to avoid shifting it by the runtime timezone.
 export function formatNbaDate(nbaDate: NbaDate): string {
   return displayDateFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
@@ -72,4 +91,12 @@ export function formatNbaWeekday(nbaDate: NbaDate): string {
 
 export function formatNbaMonthDay(nbaDate: NbaDate): string {
   return monthDayFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
+}
+
+export function formatShortNbaWeekday(nbaDate: NbaDate): string {
+  return shortWeekdayFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
+}
+
+export function formatNbaDayNumber(nbaDate: NbaDate): string {
+  return dayNumberFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
 }

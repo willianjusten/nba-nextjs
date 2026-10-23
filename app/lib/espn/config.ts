@@ -7,6 +7,10 @@ export const ESPN_HOSTS = {
       "/apis/v2/sports/basketball/nba/",
     ],
   },
+  siteWeb: {
+    origin: "https://site.web.api.espn.com",
+    allowedPathPrefixes: ["/apis/v2/scoreboard/header"],
+  },
   core: {
     origin: "https://sports.core.api.espn.com",
     allowedPathPrefixes: ["/v2/sports/basketball/leagues/nba/"],
@@ -43,6 +47,13 @@ export const ESPN_ENDPOINTS = {
     path: "/apis/site/v2/sports/basketball/nba/scoreboard",
     access: "direct",
     isLive: true,
+  },
+  // The site scoreboard rejects date ranges, but the header scoreboard serves a whole range in one response.
+  scoreboardHeader: {
+    host: "siteWeb",
+    path: "/apis/v2/scoreboard/header",
+    access: "direct",
+    revalidateSeconds: ONE_HOUR_IN_SECONDS,
   },
   summary: {
     host: "site",

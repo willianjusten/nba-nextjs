@@ -6,6 +6,13 @@ export type RawScoreboard = {
   leagues?: { calendar?: string[] }[];
 };
 
+export type RawScoreboardHeader = {
+  sports?: {
+    // ESPN leaves events out when the range has no games.
+    leagues?: { events?: { date: string }[] }[];
+  }[];
+};
+
 export type RawEvent = {
   id: string;
   date: string;

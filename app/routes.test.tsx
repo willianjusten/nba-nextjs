@@ -13,6 +13,7 @@ import StandingsPage from "./standings/page";
 import TeamPage from "./teams/[slug]/page";
 import PlayoffsPage from "./playoffs/page";
 import finalDay from "./lib/espn/__fixtures__/scoreboard-final-day.json";
+import headerWeek from "./lib/espn/__fixtures__/scoreboard-header-week.json";
 import teamsList from "./lib/espn/__fixtures__/teams-list.json";
 import lakersDetail from "./lib/espn/__fixtures__/team-detail-lakers.json";
 import lakersSchedule from "./lib/espn/__fixtures__/team-schedule-lakers.json";
@@ -31,10 +32,16 @@ const FINAL_GAME_ID = "401909092";
 const LIVE_GAME_ID = "401909093";
 const PRE_GAME_ID = "401909094";
 
+vi.mock("next/navigation", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("next/navigation")>()),
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
 function espnFixtureFor(url: string) {
   if (url.endsWith(`/summary?event=${FINAL_GAME_ID}`)) return finalSummary;
   if (url.endsWith(`/summary?event=${LIVE_GAME_ID}`)) return liveSummary;
   if (url.endsWith(`/summary?event=${PRE_GAME_ID}`)) return preGameSummary;
+  if (url.includes("/scoreboard/header?")) return headerWeek;
   if (url.endsWith("/teams/13/schedule")) return lakersSchedule;
   if (url.endsWith("/teams/13/roster")) return lakersRoster;
   if (url.endsWith("/teams/13")) return lakersDetail;
@@ -95,6 +102,23 @@ describe("routes", () => {
     ).toBeDefined();
     expect(await screen.findByText("3 games · 3 final")).toBeDefined();
     expect(screen.getByText("Magic")).toBeDefined();
+  });
+
+  it("renders the date rail with the server-prefetched game counts", async () => {
+    render(
+      await GamesPage({ params: Promise.resolve({ date: "2026-10-21" }) }),
+    );
+
+    const dateRail = screen.getByRole("group", {
+      name: strings.dateRail.label,
+    });
+    expect(
+      within(dateRail)
+        .getByRole("button", {
+          name: "Wednesday, October 21, 11 games",
+        })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
   });
 
   it("returns not found for an invalid games date", async () => {

@@ -1,3 +1,4 @@
+export { fetchGameCounts } from "./game-counts";
 export { fetchGameSummary } from "./game-summary";
 export { fetchScoreboard } from "./scoreboard";
 export { fetchStandings } from "./standings";

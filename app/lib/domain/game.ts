@@ -77,3 +77,6 @@ export type Scoreboard = {
   // The first later day with games on the season calendar; null once the season has none left.
   nextGameDate: NbaDate | null;
 };
+
+// Games per NBA date; every day of the requested range has an entry, zero when it has no games.
+export type GameCounts = Partial<Record<NbaDate, number>>;

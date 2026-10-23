@@ -1,4 +1,9 @@
-import type { Game, GameStatus, Scoreboard } from "@/app/lib/domain/game";
+import type {
+  Game,
+  GameCounts,
+  GameStatus,
+  Scoreboard,
+} from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import {
   finalLabel,
@@ -8,15 +13,21 @@ import {
 } from "@/app/lib/game/status";
 import { strings } from "@/app/lib/strings";
 import {
+  addDaysToNbaDate,
   formatNbaDate,
+  formatNbaDayNumber,
   formatNbaMonthDay,
   formatNbaWeekday,
   formatShortNbaDate,
+  formatShortNbaWeekday,
 } from "@/app/lib/time/nba-date";
 import { formatTipOff } from "@/app/lib/time/tip-off";
 import { readableTeamColors, type TeamSide } from "./team-colors";
 
 const MILLISECONDS_PER_MINUTE = 60_000;
+const DAYS_PER_WEEK = 7;
+// The rail shows one week, so the arrows move by exactly one rail width.
+const RAIL_DAYS_PER_SIDE = (DAYS_PER_WEEK - 1) / 2;
 
 export type ScoreboardQueryState =
   | { status: "loading" }
@@ -27,7 +38,10 @@ export type ScoreboardQueryState =
 
 export type HomeViewInput = {
   nbaDate: NbaDate;
+  // The current NBA date, which lives at "/" instead of its own games page.
+  today: NbaDate;
   query: ScoreboardQueryState;
+  gameCounts: GameCounts | null;
   now: Date;
   // The browser timezone; null while server rendering, where the viewer's timezone is unknown.
   timeZone: string | null;
@@ -68,6 +82,25 @@ export type HomeCard = {
   topScorerLabel: string | null;
 };
 
+export type RailDay = {
+  nbaDate: NbaDate;
+  href: string;
+  weekday: string;
+  dayNumber: string;
+  // The full date plus the count, read in place of the pill's abbreviated text.
+  label: string;
+  isSelected: boolean;
+  // Both null until the counts load, so a pending or failed request never reads as "No games".
+  gameCount: number | null;
+  countLabel: string | null;
+};
+
+export type DateRailView = {
+  days: RailDay[];
+  previousWeekHref: string;
+  nextWeekHref: string;
+};
+
 export type HomeScreen =
   | { kind: "loading" }
   | { kind: "error" }
@@ -77,6 +110,7 @@ export type HomeScreen =
 
 export type HomeView = {
   heading: DateHeading;
+  dateRail: DateRailView;
   // Null until there are games to count, so a failed or pending request never reads as "0 games".
   summary: GamesSummary | null;
   screen: HomeScreen;
@@ -246,9 +280,66 @@ function screenOf(
   }
 }
 
+export function dateRailRange(nbaDate: NbaDate) {
+  return {
+    firstDate: addDaysToNbaDate(nbaDate, -RAIL_DAYS_PER_SIDE),
+    lastDate: addDaysToNbaDate(nbaDate, RAIL_DAYS_PER_SIDE),
+  };
+}
+
+function hrefOf(nbaDate: NbaDate, today: NbaDate) {
+  return nbaDate === today ? "/" : `/games/${nbaDate}`;
+}
+
+function railDayOf(
+  nbaDate: NbaDate,
+  selectedDate: NbaDate,
+  today: NbaDate,
+  gameCounts: GameCounts | null,
+): RailDay {
+  const gameCount = gameCounts?.[nbaDate] ?? null;
+  const countLabel =
+    gameCount === null ? null : strings.dateRail.gameCount(gameCount);
+
+  return {
+    nbaDate,
+    href: hrefOf(nbaDate, today),
+    weekday: formatShortNbaWeekday(nbaDate).toUpperCase(),
+    dayNumber: formatNbaDayNumber(nbaDate),
+    label: strings.dateRail.dayLabel(formatNbaDate(nbaDate), countLabel),
+    isSelected: nbaDate === selectedDate,
+    gameCount,
+    countLabel,
+  };
+}
+
+function dateRailOf(
+  nbaDate: NbaDate,
+  today: NbaDate,
+  gameCounts: GameCounts | null,
+): DateRailView {
+  const { firstDate } = dateRailRange(nbaDate);
+  const days = Array.from({ length: DAYS_PER_WEEK }, (_, dayOffset) =>
+    railDayOf(
+      addDaysToNbaDate(firstDate, dayOffset),
+      nbaDate,
+      today,
+      gameCounts,
+    ),
+  );
+
+  return {
+    days,
+    previousWeekHref: hrefOf(addDaysToNbaDate(nbaDate, -DAYS_PER_WEEK), today),
+    nextWeekHref: hrefOf(addDaysToNbaDate(nbaDate, DAYS_PER_WEEK), today),
+  };
+}
+
 export function buildHomeView({
   nbaDate,
+  today,
   query,
+  gameCounts,
   now,
   timeZone,
 }: HomeViewInput): HomeView {
@@ -259,6 +350,7 @@ export function buildHomeView({
 
   return {
     heading: headingOf(nbaDate),
+    dateRail: dateRailOf(nbaDate, today, gameCounts),
     summary: games.length > 0 ? summarize(games) : null,
     screen: screenOf(query, now, timeZone),
   };

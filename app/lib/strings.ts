@@ -29,6 +29,15 @@ export const strings = {
         .filter(Boolean)
         .join(" · "),
   },
+  dateRail: {
+    label: "Choose a date",
+    previousWeek: "Previous week",
+    nextWeek: "Next week",
+    gameCount: (count: number) =>
+      count === 0 ? "No games" : `${count} ${count === 1 ? "game" : "games"}`,
+    dayLabel: (formattedDate: string, countLabel: string | null) =>
+      countLabel ? `${formattedDate}, ${countLabel}` : formattedDate,
+  },
   games: {
     loading: "Loading games...",
     error: "Couldn't load the games",
