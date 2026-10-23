@@ -6,6 +6,17 @@ export const strings = {
   common: {
     comingSoon: "Coming soon.",
   },
+  shell: {
+    logoLabel: "NBA home",
+    primaryNavigation: "Primary",
+    bottomNavigation: "Sections",
+    sections: {
+      games: "Games",
+      standings: "Standings",
+      playoffs: "Playoffs",
+    },
+    footer: "Data from ESPN",
+  },
   home: {
     title: "Today's games",
   },

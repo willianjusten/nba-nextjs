@@ -18,6 +18,12 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Environment
+
+| Variable             | Purpose                                                                                       |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `FORCE_PLAYOFFS_TAB` | Set to `true` or `1` to show the Playoffs tab outside the postseason (useful in development). |
+
 ## Quality Commands
 
 Use OXC for linting and formatting:

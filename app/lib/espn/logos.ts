@@ -1,3 +1,6 @@
+export const NBA_LOGO_URL =
+  "https://a.espncdn.com/i/teamlogos/leagues/500/nba.png";
+
 const ESPN_IMAGE_RESIZER = "https://a.espncdn.com/combiner/i";
 
 // The ESPN CDN resizes images server-side, so the app ships small PNGs without Next image optimization.

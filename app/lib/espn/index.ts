@@ -8,5 +8,5 @@ export {
   fetchTeamSchedule,
   fetchTeams,
 } from "./teams";
-export { resizedImageUrl, resizedLogoUrl } from "./logos";
+export { NBA_LOGO_URL, resizedImageUrl, resizedLogoUrl } from "./logos";
 export { EspnRequestError } from "./transport";
