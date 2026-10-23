@@ -68,26 +68,33 @@ describe("routes", () => {
     vi.restoreAllMocks();
   });
 
-  it("renders the home page with the current NBA date's games", async () => {
+  it("renders the home page with the current NBA date's heading, summary, and games", async () => {
+    vi.useFakeTimers({
+      toFake: ["Date"],
+      now: new Date("2026-10-21T16:00:00Z"),
+    });
     render(await HomePage());
+    vi.useRealTimers();
 
     expect(
-      screen.getByRole("heading", { name: strings.home.title }),
+      screen.getByRole("heading", { name: "Wednesday, October 21" }),
     ).toBeDefined();
-    expect(await screen.findByText("Orlando Magic")).toBeDefined();
+    expect(await screen.findByText("3 games · 3 final")).toBeDefined();
+    expect(screen.getByText("Orlando Magic")).toBeDefined();
   });
 
-  it("renders the games page for the requested date", async () => {
+  it("renders the games page with the requested date's heading, summary, and games", async () => {
     render(
       await GamesPage({ params: Promise.resolve({ date: "2026-10-21" }) }),
     );
 
     expect(
       screen.getByRole("heading", {
-        name: strings.games.title("Wednesday, October 21"),
+        name: "Wednesday, October 21",
       }),
     ).toBeDefined();
-    expect(await screen.findByText("Orlando Magic")).toBeDefined();
+    expect(await screen.findByText("3 games · 3 final")).toBeDefined();
+    expect(screen.getByText("Orlando Magic")).toBeDefined();
   });
 
   it("returns not found for an invalid games date", async () => {

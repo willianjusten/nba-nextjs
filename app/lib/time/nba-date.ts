@@ -23,6 +23,17 @@ const shortDisplayDateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+const weekdayFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  weekday: "long",
+});
+
+const monthDayFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  month: "long",
+  day: "numeric",
+});
+
 export function nbaDateOf(instant: string | Date): NbaDate {
   const parts = easternDateFormatter.formatToParts(new Date(instant));
   const partValue = (type: Intl.DateTimeFormatPartTypes) =>
@@ -53,4 +64,12 @@ export function formatNbaDate(nbaDate: NbaDate): string {
 
 export function formatShortNbaDate(nbaDate: NbaDate): string {
   return shortDisplayDateFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
+}
+
+export function formatNbaWeekday(nbaDate: NbaDate): string {
+  return weekdayFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
+}
+
+export function formatNbaMonthDay(nbaDate: NbaDate): string {
+  return monthDayFormatter.format(new Date(`${nbaDate}T00:00:00Z`));
 }

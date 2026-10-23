@@ -6,7 +6,7 @@ import { fetchScoreboard } from "@/app/lib/espn";
 import liveDay from "@/app/lib/espn/__fixtures__/scoreboard-live-day-simulated.json";
 import { makeQueryClient } from "@/app/lib/query/make-query-client";
 import { scoreboardQueryOptions } from "@/app/lib/queries/scoreboard";
-import GamesList from ".";
+import DayScoreboard from ".";
 
 const nbaDate = "2026-10-22" as NbaDate;
 
@@ -14,7 +14,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("GamesList on the server", () => {
+describe("DayScoreboard on the server", () => {
   it("renders prefetched live games without browser globals", async () => {
     vi.stubGlobal(
       "fetch",
@@ -28,7 +28,7 @@ describe("GamesList on the server", () => {
 
     const html = renderToString(
       <QueryClientProvider client={queryClient}>
-        <GamesList nbaDate={nbaDate} />
+        <DayScoreboard nbaDate={nbaDate} />
       </QueryClientProvider>,
     );
 

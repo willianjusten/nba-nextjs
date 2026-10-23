@@ -1,3 +1,5 @@
+import type { GamesSummary } from "@/app/lib/home/home-view";
+
 export const strings = {
   app: {
     name: "NBA Next.js",
@@ -18,10 +20,16 @@ export const strings = {
     footer: "Create with s2 by Willian Justen, Marcus, Bruna",
   },
   home: {
-    title: "Today's games",
+    summary: ({ total, live, final }: GamesSummary) =>
+      [
+        `${total} ${total === 1 ? "game" : "games"}`,
+        live > 0 && `${live} live`,
+        final > 0 && `${final} final`,
+      ]
+        .filter(Boolean)
+        .join(" · "),
   },
   games: {
-    title: (formattedDate: string) => `Games on ${formattedDate}`,
     loading: "Loading games...",
     error: "Couldn't load the games",
     errorDetail:

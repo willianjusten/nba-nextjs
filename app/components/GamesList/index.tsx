@@ -1,7 +1,5 @@
-"use client";
-
 import type { NbaDate } from "@/app/lib/domain/nba-date";
-import { useScoreboard } from "@/app/lib/queries/use-scoreboard";
+import type { HomeScreen } from "@/app/lib/home/home-view";
 import GameCard from "@/app/components/GameCard";
 import {
   GAMES_GRID_CLASS_NAME,
@@ -11,42 +9,41 @@ import {
   StaleScoresNotice,
 } from "./states";
 
-export default function GamesList({ nbaDate }: { nbaDate: NbaDate }) {
-  const {
-    data: scoreboard,
-    dataUpdatedAt,
-    error,
-    isFetching,
-    isRefetchError,
-    refetch,
-  } = useScoreboard(nbaDate);
+type GamesListProps = {
+  nbaDate: NbaDate;
+  screen: HomeScreen;
+  onRetry: () => void;
+  isRetrying: boolean;
+};
 
-  // Data is checked before the error: a failed refetch keeps the last valid scoreboard instead of hiding it.
-  if (scoreboard) {
-    if (scoreboard.games.length === 0) {
+export default function GamesList({
+  nbaDate,
+  screen,
+  onRetry,
+  isRetrying,
+}: GamesListProps) {
+  switch (screen.kind) {
+    case "loading":
+      return <GamesListLoading />;
+    case "error":
+      return <GamesListError onRetry={onRetry} isRetrying={isRetrying} />;
+    case "empty":
       return (
-        <GamesListEmpty
-          nbaDate={nbaDate}
-          nextGameDate={scoreboard.nextGameDate}
-        />
+        <GamesListEmpty nbaDate={nbaDate} nextGameDate={screen.nextGameDate} />
       );
-    }
-
-    return (
-      <div className="flex flex-col gap-3">
-        {isRefetchError && <StaleScoresNotice updatedAt={dataUpdatedAt} />}
-        <div className={GAMES_GRID_CLASS_NAME}>
-          {scoreboard.games.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
+    case "games":
+    case "stale":
+      return (
+        <div className="flex flex-col gap-3">
+          {screen.kind === "stale" && (
+            <StaleScoresNotice minutesAgo={screen.minutesAgo} />
+          )}
+          <div className={GAMES_GRID_CLASS_NAME}>
+            {screen.cards.map(({ game }) => (
+              <GameCard key={game.id} game={game} />
+            ))}
+          </div>
         </div>
-      </div>
-    );
+      );
   }
-
-  if (error) {
-    return <GamesListError onRetry={() => refetch()} isRetrying={isFetching} />;
-  }
-
-  return <GamesListLoading />;
 }

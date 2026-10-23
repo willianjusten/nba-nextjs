@@ -4,7 +4,6 @@ import { strings } from "@/app/lib/strings";
 import { formatShortNbaDate } from "@/app/lib/time/nba-date";
 
 const LOADING_PLACEHOLDER_COUNT = 4;
-const MILLISECONDS_PER_MINUTE = 60_000;
 
 // Shared so the loading skeleton keeps the same layout as the loaded games.
 export const GAMES_GRID_CLASS_NAME = "grid grid-cols-auto-fill gap-4";
@@ -88,12 +87,7 @@ export function GamesListEmpty({ nbaDate, nextGameDate }: GamesListEmptyProps) {
   );
 }
 
-export function StaleScoresNotice({ updatedAt }: { updatedAt: number }) {
-  const minutesAgo = Math.max(
-    1,
-    Math.round((Date.now() - updatedAt) / MILLISECONDS_PER_MINUTE),
-  );
-
+export function StaleScoresNotice({ minutesAgo }: { minutesAgo: number }) {
   return (
     <div
       role="status"

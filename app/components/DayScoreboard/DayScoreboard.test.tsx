@@ -6,18 +6,18 @@ import noGames from "@/app/lib/espn/__fixtures__/scoreboard-no-games.json";
 import liveDay from "@/app/lib/espn/__fixtures__/scoreboard-live-day-simulated.json";
 import { makeQueryClient } from "@/app/lib/query/make-query-client";
 import { strings } from "@/app/lib/strings";
-import GamesList from ".";
+import DayScoreboard from ".";
 
 const nbaDate = "2026-10-21" as NbaDate;
 const fetchMock = vi.fn();
 
-function renderGamesList() {
+function renderDayScoreboard() {
   const queryClient = makeQueryClient();
   queryClient.setDefaultOptions({ queries: { retry: false } });
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <GamesList nbaDate={nbaDate} />
+      <DayScoreboard nbaDate={nbaDate} />
     </QueryClientProvider>,
   );
 }
@@ -41,11 +41,11 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("GamesList", () => {
+describe("DayScoreboard", () => {
   it("shows a loading state while the scoreboard is fetching", () => {
     fetchMock.mockReturnValue(new Promise(() => {}));
 
-    renderGamesList();
+    renderDayScoreboard();
 
     expect(screen.getByRole("status").textContent).toContain(
       strings.games.loading,
@@ -55,21 +55,33 @@ describe("GamesList", () => {
   it("shows the games once the scoreboard loads", async () => {
     fetchMock.mockResolvedValue(jsonResponse(finalDay));
 
-    renderGamesList();
+    renderDayScoreboard();
 
     expect(await screen.findByText("Orlando Magic")).toBeDefined();
     expect(screen.queryByRole("alert")).toBeNull();
   });
 
+  it("headlines the date with a summary of its live and final games", async () => {
+    fetchMock.mockResolvedValue(jsonResponse(liveDay));
+
+    renderDayScoreboard();
+
+    expect(
+      screen.getByRole("heading", { name: "Wednesday, October 21" }),
+    ).toBeDefined();
+    expect(await screen.findByText("2 games · 2 live")).toBeDefined();
+  });
+
   it("shows an error with a retry button that reloads the games", async () => {
     fetchMock.mockResolvedValueOnce(new Response("", { status: 503 }));
 
-    renderGamesList();
+    renderDayScoreboard();
 
     const errorAlert = await screen.findByRole("alert");
     expect(errorAlert.textContent).toContain(strings.games.error);
     expect(errorAlert.textContent).toContain(strings.games.errorDetail);
     expect(screen.queryByText(/No games on/)).toBeNull();
+    expect(screen.queryByText(/\d+ games?/)).toBeNull();
     expect(screen.queryByText("Orlando Magic")).toBeNull();
 
     fetchMock.mockResolvedValueOnce(jsonResponse(finalDay));
@@ -82,7 +94,7 @@ describe("GamesList", () => {
   it("shows a specific empty state on a day without games", async () => {
     fetchMock.mockResolvedValue(jsonResponse(noGames));
 
-    renderGamesList();
+    renderDayScoreboard();
 
     expect(
       await screen.findByText(strings.games.empty("Wed, Oct 21")),
@@ -99,7 +111,7 @@ describe("GamesList", () => {
       }),
     );
 
-    renderGamesList();
+    renderDayScoreboard();
 
     const nextGamesLink = await screen.findByRole("link", {
       name: strings.games.nextGames("Fri, Oct 23"),
@@ -110,7 +122,7 @@ describe("GamesList", () => {
   it("offers no next games link once the season has no game days left", async () => {
     fetchMock.mockResolvedValue(jsonResponse(noGames));
 
-    renderGamesList();
+    renderDayScoreboard();
 
     await screen.findByText(strings.games.empty("Wed, Oct 21"));
     expect(screen.queryByRole("link")).toBeNull();
@@ -122,7 +134,7 @@ describe("GamesList", () => {
       now: new Date("2026-10-22T23:45:00Z"),
     });
     fetchMock.mockResolvedValueOnce(jsonResponse(liveDay));
-    renderGamesList();
+    renderDayScoreboard();
     expect(await screen.findByText("Philadelphia 76ers")).toBeDefined();
 
     fetchMock.mockResolvedValueOnce(new Response("", { status: 503 }));
