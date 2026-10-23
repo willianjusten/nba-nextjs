@@ -1,11 +1,9 @@
 import Link from "next/link";
 import type { ConferenceStandings as ConferenceStandingsData } from "@/app/lib/domain/standings";
-import { resizedLogoUrl } from "@/app/lib/espn";
+import TeamLogo from "@/app/components/TeamLogo";
 import { strings } from "@/app/lib/strings";
 
 const LOGO_DISPLAY_SIZE = 24;
-// Requested at twice the display size so logos stay sharp on high-density screens.
-const LOGO_REQUEST_SIZE = LOGO_DISPLAY_SIZE * 2;
 
 // Win percentage as standings tables print it: ".750", or "1.000" for an unbeaten team.
 function formatWinPercent(winPercent: number) {
@@ -53,12 +51,10 @@ export default function ConferenceStandings({
                 <td className="px-3 py-2">{row.seed}</td>
                 <td className="px-3 py-2">
                   <span className="flex items-center gap-2">
-                    <img
-                      src={resizedLogoUrl(row.team.logoUrl, LOGO_REQUEST_SIZE)}
-                      alt=""
-                      width={LOGO_DISPLAY_SIZE}
-                      height={LOGO_DISPLAY_SIZE}
-                      loading="lazy"
+                    <TeamLogo
+                      logoUrl={row.team.logoUrl}
+                      size={LOGO_DISPLAY_SIZE}
+                      lazy
                     />
                     <Link
                       href={`/teams/${row.team.slug}`}

@@ -120,7 +120,7 @@ function mapTeam(team: RawTeam): Team {
     displayName: team.displayName,
     location: team.location,
     color: team.color ?? null,
-    logoUrl: team.logo,
+    logoUrl: team.logo || null,
   };
 }
 
@@ -133,7 +133,7 @@ function pickScoreboardLogo(logos: RawListedTeam["logos"]) {
   const scoreboardLogo = logos.find(
     (logo) => logo.rel.includes("scoreboard") && !logo.rel.includes("dark"),
   );
-  return (scoreboardLogo ?? logos[0])?.href ?? "";
+  return (scoreboardLogo ?? logos[0])?.href;
 }
 
 export function mapListedTeam(team: RawListedTeam): ListedTeam {

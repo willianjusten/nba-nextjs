@@ -8,7 +8,7 @@ import type {
   TeamBoxScore,
   WinProbabilityPoint,
 } from "@/app/lib/domain/game-summary";
-import { resizedLogoUrl } from "@/app/lib/espn";
+import TeamLogo from "@/app/components/TeamLogo";
 import { strings } from "@/app/lib/strings";
 import GameStatusLabel, {
   hasScore,
@@ -16,8 +16,6 @@ import GameStatusLabel, {
 } from "@/app/components/GameStatusLabel";
 
 const LOGO_DISPLAY_SIZE = 56;
-// Requested at twice the display size so logos stay sharp on high-density screens.
-const LOGO_REQUEST_SIZE = LOGO_DISPLAY_SIZE * 2;
 const BOX_SCORE_COLUMNS = Object.keys(
   strings.game.boxScore.columns,
 ) as (keyof BoxScoreStats)[];
@@ -54,12 +52,7 @@ function HeaderTeam({
 }) {
   return (
     <div className="flex flex-col items-center gap-2 text-center">
-      <img
-        src={resizedLogoUrl(competitor.team.logoUrl, LOGO_REQUEST_SIZE)}
-        alt=""
-        width={LOGO_DISPLAY_SIZE}
-        height={LOGO_DISPLAY_SIZE}
-      />
+      <TeamLogo logoUrl={competitor.team.logoUrl} size={LOGO_DISPLAY_SIZE} />
       <span className="font-medium">{competitor.team.displayName}</span>
       {showScore && (
         <span className="font-display text-5xl leading-none">

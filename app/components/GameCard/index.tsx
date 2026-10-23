@@ -1,5 +1,5 @@
 import type { Broadcast, Game, GameCompetitor } from "@/app/lib/domain/game";
-import { resizedLogoUrl } from "@/app/lib/espn";
+import TeamLogo from "@/app/components/TeamLogo";
 import { strings } from "@/app/lib/strings";
 import GameStatusLabel, {
   hasScore,
@@ -8,8 +8,6 @@ import GameStatusLabel, {
 import GameStatusChip from "@/app/components/StatusChip";
 
 const LOGO_DISPLAY_SIZE = 40;
-// Requested at twice the display size so logos stay sharp on high-density screens.
-const LOGO_REQUEST_SIZE = LOGO_DISPLAY_SIZE * 2;
 
 function CompetitorRow({
   competitor,
@@ -20,12 +18,10 @@ function CompetitorRow({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <img
-        src={resizedLogoUrl(competitor.team.logoUrl, LOGO_REQUEST_SIZE)}
-        alt=""
-        width={LOGO_DISPLAY_SIZE}
-        height={LOGO_DISPLAY_SIZE}
-        loading="lazy"
+      <TeamLogo
+        logoUrl={competitor.team.logoUrl}
+        size={LOGO_DISPLAY_SIZE}
+        lazy
       />
       <span className="grow font-medium">{competitor.team.displayName}</span>
       {showScore && (

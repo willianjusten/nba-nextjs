@@ -17,7 +17,8 @@ export type Team = {
   displayName: string;
   location: string;
   color: string | null;
-  logoUrl: string;
+  // Null when ESPN has no logo for the team.
+  logoUrl: string | null;
 };
 
 export type GameCompetitor = {

@@ -1,13 +1,11 @@
 import type { ReactNode } from "react";
 import type { Game, GameCompetitor } from "@/app/lib/domain/game";
-import { resizedLogoUrl } from "@/app/lib/espn";
+import TeamLogo from "@/app/components/TeamLogo";
 import { strings } from "@/app/lib/strings";
 import { formatNbaDate } from "@/app/lib/time/nba-date";
 import GameTime from "@/app/components/GameTime";
 
 const LOGO_DISPLAY_SIZE = 24;
-// Requested at twice the display size so logos stay sharp on high-density screens.
-const LOGO_REQUEST_SIZE = LOGO_DISPLAY_SIZE * 2;
 
 type TeamScheduleProps = {
   teamId: string;
@@ -36,13 +34,7 @@ function Opponent({
 
   return (
     <span className="flex grow items-center gap-2">
-      <img
-        src={resizedLogoUrl(opponent.team.logoUrl, LOGO_REQUEST_SIZE)}
-        alt=""
-        width={LOGO_DISPLAY_SIZE}
-        height={LOGO_DISPLAY_SIZE}
-        loading="lazy"
-      />
+      <TeamLogo logoUrl={opponent.team.logoUrl} size={LOGO_DISPLAY_SIZE} lazy />
       {formatOpponentLabel(opponent.team.displayName)}
     </span>
   );

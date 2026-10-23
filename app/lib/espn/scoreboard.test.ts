@@ -8,6 +8,7 @@ import playInGame from "./__fixtures__/scoreboard-play-in.json";
 import liveDay from "./__fixtures__/scoreboard-live-day-simulated.json";
 import endOfPeriod from "./__fixtures__/scoreboard-end-of-period-simulated.json";
 import preseasonDay from "./__fixtures__/scoreboard-preseason-day.json";
+import internationalExhibition from "./__fixtures__/scoreboard-international-exhibition.json";
 
 const fetchMock = vi.fn();
 
@@ -226,6 +227,18 @@ describe("fetchScoreboard", () => {
 
     expect(scoreboard.games[0].broadcasts).toEqual(leaguePassOnly);
     expect(scoreboard.games[1].broadcasts).toEqual(leaguePassOnly);
+  });
+
+  it("maps a team without an ESPN logo to no logo", async () => {
+    respondWith(internationalExhibition);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-12")!);
+
+    expect(scoreboard.games[0].away.team.displayName).toBe("London Lions");
+    expect(scoreboard.games[0].away.team.logoUrl).toBeNull();
+    expect(scoreboard.games[0].home.team.logoUrl).toBe(
+      "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/por.png",
+    );
   });
 
   it("exposes the series of a playoff game by side", async () => {

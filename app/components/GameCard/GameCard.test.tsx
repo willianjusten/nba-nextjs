@@ -131,4 +131,16 @@ describe("GameCard", () => {
 
     expect(screen.queryByText(/Broadcast/)).toBeNull();
   });
+
+  it("shows a generic shield for a team without an ESPN logo", () => {
+    const game = buildGame({ kind: "scheduled" });
+    game.away.team.logoUrl = null;
+
+    const { container } = render(<GameCard game={game} />);
+    const logos = container.querySelectorAll("img");
+
+    expect(screen.getByTestId("generic-team-logo")).toBeDefined();
+    expect(logos).toHaveLength(1);
+    expect(logos[0].getAttribute("src")).toContain("/scoreboard/den.png");
+  });
 });

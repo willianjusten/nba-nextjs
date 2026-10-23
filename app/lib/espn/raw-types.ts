@@ -138,7 +138,8 @@ export type RawTeam = {
   name: string;
   displayName: string;
   color?: string;
-  logo: string;
+  // Missing for non-NBA opponents such as international exhibition teams.
+  logo?: string;
 };
 
 export type RawStandingsResponse = {
