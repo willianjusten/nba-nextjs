@@ -42,6 +42,12 @@ export const strings = {
       `Can't reach live data. Showing scores from ${minutesAgo} min ago.`,
     retryingAutomatically: "retrying…",
   },
+  gameCard: {
+    at: "at",
+    winner: "Winner",
+    highlights: "Highlights · recap",
+    gameCenter: "Game center",
+  },
   gameStatus: {
     live: "Live",
     postponedShort: "PPD",

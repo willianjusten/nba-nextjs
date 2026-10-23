@@ -39,8 +39,8 @@ export default function GamesList({
             <StaleScoresNotice minutesAgo={screen.minutesAgo} />
           )}
           <div className={GAMES_GRID_CLASS_NAME}>
-            {screen.cards.map(({ game }) => (
-              <GameCard key={game.id} game={game} />
+            {screen.cards.map((card) => (
+              <GameCard key={card.game.id} card={card} />
             ))}
           </div>
         </div>

@@ -53,6 +53,7 @@ describe("fetchScoreboard", () => {
       seasonYear: 2027,
       seasonType: "regular",
       status: { kind: "final", period: 4 },
+      venue: "Kia Center",
       home: {
         team: {
           id: "19",
@@ -61,11 +62,13 @@ describe("fetchScoreboard", () => {
           displayName: "Orlando Magic",
           location: "Orlando",
           color: "0150b5",
+          alternateColor: "9ca0a3",
           logoUrl:
             "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/orl.png",
         },
         score: 125,
         winner: false,
+        record: "0-1",
       },
       away: {
         team: {
@@ -75,11 +78,13 @@ describe("fetchScoreboard", () => {
           displayName: "Atlanta Hawks",
           location: "Atlanta",
           color: "c8102e",
+          alternateColor: "fdb927",
           logoUrl:
             "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/atl.png",
         },
         score: 132,
         winner: true,
+        record: "1-0",
       },
       broadcasts: [{ name: "NBA League Pass", market: "away" }],
       series: null,
@@ -239,6 +244,17 @@ describe("fetchScoreboard", () => {
     expect(scoreboard.games[0].home.team.logoUrl).toBe(
       "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/por.png",
     );
+  });
+
+  it("maps a team without colors or a record to null", async () => {
+    respondWith(internationalExhibition);
+
+    const scoreboard = await fetchScoreboard(parseNbaDate("2026-10-12")!);
+    const { away } = scoreboard.games[0];
+
+    expect(away.team.color).toBeNull();
+    expect(away.team.alternateColor).toBeNull();
+    expect(away.record).toBeNull();
   });
 
   it("exposes the series of a playoff game by side", async () => {

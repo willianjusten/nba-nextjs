@@ -1,69 +1,227 @@
-import type { Broadcast, Game, GameCompetitor } from "@/app/lib/domain/game";
-import TeamLogo from "@/app/components/TeamLogo";
+import Link from "next/link";
+import type { GameCompetitor } from "@/app/lib/domain/game";
+import { hasScore, isInProgress } from "@/app/lib/game/status";
+import type { HomeCard } from "@/app/lib/home/home-view";
+import type { TeamSide } from "@/app/lib/home/team-colors";
 import { strings } from "@/app/lib/strings";
-import GameStatusLabel, {
-  hasScore,
-  isInProgress,
-} from "@/app/components/GameStatusLabel";
+import TeamLogo from "@/app/components/TeamLogo";
 import GameStatusChip from "@/app/components/StatusChip";
 
-const LOGO_DISPLAY_SIZE = 40;
+const ROW_LOGO_SIZE = 34;
+const MATCHUP_LOGO_SIZE = 44;
+const TEAM_NAME_CLASS_NAME =
+  "font-display text-xl leading-none tracking-[0.04em]";
 
-function CompetitorRow({
+function TeamRecord({ record }: { record: string | null }) {
+  return record && <span className="text-meta text-muted">{record}</span>;
+}
+
+function ScoreRow({
   competitor,
-  showScore,
+  color,
+  isLeading,
+  isLive,
+  isFinal,
 }: {
   competitor: GameCompetitor;
-  showScore: boolean;
+  color: string;
+  isLeading: boolean;
+  isLive: boolean;
+  isFinal: boolean;
 }) {
+  const isFinalLoser = isFinal && !isLeading;
+
   return (
-    <div className="flex items-center gap-3">
+    <div
+      className={`flex items-center gap-2.5 ${isFinalLoser ? "opacity-56" : ""}`}
+    >
       <TeamLogo
         logoUrl={competitor.team.logoUrl}
-        size={LOGO_DISPLAY_SIZE}
+        size={ROW_LOGO_SIZE}
+        fallbackColor={color}
         lazy
       />
-      <span className="grow font-medium">{competitor.team.displayName}</span>
-      {showScore && (
-        <span className="font-display text-3xl leading-none">
-          {competitor.score}
+      <span className="flex grow flex-wrap items-baseline gap-x-2 gap-y-0.5">
+        <span className={TEAM_NAME_CLASS_NAME}>{competitor.team.name}</span>
+        <TeamRecord record={competitor.record} />
+      </span>
+      <span
+        className={`font-display text-3xl leading-none ${isLive && isLeading ? "text-link" : ""}`}
+      >
+        {competitor.score}
+      </span>
+      {isFinal && (
+        <span className="flex w-3.5 justify-center">
+          {isLeading && (
+            <svg
+              viewBox="0 0 24 24"
+              role="img"
+              aria-label={strings.gameCard.winner}
+              className="size-3.5"
+            >
+              <path
+                d="M4 12l6 6L20 6"
+                stroke="currentColor"
+                strokeWidth="3"
+                fill="none"
+                strokeLinecap="round"
+                className="text-accent"
+              />
+            </svg>
+          )}
         </span>
       )}
     </div>
   );
 }
 
-function BroadcastLine({ broadcasts }: { broadcasts: Broadcast[] }) {
-  if (broadcasts.length === 0) {
-    return null;
-  }
-
+function MatchupTeam({
+  competitor,
+  color,
+}: {
+  competitor: GameCompetitor;
+  color: string;
+}) {
   return (
-    <p className="text-meta text-muted">
-      <span className="sr-only">{strings.broadcast.label}</span>
-      {broadcasts
-        .map((broadcast) => broadcast.name)
-        .join(strings.broadcast.separator)}
-    </p>
+    <div className="flex grow basis-0 flex-col items-center gap-1.5 text-center">
+      <TeamLogo
+        logoUrl={competitor.team.logoUrl}
+        size={MATCHUP_LOGO_SIZE}
+        fallbackColor={color}
+        lazy
+      />
+      <span className={TEAM_NAME_CLASS_NAME}>{competitor.team.name}</span>
+      <TeamRecord record={competitor.record} />
+    </div>
   );
 }
 
-export default function GameCard({ game }: { game: Game }) {
-  const showScore = hasScore(game.status);
+function CardAction({
+  href,
+  tone,
+  children,
+}: {
+  href: string;
+  tone: "accent" | "neutral";
+  children: React.ReactNode;
+}) {
+  const toneClassName =
+    tone === "accent"
+      ? "border-accent/42 bg-accent/14 text-accent-soft hover:bg-accent/22"
+      : "border-white/14 bg-white/5 text-foreground hover:bg-white/10";
 
   return (
-    <article className="card flex flex-col gap-3 p-4">
+    // Sits above the card-wide link so it stays clickable on its own.
+    <Link
+      href={href}
+      className={`relative z-10 flex min-h-11 items-center justify-center gap-2 rounded-tile border text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${toneClassName}`}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className="size-4"
+    >
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      aria-hidden="true"
+      className="size-4"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+export default function GameCard({ card }: { card: HomeCard }) {
+  const { game, leadingSide, teamColors } = card;
+  const gameCenterHref = `/game/${game.id}`;
+  const isLive = isInProgress(game.status);
+  const isFinal = game.status.kind === "final";
+  const scoreRowOf = (side: TeamSide) => (
+    <ScoreRow
+      competitor={game[side]}
+      color={teamColors[side]}
+      isLeading={leadingSide === side}
+      isLive={isLive}
+      isFinal={isFinal}
+    />
+  );
+
+  return (
+    <article
+      className={`card relative flex flex-col gap-3 p-4 ${isLive ? "border-live/34 bg-linear-to-b from-live/14 to-elevated to-50%" : ""}`}
+    >
+      {/* Stretched over the whole card so tapping anywhere opens the game center; first so it is also first in tab order. */}
+      <Link
+        href={gameCenterHref}
+        className="absolute inset-0 rounded-card transition-colors hover:bg-white/3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      >
+        <span className="sr-only">
+          {strings.game.title(
+            game.away.team.displayName,
+            game.home.team.displayName,
+          )}
+        </span>
+      </Link>
+
       <div className="flex items-center gap-2">
-        <GameStatusChip status={game.status} startTime={game.startTime} />
-        {isInProgress(game.status) && (
-          <span className="ml-auto text-meta text-secondary">
-            <GameStatusLabel status={game.status} startTime={game.startTime} />
-          </span>
-        )}
+        <GameStatusChip
+          status={game.status}
+          label={card.statusLabel}
+          startTime={game.startTime}
+        />
+        <span
+          className={`ml-auto truncate text-meta ${isLive ? "text-secondary" : "text-muted"}`}
+        >
+          {card.metaLabel}
+        </span>
       </div>
-      <CompetitorRow competitor={game.away} showScore={showScore} />
-      <CompetitorRow competitor={game.home} showScore={showScore} />
-      <BroadcastLine broadcasts={game.broadcasts} />
+
+      {hasScore(game.status) ? (
+        <div className="flex flex-col gap-2.5">
+          {scoreRowOf("away")}
+          {scoreRowOf("home")}
+        </div>
+      ) : (
+        <div className="flex items-center gap-4 py-1.5">
+          <MatchupTeam competitor={game.away} color={teamColors.away} />
+          <span className="font-display text-base text-muted">
+            {strings.gameCard.at}
+          </span>
+          <MatchupTeam competitor={game.home} color={teamColors.home} />
+        </div>
+      )}
+
+      {card.showHighlights && (
+        <CardAction href={gameCenterHref} tone="neutral">
+          <PlayIcon />
+          {strings.gameCard.highlights}
+        </CardAction>
+      )}
+      {isLive && (
+        <CardAction href={gameCenterHref} tone="accent">
+          {strings.gameCard.gameCenter}
+          <ArrowIcon />
+        </CardAction>
+      )}
     </article>
   );
 }

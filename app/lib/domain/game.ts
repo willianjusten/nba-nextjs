@@ -17,6 +17,7 @@ export type Team = {
   displayName: string;
   location: string;
   color: string | null;
+  alternateColor: string | null;
   // Null when ESPN has no logo for the team.
   logoUrl: string | null;
 };
@@ -25,6 +26,8 @@ export type GameCompetitor = {
   team: Team;
   score: number;
   winner: boolean;
+  // Overall win-loss record such as "3-1"; null when ESPN leaves it out, e.g. for exhibition opponents.
+  record: string | null;
 };
 
 export type BroadcastMarket = "national" | "home" | "away";
@@ -49,6 +52,7 @@ export type Game = {
   seasonYear: number;
   seasonType: SeasonType;
   status: GameStatus;
+  venue: string | null;
   home: GameCompetitor;
   away: GameCompetitor;
   // Ordered national first; never empty, since NBA League Pass is the fallback.

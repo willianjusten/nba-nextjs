@@ -60,6 +60,7 @@ describe("fetchTeamSchedule", () => {
       seasonYear: 2027,
       seasonType: "regular",
       status: { kind: "final", period: 4 },
+      venue: "crypto.com Arena",
       home: {
         team: {
           id: "13",
@@ -68,11 +69,13 @@ describe("fetchTeamSchedule", () => {
           displayName: "Los Angeles Lakers",
           location: "Los Angeles",
           color: null,
+          alternateColor: null,
           logoUrl:
             "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
         },
         score: 127,
         winner: true,
+        record: "1-0",
       },
       away: {
         team: {
@@ -82,11 +85,13 @@ describe("fetchTeamSchedule", () => {
           displayName: "Golden State Warriors",
           location: "Golden State",
           color: null,
+          alternateColor: null,
           logoUrl:
             "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/gs.png",
         },
         score: 105,
         winner: false,
+        record: "0-1",
       },
       broadcasts: [{ name: "ESPN", market: "national" }],
       series: null,

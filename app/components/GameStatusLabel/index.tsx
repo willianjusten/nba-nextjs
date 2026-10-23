@@ -1,27 +1,7 @@
 import type { GameStatus } from "@/app/lib/domain/game";
+import { finalLabel, periodLabel } from "@/app/lib/game/status";
 import { strings } from "@/app/lib/strings";
 import GameTime from "@/app/components/GameTime";
-
-const REGULATION_PERIODS = 4;
-const STATUSES_WITHOUT_SCORE: ReadonlyArray<GameStatus["kind"]> = [
-  "scheduled",
-  "postponed",
-  "canceled",
-];
-
-export function hasScore(status: GameStatus) {
-  return !STATUSES_WITHOUT_SCORE.includes(status.kind);
-}
-
-export function isInProgress(status: GameStatus) {
-  return status.kind === "live" || status.kind === "halftime";
-}
-
-export function periodLabel(period: number) {
-  return period <= REGULATION_PERIODS
-    ? strings.gameStatus.quarter(period)
-    : strings.gameStatus.overtime(period - REGULATION_PERIODS);
-}
 
 export default function GameStatusLabel({
   status,
@@ -38,9 +18,7 @@ export default function GameStatusLabel({
     case "halftime":
       return strings.gameStatus.halftime;
     case "final":
-      return status.period > REGULATION_PERIODS
-        ? strings.gameStatus.finalAfter(periodLabel(status.period))
-        : strings.gameStatus.final;
+      return finalLabel(status.period);
     case "postponed":
       return strings.gameStatus.postponed;
     case "canceled":

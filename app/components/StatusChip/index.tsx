@@ -1,6 +1,5 @@
 import type { GameStatus } from "@/app/lib/domain/game";
 import { strings } from "@/app/lib/strings";
-import GameStatusLabel from "@/app/components/GameStatusLabel";
 
 type ChipTone = "live" | "final" | "tip-off" | "postponed" | "my-team";
 
@@ -65,9 +64,11 @@ function StarIcon() {
 // In-game details (period and clock) sit beside the chip as a meta line, so the chip only says which phase the game is in.
 export default function GameStatusChip({
   status,
+  label,
   startTime,
 }: {
   status: GameStatus;
+  label: string | null;
   startTime: string;
 }) {
   switch (status.kind) {
@@ -77,22 +78,26 @@ export default function GameStatusChip({
     case "scheduled":
       return (
         <StatusChip tone="tip-off">
-          <GameStatusLabel status={status} startTime={startTime} />
+          {/* Reserves the width of a tip-off time so filling it in on the client doesn't shift the row. */}
+          <time
+            dateTime={startTime}
+            className="inline-block min-w-[8ch] text-center"
+          >
+            {label}
+          </time>
         </StatusChip>
       );
     case "final":
-      return (
-        <StatusChip tone="final">
-          <GameStatusLabel status={status} startTime={startTime} />
-        </StatusChip>
-      );
+      return <StatusChip tone="final">{label}</StatusChip>;
     case "postponed":
     case "canceled":
       return (
         <StatusChip tone="postponed">
-          <span aria-hidden="true">{strings.gameStatus.postponedShort}</span>
+          <span aria-hidden="true">{label}</span>
           <span className="sr-only">
-            <GameStatusLabel status={status} startTime={startTime} />
+            {status.kind === "postponed"
+              ? strings.gameStatus.postponed
+              : strings.gameStatus.canceled}
           </span>
         </StatusChip>
       );

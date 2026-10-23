@@ -6,6 +6,7 @@ import {
   type ScoreboardQueryState,
 } from "@/app/lib/home/home-view";
 import { useScoreboard } from "@/app/lib/queries/use-scoreboard";
+import { useBrowserTimeZone } from "@/app/lib/time/use-browser-time-zone";
 import GamesList from "@/app/components/GamesList";
 import DateHeading from "./DateHeading";
 
@@ -18,6 +19,7 @@ export default function DayScoreboard({ nbaDate }: { nbaDate: NbaDate }) {
     isRefetchError,
     refetch,
   } = useScoreboard(nbaDate);
+  const timeZone = useBrowserTimeZone();
 
   // Data is checked before the error: a failed refetch keeps the last valid scoreboard instead of hiding it.
   const query: ScoreboardQueryState = scoreboard
@@ -28,7 +30,12 @@ export default function DayScoreboard({ nbaDate }: { nbaDate: NbaDate }) {
       ? { status: "error" }
       : { status: "loading" };
 
-  const homeView = buildHomeView({ nbaDate, query, now: new Date() });
+  const homeView = buildHomeView({
+    nbaDate,
+    query,
+    now: new Date(),
+    timeZone,
+  });
 
   return (
     <section className="flex flex-col gap-6 py-6 md:py-8">

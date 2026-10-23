@@ -34,6 +34,16 @@ export type RawCompetition = {
   broadcasts?: RawBroadcast[];
   geoBroadcasts?: RawGeoBroadcast[];
   series?: RawSeries;
+  venue?: RawVenue;
+};
+
+export type RawRecord = {
+  type: string;
+  summary: string;
+};
+
+export type RawVenue = {
+  fullName: string;
 };
 
 export type RawBroadcast = {
@@ -60,6 +70,7 @@ export type RawCompetitor = {
   score?: string;
   winner?: boolean;
   team: RawTeam;
+  records?: RawRecord[];
 };
 
 export type RawTeamScheduleResponse = {
@@ -81,6 +92,7 @@ export type RawScheduleCompetition = {
   competitors: RawScheduleCompetitor[];
   broadcasts?: RawGeoBroadcast[];
   series?: RawSeries;
+  venue?: RawVenue;
 };
 
 export type RawScheduleCompetitor = {
@@ -89,6 +101,7 @@ export type RawScheduleCompetitor = {
   score?: { value: number; displayValue: string } | null;
   winner?: boolean | null;
   team: RawScheduleTeam;
+  record?: { type: string; displayValue: string }[];
 };
 
 export type RawScheduleTeam = {
@@ -138,6 +151,7 @@ export type RawTeam = {
   name: string;
   displayName: string;
   color?: string;
+  alternateColor?: string;
   // Missing for non-NBA opponents such as international exhibition teams.
   logo?: string;
 };
@@ -217,6 +231,7 @@ export type RawSummary = {
   // Missing before the game starts.
   plays?: RawPlay[];
   winprobability?: RawWinProbabilityPoint[];
+  gameInfo?: { venue?: RawVenue };
 };
 
 // The summary header carries the event's season, while its competition mirrors a scoreboard competition.
@@ -243,6 +258,7 @@ export type RawSummaryCompetitor = {
   winner?: boolean;
   team: RawListedTeam;
   linescores?: { displayValue: string }[];
+  record?: RawRecord[];
 };
 
 export type RawBoxScoreTeam = {

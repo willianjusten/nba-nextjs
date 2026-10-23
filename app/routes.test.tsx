@@ -80,7 +80,7 @@ describe("routes", () => {
       screen.getByRole("heading", { name: "Wednesday, October 21" }),
     ).toBeDefined();
     expect(await screen.findByText("3 games · 3 final")).toBeDefined();
-    expect(screen.getByText("Orlando Magic")).toBeDefined();
+    expect(screen.getByText("Magic")).toBeDefined();
   });
 
   it("renders the games page with the requested date's heading, summary, and games", async () => {
@@ -94,7 +94,7 @@ describe("routes", () => {
       }),
     ).toBeDefined();
     expect(await screen.findByText("3 games · 3 final")).toBeDefined();
-    expect(screen.getByText("Orlando Magic")).toBeDefined();
+    expect(screen.getByText("Magic")).toBeDefined();
   });
 
   it("returns not found for an invalid games date", async () => {

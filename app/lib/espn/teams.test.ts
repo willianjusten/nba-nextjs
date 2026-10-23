@@ -78,6 +78,7 @@ describe("fetchTeams", () => {
       displayName: "Los Angeles Lakers",
       location: "Los Angeles",
       color: "552583",
+      alternateColor: "fdb927",
       logoUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
     });
   });
@@ -130,6 +131,7 @@ describe("fetchTeamDetail", () => {
       displayName: "Los Angeles Lakers",
       location: "Los Angeles",
       color: "552583",
+      alternateColor: "fdb927",
       logoUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
       record: "1-0",
       standingSummary: "1st in Pacific Division",

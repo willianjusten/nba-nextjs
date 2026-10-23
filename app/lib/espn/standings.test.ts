@@ -99,6 +99,7 @@ describe("fetchStandings", () => {
         displayName: "Indiana Pacers",
         location: "Indiana",
         color: null,
+        alternateColor: null,
         logoUrl: "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
         slug: "pacers",
       },

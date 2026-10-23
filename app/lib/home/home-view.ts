@@ -1,11 +1,15 @@
 import type { Game, GameStatus, Scoreboard } from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
+import { finalLabel, hasScore, periodLabel } from "@/app/lib/game/status";
+import { strings } from "@/app/lib/strings";
 import {
   formatNbaDate,
   formatNbaMonthDay,
   formatNbaWeekday,
   formatShortNbaDate,
 } from "@/app/lib/time/nba-date";
+import { formatTipOff } from "@/app/lib/time/tip-off";
+import { readableTeamColors, type TeamSide } from "./team-colors";
 
 const MILLISECONDS_PER_MINUTE = 60_000;
 
@@ -20,6 +24,8 @@ export type HomeViewInput = {
   nbaDate: NbaDate;
   query: ScoreboardQueryState;
   now: Date;
+  // The browser timezone; null while server rendering, where the viewer's timezone is unknown.
+  timeZone: string | null;
 };
 
 export type DateHeading = {
@@ -37,6 +43,13 @@ export type GamesSummary = {
 
 export type HomeCard = {
   game: Game;
+  // Null only for a scheduled game until the browser timezone is known.
+  statusLabel: string | null;
+  channelLabel: string;
+  metaLabel: string;
+  leadingSide: TeamSide | null;
+  teamColors: Record<TeamSide, string>;
+  showHighlights: boolean;
 };
 
 export type HomeScreen =
@@ -83,6 +96,66 @@ function orderGames(games: Game[]): Game[] {
   );
 }
 
+const META_SEPARATOR = " · ";
+function statusLabelOf(game: Game, timeZone: string | null): string | null {
+  const { status } = game;
+  switch (status.kind) {
+    case "scheduled":
+      return timeZone
+        ? formatTipOff(game.startTime, game.nbaDate, timeZone)
+        : null;
+    case "live":
+      return `${periodLabel(status.period)} ${status.clock}`;
+    case "halftime":
+      return strings.gameStatus.halftime;
+    case "final":
+      return finalLabel(status.period);
+    case "postponed":
+    case "canceled":
+      return strings.gameStatus.postponedShort;
+  }
+}
+
+function metaLabelOf(game: Game, channelLabel: string) {
+  const { status } = game;
+  const parts = (() => {
+    switch (status.kind) {
+      case "live":
+        return [periodLabel(status.period), status.clock, channelLabel];
+      case "halftime":
+        return [strings.gameStatus.halftime, channelLabel];
+      case "final":
+        return [channelLabel];
+      case "scheduled":
+      case "postponed":
+      case "canceled":
+        return [game.venue, channelLabel];
+    }
+  })();
+  return parts.filter(Boolean).join(META_SEPARATOR);
+}
+
+function leadingSideOf({ status, home, away }: Game): TeamSide | null {
+  if (!hasScore(status) || home.score === away.score) return null;
+  return home.score > away.score ? "home" : "away";
+}
+
+function cardOf(game: Game, timeZone: string | null): HomeCard {
+  const channelLabel = game.broadcasts
+    .map((broadcast) => broadcast.name)
+    .join(META_SEPARATOR);
+
+  return {
+    game,
+    statusLabel: statusLabelOf(game, timeZone),
+    channelLabel,
+    metaLabel: metaLabelOf(game, channelLabel),
+    leadingSide: leadingSideOf(game),
+    teamColors: readableTeamColors(game.home.team, game.away.team),
+    showHighlights: game.status.kind === "final",
+  };
+}
+
 function summarize(games: Game[]): GamesSummary {
   const countOf = (group: StatusGroup) =>
     games.filter((game) => statusGroupOf(game.status) === group).length;
@@ -103,7 +176,11 @@ function headingOf(nbaDate: NbaDate): DateHeading {
   };
 }
 
-function screenOf(query: ScoreboardQueryState, now: Date): HomeScreen {
+function screenOf(
+  query: ScoreboardQueryState,
+  now: Date,
+  timeZone: string | null,
+): HomeScreen {
   switch (query.status) {
     case "loading":
       return { kind: "loading" };
@@ -114,7 +191,7 @@ function screenOf(query: ScoreboardQueryState, now: Date): HomeScreen {
       const { games, nextGameDate } = query.scoreboard;
       if (games.length === 0) return { kind: "empty", nextGameDate };
 
-      const cards = orderGames(games).map((game) => ({ game }));
+      const cards = orderGames(games).map((game) => cardOf(game, timeZone));
       if (query.status === "success") return { kind: "games", cards };
 
       const minutesAgo = Math.max(
@@ -130,6 +207,7 @@ export function buildHomeView({
   nbaDate,
   query,
   now,
+  timeZone,
 }: HomeViewInput): HomeView {
   const games =
     query.status === "success" || query.status === "stale"
@@ -139,6 +217,6 @@ export function buildHomeView({
   return {
     heading: headingOf(nbaDate),
     summary: games.length > 0 ? summarize(games) : null,
-    screen: screenOf(query, now),
+    screen: screenOf(query, now, timeZone),
   };
 }

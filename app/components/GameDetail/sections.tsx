@@ -10,10 +10,8 @@ import type {
 } from "@/app/lib/domain/game-summary";
 import TeamLogo from "@/app/components/TeamLogo";
 import { strings } from "@/app/lib/strings";
-import GameStatusLabel, {
-  hasScore,
-  periodLabel,
-} from "@/app/components/GameStatusLabel";
+import GameStatusLabel from "@/app/components/GameStatusLabel";
+import { hasScore, periodLabel } from "@/app/lib/game/status";
 
 const LOGO_DISPLAY_SIZE = 56;
 const BOX_SCORE_COLUMNS = Object.keys(

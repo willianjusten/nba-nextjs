@@ -4,6 +4,7 @@ type TeamLogoProps = {
   logoUrl: string | null;
   size: number;
   lazy?: boolean;
+  fallbackColor?: string;
 };
 
 const SHIELD_OUTLINE_PATH =
@@ -16,7 +17,7 @@ const SHIELD_UPPER_HALF_PATH =
   "M12 4 18.6 6.2 6.4 16.4C5.8 14.9 5.4 13.2 5.4 11.3V6.2Z";
 
 // Teams without an ESPN logo, such as international exhibition opponents, get a generic shield instead of a logo they don't own.
-function GenericShield({ size }: { size: number }) {
+function GenericShield({ size, color }: { size: number; color?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -25,6 +26,7 @@ function GenericShield({ size }: { size: number }) {
       aria-hidden="true"
       data-testid="generic-team-logo"
       className="shrink-0 text-muted"
+      style={color ? { color } : undefined}
     >
       <path d={SHIELD_OUTLINE_PATH} fill="currentColor" opacity="0.35" />
       <path d={SHIELD_INNER_PATH} fill="currentColor" opacity="0.55" />
@@ -42,8 +44,9 @@ export default function TeamLogo({
   logoUrl,
   size,
   lazy = false,
+  fallbackColor,
 }: TeamLogoProps) {
-  if (!logoUrl) return <GenericShield size={size} />;
+  if (!logoUrl) return <GenericShield size={size} color={fallbackColor} />;
 
   return (
     <img

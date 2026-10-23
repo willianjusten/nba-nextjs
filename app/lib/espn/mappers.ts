@@ -120,6 +120,7 @@ function mapTeam(team: RawTeam): Team {
     displayName: team.displayName,
     location: team.location,
     color: team.color ?? null,
+    alternateColor: team.alternateColor ?? null,
     logoUrl: team.logo || null,
   };
 }
@@ -166,11 +167,18 @@ function normalizeScore(
   return Number.isFinite(score) ? score : 0;
 }
 
+function totalRecordOf<RecordItem extends { type: string }>(
+  records: RecordItem[] | undefined,
+) {
+  return records?.find((recordItem) => recordItem.type === "total");
+}
+
 function mapCompetitor(competitor: RawCompetitor): GameCompetitor {
   return {
     team: mapTeam(competitor.team),
     score: normalizeScore(competitor.score),
     winner: competitor.winner ?? false,
+    record: totalRecordOf(competitor.records)?.summary ?? null,
   };
 }
 
@@ -189,6 +197,7 @@ function mapScheduleCompetitor(
     team: mapScheduleTeam(competitor.team),
     score: normalizeScore(competitor.score),
     winner: competitor.winner ?? false,
+    record: totalRecordOf(competitor.record)?.displayValue ?? null,
   };
 }
 
@@ -289,6 +298,7 @@ export function mapGame(event: RawEvent): Game {
     seasonYear: event.season.year,
     seasonType: mapSeasonType(event.season),
     status: mapStatus(event.status),
+    venue: competition?.venue?.fullName ?? null,
     home: mapCompetitor(home),
     away: mapCompetitor(away),
     broadcasts: mapBroadcasts(
@@ -314,6 +324,7 @@ export function mapScheduleGame(event: RawScheduleEvent): Game {
     seasonYear: event.season.year,
     seasonType: mapSeasonType(event.seasonType),
     status: mapStatus(competition.status),
+    venue: competition.venue?.fullName ?? null,
     home: mapScheduleCompetitor(home),
     away: mapScheduleCompetitor(away),
     // The schedule sends its broadcasts in the geoBroadcast shape.
@@ -608,6 +619,7 @@ function findByTeam<Entry extends { team: { id: string } }>(
 function mapSummaryCompetitor(competitor: RawSummaryCompetitor) {
   return mapCompetitor({
     ...competitor,
+    records: competitor.record,
     team: {
       ...competitor.team,
       logo: pickScoreboardLogo(competitor.team.logos),
@@ -638,6 +650,7 @@ export function mapGameSummary(summary: RawSummary): GameSummary {
       seasonYear: header.season.year,
       seasonType: mapSeasonType(header.season),
       status: mapStatus(status),
+      venue: summary.gameInfo?.venue?.fullName ?? null,
       home: mapSummaryCompetitor(home),
       away: mapSummaryCompetitor(away),
       // The summary sends its broadcasts in the geoBroadcast shape.

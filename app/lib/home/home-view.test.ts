@@ -1,15 +1,18 @@
 import type { Game, Scoreboard } from "@/app/lib/domain/game";
 import type { NbaDate } from "@/app/lib/domain/nba-date";
 import finalDay from "@/app/lib/espn/__fixtures__/scoreboard-final-day.json";
+import internationalExhibition from "@/app/lib/espn/__fixtures__/scoreboard-international-exhibition.json";
 import liveDay from "@/app/lib/espn/__fixtures__/scoreboard-live-day-simulated.json";
 import scheduledDay from "@/app/lib/espn/__fixtures__/scoreboard-scheduled-day.json";
 import { mapGame } from "@/app/lib/espn/mappers";
 import type { RawEvent } from "@/app/lib/espn/raw-types";
 import {
   buildHomeView,
+  type HomeCard,
   type HomeView,
   type ScoreboardQueryState,
 } from "./home-view";
+import { contrastRatio, INK } from "./team-colors";
 
 const nbaDate = "2026-10-20" as NbaDate;
 const now = new Date("2026-10-21T00:30:00Z");
@@ -20,6 +23,7 @@ const gamesOf = (fixture: { events: unknown[] }) =>
 const [finalOrlando, finalSecond, finalLate] = gamesOf(finalDay);
 const [liveGame, halftimeGame] = gamesOf(liveDay);
 const [, scheduledLate] = gamesOf(scheduledDay);
+const [exhibitionGame] = gamesOf(internationalExhibition);
 const postponedGame: Game = { ...finalLate, status: { kind: "postponed" } };
 
 function scoreboardWith(
@@ -29,9 +33,26 @@ function scoreboardWith(
   return { nbaDate, games, nextGameDate };
 }
 
-function viewFor(query: ScoreboardQueryState): HomeView {
-  return buildHomeView({ nbaDate, query, now });
+function viewFor(
+  query: ScoreboardQueryState,
+  timeZone: string | null = "America/New_York",
+): HomeView {
+  return buildHomeView({ nbaDate, query, now, timeZone });
 }
+
+function cardFor(game: Game, timeZone?: string | null): HomeCard {
+  const view = viewFor(
+    { status: "success", scoreboard: scoreboardWith([game]) },
+    timeZone,
+  );
+  if (view.screen.kind !== "games") throw new Error("Expected a games screen");
+  return view.screen.cards[0];
+}
+
+const withStatus = (game: Game, status: Game["status"]): Game => ({
+  ...game,
+  status,
+});
 
 const cardIds = (view: HomeView) =>
   view.screen.kind === "games" || view.screen.kind === "stale"
@@ -134,11 +155,8 @@ describe("buildHomeView", () => {
       updatedAt: now.getTime() - 3 * 60_000,
     });
 
-    expect(view.screen).toEqual({
-      kind: "stale",
-      cards: [{ game: liveGame }, { game: finalOrlando }],
-      minutesAgo: 3,
-    });
+    expect(view.screen).toMatchObject({ kind: "stale", minutesAgo: 3 });
+    expect(cardIds(view)).toEqual([liveGame.id, finalOrlando.id]);
     expect(view.summary).toEqual({ total: 2, live: 1, final: 1 });
   });
 
@@ -173,5 +191,167 @@ describe("buildHomeView", () => {
     });
 
     expect(view.screen).toEqual({ kind: "empty", nextGameDate: null });
+  });
+
+  describe("cards", () => {
+    it.each<[string, Game["status"], string]>([
+      [
+        "live in regulation",
+        { kind: "live", period: 3, clock: "4:12" },
+        "Q3 4:12",
+      ],
+      [
+        "live in overtime",
+        { kind: "live", period: 5, clock: "1:05" },
+        "OT 1:05",
+      ],
+      [
+        "live in double overtime",
+        { kind: "live", period: 6, clock: "0:42" },
+        "2OT 0:42",
+      ],
+      ["at halftime", { kind: "halftime", period: 2 }, "Halftime"],
+      ["final", { kind: "final", period: 4 }, "Final"],
+      ["final after overtime", { kind: "final", period: 5 }, "Final/OT"],
+      ["postponed", { kind: "postponed" }, "PPD"],
+      ["canceled", { kind: "canceled" }, "PPD"],
+    ])("labels a game %s", (_case, status, expectedLabel) => {
+      expect(cardFor(withStatus(liveGame, status)).statusLabel).toBe(
+        expectedLabel,
+      );
+    });
+
+    it.each<[string, string]>([
+      ["America/New_York", "9:30 PM"],
+      ["America/Los_Angeles", "6:30 PM"],
+      ["America/Sao_Paulo", "10:30 PM"],
+    ])(
+      "labels a scheduled game with its tip-off in %s",
+      (timeZone, expectedLabel) => {
+        expect(cardFor(scheduledLate, timeZone).statusLabel).toBe(
+          expectedLabel,
+        );
+      },
+    );
+
+    it("adds the weekday when a late ET tip-off falls on the next local day", () => {
+      expect(cardFor(scheduledLate, "Europe/London").statusLabel).toBe(
+        "Fri 2:30 AM",
+      );
+      expect(cardFor(scheduledLate, "Asia/Tokyo").statusLabel).toBe(
+        "Fri 10:30 AM",
+      );
+    });
+
+    it("leaves the tip-off empty until the browser timezone is known", () => {
+      expect(cardFor(scheduledLate, null).statusLabel).toBeNull();
+    });
+
+    it("shows the national channel", () => {
+      expect(cardFor(liveGame).channelLabel).toBe("ESPN");
+    });
+
+    it("lists multiple channels national first", () => {
+      const game: Game = {
+        ...liveGame,
+        broadcasts: [
+          { name: "ESPN", market: "national" },
+          { name: "NBA League Pass", market: "home" },
+        ],
+      };
+
+      expect(cardFor(game).channelLabel).toBe("ESPN · NBA League Pass");
+    });
+
+    it("falls back to NBA League Pass when no supported channel carries the game", () => {
+      expect(cardFor(exhibitionGame).channelLabel).toBe("NBA League Pass");
+    });
+
+    it.each<[string, Game, string]>([
+      [
+        "live games",
+        withStatus(liveGame, { kind: "live", period: 3, clock: "4:12" }),
+        "Q3 · 4:12 · ESPN",
+      ],
+      ["halftime", halftimeGame, "Halftime · ESPN"],
+      ["finals", finalOrlando, "NBA League Pass"],
+      ["scheduled games", scheduledLate, "Paycom Center · ESPN"],
+      ["postponed games", postponedGame, "Kaseya Center · ESPN"],
+    ])("builds the meta line of %s", (_case, game, expectedMeta) => {
+      expect(cardFor(game).metaLabel).toBe(expectedMeta);
+    });
+
+    it("leaves the venue out of the meta line when ESPN has none", () => {
+      expect(cardFor({ ...scheduledLate, venue: null }).metaLabel).toBe("ESPN");
+    });
+
+    it("marks the leading team once the game has a score", () => {
+      expect(cardFor(liveGame).leadingSide).toBe("home");
+      expect(cardFor(finalOrlando).leadingSide).toBe("away");
+    });
+
+    it("marks no leader when the score is tied or the game has not started", () => {
+      const tiedGame: Game = {
+        ...liveGame,
+        away: { ...liveGame.away, score: liveGame.home.score },
+      };
+
+      expect(cardFor(tiedGame).leadingSide).toBeNull();
+      expect(cardFor(scheduledLate).leadingSide).toBeNull();
+      expect(cardFor(postponedGame).leadingSide).toBeNull();
+    });
+
+    it("offers highlights only for finished games", () => {
+      expect(cardFor(finalOrlando).showHighlights).toBe(true);
+      expect(cardFor(liveGame).showHighlights).toBe(false);
+      expect(cardFor(scheduledLate).showHighlights).toBe(false);
+      expect(cardFor(postponedGame).showHighlights).toBe(false);
+    });
+
+    describe("team colors", () => {
+      it("keeps a primary color that reaches 3:1 against Ink", () => {
+        // OKC blue is readable on Ink as is.
+        expect(cardFor(scheduledLate).teamColors.home).toBe("#007ac1");
+      });
+
+      it("switches to the alternate when the primary is too dark", () => {
+        // DEN navy fails on Ink, so its gold alternate is used.
+        expect(cardFor(scheduledLate).teamColors.away).toBe("#fec524");
+      });
+
+      it("lightens the primary when neither color is readable", () => {
+        // MIA red and its black alternate both fail on Ink.
+        const { home } = cardFor(finalLate).teamColors;
+
+        expect(home).not.toBe("#98002e");
+        expect(home).not.toBe("#000000");
+        expect(contrastRatio(home, INK)).toBeGreaterThanOrEqual(3);
+      });
+
+      it("switches the away team when both teams end up looking alike", () => {
+        const game: Game = {
+          ...scheduledLate,
+          home: {
+            ...scheduledLate.home,
+            team: {
+              ...scheduledLate.home.team,
+              color: "552583",
+              alternateColor: "fdb927",
+            },
+          },
+        };
+        const { home, away } = cardFor(game).teamColors;
+
+        expect(home).toBe("#fdb927");
+        expect(away).not.toBe("#fec524");
+        expect(contrastRatio(away, INK)).toBeGreaterThanOrEqual(3);
+      });
+
+      it("uses a neutral color for a team without colors", () => {
+        const { away } = cardFor(exhibitionGame).teamColors;
+
+        expect(contrastRatio(away, INK)).toBeGreaterThanOrEqual(3);
+      });
+    });
   });
 });

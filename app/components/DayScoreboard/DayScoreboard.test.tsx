@@ -57,7 +57,7 @@ describe("DayScoreboard", () => {
 
     renderDayScoreboard();
 
-    expect(await screen.findByText("Orlando Magic")).toBeDefined();
+    expect(await screen.findByText("Magic")).toBeDefined();
     expect(screen.queryByRole("alert")).toBeNull();
   });
 
@@ -82,12 +82,12 @@ describe("DayScoreboard", () => {
     expect(errorAlert.textContent).toContain(strings.games.errorDetail);
     expect(screen.queryByText(/No games on/)).toBeNull();
     expect(screen.queryByText(/\d+ games?/)).toBeNull();
-    expect(screen.queryByText("Orlando Magic")).toBeNull();
+    expect(screen.queryByText("Magic")).toBeNull();
 
     fetchMock.mockResolvedValueOnce(jsonResponse(finalDay));
     fireEvent.click(screen.getByRole("button", { name: strings.games.retry }));
 
-    expect(await screen.findByText("Orlando Magic")).toBeDefined();
+    expect(await screen.findByText("Magic")).toBeDefined();
     expect(screen.queryByRole("alert")).toBeNull();
   });
 
@@ -135,7 +135,7 @@ describe("DayScoreboard", () => {
     });
     fetchMock.mockResolvedValueOnce(jsonResponse(liveDay));
     renderDayScoreboard();
-    expect(await screen.findByText("Philadelphia 76ers")).toBeDefined();
+    expect(await screen.findByText("76ers")).toBeDefined();
 
     fetchMock.mockResolvedValueOnce(new Response("", { status: 503 }));
     returnToTab();
@@ -144,7 +144,7 @@ describe("DayScoreboard", () => {
     expect(staleNotice.closest("[role=status]")?.textContent).toContain(
       strings.games.retryingAutomatically,
     );
-    expect(screen.getByText("Philadelphia 76ers")).toBeDefined();
+    expect(screen.getByText("76ers")).toBeDefined();
     expect(screen.queryByRole("alert")).toBeNull();
 
     fetchMock.mockResolvedValueOnce(jsonResponse(liveDay));
@@ -153,7 +153,7 @@ describe("DayScoreboard", () => {
     await vi.waitFor(() =>
       expect(screen.queryByText(strings.games.stale(1))).toBeNull(),
     );
-    expect(screen.getByText("Philadelphia 76ers")).toBeDefined();
+    expect(screen.getByText("76ers")).toBeDefined();
     vi.useRealTimers();
   });
 });
