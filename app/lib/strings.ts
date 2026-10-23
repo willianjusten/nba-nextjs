@@ -100,7 +100,6 @@ export const strings = {
   gameStatus: {
     live: "Live",
     postponedShort: "PPD",
-    myTeam: "My team",
     quarter: (period: number) => `Q${period}`,
     overtime: (overtimeNumber: number) =>
       overtimeNumber === 1 ? "OT" : `${overtimeNumber}OT`,

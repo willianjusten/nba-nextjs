@@ -141,20 +141,18 @@ describe("GameCard", () => {
     );
   });
 
-  it("flags a favorite's game with the my team chip and stars the favorite team", () => {
+  it("stars the favorite team on a favorite's game", () => {
     // The Magic (19) host the Hawks in the final game.
     renderCard(cardFor(finalGame, "America/New_York", ["19"]));
 
-    expect(screen.getByText(strings.gameStatus.myTeam)).toBeDefined();
     expect(
       screen.getAllByRole("img", { name: strings.myTeams.favorite }),
     ).toHaveLength(1);
   });
 
-  it("shows no my team chip or star without favorites", () => {
+  it("shows no star without favorites", () => {
     renderCard(cardFor(finalGame));
 
-    expect(screen.queryByText(strings.gameStatus.myTeam)).toBeNull();
     expect(
       screen.queryByRole("img", { name: strings.myTeams.favorite }),
     ).toBeNull();

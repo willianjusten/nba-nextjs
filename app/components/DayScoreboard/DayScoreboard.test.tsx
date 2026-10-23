@@ -204,7 +204,7 @@ describe("DayScoreboard", () => {
     const [firstCard] = screen.getAllByRole("article");
     expect(within(firstCard).getByText("Heat")).toBeDefined();
     expect(
-      within(firstCard).getByText(strings.gameStatus.myTeam),
+      within(firstCard).getByRole("img", { name: strings.myTeams.favorite }),
     ).toBeDefined();
   });
 

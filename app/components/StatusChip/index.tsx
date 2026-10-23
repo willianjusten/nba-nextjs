@@ -1,7 +1,7 @@
 import type { GameStatus } from "@/app/lib/domain/game";
 import { strings } from "@/app/lib/strings";
 
-type ChipTone = "live" | "final" | "tip-off" | "postponed" | "my-team";
+type ChipTone = "live" | "final" | "tip-off" | "postponed";
 
 const CHIP_BASE_CLASS_NAME =
   "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-meta leading-none font-bold tracking-[0.12em] whitespace-nowrap uppercase";
@@ -11,7 +11,6 @@ const CHIP_TONE_CLASS_NAMES: Record<ChipTone, string> = {
   final: "border-white/14 bg-white/8 text-secondary",
   "tip-off": "border-accent/45 bg-accent/16 text-accent-soft",
   postponed: "border-dashed border-white/22 bg-white/5 text-muted",
-  "my-team": "border-favorite/40 bg-favorite/12 text-favorite-soft",
 };
 
 function StatusChip({
@@ -37,28 +36,6 @@ export function LiveChip() {
       />
       {strings.gameStatus.live}
     </StatusChip>
-  );
-}
-
-// Star only, so the channel beside it keeps its room; the label is still read out.
-export function MyTeamChip() {
-  return (
-    <StatusChip tone="my-team">
-      <StarIcon />
-      <span className="sr-only">{strings.gameStatus.myTeam}</span>
-    </StatusChip>
-  );
-}
-
-function StarIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="size-3 fill-favorite"
-    >
-      <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />
-    </svg>
   );
 }
 

@@ -5,7 +5,7 @@ import type { HomeCard, TeamWinProbability } from "@/app/lib/home/home-view";
 import type { TeamSide } from "@/app/lib/home/team-colors";
 import { strings } from "@/app/lib/strings";
 import TeamLogo from "@/app/components/TeamLogo";
-import GameStatusChip, { MyTeamChip } from "@/app/components/StatusChip";
+import GameStatusChip from "@/app/components/StatusChip";
 
 const ROW_LOGO_SIZE = 34;
 const MATCHUP_LOGO_SIZE = 44;
@@ -274,7 +274,6 @@ export default function GameCard({ card }: { card: HomeCard }) {
           label={card.statusLabel}
           startTime={game.startTime}
         />
-        {card.isMyTeam && <MyTeamChip />}
         <span
           className={`ml-auto truncate text-meta ${isLive ? "text-secondary" : "text-muted"}`}
         >
