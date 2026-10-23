@@ -19,7 +19,11 @@ const [liveGame] = gamesOf(liveDay);
 const [, scheduledGame] = gamesOf(scheduledDay);
 const [exhibitionGame] = gamesOf(internationalExhibition);
 
-function cardFor(game: Game, timeZone: string | null = "America/New_York") {
+function cardFor(
+  game: Game,
+  timeZone: string | null = "America/New_York",
+  favoriteTeamIds: string[] = [],
+) {
   const { screen: homeScreen } = buildHomeView({
     selectedDate: game.nbaDate as NbaDate,
     railCenterDate: game.nbaDate as NbaDate,
@@ -31,6 +35,8 @@ function cardFor(game: Game, timeZone: string | null = "America/New_York") {
     filter: "all",
     gameCounts: null,
     seasonCalendar: null,
+    favoriteTeamIds,
+    teams: null,
     now: new Date("2026-10-23T00:00:00Z"),
     timeZone,
   });
@@ -134,6 +140,25 @@ describe("GameCard", () => {
     expect(screen.getByText(strings.gameStatus.postponed).className).toContain(
       "sr-only",
     );
+  });
+
+  it("flags a favorite's game with the my team chip and stars the favorite team", () => {
+    // The Magic (19) host the Hawks in the final game.
+    renderCard(cardFor(finalGame, "America/New_York", ["19"]));
+
+    expect(screen.getByText(strings.gameStatus.myTeam)).toBeDefined();
+    expect(
+      screen.getAllByRole("img", { name: strings.myTeams.favorite }),
+    ).toHaveLength(1);
+  });
+
+  it("shows no my team chip or star without favorites", () => {
+    renderCard(cardFor(finalGame));
+
+    expect(screen.queryByText(strings.gameStatus.myTeam)).toBeNull();
+    expect(
+      screen.queryByRole("img", { name: strings.myTeams.favorite }),
+    ).toBeNull();
   });
 
   it("requests logos from the ESPN resizer instead of the full-size image", () => {

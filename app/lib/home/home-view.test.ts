@@ -4,8 +4,10 @@ import finalDay from "@/app/lib/espn/__fixtures__/scoreboard-final-day.json";
 import internationalExhibition from "@/app/lib/espn/__fixtures__/scoreboard-international-exhibition.json";
 import liveDay from "@/app/lib/espn/__fixtures__/scoreboard-live-day-simulated.json";
 import scheduledDay from "@/app/lib/espn/__fixtures__/scoreboard-scheduled-day.json";
-import { mapGame } from "@/app/lib/espn/mappers";
-import type { RawEvent } from "@/app/lib/espn/raw-types";
+import teamsList from "@/app/lib/espn/__fixtures__/teams-list.json";
+import type { ListedTeam } from "@/app/lib/domain/team";
+import { mapGame, mapListedTeam } from "@/app/lib/espn/mappers";
+import type { RawEvent, RawTeamsList } from "@/app/lib/espn/raw-types";
 import {
   buildCalendarMonth,
   buildHomeView,
@@ -31,6 +33,9 @@ const [liveGame, halftimeGame] = gamesOf(liveDay);
 const [, scheduledLate] = gamesOf(scheduledDay);
 const [exhibitionGame] = gamesOf(internationalExhibition);
 const postponedGame: Game = { ...finalLate, status: { kind: "postponed" } };
+const teams: ListedTeam[] = (
+  teamsList as RawTeamsList
+).sports[0].leagues[0].teams.map(({ team }) => mapListedTeam(team));
 
 function scoreboardWith(games: Game[]): Scoreboard {
   return { nbaDate, games };
@@ -50,6 +55,8 @@ function viewFor(
     filter,
     gameCounts: null,
     seasonCalendar: seasonCalendar as NbaDate[] | null,
+    favoriteTeamIds: [],
+    teams: null,
     now,
     timeZone,
   });
@@ -72,6 +79,8 @@ function railFor(
     filter: "all",
     gameCounts,
     seasonCalendar: null,
+    favoriteTeamIds: [],
+    teams: null,
     now,
     timeZone: "America/New_York",
   }).dateRail;
@@ -817,6 +826,144 @@ describe("buildHomeView", () => {
 
         expect(contrastRatio(away, INK)).toBeGreaterThanOrEqual(3);
       });
+    });
+  });
+
+  describe("my teams", () => {
+    const mixedDay = [
+      postponedGame,
+      finalOrlando,
+      scheduledLate,
+      finalSecond,
+      liveGame,
+    ];
+    const favoritesViewFor = (
+      favoriteTeamIds: string[],
+      {
+        games = mixedDay,
+        filter = "all",
+        listedTeams = teams,
+      }: {
+        games?: Game[];
+        filter?: GameFilter;
+        listedTeams?: ListedTeam[] | null;
+      } = {},
+    ) =>
+      buildHomeView({
+        selectedDate: nbaDate,
+        railCenterDate: nbaDate,
+        today,
+        query: { status: "success", scoreboard: scoreboardWith(games) },
+        filter,
+        gameCounts: null,
+        seasonCalendar: null,
+        favoriteTeamIds,
+        teams: listedTeams,
+        now,
+        timeZone: "America/New_York",
+      });
+    const cardsOf = (view: HomeView) =>
+      view.screen.kind === "games" ? view.screen.cards : [];
+
+    it("pins favorites' games first, keeping status order on both sides", () => {
+      // Wizards (27) play the final second game and Heat (14) the postponed one.
+      const view = favoritesViewFor(["14", "27"]);
+
+      expect(cardIds(view)).toEqual([
+        finalSecond.id,
+        postponedGame.id,
+        liveGame.id,
+        scheduledLate.id,
+        finalOrlando.id,
+      ]);
+    });
+
+    it("orders pinned live, scheduled, final, and postponed games by status", () => {
+      // 76ers (20) live, Nuggets (7) scheduled, Magic (19) final, Heat (14) postponed.
+      const view = favoritesViewFor(["14", "19", "7", "20"]);
+
+      expect(cardIds(view)).toEqual([
+        liveGame.id,
+        scheduledLate.id,
+        finalOrlando.id,
+        postponedGame.id,
+        finalSecond.id,
+      ]);
+    });
+
+    it("keeps the usual order when no favorite plays that day", () => {
+      const view = favoritesViewFor(["2"]);
+
+      expect(cardIds(view)).toEqual([
+        liveGame.id,
+        scheduledLate.id,
+        finalOrlando.id,
+        finalSecond.id,
+        postponedGame.id,
+      ]);
+    });
+
+    it("pins favorites' games within the selected filter", () => {
+      const view = favoritesViewFor(["27"], { filter: "final" });
+
+      expect(cardIds(view)).toEqual([finalSecond.id, finalOrlando.id]);
+    });
+
+    it("flags a favorite's game as my team and marks which side is the favorite", () => {
+      const [pinnedCard, otherCard] = cardsOf(
+        favoritesViewFor(["19"], { games: [finalSecond, finalOrlando] }),
+      );
+
+      expect(pinnedCard.isMyTeam).toBe(true);
+      expect(pinnedCard.favoriteSides).toEqual({ away: false, home: true });
+      expect(otherCard.isMyTeam).toBe(false);
+      expect(otherCard.favoriteSides).toEqual({ away: false, home: false });
+    });
+
+    it("marks both sides when both teams are favorites", () => {
+      const [card] = cardsOf(
+        favoritesViewFor(["1", "19"], { games: [finalOrlando] }),
+      );
+
+      expect(card.favoriteSides).toEqual({ away: true, home: true });
+    });
+
+    it("lists the favorite teams in the order they were followed, linking to their pages", () => {
+      const { myTeams } = favoritesViewFor(["13", "18"]);
+
+      expect(myTeams).toEqual([
+        {
+          teamId: "13",
+          name: "Lakers",
+          displayName: "Los Angeles Lakers",
+          logoUrl: expect.stringContaining("lal.png"),
+          href: "/teams/lakers",
+        },
+        {
+          teamId: "18",
+          name: "Knicks",
+          displayName: "New York Knicks",
+          logoUrl: expect.stringContaining("ny.png"),
+          href: "/teams/knicks",
+        },
+      ]);
+    });
+
+    it("leaves out favorite ids that match no team", () => {
+      const { myTeams } = favoritesViewFor(["unknown", "13"]);
+
+      expect(myTeams?.map((team) => team.teamId)).toEqual(["13"]);
+    });
+
+    it("lists no teams without favorites, even before the teams list loads", () => {
+      expect(favoritesViewFor([]).myTeams).toEqual([]);
+      expect(favoritesViewFor([], { listedTeams: null }).myTeams).toEqual([]);
+    });
+
+    it("holds the favorite teams back while the teams list is pending", () => {
+      expect(
+        favoritesViewFor(["13"], { listedTeams: null }).myTeams,
+      ).toBeNull();
     });
   });
 });

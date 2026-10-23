@@ -29,6 +29,11 @@ export const strings = {
         .filter(Boolean)
         .join(" · "),
   },
+  myTeams: {
+    label: "My teams",
+    add: "Add a favorite team",
+    favorite: "Favorite",
+  },
   dateRail: {
     label: "Choose a date",
     previousDays: "Show earlier days",

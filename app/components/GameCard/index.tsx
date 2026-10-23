@@ -5,12 +5,40 @@ import type { HomeCard, TeamWinProbability } from "@/app/lib/home/home-view";
 import type { TeamSide } from "@/app/lib/home/team-colors";
 import { strings } from "@/app/lib/strings";
 import TeamLogo from "@/app/components/TeamLogo";
-import GameStatusChip from "@/app/components/StatusChip";
+import GameStatusChip, { MyTeamChip } from "@/app/components/StatusChip";
 
 const ROW_LOGO_SIZE = 34;
 const MATCHUP_LOGO_SIZE = 44;
 const TEAM_NAME_CLASS_NAME =
   "font-display text-xl leading-none tracking-[0.04em]";
+
+function FavoriteStar() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      role="img"
+      aria-label={strings.myTeams.favorite}
+      className="size-[11px] shrink-0 fill-favorite"
+    >
+      <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />
+    </svg>
+  );
+}
+
+function TeamName({
+  competitor,
+  isFavorite,
+}: {
+  competitor: GameCompetitor;
+  isFavorite: boolean;
+}) {
+  return (
+    <span className={`inline-flex items-center gap-1 ${TEAM_NAME_CLASS_NAME}`}>
+      {competitor.team.name}
+      {isFavorite && <FavoriteStar />}
+    </span>
+  );
+}
 
 function TeamRecord({ record }: { record: string | null }) {
   return record && <span className="text-meta text-muted">{record}</span>;
@@ -19,12 +47,14 @@ function TeamRecord({ record }: { record: string | null }) {
 function ScoreRow({
   competitor,
   color,
+  isFavorite,
   isLeading,
   isLive,
   isFinal,
 }: {
   competitor: GameCompetitor;
   color: string;
+  isFavorite: boolean;
   isLeading: boolean;
   isLive: boolean;
   isFinal: boolean;
@@ -42,7 +72,7 @@ function ScoreRow({
         lazy
       />
       <span className="flex grow flex-wrap items-baseline gap-x-2 gap-y-0.5">
-        <span className={TEAM_NAME_CLASS_NAME}>{competitor.team.name}</span>
+        <TeamName competitor={competitor} isFavorite={isFavorite} />
         <TeamRecord record={competitor.record} />
       </span>
       <span
@@ -78,9 +108,11 @@ function ScoreRow({
 function MatchupTeam({
   competitor,
   color,
+  isFavorite,
 }: {
   competitor: GameCompetitor;
   color: string;
+  isFavorite: boolean;
 }) {
   return (
     <div className="flex grow basis-0 flex-col items-center gap-1.5 text-center">
@@ -90,7 +122,7 @@ function MatchupTeam({
         fallbackColor={color}
         lazy
       />
-      <span className={TEAM_NAME_CLASS_NAME}>{competitor.team.name}</span>
+      <TeamName competitor={competitor} isFavorite={isFavorite} />
       <TeamRecord record={competitor.record} />
     </div>
   );
@@ -204,7 +236,7 @@ function ArrowIcon() {
 }
 
 export default function GameCard({ card }: { card: HomeCard }) {
-  const { game, leadingSide, teamColors } = card;
+  const { game, leadingSide, teamColors, favoriteSides } = card;
   const gameCenterHref = `/game/${game.id}`;
   const isLive = isInProgress(game.status);
   const isFinal = game.status.kind === "final";
@@ -212,6 +244,7 @@ export default function GameCard({ card }: { card: HomeCard }) {
     <ScoreRow
       competitor={game[side]}
       color={teamColors[side]}
+      isFavorite={favoriteSides[side]}
       isLeading={leadingSide === side}
       isLive={isLive}
       isFinal={isFinal}
@@ -220,7 +253,7 @@ export default function GameCard({ card }: { card: HomeCard }) {
 
   return (
     <article
-      className={`card relative flex flex-col gap-3 p-4 ${isLive ? "border-live/34 bg-linear-to-b from-live/14 to-elevated to-50%" : "border-white/10 bg-white/4.5"}`}
+      className={`card relative flex flex-col gap-3 p-4 ${isLive ? "border-live/34 bg-linear-to-b from-live/14 to-elevated to-50%" : "border-white/10 bg-white/4.5"} ${card.isMyTeam ? "inset-ring inset-ring-favorite/22" : ""}`}
     >
       {/* Stretched over the whole card so tapping anywhere opens the game center; first so it is also first in tab order. */}
       <Link
@@ -241,6 +274,7 @@ export default function GameCard({ card }: { card: HomeCard }) {
           label={card.statusLabel}
           startTime={game.startTime}
         />
+        {card.isMyTeam && <MyTeamChip />}
         <span
           className={`ml-auto truncate text-meta ${isLive ? "text-secondary" : "text-muted"}`}
         >
@@ -255,11 +289,19 @@ export default function GameCard({ card }: { card: HomeCard }) {
         </div>
       ) : (
         <div className="flex items-center gap-4 py-1.5">
-          <MatchupTeam competitor={game.away} color={teamColors.away} />
+          <MatchupTeam
+            competitor={game.away}
+            color={teamColors.away}
+            isFavorite={favoriteSides.away}
+          />
           <span className="font-display text-base text-muted">
             {strings.gameCard.at}
           </span>
-          <MatchupTeam competitor={game.home} color={teamColors.home} />
+          <MatchupTeam
+            competitor={game.home}
+            color={teamColors.home}
+            isFavorite={favoriteSides.home}
+          />
         </div>
       )}
 

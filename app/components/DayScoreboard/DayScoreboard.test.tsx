@@ -172,7 +172,21 @@ describe("DayScoreboard", () => {
     renderDayScoreboard();
 
     await screen.findByText(strings.games.empty("Wed, Oct 21"));
-    expect(screen.queryByRole("link")).toBeNull();
+    expect(screen.queryByRole("link", { name: /^Next games/ })).toBeNull();
+  });
+
+  it("offers adding a favorite team from the standings while there are none", async () => {
+    fetchMock.mockResolvedValue(jsonResponse(noGames));
+
+    renderDayScoreboard();
+
+    const myTeams = screen.getByRole("navigation", {
+      name: strings.myTeams.label,
+    });
+    const addLink = within(myTeams).getByRole("link", {
+      name: strings.myTeams.add,
+    });
+    expect(addLink.getAttribute("href")).toBe("/standings");
   });
 
   it("keeps the last scores with a stale notice when a refetch fails, and clears it after a successful one", async () => {
